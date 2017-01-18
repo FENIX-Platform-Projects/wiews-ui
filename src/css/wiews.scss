@@ -1,0 +1,25 @@
+// Typo 3 Bootstrap compatibility
+@import 'base/fx-fonts-import';
+
+//@import "fenix-ui-catalog";
+//@import "fenix-ui-filter";
+
+//@import 'base/variables';
+@import 'themes/fx-variables';
+@import 'utils/fx-utils';
+
+@import 'base/fx-buttons';
+@import 'base/fx-fixed-height';
+@import 'base/fx-fonts-import';
+@import 'base/fx-icons';
+@import 'base/fx-radio-checkbox';
+@import 'base/fx-typography';
+
+
+//pages
+@import 'pages/home';
+
+@import "themes/default";
+@import 'themes/fx-material-theme-light';
+@import 'themes/unified-style';
+@import 'themes/typo3-fix';
