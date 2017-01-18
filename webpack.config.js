@@ -76,11 +76,10 @@ function getOutput() {
     var output;
 
     switch (getEnvironment()) {
-//http://fenixrepo.fao.org/data/policy/general/OrganizationPoliciesInAMISPolicyDatabase.pdf
         case "production" :
             output = {
                 path: Path.join(__dirname, distFolderPath),
-                publicPath: 'http://fenixrepo.fao.org/amisPolicy/',
+                publicPath: 'http://fenixrepo.fao.org/wiews/',
                 filename: "[name]/" + packageJson.name + '.[name].min.js',
                 chunkFilename: "[name]/" + 'chunk-[id].' + packageJson.name + '.[name].min.js'
             };
