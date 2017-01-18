@@ -1,0 +1,48 @@
+/* Footer */
+
+.amis-footer {
+  height: 50px;
+  background-color: #173e7a;
+  color: #FFFFFF;
+}
+
+.amis-footer-menu {
+  padding-top: 18px;
+  color: #FFFFFF;
+  font-size: 12px;
+}
+
+.amis-footer-sides {
+  background-color: #0b2957;
+  height: 50px;
+}
+
+.amis-contact-us{
+  margin-top: 14px;
+  color: #FFFFFF;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 16px;
+  display: block;
+}
+
+.amis-contact-us:hover{
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.feedback-system-icon{
+  background-image: url(./img/amis-megaphone.png);
+  cursor: pointer;
+  padding: 1px 5px 3px 9px;
+  background-position: 87px 3px;
+  background-repeat: no-repeat;
+  margin-top: 8px; margin-left: 27px;
+}
+
+.feedback-system-icon p {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #FFF;
+  font-style: italic;
+  font-size: 9px;
+  margin-bottom: 0;
+}

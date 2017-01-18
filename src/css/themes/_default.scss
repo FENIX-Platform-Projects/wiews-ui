@@ -1,0 +1,195 @@
+/* Base style File */
+
+//@media (min-width: 768px) and (max-width: 991px) {
+//
+//}
+//
+//@media (min-width: 992px) and (max-width: 1199px) {
+//
+//}
+//
+//@media (min-width: 1200px) {
+//
+//}
+
+body {
+  background-color: $amis-background;
+  color: $fenix-text;
+}
+
+
+h1{
+  font-family: "Open Sans Condensed", sans-serif;
+  color: $amis-blue;
+  font-size: 22px;
+}
+
+h2{
+  font-family: "Open Sans Condensed", sans-serif;
+  color: $amis-blue;
+  font-size: 16px;
+
+}
+
+.navbar-brand {
+  background-image: url(./img/banner-tag.jpg);
+  width: 270px;
+  height: 90px;
+  position: relative;
+  background-size: 100% 100%;
+  background-position: 0 0;
+}
+
+.navbar {
+  margin-bottom: 0;
+  min-height: 0;
+  border: none;
+
+  > .container {
+    background-color: $fx-cool-blue;
+  }
+
+}
+
+
+
+.navbar-collapse{
+  background-color: $amis-ultralight-gray;
+}
+
+.navbar-default .navbar-nav {
+
+  > li {
+
+    > a {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      font-family: "Open Sans Condensed", sans-serif;
+      font-size: 14px;
+
+    }
+
+  }
+
+}
+
+
+
+
+@media (min-width: 768px) {
+
+  .navbar-collapse{
+    background-color: transparent;
+  }
+
+
+  .navbar-default .navbar-nav {
+
+    > li {
+
+      &.active {
+
+        > a {
+          color: $fenix-text;
+          background-color: $amis-ultralight-gray;
+
+          &:before {
+            content: '';
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid $amis-ultralight-gray;
+            position: absolute;
+            margin-left: -10px;
+            left: 50%;
+            top: 100%;
+          }
+
+          &:hover, &:active, &:focus {
+
+            background-color: $amis-ultralight-gray;
+            color: $fenix-text;
+
+            &:before {
+              border-top: 10px solid $amis-ultralight-gray;
+            }
+
+          }
+
+        }
+
+      }
+
+      > a {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-family: "Open Sans Condensed", sans-serif;
+        color: white;
+        font-size: 14px;
+
+        @media (min-width: 768px) and (max-width: 991px) {
+          padding-left: 7px;
+          padding-right: 7px;
+        }
+
+        &:hover, &:active, &:focus {
+
+          background-color: $amis-ultralight-gray;
+          color: $fenix-text;
+
+          &:before {
+            content: '';
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid $amis-ultralight-gray;
+            position: absolute;
+            margin-left: -10px;
+            left: 50%;
+            top: 100%;
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+.login-btn {
+  > a {
+    background-color: $amis-blue;
+
+
+
+  }
+
+}
+
+.container {
+  background-color: white;
+}
+
+.container {
+  background-color: white;
+}
+
+.amis-header {
+
+  @media (min-width: 992px) {
+    background-image: url(./img/calder-Amis.jpg);
+    background-position: 100% 0;
+    background-repeat: no-repeat;
+  }
+
+  .banner-links {
+    background-color: white;
+  }
+
+}
+
+.blue-hr{
+  border-top: 1px solid $amis-blue;
+}

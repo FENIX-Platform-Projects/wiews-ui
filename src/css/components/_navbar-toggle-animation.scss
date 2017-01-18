@@ -1,0 +1,43 @@
+
+.navbar-default .navbar-toggle .icon-bar{
+  background-color: white;
+}
+
+.navbar-toggle {
+  border: none;
+  background: transparent !important;
+
+  &:hover {
+    background: transparent !important;
+  }
+
+  .icon-bar {
+    width: 22px;
+    transition: all 0.2s;
+
+  }
+  .icon-bar:nth-child(2) {
+    transform: rotate(45deg);
+    transform-origin: 10% 10%;
+  }
+
+  .icon-bar:nth-child(3) {
+    opacity: 0;
+  }
+  .icon-bar:last-child {
+    transform: rotate(-45deg);
+    transform-origin: 10% 90%;
+  }
+
+  &.collapsed {
+    .icon-bar:nth-child(2) {
+      transform: rotate(0);
+    }
+    .icon-bar:nth-child(3) {
+      opacity: 1;
+    }
+    .icon-bar:last-child  {
+      transform: rotate(0);
+    }
+  }
+}

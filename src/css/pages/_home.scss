@@ -1,0 +1,71 @@
+/* Homepage */
+
+[data-page='home'] {
+
+  .container-breadcrumb {
+    display: none;
+  }
+
+}
+
+.slider_container{
+  position: relative;
+  background-color: #fafafa;
+}
+
+.arrow-left {
+  z-index: 100;
+  background: url(./img/freccia-sx.png) no-repeat left top;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  margin-top: -15px;
+  width: 34px;
+  height: 34px;
+}
+.arrow-right {
+  background: url(./img/freccia-dx.png) no-repeat left bottom;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -15px;
+  width: 34px;
+  height: 34px;
+  z-index: 100;
+}
+
+
+.content-slide {
+  padding: 0 49px;
+}
+
+.home-topics{
+  padding: 0 15px;
+  margin-top: 25px;
+}
+
+.home-btn-box {
+  background-color: #fafafa;
+  border-right: 15px solid #FFFFFF;
+  border-left: 15px solid #FFFFFF;
+  min-height: 216px;
+
+  a{
+
+    color: $fenix-text;
+
+    &:hover, &:active, &:focus{
+      text-decoration: none;
+
+    }
+
+
+  }
+
+}
+
+.ap-diagram-link{
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}

@@ -1,0 +1,212 @@
+/* Profile - Domain Page */
+
+.profiles, .domain{
+
+  li[role="treeitem"]:nth-child(odd){
+    background-color: transparent !important;
+  }
+
+  .jstree-node[aria-disabled="true"]{
+    opacity: 0.5;
+    cursor: no-drop !important;
+  }
+
+  ul[role="group"]{
+
+  }
+
+}
+
+.dash-title{
+  margin-bottom: 15px ;
+  font-size: 90%;
+  font-weight: normal;
+  display: inline-block;
+  padding: 4px;
+}
+
+.dash-box{
+  padding: 10px 15px;
+  margin-top: 45px;
+
+
+
+  h2, h1{
+    margin-top: 10px;
+  }
+
+
+  .fm-map-box{
+    
+  }
+
+}
+
+
+.profiles{
+
+
+  #dashboard-content section{
+
+
+
+    .row:first-child{
+
+
+      
+        .dash-box{
+          margin-top: 0;
+        }
+
+    }
+
+  }
+
+
+
+  .domain-filter-container{
+    margin-bottom: 45px;
+
+  }
+
+  [data-dashboard="expenditure_gdp"], [data-dashboard="poverty"]{
+
+    //h1{
+    //  margin-top: 0;
+    //}
+
+    .dash-box{
+      margin-top: 0;
+      margin-bottom: 45px;
+
+    }
+
+  }
+
+}
+
+.domain-filter-container{
+
+  border: 1px solid $fenix-light-hr;
+  padding: 15px;
+
+
+
+  .filter-title{
+
+    margin-top: 0;
+
+  }
+
+}
+
+
+
+.country-name{
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.back-profile{
+  margin-top: -40px;
+}
+
+.dl-horizontal dt{
+  width: 90px;
+}
+
+.dl-horizontal dd{
+  margin-left: 120px;
+}
+
+
+#lateral-menu{
+  z-index: 1;
+  position: relative;
+}
+
+.lat-men{
+  position: relative;
+  border-right: 1px solid $fenix-light-hr;
+}
+
+.lateral-menu-container{
+  top: 0;left: 15px;
+  position: absolute;
+  margin-bottom: 15px;
+  height: 100%;
+  width: calc(100% - 30px);
+  background-color: $fenix-light-bg;
+}
+
+ul[role="group"]{
+  //background-color:$fenix-light-bg;
+
+}
+
+.info-title{
+  font-size: 12px;
+  color: $fenix-text;
+  margin-top: 0;
+}
+
+.country-item{
+  padding: 15px 0;
+  position: relative;
+
+  &:after{
+
+    content: '';
+    display: block;
+    width: 90%;
+    height: 1px;
+    background-color: lighten($fenix-light-hr, 5%);
+    position: absolute;
+    bottom: 0;
+    
+  }
+
+
+  a{
+
+    display: inline-block;
+
+  }
+}
+
+.main-information{
+
+  li{
+    margin-bottom: 25px;
+    border-bottom: 1px solid $fenix-light-hr;
+    position: relative;
+
+    p{
+      font-weight: 100;
+      font-size: 23px;
+    }
+
+  }
+
+  .dash-info-title{
+    color: $fx-cool-blue;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding-left: 0;
+    margin: 0;
+
+  }
+
+  .dash-info-ico{
+    font-size: 32px;
+    color: $fenix-light-hr;
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+  }
+
+
+
+}

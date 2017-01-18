@@ -1,0 +1,76 @@
+/* Variables */
+
+// Path of the FENIX-UI-COMMON Submodule relative to this file
+$fx-ui-common: '../../submodules/fenix-ui-common/';
+
+// Fenix - Variables
+
+// Layout
+$host-menu-height : 40px;
+
+// Typography
+$small-text : 12px;
+$standard-text-size: 12px;
+
+// Fenix Colors
+$fenix-standard-blue: rgba(53, 166, 220, 1);
+$fx-cool-blue: #dd3118;
+$fx-cool-alt: #51b5ff;
+
+
+$fx-secondary-color: desaturate( $fx-cool-blue, 50% );
+
+$amis-background: #f9f7f3;
+$amis-ultralight-gray: #EEEEEE;
+
+$amis-blue: #2A5D9F;
+
+
+$fenix-text: #333333;
+$fenix-secondary-text: #999999;
+
+$fenix-light-gray: #dddddd;
+$fenix-dark-blue: #4c647f;
+$fenix-dark-bg: #666666;
+$fenix-light-bg: #f1f1f1;
+$light-purple: #EEEEFF;
+$light-brown: #f3efe0;
+
+$box-bg: #ededed;
+$superlight-gray: #f2f2f2;
+
+$buttons: #005493;
+
+$fenix-hr: #D2D0D0;
+$fenix-light-hr: #e1e1e1;
+
+$fenix-thin-border: 1px solid $fenix-hr;
+
+// Specials
+$white-alpha: rgba(255, 255, 255, 0.9);
+$black-alpha : rgba(0, 0, 0, 0.8);
+
+$footer-bg: #343434;
+$footer-text:#A8A7A7;
+
+// Background
+// background: color position/size repeat origin clip attachment image|initial|inherit;
+$fx-site-bg: $fenix-light-bg;
+
+// Border Radius
+$fx-border-radius: 0;
+$custom-color1: lighten($fx-cool-blue, 42%); //Arancio
+
+$custom-color2: #d2ccbf; //Marroncino
+$custom-color3: #dfdede; //Grigio chiaro pulsanti reset
+$custom-color4: #ebebeb; //Grigio Pulsanti pressed
+$custom-color5: #27729a; //Cool blue pressed
+$custom-color6: #0d6cac; // Fao Blue
+$custom-color7: #4fa3db; // Fao Azure
+$custom-color8: #ec6e00; // Fao Orange
+
+$fx-main-color-light: #ced8df;  // Ideal for selection
+$fx-main-color-lighter: #ced8df ;// Ideal for hovers
+$fx-main-color-darker: #ced8df; // Ideal for hovers
+
+$summary-bg:#efefef;
