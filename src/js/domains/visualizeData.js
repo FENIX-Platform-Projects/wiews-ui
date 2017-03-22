@@ -23,7 +23,7 @@ define([
     var dashboardName = "visualizeData";
 
     var s = {
-        PROGRESS_BAR_CONTAINER: '#progress-bar-holder',
+        PROGRESS_BAR_CONTAINER: '#vd-progress-bar-holder',
 
         events: {
             dashboardComponent :{

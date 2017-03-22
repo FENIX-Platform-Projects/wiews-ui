@@ -23,7 +23,7 @@ define([
     var dashboardName = "downloadData";
 
     var s = {
-        PROGRESS_BAR_CONTAINER: '#progress-bar-holder',
+        PROGRESS_BAR_CONTAINER: '#dd-progress-bar-holder',
 
         events: {
             dashboardComponent :{
