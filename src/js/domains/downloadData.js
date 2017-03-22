@@ -36,12 +36,11 @@ define([
         }
     };
 
-    function DownloadData(opt){
+    function DownloadData(opts){
 
-        console.log("DownloadData start")
         require('highcharts-no-data-to-display')(Highcharts);
 
-        $.extend(true, this, opt);
+        $.extend(true, this, opts);
 
         this._validateConfig();
 
@@ -49,7 +48,6 @@ define([
 
         this._initVariables();
 
-        //this._printDashboard();
     };
 
     DownloadData.prototype._validateConfig = function () {
@@ -73,6 +71,8 @@ define([
         this.cache = C.cache;
         this.indicatorConfig = INDICATORSC[this.indicator.code];
         this.config = this.indicatorConfig[dashboardName];
+
+        this.channels = {};
 
         this.progressBar = new ProgressBar({
             container: s.PROGRESS_BAR_CONTAINER,
@@ -102,35 +102,83 @@ define([
         }
     };
 
+    // DownloadData.prototype._loadProgressBar = function () {
+    //     this.progressBar.reset();
+    //     this.progressBar.show();
+    //
+    //     var self = this, increment = 0, percent = Math.round(100 / this.config.items.length);
+    //
+    //     $("#chart_1").on('dashboard.ready', function () {
+    //         console.log("RRRRRR")
+    //     });
+    //     $("#chart_1").on('dashboard.ready', _.bind(this._onMenuItemClick, this));
+    //     this.dashboard.on(s.events.dashboardComponent.READY, function () {
+    //         console.log("dashboardComponent.READY")
+    //         // self._trigger(s.events.dashboard.READY);
+    //         $("#chart_1").trigger('dashboard.ready')
+    //
+    //         // self.dashboard._trigger()
+    //         // self._trigger('dashboard.ready');
+    //         self.progressBar.finish();
+    //     });
+    //
+    //     this.dashboard.on(s.events.dashboardComponent.ITEM_READY, function (item) {
+    //         increment = increment + percent;
+    //         self.progressBar.update(increment);
+    //     });
+    // };
+
     DownloadData.prototype._loadProgressBar = function () {
         this.progressBar.reset();
         this.progressBar.show();
 
         var self = this, increment = 0, percent = Math.round(100 / this.config.items.length);
-        console.log(this.dashboard)
+
         this.dashboard.on(s.events.dashboardComponent.READY, function () {
-            //self.trigger(s.events.dashboard.READY, [{tabName : dashboardName}]);
-            //self.progressBar.finish();
+            // self._trigger('dashboard.ready');
+            self.progressBar.finish();
         });
 
         this.dashboard.on(s.events.dashboardComponent.ITEM_READY, function (item) {
-            //increment = increment + percent;
-            //self.progressBar.update(increment);
+            increment = increment + percent;
+            self.progressBar.update(increment);
         });
     };
 
     DownloadData.prototype._renderDashboard = function () {
-        console.log("_renderDashboard start")
-        console.log(this.config)
         // Build new dashboard
         this.dashboard = new Dashboard(
             this.config
         );
-        console.log(this.dashboard)
+    };
+
+    DownloadData.prototype._trigger = function (channel) {
+
+        if (!this.channels[channel]) {
+            return false;
+        }
+        var args = Array.prototype.slice.call(arguments, 1);
+        for (var i = 0, l = this.channels[channel].length; i < l; i++) {
+            var subscription = this.channels[channel][i];
+            subscription.callback.apply(subscription.context, args);
+        }
+
+        return this;
+    };
+
+    DownloadData.prototype.on = function (channel, fn, context) {
+        var _context = context || this;
+        if (!this.channels[channel]) {
+            this.channels[channel] = [];
+        }
+        this.channels[channel].push({context: _context, callback: fn});
+        return this;
     };
 
     DownloadData.prototype._importThirdPartyCss = function () {
 
+    //SANDBOXED BOOTSTRAP
+    require("../../css/sandboxed-bootstrap.css");
     //Bootstrap
     require('bootstrap/dist/css/bootstrap.css');
 

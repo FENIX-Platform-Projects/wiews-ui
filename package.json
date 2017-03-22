@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "echo \"Error: please specify a valid section to develop [e.g. npm run dev:analysis]\" && exit 1",
     "dev:base": "cross-env SECTIONS=base NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
+    "dev:test": "cross-env SECTIONS=test NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "dev:countryProfile": "cross-env SECTIONS=countryProfile NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "dev:cultivars": "cross-env SECTIONS=cultivars NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "dev:domains": "cross-env SECTIONS=domains NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",

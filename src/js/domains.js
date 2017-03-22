@@ -10,8 +10,10 @@ define([
     "fenix-ui-filter-utils",
     "../lib/utils",
     "../nls/labels",
+    "fenix-ui-dashboard",
+    "../config/domains/indicatorsConfig",
     "bootstrap"
-], function ($, log, _, C, PAGC, template, DownloadData, VisualizeData, Filter, Utils, labels) {
+], function ($, log, _, C, PAGC, template, DownloadData, VisualizeData, Filter, Utils, labels, Dashboard, INDICATORSC) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
@@ -38,7 +40,6 @@ define([
 
         console.clear();
 
-        console.log("Domains start")
         log.setLevel("silent");
 
         this._importThirdPartyCss();
@@ -97,14 +98,13 @@ define([
             indicator: this.selected_indicator
         });
 
-        // this.visualizeDataTab = new VisualizeData({
-        //     el: this.$el.find(s.VISUALIZE_DATA_TAB_EL),
-        //     lang: this.lang,
-        //     environment: this.environment,
-        //     indicator: this.selected_indicator
-        // });
+        this.visualizeDataTab = new VisualizeData({
+            el: this.$el.find(s.VISUALIZE_DATA_TAB_EL),
+            lang: this.lang,
+            environment: this.environment,
+            indicator: this.selected_indicator
+        });
 
-        console.log("Before downloadDataTab")
         this.downloadDataTab.render();
     };
 
@@ -113,14 +113,16 @@ define([
 
         this.$tabs.on("click", _.bind(this._onTabClick, this))
 
-        this.$tabs.on(s.events.dashboard.READY, _.bind(this._onDashboardReady, this))
-
+        //console.log("_bindEventListeners", this.$el.find(s.DOWNLOAD_DATA_TAB_EL))
+        //this.$el.find(s.DOWNLOAD_DATA_TAB_EL).on('dashboard.ready', _.bind(this._onDashboardReady, this))
+        //this.$tabs.on(s.events.dashboard.READY, _.bind(this._onDashboardReady, this))
     };
 
     Domains.prototype._onDashboardReady = function (tab) {
 
         console.log("_onDashboardReady", tab)
         if((tab)&&(tab.tabName)&&(tab.tabName==s.VISUALIZE_DATA_TAB)){
+            s.visualizeDataTab_created = true;
             s.visualizeDataTab_created = true;
         }
     };
@@ -129,15 +131,14 @@ define([
 
         var tab = $(evt.target).data("tab");
         this.currentTab = tab;
-        if((tab)&&(tab.tabName)&&(tab.tabName==s.VISUALIZE_DATA_TAB)&&(!s.visualizeDataTab_created)){
+        if((tab)&&(tab==s.VISUALIZE_DATA_TAB)&&(!s.visualizeDataTab_created)){
             this.visualizeDataTab.render();
+            s.visualizeDataTab_created = true;
         }
-
         //this._showTab(tab);
     };
 
     Domains.prototype._showTab = function (tab) {
-        console.log("In showTab ", tab)
         switch (tab) {
             case s.DOWNLOAD_DATA_TAB:
                 this.downloadDataTab.show();

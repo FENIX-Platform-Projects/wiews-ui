@@ -9,44 +9,124 @@ define(["highcharts", "../../nls/labels"], function (Highcharts, labels) {
        "20": {
            downloadData: {
 
-               uid: "gift_process_ENERGY_000042BUR201001",
-               //gift_process_FOOD_AMOUNT_PROC_000042BUR201001
-               //uid: 'UNECA_Population',
+               environment : "develop",
+               cache : false,
+               uid: "adam_usd_commitment",
+
                items: [
                    {
-                       id: "item_1",
-                       type: "chart",
+                       id: "dd_item_1", //ref [data-item=':id']
+                       type: "chart", //chart || map || olap,
                        config: {
-                           type: "donut",
-                           x: [],
-                           series: ["group_code"], //Y dimension
-                           y: ["value"],
-                           useDimensionLabelsIfExist : true,
+                           type: "line",
+                           x: ["year"], //x axis
+                           series: ["indicator"], // series
+                           y: ["value"],//Y dimension
+                           aggregationFn: {"value": "sum"},
+                           useDimensionLabelsIfExist: false,// || default raw else fenixtool
 
-                           aggregationFn: {"value": "sum"}
+                           config: {
+                               xAxis: {
+                                   type: 'datetime'
+                               }
+                           }
                        },
-                       /*              filter: {
-                        IndicatorCode: ["010101"],
-                        GenderCode: ["3"],
-                        AgeRangeCode: ["AGT"],
-                        CountryCode: ["BEN", "BFA", "CAF", "COM", "DJI", "ERI", "GHA", "GNB", "KEN", "LBR",
-                        "LBY", "MRT", "NER", "NGA", "STP", "SEN", "SLE", "SOM", "SDN", "TGO", "TUN"],
-                        Year: ["2013"]
-                        },
-                        filterFor: ["IndicatorCode", "GenderCode", "AgeRangeCode", "CountryCode"]*/
+
+                       filterFor: {
+                           // "filter_total_ODA": ['fao_region_code', 'recipientcode', 'year', 'oda']
+                           "filter_total_ODA": ['recipientcode', 'year', 'oda']
+                       },
+
                        postProcess: [
+                           {
+                               "name": "filter",
+                               "sid": [
+                                   {
+                                       "uid": "adam_usd_aggregation_table"
+                                   }
+                               ],
+                               "parameters": {
+                                   "columns": [
+                                       "year",
+                                       "value",
+                                       "unitcode"
+                                   ],
+                                   "rows": {
+                                       "oda": {
+                                           "enumeration": [
+                                               "usd_commitment"
+                                           ]
+                                       },
+                                       "recipientcode": {
+                                           "codes": [
+                                               {
+                                                   "uid": "crs_recipients",
+                                                   "version": "2016",
+                                                   "codes": [
+                                                       "625"
+                                                   ]
+                                               }
+                                           ]
+                                       },
+                                       "year": {
+                                           "time": [
+                                               {
+                                                   "from": 2000,
+                                                   "to": 2014
+                                               }
+                                           ]
+                                       }
+                                   }
+                               },
+                               "rid":{"uid":"filter_total_ODA"}
+                           },
                            {
                                "name": "group",
                                "parameters": {
                                    "by": [
-                                       "group_code",
+                                       "year"
                                    ],
                                    "aggregations": [
                                        {
-                                           "columns": [ "value" ],
+                                           "columns": [
+                                               "value"
+                                           ],
                                            "rule": "SUM"
+                                       },
+                                       {
+                                           "columns": [
+                                               "unitcode"
+                                           ],
+                                           "rule": "first"
                                        }
                                    ]
+                               },
+                               "rid": {
+                                   "uid": "total_oda"
+                               }
+                           },
+                           {
+                               "name": "addcolumn",
+                               "parameters": {
+                                   "column": {
+                                       "dataType": "text",
+                                       "id": "indicator",
+                                       "title": {
+                                           "EN": "Indicator"
+                                       },
+                                       "domain": {
+                                           "codes": [
+                                               {
+                                                   "extendedName": {
+                                                       "EN": "Adam Processes"
+                                                   },
+                                                   "idCodeList": "adam_processes"
+                                               }
+                                           ]
+                                       },
+                                       "subject": null
+                                   },
+                                   "value": "ODA"
                                }
                            }
                        ]
@@ -55,7 +135,130 @@ define(["highcharts", "../../nls/labels"], function (Highcharts, labels) {
            },
            visualizeData: {
 
-           }
+        environment : "develop",
+            cache : false,
+            uid: "adam_usd_commitment",
+
+            items: [
+            {
+                id: "vd_item_1", //ref [data-item=':id']
+                type: "chart", //chart || map || olap,
+                config: {
+                    type: "line",
+                    x: ["year"], //x axis
+                    series: ["indicator"], // series
+                    y: ["value"],//Y dimension
+                    aggregationFn: {"value": "sum"},
+                    useDimensionLabelsIfExist: false,// || default raw else fenixtool
+
+                    config: {
+                        xAxis: {
+                            type: 'datetime'
+                        }
+                    }
+                },
+
+                filterFor: {
+                    // "filter_total_ODA": ['fao_region_code', 'recipientcode', 'year', 'oda']
+                    "filter_total_ODA": ['recipientcode', 'year', 'oda']
+                },
+
+                postProcess: [
+                    {
+                        "name": "filter",
+                        "sid": [
+                            {
+                                "uid": "adam_usd_aggregation_table"
+                            }
+                        ],
+                        "parameters": {
+                            "columns": [
+                                "year",
+                                "value",
+                                "unitcode"
+                            ],
+                            "rows": {
+                                "oda": {
+                                    "enumeration": [
+                                        "usd_commitment"
+                                    ]
+                                },
+                                "recipientcode": {
+                                    "codes": [
+                                        {
+                                            "uid": "crs_recipients",
+                                            "version": "2016",
+                                            "codes": [
+                                                "625"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "year": {
+                                    "time": [
+                                        {
+                                            "from": 2000,
+                                            "to": 2014
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        "rid":{"uid":"filter_total_ODA"}
+                    },
+                    {
+                        "name": "group",
+                        "parameters": {
+                            "by": [
+                                "year"
+                            ],
+                            "aggregations": [
+                                {
+                                    "columns": [
+                                        "value"
+                                    ],
+                                    "rule": "SUM"
+                                },
+                                {
+                                    "columns": [
+                                        "unitcode"
+                                    ],
+                                    "rule": "first"
+                                }
+                            ]
+                        },
+                        "rid": {
+                            "uid": "total_oda"
+                        }
+                    },
+                    {
+                        "name": "addcolumn",
+                        "parameters": {
+                            "column": {
+                                "dataType": "text",
+                                "id": "indicator",
+                                "title": {
+                                    "EN": "Indicator"
+                                },
+                                "domain": {
+                                    "codes": [
+                                        {
+                                            "extendedName": {
+                                                "EN": "Adam Processes"
+                                            },
+                                            "idCodeList": "adam_processes"
+                                        }
+                                    ]
+                                },
+                                "subject": null
+                            },
+                            "value": "ODA"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
        }
     };
 });
