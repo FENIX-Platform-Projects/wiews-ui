@@ -25,6 +25,16 @@ define([
     var s = {
         PROGRESS_BAR_CONTAINER: '#vd-progress-bar-holder',
 
+        dashboard: {
+            dashboard_config_item : 'dashboard',
+            dashboard_container : '#vd-dashboard-container'
+        },
+
+        filter: {
+            filter_config_item : 'filter',
+            filter_container : '#vd-filter-container'
+        },
+
         events: {
             dashboardComponent :{
                 READY : 'ready',
@@ -86,7 +96,12 @@ define([
             this._disposeDashboard();
         }
 
-        this._renderDashboard();
+        var dashboardConf = this._getElemConfig(s.dashboard.dashboard_config_item),
+            filterConfig = this._getElemConfig(s.filter.filter_config_item);
+
+        this._renderFilter(filterConfig);
+
+        this._renderDashboard(dashboardConf);
 
         this._loadProgressBar();
     }
@@ -145,10 +160,36 @@ define([
         });
     };
 
-    VisualizeData.prototype._renderDashboard = function () {
+    VisualizeData.prototype._getElemConfig = function (elem) {
+
+        var config;
+
+        if((this.config)&&(elem)&&(this.config[elem]))
+        {
+            config = this.config[elem];
+        }
+
+        return config;
+    }
+
+    VisualizeData.prototype._renderFilter = function (filterConfig) {
+
+        this.filter = new Filter({
+            el: s.filter.filter_container,
+            selectors: filterConfig,
+            common: {
+                template: {
+                    hideSwitch: true,
+                    hideRemoveButton: true
+                }
+            }
+        });
+    }
+
+    VisualizeData.prototype._renderDashboard = function (dashboardConfig) {
         // Build new dashboard
         this.dashboard = new Dashboard(
-            this.config
+            dashboardConfig
         );
     };
 
