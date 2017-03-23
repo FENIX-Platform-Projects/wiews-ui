@@ -1,8 +1,9 @@
 /*global define*/
-
-define(["highcharts", "../../nls/labels"], function (Highcharts, labels) {
+define(["highcharts", "../../config/config", "../../nls/labels"], function (Highcharts, C, labels) {
 
     "use strict";
+
+    var Clang = C.lang.toLowerCase();
 
     var filter = {
         biofuelsPoliciesType : {
@@ -225,24 +226,106 @@ define(["highcharts", "../../nls/labels"], function (Highcharts, labels) {
                        selector: {
                            id: "dropdown",
                            source: [
-                               {value: "8", label: "Biofuel targets"},
-                               {value: "10", label: "Domestic price regulation"},
-                               {value: "1", label: "Export measures"},
-                               {value: "2", label: "Import measures"},
-                               {value: "12", label: "Production measures"},
-                               {value: "9", label: "Tax concessions"}
+                               {value: "1", label: "Gender 1"},
+                               {value: "2", label: "Gender 2"},
+                               {value: "3", label: "Gender 3"},
+                               {value: "4", label: "Gender 4"},
+                               {value: "5", label: "Gender 5"},
+                               {value: "6", label: "Gender 6"}
                            ],
-                           default:["8"],
+                           default:["2"],
                            config : {
-                               placeholder: "Please select a Policy Type",
+                               //placeholder: "Please select a Policy Type",
                                maxItems: 1
                            }
                        },
 
                        template: {
-                           title: "Policy Type"
+                           title: labels[Clang]['vd_filter_item_1']
+                       }
+                   },
+                   vd_filter_item_2: {
+
+                       selector: {
+                           id: "dropdown",
+                           source: [
+                               {value: "1", label: "Region 1"},
+                               {value: "2", label: "Region 2"},
+                               {value: "3", label: "Region 3"},
+                               {value: "4", label: "Region 4"},
+                               {value: "5", label: "Region 5"},
+                               {value: "6", label: "Region 6"}
+                           ],
+                           default:["3"],
+                           config : {
+                               //placeholder: "Please select a Policy Type",
+                               maxItems: 1
+                           }
+                       },
+
+                       template: {
+                           title: labels[Clang]['vd_filter_item_2']
+                       }
+                   },
+                   vd_filter_item_3: {
+
+                       selector: {
+                           id: "dropdown",
+                           source: [
+                               {value: "1", label: "Period 1"},
+                               {value: "2", label: "Period 2"},
+                               {value: "3", label: "Period 3"},
+                               {value: "4", label: "Period 4"},
+                               {value: "5", label: "Period 5"},
+                               {value: "6", label: "Period 6"}
+                           ],
+                           default:["4"],
+                           config : {
+                               //placeholder: "Please select a Policy Type",
+                               maxItems: 1
+                           }
+                       },
+
+                       template: {
+                           title: labels[Clang]['vd_filter_item_3']
                        }
                    }
+                   // vd_filter_item_2: {
+                   //      "id": "item",
+                   //      "type": "codelist",
+                   //      "parameter": "item",
+                   //      "componentType": {
+                   //      "class": "col-xs-6 col-sm-6 col-md-3",
+                   //          "type": "dropDownList"
+                   //      },
+                   //      "config": {
+                   //      "dimension_id": "item",
+                   //          "defaultCodes": ["2905"],
+                   //          "filter": {
+                   //          "show_lists": false
+                   //          }
+                   //      }
+                   //  },
+
+
+                    // commodityClass: {
+                    //
+                    // selector: {
+                    // id: "dropdown",
+                    // hideSelectAllButton: false,
+                    // hideClearAllButton: false
+                    // },
+                    //
+                    // cl: {
+                    // "uid": "OECD_CommodityClass1",
+                    // "version": "1.0"
+                    // },
+                    //
+                    // template: {
+                    // title: "Commodity Class"
+                    // }
+                    // }
+
                },
                dashboard: {
 
