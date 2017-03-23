@@ -4,6 +4,91 @@ define(["highcharts", "../../nls/labels"], function (Highcharts, labels) {
 
     "use strict";
 
+    var filter = {
+        biofuelsPoliciesType : {
+            year: {min: '2011-01-01', max: '2014-08-31', from: '2011-01-01', to: '2014-01-01'},
+            yearTitle: {from: '01/2011', to: '01/2014'}
+        },
+        importTariffs : {
+            yearTitle: {period: '2012/2015'}
+        },
+        exportSubsidies : {
+            yearTitle: {period: '1995/2011'}
+        },
+        exportRestrictions : {
+            year: {min: '2007-01-01', max: '2014-12-31', from: '2007-01-01', to: '2014-01-01'},
+            yearTitle: {from: '01/2010', to: '01/2014'}
+        }
+    }
+
+    var biofuelsPoliciesType = {
+        title: {
+            biofuelsPoliciesFreqGraph: {
+                zero: 'Number of AMIS Countries',
+                first:'Number of AMIS countries with biofuel policies, disaggregated by policy type'
+            },
+            biofuelsPoliciesTimeSeriesGraph: {
+                zero: 'Number of AMIS Countries',
+                first: 'Number of AMIS countries with ethanol policies, disaggregated by policy type',
+                second: 'Number of AMIS countries with biodiesel policies, disaggregated by policy type',
+                third: 'Number of AMIS countries with biofuel (unspecified) policies, disaggregated by policy type',
+                fourth: 'Number of AMIS countries with biofuel policies targeted at ethanol, biodiesel or an unspecified type of biofuel, disaggregated by policy type'
+            }
+        },
+        subtitle: {
+            biofuelsPoliciesFreqGraph: {
+                first: "Period "+ filter.biofuelsPoliciesType.yearTitle.from+" until "+filter.biofuelsPoliciesType.yearTitle.to
+            },
+            biofuelsPoliciesTimeSeriesGraph: {
+            }
+        },
+        notes: {
+            biofuelsPoliciesFreqGraph: {
+                first: 'In Australia, Brazil, Canada, Mexico and US biofuel policies can be implemented at state-level. <br>Ethanol, biodiesel and biofuel (unspecified) are mutually exclusive categories.<br>Import measures do not include import tariffs or tariff quotas. <br>Source: AMIS Policy Database'
+            },
+            biofuelsPoliciesTimeSeriesGraph: {
+                first: 'In Australia, Brazil, Canada, Mexico and US biofuel policies can be implemented at state-level.<br>Import measures do not include import tariffs or tariff quotas.<br>Source: AMIS Policy Database',
+                second: 'In Australia, Brazil, Canada, Mexico and US biofuel policies can be implemented at state-level.<br>Import measures do not include import tariffs or tariff quotas.<br>Source: AMIS Policy Database',
+                third: 'In Australia, Brazil, Canada, Mexico and US biofuel policies can be implemented at state-level.<br>Unspecified biofuel policies can apply to ethanol and/or biodiesel.<br>Import measures do not include import tariffs or tariff quotas.<br>Source: AMIS Policy Database',
+                fourth: 'In Australia, Brazil, Canada, Mexico and US biofuel policies can be implemented at state-level. <br>Combination of policies targeted on ethanol, biodiesel and biofuel (unspecified).<br>Import measures do not include import tariffs or tariff quotas.<br>Source: AMIS Policy Database'
+            }
+        },
+        legend: {
+            biofuelsPoliciesFreqGraph: {
+                title: 'Policy Type'
+            },
+            biofuelsPoliciesTimeSeriesGraph: {
+            }
+        },
+        export: {
+            title: 'Download',
+            button_items: {
+                first: 'As PNG image',
+                second: 'As JPEG image',
+                third: 'As SVG vector image',
+                fourth: 'To PDF document',
+            },
+            biofuelsPoliciesFreqGraph: {
+                filename: {
+                    first: 'Biofuels-policies-frequency_graph'
+                }
+            },
+            biofuelsPoliciesTimeSeriesGraph: {
+                filename: {
+                    first: 'Biofuels-policies-time_series_graph'
+                }
+            }
+        },
+        time: {
+            biofuelsPoliciesTimeSeriesGraph: {
+                min: {year: 2011, month: 0, day: 1},
+                max: {year: 2014, month: 11, day: 31},
+                floor: {year: 2011, month: 0, day: 1},
+                ceiling: {year: 2014, month: 11, day: 31}
+            }
+        }
+    };
+
 
     return {
        "20": {

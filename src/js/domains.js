@@ -91,12 +91,12 @@ define([
 
     Domains.prototype._initTabs = function () {
 
-        this.downloadDataTab = new DownloadData({
-            el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
-            lang: this.lang,
-            environment: this.environment,
-            indicator: this.selected_indicator
-        });
+        // this.downloadDataTab = new DownloadData({
+        //     el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
+        //     lang: this.lang,
+        //     environment: this.environment,
+        //     indicator: this.selected_indicator
+        // });
 
         this.visualizeDataTab = new VisualizeData({
             el: this.$el.find(s.VISUALIZE_DATA_TAB_EL),
@@ -105,7 +105,7 @@ define([
             indicator: this.selected_indicator
         });
 
-        this.downloadDataTab.render();
+       // this.downloadDataTab.render();
     };
 
     // Events
@@ -153,11 +153,35 @@ define([
 
     Domains.prototype._importThirdPartyCss = function () {
 
+        //SANDBOXED BOOTSTRAP
+        //require("../../css/sandboxed-bootstrap.css");
         //Bootstrap
         require('bootstrap/dist/css/bootstrap.css');
 
+        //dropdown selector
+        require("../../node_modules/selectize/dist/css/selectize.bootstrap3.css");
+        //tree selector
+        //require("../../node_modules/jstree/dist/themes/default/style.min.css");
+        //range selector
+        //require("../../node_modules/ion-rangeslider/css/ion.rangeSlider.css");
+        //require("../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css");
+        //time selector
+        //require("../../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css");
+        // fenix-ui-filter
+        //require("../../node_modules/fenix-ui-filter/dist/fenix-ui-filter.min.css");
+
+        // fenix-ui-dropdown
+        // require("../../node_modules/fenix-ui-dropdown/dist/fenix-ui-dropdown.min.css");
+
+        // bootstrap-table
+        //require("../../node_modules/bootstrap-table/dist/bootstrap-table.min.css");
+
+        //meta viewer requirements
+        //require("jquery-treegrid-webpack/css/jquery.treegrid.css");
+
         //Wiews CSS
         //require("../css/wiews.css");
+
     };
 
     return new Domains();

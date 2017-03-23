@@ -101,9 +101,9 @@ define([
 
         this._renderFilter(filterConfig);
 
-        this._renderDashboard(dashboardConf);
+        //this._renderDashboard(dashboardConf);
 
-        this._loadProgressBar();
+        //this._loadProgressBar(dashboardConf);
     }
 
     // Events
@@ -143,11 +143,11 @@ define([
     //     });
     // };
 
-    VisualizeData.prototype._loadProgressBar = function () {
+    VisualizeData.prototype._loadProgressBar = function (dashboardConf) {
         this.progressBar.reset();
         this.progressBar.show();
 
-        var self = this, increment = 0, percent = Math.round(100 / this.config.items.length);
+        var self = this, increment = 0, percent = Math.round(100 / dashboardConf.items.length);
 
         this.dashboard.on(s.events.dashboardComponent.READY, function () {
             // self._trigger('dashboard.ready');
@@ -214,39 +214,6 @@ define([
         }
         this.channels[channel].push({context: _context, callback: fn});
         return this;
-    };
-
-    VisualizeData.prototype._importThirdPartyCss = function () {
-
-        //SANDBOXED BOOTSTRAP
-        require("../../css/sandboxed-bootstrap.css");
-        //Bootstrap
-        require('bootstrap/dist/css/bootstrap.css');
-
-        //dropdown selector
-        require("../../../node_modules/selectize/dist/css/selectize.bootstrap3.css");
-        //tree selector
-        require("../../../node_modules/jstree/dist/themes/default/style.min.css");
-        //range selector
-        require("../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css");
-        require("../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css");
-        //time selector
-        require("../../../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css");
-        // fenix-ui-filter
-        require("../../../node_modules/fenix-ui-filter/dist/fenix-ui-filter.min.css");
-
-        // fenix-ui-dropdown
-        require("../../../node_modules/fenix-ui-dropdown/dist/fenix-ui-dropdown.min.css");
-
-        // bootstrap-table
-        require("../../../node_modules/bootstrap-table/dist/bootstrap-table.min.css");
-
-        //meta viewer requirements
-        require("jquery-treegrid-webpack/css/jquery.treegrid.css");
-
-        //Wiews CSS
-        //require("../css/wiews.css");
-
     };
 
     return VisualizeData;
