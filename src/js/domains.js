@@ -4,6 +4,7 @@ define([
     "underscore",
     "../config/config",
     "../config/domains/config",
+    "../config/domains/indicatorsCategories",
     "../html/domains/template.hbs",
     "./domains/downloadData",
     "./domains/visualizeData",
@@ -13,11 +14,12 @@ define([
     "fenix-ui-dashboard",
     "../config/domains/indicatorsConfig",
     "bootstrap"
-], function ($, log, _, C, PAGC, template, DownloadData, VisualizeData, Filter, Utils, labels, Dashboard, INDICATORSC) {
+], function ($, log, _, C, PAGC, CATEG, template, DownloadData, VisualizeData, Filter, Utils, labels, Dashboard, INDICATORSC) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
 
+    //This code has to be passed by Typo3
     var selected = {code: "20"};
 
     var s = {
@@ -78,6 +80,7 @@ define([
         this.cache = C.cache;
 
         this.selected_indicator = selected;
+        this.selected_indicator_position = CATEG[this.selected_indicator.code];
         this.$tabs = this.$el.find(s.TABS_A);
 
         s.visualizeDataTab_created = false;
@@ -95,14 +98,14 @@ define([
         //     el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
         //     lang: this.lang,
         //     environment: this.environment,
-        //     indicator: this.selected_indicator
+        //     indicator: this.selected_indicator_position
         // });
 
         this.visualizeDataTab = new VisualizeData({
             el: this.$el.find(s.VISUALIZE_DATA_TAB_EL),
             lang: this.lang,
             environment: this.environment,
-            indicator: this.selected_indicator
+            indicator: this.selected_indicator_position
         });
 
        // this.downloadDataTab.render();
@@ -160,6 +163,11 @@ define([
 
         //dropdown selector
         require("../../node_modules/selectize/dist/css/selectize.bootstrap3.css");
+
+        require("../../node_modules/leaflet/dist/leaflet.css");
+
+        require("../../node_modules/fenix-ui-map-creator/dist/fenix-ui-map-creator.min.css");
+
         //tree selector
         //require("../../node_modules/jstree/dist/themes/default/style.min.css");
         //range selector
@@ -168,7 +176,7 @@ define([
         //time selector
         //require("../../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css");
         // fenix-ui-filter
-        //require("../../node_modules/fenix-ui-filter/dist/fenix-ui-filter.min.css");
+        require("../../node_modules/fenix-ui-filter/dist/fenix-ui-filter.min.css");
 
         // fenix-ui-dropdown
         // require("../../node_modules/fenix-ui-dropdown/dist/fenix-ui-dropdown.min.css");

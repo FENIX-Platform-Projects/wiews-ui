@@ -10,9 +10,9 @@ define(function () {
 
     "loading_in_progress" : "Loading in progress",
     "completed" : "Completed",
-    "vd_filter_item_1" : "Gender",
-    "vd_filter_item_2" : "Country/Region",
-    "vd_filter_item_3" : "Period"
+    "1_filter-vd_filter_item_1_title" : "Genre",
+    "1_filter-vd_filter_item_2_title" : "Country/Region",
+    "1_filter-vd_filter_item_3_title" : "Period"
 
 }
 });

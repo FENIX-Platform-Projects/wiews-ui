@@ -1,98 +1,12 @@
 /*global define*/
-define(["highcharts", "../../config/config", "../../nls/labels"], function (Highcharts, C, labels) {
+define(["highcharts", "../../config/config", "../../nls/labels", "../../config/domains/downloadDataDefaultValues", "../../config/domains/visualizeDataDefaultValues"], function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
 
     "use strict";
 
     var Clang = C.lang.toLowerCase();
 
-    var filter = {
-        biofuelsPoliciesType : {
-            year: {min: '2011-01-01', max: '2014-08-31', from: '2011-01-01', to: '2014-01-01'},
-            yearTitle: {from: '01/2011', to: '01/2014'}
-        },
-        importTariffs : {
-            yearTitle: {period: '2012/2015'}
-        },
-        exportSubsidies : {
-            yearTitle: {period: '1995/2011'}
-        },
-        exportRestrictions : {
-            year: {min: '2007-01-01', max: '2014-12-31', from: '2007-01-01', to: '2014-01-01'},
-            yearTitle: {from: '01/2010', to: '01/2014'}
-        }
-    }
-
-    var biofuelsPoliciesType = {
-        title: {
-            biofuelsPoliciesFreqGraph: {
-                zero: 'Number of AMIS Countries',
-                first:'Number of AMIS countries with biofuel policies, disaggregated by policy type'
-            },
-            biofuelsPoliciesTimeSeriesGraph: {
-                zero: 'Number of AMIS Countries',
-                first: 'Number of AMIS countries with ethanol policies, disaggregated by policy type',
-                second: 'Number of AMIS countries with biodiesel policies, disaggregated by policy type',
-                third: 'Number of AMIS countries with biofuel (unspecified) policies, disaggregated by policy type',
-                fourth: 'Number of AMIS countries with biofuel policies targeted at ethanol, biodiesel or an unspecified type of biofuel, disaggregated by policy type'
-            }
-        },
-        subtitle: {
-            biofuelsPoliciesFreqGraph: {
-                first: "Period "+ filter.biofuelsPoliciesType.yearTitle.from+" until "+filter.biofuelsPoliciesType.yearTitle.to
-            },
-            biofuelsPoliciesTimeSeriesGraph: {
-            }
-        },
-        notes: {
-            biofuelsPoliciesFreqGraph: {
-                first: 'In Australia, Brazil, Canada, Mexico and US biofuel policies can be implemented at state-level. <br>Ethanol, biodiesel and biofuel (unspecified) are mutually exclusive categories.<br>Import measures do not include import tariffs or tariff quotas. <br>Source: AMIS Policy Database'
-            },
-            biofuelsPoliciesTimeSeriesGraph: {
-                first: 'In Australia, Brazil, Canada, Mexico and US biofuel policies can be implemented at state-level.<br>Import measures do not include import tariffs or tariff quotas.<br>Source: AMIS Policy Database',
-                second: 'In Australia, Brazil, Canada, Mexico and US biofuel policies can be implemented at state-level.<br>Import measures do not include import tariffs or tariff quotas.<br>Source: AMIS Policy Database',
-                third: 'In Australia, Brazil, Canada, Mexico and US biofuel policies can be implemented at state-level.<br>Unspecified biofuel policies can apply to ethanol and/or biodiesel.<br>Import measures do not include import tariffs or tariff quotas.<br>Source: AMIS Policy Database',
-                fourth: 'In Australia, Brazil, Canada, Mexico and US biofuel policies can be implemented at state-level. <br>Combination of policies targeted on ethanol, biodiesel and biofuel (unspecified).<br>Import measures do not include import tariffs or tariff quotas.<br>Source: AMIS Policy Database'
-            }
-        },
-        legend: {
-            biofuelsPoliciesFreqGraph: {
-                title: 'Policy Type'
-            },
-            biofuelsPoliciesTimeSeriesGraph: {
-            }
-        },
-        export: {
-            title: 'Download',
-            button_items: {
-                first: 'As PNG image',
-                second: 'As JPEG image',
-                third: 'As SVG vector image',
-                fourth: 'To PDF document',
-            },
-            biofuelsPoliciesFreqGraph: {
-                filename: {
-                    first: 'Biofuels-policies-frequency_graph'
-                }
-            },
-            biofuelsPoliciesTimeSeriesGraph: {
-                filename: {
-                    first: 'Biofuels-policies-time_series_graph'
-                }
-            }
-        },
-        time: {
-            biofuelsPoliciesTimeSeriesGraph: {
-                min: {year: 2011, month: 0, day: 1},
-                max: {year: 2014, month: 11, day: 31},
-                floor: {year: 2011, month: 0, day: 1},
-                ceiling: {year: 2014, month: 11, day: 31}
-            }
-        }
-    };
-
-
     return {
-       "20": {
+       "1": {
            downloadData: {
 
                environment : "develop",
@@ -222,319 +136,417 @@ define(["highcharts", "../../config/config", "../../nls/labels"], function (High
            visualizeData: {
                filter: {
                    vd_filter_item_1: {
-
                        selector: {
                            id: "dropdown",
-                           source: [
-                               {value: "1", label: "Gender 1"},
-                               {value: "2", label: "Gender 2"},
-                               {value: "3", label: "Gender 3"},
-                               {value: "4", label: "Gender 4"},
-                               {value: "5", label: "Gender 5"},
-                               {value: "6", label: "Gender 6"}
-                           ],
-                           default:["2"],
-                           config : {
-                               //placeholder: "Please select a Policy Type",
-                               maxItems: 1
-                           }
+                           default: VISUALIZE_DV["1_filter-vd_filter_item_1"]
+                           //default: ["abarema"]
                        },
-
+                       cl: {
+                           uid: "wiews_genus"
+                       },
                        template: {
-                           title: labels[Clang]['vd_filter_item_1']
+                           title: labels[Clang]['1_filter-vd_filter_item_1_title']
                        }
                    },
                    vd_filter_item_2: {
 
                        selector: {
                            id: "dropdown",
-                           source: [
-                               {value: "1", label: "Region 1"},
-                               {value: "2", label: "Region 2"},
-                               {value: "3", label: "Region 3"},
-                               {value: "4", label: "Region 4"},
-                               {value: "5", label: "Region 5"},
-                               {value: "6", label: "Region 6"}
-                           ],
-                           default:["3"],
-                           config : {
-                               //placeholder: "Please select a Policy Type",
-                               maxItems: 1
-                           }
+                           default: VISUALIZE_DV["1_filter-vd_filter_item_2"]
                        },
-
+                       cl: {
+                           uid: "m49",
+                           level : "2",
+                           levels : "1"
+                       },
                        template: {
-                           title: labels[Clang]['vd_filter_item_2']
+                           title: labels[Clang]['1_filter-vd_filter_item_2_title']
                        }
                    },
                    vd_filter_item_3: {
 
                        selector: {
                            id: "dropdown",
-                           source: [
-                               {value: "1", label: "Period 1"},
-                               {value: "2", label: "Period 2"},
-                               {value: "3", label: "Period 3"},
-                               {value: "4", label: "Period 4"},
-                               {value: "5", label: "Period 5"},
-                               {value: "6", label: "Period 6"}
-                           ],
-                           default:["4"],
+                           default: VISUALIZE_DV["1_filter-vd_filter_item_3"],
                            config : {
-                               //placeholder: "Please select a Policy Type",
                                maxItems: 1
                            }
                        },
-
+                       cl: {
+                           uid: "wiews_iteration"
+                       },
                        template: {
-                           title: labels[Clang]['vd_filter_item_3']
+                           title: labels[Clang]['1_filter-vd_filter_item_3_title']
                        }
                    }
-                   // vd_filter_item_2: {
-                   //      "id": "item",
-                   //      "type": "codelist",
-                   //      "parameter": "item",
-                   //      "componentType": {
-                   //      "class": "col-xs-6 col-sm-6 col-md-3",
-                   //          "type": "dropDownList"
-                   //      },
-                   //      "config": {
-                   //      "dimension_id": "item",
-                   //          "defaultCodes": ["2905"],
-                   //          "filter": {
-                   //          "show_lists": false
-                   //          }
-                   //      }
-                   //  },
-
-
-                    // commodityClass: {
-                    //
-                    // selector: {
-                    // id: "dropdown",
-                    // hideSelectAllButton: false,
-                    // hideClearAllButton: false
-                    // },
-                    //
-                    // cl: {
-                    // "uid": "OECD_CommodityClass1",
-                    // "version": "1.0"
-                    // },
-                    //
-                    // template: {
-                    // title: "Commodity Class"
-                    // }
-                    // }
-
                },
                dashboard: {
 
-                   uid: "Policy_biofuelsPoliciesFreqGraph",
+                   uid: "VisualizaDataDashboard",
                    items: [
                        {
-                           id: "vd_dashboard_item_1", //ref [data-item=':id']
-                           type: "chart", //chart || map || olap,
+                           id: 'vd_dashboard_item_1',
+                           type: 'map',
                            config: {
-                               type: "column",
-                               x: ["commodityclass"], //x axis and series
-                               series: ["policytype"], //Y dimension
-                               y: ["VALUE0"],
+                               geoSubject: 'gaul0',
+                               colorRamp: 'GnBu',  //Blues, Greens,
+                               //colorRamp values: http://fenixrepo.fao.org/cdn/fenix/fenix-ui-map-datasets/colorramp.png
 
-                               useDimensionLabelsIfExist: true,// || default raw else fenixtool
-                               aggregationFn: {"VALUE0": "sum"},
-                               config: {
-                                   "chart": {
-                                       "borderWidth": 2,
-                                       "marginBottom": 170,
-                                       events: {
-                                           load: function () {
-                                               var label = this.renderer.label(biofuelsPoliciesType.notes.biofuelsPoliciesFreqGraph.first)
-                                                   .css({
-                                                       width: '450px',
-                                                       fontSize: '9px'
-                                                   })
-                                                   .attr({
-                                                       'r': 5,
-                                                       'padding': 10
-                                                   })
-                                                   .add();
+                               legendtitle: 'ODA',
 
-                                               label.align(Highcharts.extend(label.getBBox(), {
-                                                   align: 'left',
-                                                   x: 0, // offset
-                                                   verticalAlign: 'bottom',
-                                                   y: 50 // offset
-                                               }), null, 'spacingBox');
-                                           }
-                                       },
-                                       "spacingBottom": 50
-                                   },
-                                   "title": {
-                                       "text": biofuelsPoliciesType.title.biofuelsPoliciesFreqGraph.first,
-                                       "style": {"fontSize": "15px"}
-                                   },
-                                   "subtitle": {"text": biofuelsPoliciesType.subtitle.biofuelsPoliciesFreqGraph.first},
-                                   "colors": ["#125824", "#255ba3", "#f6b539", "#199e34", "#7f7f7f", "#67b7e3", "#dc3018"],
-                                   //"xAxis": {"categories": ["Ethanol", "Biodiesel", "Biofuel (unspecified)"]},
-                                   "yAxis": {
-                                       "min": 0,
-                                       "allowDecimals": false,
-                                       "title": {"text": biofuelsPoliciesType.title.biofuelsPoliciesFreqGraph.zero, enabled: true}
-                                   },
-                                   "tooltip": {
-                                       "headerFormat": "<span style=\"font-size:10px\">{point.key}</span><table>",
-                                       "pointFormat": "<tr><td style=\"color:{series.color};padding:0\">{series.name}: </td><td style=\"padding:0\"><b>{point.y}</b></td></tr>",
-                                       "footerFormat": "</table>",
-                                       "shared": true,
-                                       "useHTML": true
-                                   },
-                                   "credits": {"enabled": false},
-                                   "plotOptions": {"column": {"pointPadding": 0.2, "borderWidth": 0}},
-                                   "legend": {
-                                       "title": {"text": biofuelsPoliciesType.legend.biofuelsPoliciesFreqGraph.title, "style": {"fontWeight": "bold"}},
-                                       "itemWidth": 200,
-                                       //"verticalAlign": "center",
-                                       "layout": "horizontal",
-                                       "align": "center",
-                                       "y": -30, // Posizionamento in verticale della legenda
-                                       "x": 0,
-                                       "useHTML": true,
-                                       "enabled": true,
-                                       "borderColor": "#4572a7",
-                                       "itemStyle": {"fontSize": "10px"}
-                                   },
-                                   "exporting": {
-                                       "buttons": {
-                                           "contextButton": {"enabled": false},
-                                           "exportButton": {
-                                               "theme": {
-                                                   "title": biofuelsPoliciesType.export.title,
-                                                   "stroke-width": 1,
-                                                   "stroke": "#4572a7",
-                                                   "fill": "#ADD8E6",
-                                                   "r": 0,
-                                                   "states": {"hover": {"fill": "#d3d3d3"}}
-                                               },
-                                               "text": "Download",
-                                               "menuItems": [
-                                                   {
-                                                       text: biofuelsPoliciesType.export.button_items.first,
-                                                       onclick: function () {
+                               fenix_ui_map: {
 
-                                                           var today = currentDate();
-                                                           this.exportChart({
-                                                               filename: biofuelsPoliciesType.export.biofuelsPoliciesFreqGraph.filename.first
-                                                           }, {subtitle: {text: this.subtitle.textStr+today}});
-                                                       }
-                                                   },
-                                                   {
-                                                       text: biofuelsPoliciesType.export.button_items.second,
-                                                       onclick: function () {
-                                                           var today = currentDate();
-                                                           this.exportChart({
-                                                               type: 'image/jpeg',
-                                                               filename: biofuelsPoliciesType.export.biofuelsPoliciesFreqGraph.filename.first
-                                                           }, {subtitle: {text: this.subtitle.textStr+today}});
-                                                       }
-                                                   },
-                                                   {
-                                                       text: biofuelsPoliciesType.export.button_items.third,
-                                                       onclick: function () {
-                                                           var today = currentDate();
-                                                           this.exportChart({
-                                                               type: 'image/svg+xml',
-                                                               filename: biofuelsPoliciesType.export.biofuelsPoliciesFreqGraph.filename.first
-                                                           }, {subtitle: {text: this.subtitle.textStr+today}});
-                                                       }
-                                                   },
-                                                   {
-                                                       text: biofuelsPoliciesType.export.button_items.fourth,
-                                                       onclick: function () {
-                                                           var today = currentDate();
-                                                           this.exportChart({
-                                                               type: 'application/pdf',
-                                                               filename: biofuelsPoliciesType.export.biofuelsPoliciesFreqGraph.filename.first
-                                                           }, {subtitle: {text: this.subtitle.textStr+today}});
-                                                       }
-                                                   }
-                                               ]
-                                           }
+                                   plugins: {
+                                       fullscreen: false,
+                                       disclaimerfao: false
+                                   },
+                                   guiController: {
+                                       overlay: false,
+                                       baselayer: false,
+                                       wmsLoader: false
+                                   },
+
+                                   baselayers: {
+                                       "cartodb": {
+                                           title_en: "Baselayer",
+                                           url: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+                                           subdomains: 'abcd',
+                                           maxZoom: 19
                                        }
-                                   }
+                                   },
+                                   labels: true,
+                                   boundaries: true
                                }
-                           }, // :type-creator config
+                           },
+
+
+                           filterFor: { "filter_map": ['year', 'oda']},
+                           //filterFor: ["vd_filter_item_1"],
+
+
                            postProcess: [
                                {
                                    "name": "filter",
                                    "sid": [
                                        {
-                                           "uid": "OECD_View_BiofuelPolicy"
+                                           "uid": "adam_browse_sector_recipient"
                                        }
                                    ],
                                    "parameters": {
-                                       "columns": [
-                                           "commodityclass",
-                                           "policytype",
-                                           "country",
-                                           "startDate",
-                                           "endDate"
-                                       ],
+                                       "columns": [ "gaul0", "value", "unitcode"],
                                        "rows": {
-                                           "commodityclass": {
+                                           "!gaul0": {
                                                "codes": [
                                                    {
-                                                       "uid": "OECD_CommodityClass",
-                                                       "version": "1.0",
+                                                       "uid": "GAUL0",
+                                                       "version": "2014",
                                                        "codes": [
-                                                           "5",
-                                                           "6",
-                                                           "7"
+                                                           "NA",
+                                                           "ZZZZZ"
                                                        ]
+                                                   }
+                                               ]
+                                           },
+                                           "oda": {
+                                               "codes": [
+                                                   {
+                                                       "uid": "oda_crs",
+                                                       "version": "2016",
+                                                       "codes": [
+                                                           "usd_commitment"
+                                                       ]
+                                                   }
+                                               ]
+                                           },
+                                           "year": {
+                                               "time": [
+                                                   {
+                                                       "from": 2000,
+                                                       "to": 2015
                                                    }
                                                ]
                                            }
                                        }
                                    },
+                                   "rid":{"uid":"filter_map"}
                                },
-                               {
-                                   "name": "select",
-                                   "parameters": {
-                                       "query": "WHERE (((startdate BETWEEN ? AND ?) OR (enddate BETWEEN ? AND ?))OR ((startdate <= ?) AND (enddate>=?)) OR (enddate IS NULL AND  startdate<=?))",
-                                       "queryParameters": [
-                                           {
-                                               "value": 20110101
-                                           },
-                                           {
-                                               "value": 20140131
-                                           },
-                                           {
-                                               "value": 20110101
-                                           },
-                                           {
-                                               "value": 20140131
-                                           },
-                                           {
-                                               "value": 20110101
-                                           },
-                                           {
-                                               "value": 20140131
-                                           },
-                                           {
-                                               "value": 20140131
-                                           }
-                                       ]
-                                   },
-                                   "rid": {"uid" : "filter1"}                            },
-
                                {
                                    "name": "group",
                                    "parameters": {
                                        "by": [
-                                           "commodityclass",
-                                           "policytype",
-                                           "country"
+                                           "gaul0"
                                        ],
                                        "aggregations": [
+                                           {
+                                               "columns": ["value"],
+                                               "rule": "SUM"
+                                           },
+                                           {
+                                               "columns": ["unitcode"],
+                                               "rule": "max"
+                                           }
+                                       ]
+                                   }
+                               }
+                           ]
+
+                       },
+                       {
+                           id: 'vd_dashboard_item_2', // TOP RECIPIENTS Vs OTHER RECIPIENTS
+                           type: 'chart',
+                           config: {
+                               type: "pieold",
+                               x: ["indicator"], //x axis and series
+                               series: ["unitname"], // series
+                               y: ["value"],//Y dimension
+                               aggregationFn: {"value": "sum"},
+                               useDimensionLabelsIfExist: false,// || default raw else fenixtool
+
+                               config: {
+                                   //colors: ['#5DA58D'],
+                                   legend: {
+                                       title: {
+                                           text: null
+                                       }
+                                   },
+                                   plotOptions: {
+                                       pie: {
+                                           showInLegend: true
+                                       },
+                                       series: {
+                                           point: {
+                                               events: {
+                                                   legendItemClick: function () {
+                                                       return false; // <== returning false will cancel the default action
+                                                   }
+                                               }
+                                           }
+                                       }
+                                   },
+                                   chart: {
+                                       events: {
+                                           load: function (event) {
+                                               if (this.options.chart.forExport) {
+                                                   $.each(this.series, function (i, serie) {
+                                                       serie.update({
+                                                           dataLabels: {
+                                                               enabled: false
+                                                           }
+                                                       }, false);
+                                                   });
+                                                   this.redraw();
+                                               }
+                                           }
+                                       }
+                                   },
+                                   tooltip: {
+                                       style: {width: '200px', whiteSpace: 'normal'},
+                                       formatter: function () {
+                                           var val = this.y;
+                                           if (val.toFixed(0) < 1) {
+                                               val = (val * 1000).toFixed(2) + ' K'
+                                           } else {
+                                               val = val.toFixed(2) + ' USD Mil'
+                                           }
+
+                                           return '<b>' + this.percentage.toFixed(2) + '% (' + val + ')</b>';
+                                       }
+                                   },
+                                   exporting: {
+                                       buttons: {
+                                           toggleDataLabelsButton: {
+                                               enabled: false
+                                           }
+                                       },
+                                       chartOptions: {
+                                           legend: {
+                                               title: '',
+                                               enabled: true,
+                                               align: 'center',
+                                               layout: 'vertical',
+                                               useHTML: true,
+                                               labelFormatter: function () {
+                                                   var val = this.y;
+                                                   if (val.toFixed(0) < 1) {
+                                                       val = (val * 1000).toFixed(2) + ' K'
+                                                   } else {
+                                                       val = val.toFixed(2) + ' USD Mil'
+                                                   }
+
+                                                   return '<div style="width:200px"><span style="float:left;  font-size:9px">' + this.name.trim() + ': ' + this.percentage.toFixed(2) + '% (' + val + ')</span></div>';
+                                               }
+                                           }
+                                       }
+                                   }
+                               }
+                           },
+
+                           filterFor: {
+                               "filter_top_10_recipients_sum": ['purposecode', 'year', 'oda']
+                           },
+
+                           postProcess: [
+                               {
+                                   "name": "union",
+                                   "sid": [
+                                       {
+                                           "uid": "top_10_recipients_sum"
+                                       },
+                                       {
+                                           "uid":"others"
+                                       }
+                                   ],
+                                   "parameters": {
+                                   },
+                                   "rid":{"uid":"union_process"}
+                               },
+
+                               {
+                                   "name": "filter",
+                                   "sid": [
+                                       {
+                                           "uid": "adam_browse_sector_recipient"
+                                       }
+                                   ],
+                                   "parameters": {
+                                       "columns": [
+                                           "recipientcode",
+                                           "value",
+                                           "unitcode"
+                                       ],
+                                       "rows": {
+                                           "!recipientcode": {
+                                               "codes": [
+                                                   {
+                                                       "uid": "crs_recipients", // skipping regional recipient countries (e.g. "Africa, regional"; "North of Sahara, regional")
+                                                       "version": "2016",
+                                                       "codes": [
+                                                           "298", "498", "798", "89", "589", "889", "189", "289","389", "380", "489", "789","689", "619", "679"
+                                                       ]
+                                                   }
+                                               ]
+                                           },
+                                           "oda": {
+                                               "codes": [
+                                                   {
+                                                       "uid": "oda_crs",
+                                                       "version": "2016",
+                                                       "codes": [
+                                                           "usd_commitment"
+                                                       ]
+                                                   }
+                                               ]
+                                           },
+                                           "fao_sector": {
+                                               "enumeration": [
+                                                   "1"
+                                               ]
+                                           },
+                                           "year": {
+                                               "time": [
+                                                   {
+                                                       "from": 2000,
+                                                       "to": 2015
+                                                   }
+                                               ]
+                                           }
+                                       }
+                                   },
+                                   "rid":{"uid":"filter_top_10_recipients_sum"}
+                               },
+                               {
+                                   "name": "group",
+                                   "parameters": {
+                                       "by": [
+                                           "recipientcode"
+                                       ],
+                                       "aggregations": [
+                                           {
+                                               "columns": [
+                                                   "value"
+                                               ],
+                                               "rule": "SUM"
+                                           },
+                                           {
+                                               "columns": [
+                                                   "unitcode"
+                                               ],
+                                               "rule": "max"
+                                           }
+                                       ]
+                                   }
+                               },
+                               {
+                                   "name": "order",
+                                   "parameters": {
+                                       "value": "DESC"
+                                   },
+                                   "rid":{"uid":"filtered_dataset"}
+                               },
+                               {
+                                   "name": "page",
+                                   "parameters": {
+                                       "perPage": 10,
+                                       "page": 1
+                                   }
+                               },
+                               {
+                                   "name": "group",
+                                   "parameters": {
+                                       "by": [
+                                           "unitcode"
+                                       ],
+                                       "aggregations": [
+                                           {
+                                               "columns": [
+                                                   "value"
+                                               ],
+                                               "rule": "SUM"
+                                           }
+                                       ]
+                                   }
+                               },
+                               {
+                                   "name": "addcolumn",
+                                   "parameters": {
+                                       "column": {
+                                           "dataType": "text",
+                                           "id": "indicator",
+                                           "title": {
+                                               "EN": "Indicator"
+                                           },
+                                           "domain": {
+                                               "codes": [
+                                                   {
+                                                       "extendedName": {
+                                                           "EN": "Adam Processes"
+                                                       },
+                                                       "idCodeList": "adam_processes"
+                                                   }
+                                               ]
+                                           },
+                                           "subject": null
+                                       },
+                                       "value": "Top Recipient Countries"
+                                   },
+                                   "rid": {
+                                       "uid": "top_10_recipients_sum"
+                                   }
+                               },
+                               {
+                                   "name": "group",
+                                   "sid":[{"uid":"filtered_dataset"}],
+                                   "parameters": {
+                                       "by": [
+                                           "unitcode"
+                                       ],
+                                       "aggregations": [
+                                           {
+                                               "columns": [
+                                                   "value"
+                                               ],
+                                               "rule": "SUM"
+                                           }
 
                                        ]
                                    }
@@ -543,37 +555,352 @@ define(["highcharts", "../../config/config", "../../nls/labels"], function (High
                                    "name": "addcolumn",
                                    "parameters": {
                                        "column": {
+                                           "dataType": "text",
+                                           "id": "indicator",
+                                           "title": {
+                                               "EN": "Indicator"
+                                           },
+                                           "domain": {
+                                               "codes": [
+                                                   {
+                                                       "extendedName": {
+                                                           "EN": "Adam Processes"
+                                                       },
+                                                       "idCodeList": "adam_processes"
+                                                   }
+                                               ]
+                                           },
+                                           "subject": null
+                                       },
+                                       "value": "sum of all recipients"
+                                   },
+                                   "rid": {
+                                       "uid": "top_all_recipients_sum"
+                                   }
+                               },
+                               {
+                                   "name": "join",
+                                   "sid": [
+                                       {
+                                           "uid": "top_all_recipients_sum"
+                                       },
+                                       {
+                                           "uid": "top_10_recipients_sum"
+                                       }
+                                   ],
+                                   "parameters": {
+                                       "joins": [
+                                           [
+
+                                               {
+                                                   "type": "id",
+                                                   "value": "unitcode"
+                                               }
+                                           ],
+                                           [
+                                               {
+                                                   "type": "id",
+                                                   "value": "unitcode"
+                                               }
+
+                                           ]
+                                       ],
+                                       "values": [
+                                       ]
+                                   },
+                                   "rid":{"uid":"join_process_total_recipients"}
+                               },
+                               {
+                                   "name": "addcolumn",
+                                   "sid":[{"uid":"join_process_total_recipients"}],
+                                   "parameters": {
+                                       "column": {
                                            "dataType": "number",
-                                           "id": "VALUE0",
+                                           "id": "value",
                                            "title": {
                                                "EN": "Value"
                                            },
-                                           "subject":"value"
+                                           "subject": null
                                        },
-                                       "value": 1
+                                       "value": {
+                                           "keys":  ["1 = 1"],
+                                           "values":["top_all_recipients_sum_value - top_10_recipients_sum_value"]
+                                       }
                                    }
+                               },
+                               {
+                                   "name": "filter",
+                                   "parameters": {
+                                       "columns": [
+                                           "value",
+                                           "unitcode"
+                                       ]
+                                   }
+                               },
+                               {
+                                   "name": "addcolumn",
+                                   "parameters": {
+                                       "column": {
+                                           "dataType": "text",
+                                           "id": "indicator",
+                                           "title": {
+                                               "EN": "Indicator"
+                                           },
+                                           "domain": {
+                                               "codes": [
+                                                   {
+                                                       "extendedName": {
+                                                           "EN": "Adam Processes"
+                                                       },
+                                                       "idCodeList": "adam_processes"
+                                                   }
+                                               ]
+                                           },
+                                           "subject": null
+                                       },
+                                       "value": "Other Recipients"
+                                   },
+                                   "rid": {
+                                       "uid": "others"
+                                   }
+                               }
+                           ]
+                       },
+                       {
+                           id: 'vd_dashboard_item_3', // TOP DONORS
+                           type: 'chart',
+                           config: {
+                               type: "column",
+                               x: ["donorcode"], //x axis
+                               series: ["flowcategory"], // series
+                               y: ["value"],//Y dimension
+                               aggregationFn: {"value": "sum"},
+                               useDimensionLabelsIfExist: true,// || default raw else fenixtool
+
+                               config: {
+                                   colors: ['#008080'],
+                                   legend: {
+                                       title: {
+                                           text: null
+                                       }
+                                   },
+                                   plotOptions: {
+                                       column: {
+                                           events: {
+                                               legendItemClick: function () {
+                                                   return false;
+                                               }
+                                           }
+                                       },
+                                       allowPointSelect: false
+                                   }
+                               }
+
+                           },
+
+                           filterFor: {
+                               "filter_donors": ['year', 'oda', 'purposecode']
+                           },
+                           postProcess: [
+                               {
+                                   "name": "filter",
+                                   "sid": [
+                                       {
+                                           "uid": "adam_browse_sector_oda"
+                                       }
+                                   ],
+                                   "parameters": {
+                                       "rows": {
+                                           "fao_sector": {
+                                               "enumeration": [
+                                                   "1"
+                                               ]
+                                           },
+                                           "year": {
+                                               "time": [
+                                                   {
+                                                       "from": 2000,
+                                                       "to": 2015
+                                                   }
+                                               ]
+                                           },
+                                           "oda": {
+                                               "codes": [
+                                                   {
+                                                       "uid": "oda_crs",
+                                                       "version": "2016",
+                                                       "codes": [
+                                                           "usd_commitment"
+                                                       ]
+                                                   }
+                                               ]
+                                           }
+                                       }
+                                   },
+                                   "rid":{"uid":"filter_donors"}
                                },
                                {
                                    "name": "group",
                                    "parameters": {
                                        "by": [
-                                           "commodityclass",
-                                           "policytype"
+                                           "donorcode", "flowcategory"
                                        ],
                                        "aggregations": [
                                            {
                                                "columns": [
-                                                   "VALUE0"
+                                                   "value"
                                                ],
                                                "rule": "SUM"
+                                           },
+                                           {
+                                               "columns": [
+                                                   "unitcode"
+                                               ],
+                                               "rule": "max"
+                                           },
+                                           {
+                                               "columns": [
+                                                   "flowcategory"
+                                               ],
+                                               "rule": "max"
                                            }
                                        ]
-                                   },
-                                   "rid":{
-                                       "uid":"final"
+                                   }
+                               },
+                               {
+                                   "name": "order",
+                                   "parameters": {
+                                       "value": "DESC"
+                                   }
+                               },
+                               {
+                                   "name": "page",
+                                   "parameters": {
+                                       "perPage": 10,
+                                       "page": 1
                                    }
                                }
+
                            ]
+
+                       },
+                       {
+                           id: 'vd_dashboard_item_4', // TOP DONORS
+                           type: 'chart',
+                           config: {
+                               type: "column",
+                               x: ["donorcode"], //x axis
+                               series: ["flowcategory"], // series
+                               y: ["value"],//Y dimension
+                               aggregationFn: {"value": "sum"},
+                               useDimensionLabelsIfExist: true,// || default raw else fenixtool
+
+                               config: {
+                                   colors: ['#008080'],
+                                   legend: {
+                                       title: {
+                                           text: null
+                                       }
+                                   },
+                                   plotOptions: {
+                                       column: {
+                                           events: {
+                                               legendItemClick: function () {
+                                                   return false;
+                                               }
+                                           }
+                                       },
+                                       allowPointSelect: false
+                                   }
+                               }
+
+                           },
+
+                           filterFor: {
+                               "filter_donors": ['year', 'oda', 'purposecode']
+                           },
+                           postProcess: [
+                               {
+                                   "name": "filter",
+                                   "sid": [
+                                       {
+                                           "uid": "adam_browse_sector_oda"
+                                       }
+                                   ],
+                                   "parameters": {
+                                       "rows": {
+                                           "fao_sector": {
+                                               "enumeration": [
+                                                   "1"
+                                               ]
+                                           },
+                                           "year": {
+                                               "time": [
+                                                   {
+                                                       "from": 2000,
+                                                       "to": 2015
+                                                   }
+                                               ]
+                                           },
+                                           "oda": {
+                                               "codes": [
+                                                   {
+                                                       "uid": "oda_crs",
+                                                       "version": "2016",
+                                                       "codes": [
+                                                           "usd_commitment"
+                                                       ]
+                                                   }
+                                               ]
+                                           }
+                                       }
+                                   },
+                                   "rid":{"uid":"filter_donors"}
+                               },
+                               {
+                                   "name": "group",
+                                   "parameters": {
+                                       "by": [
+                                           "donorcode", "flowcategory"
+                                       ],
+                                       "aggregations": [
+                                           {
+                                               "columns": [
+                                                   "value"
+                                               ],
+                                               "rule": "SUM"
+                                           },
+                                           {
+                                               "columns": [
+                                                   "unitcode"
+                                               ],
+                                               "rule": "max"
+                                           },
+                                           {
+                                               "columns": [
+                                                   "flowcategory"
+                                               ],
+                                               "rule": "max"
+                                           }
+                                       ]
+                                   }
+                               },
+                               {
+                                   "name": "order",
+                                   "parameters": {
+                                       "value": "DESC"
+                                   }
+                               },
+                               {
+                                   "name": "page",
+                                   "parameters": {
+                                       "perPage": 10,
+                                       "page": 1
+                                   }
+                               }
+
+                           ]
+
                        }
                    ]
                }

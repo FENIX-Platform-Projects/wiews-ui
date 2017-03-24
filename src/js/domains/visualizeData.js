@@ -70,6 +70,8 @@ define([
     VisualizeData.prototype._attach = function () {
 
         $(this.el).html(template(labels[Clang]));
+        var indicatorSection = this.el.find('[data-section = "'+this.indicator+'"]');
+        $(this.el).html(indicatorSection)
     };
 
     VisualizeData.prototype._initVariables = function () {
@@ -79,7 +81,7 @@ define([
         this.lang = Clang;
         this.environment = C.ENVIRONMENT;
         this.cache = C.cache;
-        this.indicatorConfig = INDICATORSC[this.indicator.code];
+        this.indicatorConfig = INDICATORSC[this.indicator];
         this.config = this.indicatorConfig[dashboardName];
 
         this.channels = {};
@@ -101,7 +103,7 @@ define([
 
         this._renderFilter(filterConfig);
 
-        //this._renderDashboard(dashboardConf);
+        this._renderDashboard(dashboardConf);
 
         //this._loadProgressBar(dashboardConf);
     }
