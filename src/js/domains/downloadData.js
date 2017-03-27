@@ -13,7 +13,7 @@ define([
     "../../nls/labels",
     "fenix-ui-bridge",
     "highcharts",
-    '../common/progress-bar',
+    '../common/progressBar',
     "jstree"
 ], function ($, log, _, C, PAGC, INDICATORSC, template, Dashboard, Filter, FxUtils, Utils, labels, Bridge, Highcharts, ProgressBar) {
 

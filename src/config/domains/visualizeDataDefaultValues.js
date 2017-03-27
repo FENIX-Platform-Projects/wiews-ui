@@ -8,7 +8,5 @@ define(function () {
         "1_filter-vd_filter_item_2" : ["142"],
         "1_filter-vd_filter_item_3" : ["1"]
 
-
-
     };
 });

@@ -80,7 +80,7 @@ define([
         this.cache = C.cache;
 
         this.selected_indicator = selected;
-        this.selected_indicator_position = CATEG[this.selected_indicator.code];
+        this.selected_indicator_position = CATEG[this.selected_indicator.code].position;
         this.$tabs = this.$el.find(s.TABS_A);
 
         s.visualizeDataTab_created = false;

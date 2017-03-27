@@ -13,7 +13,7 @@ define([
     "../../nls/labels",
     "fenix-ui-bridge",
     "highcharts",
-    '../common/progress-bar',
+    '../common/progressBar',
     "jstree"
 ], function ($, log, _, C, PAGC, INDICATORSC, template, Dashboard, Filter, FxUtils, Utils, labels, Bridge, Highcharts, ProgressBar) {
 
@@ -23,7 +23,10 @@ define([
     var dashboardName = "visualizeData";
 
     var s = {
-        PROGRESS_BAR_CONTAINER: '#vd-progress-bar-holder',
+        bar: {
+            PROGRESS_BAR_CONTAINER: '#vd-progress-bar-holder',
+            PROGRESS_BAR_DATA_VARIABLE: 'progress-bar'
+        },
 
         dashboard: {
             dashboard_config_item : 'dashboard',
@@ -71,7 +74,9 @@ define([
 
         $(this.el).html(template(labels[Clang]));
         var indicatorSection = this.el.find('[data-section = "'+this.indicator+'"]');
-        $(this.el).html(indicatorSection)
+        var progressBar = this.el.find('[data-bar = "'+s.bar.PROGRESS_BAR_DATA_VARIABLE+'"]');//data-bar="progress-bar"
+        $(this.el).html(progressBar);
+        $(this.el).append(indicatorSection);
     };
 
     VisualizeData.prototype._initVariables = function () {
@@ -87,7 +92,7 @@ define([
         this.channels = {};
 
         this.progressBar = new ProgressBar({
-            container: s.PROGRESS_BAR_CONTAINER,
+            container: s.bar.PROGRESS_BAR_CONTAINER,
             lang: this.lang
         });
     };
@@ -105,7 +110,7 @@ define([
 
         this._renderDashboard(dashboardConf);
 
-        //this._loadProgressBar(dashboardConf);
+        this._loadProgressBar(dashboardConf);
     }
 
     // Events
@@ -125,14 +130,14 @@ define([
     //
     //     var self = this, increment = 0, percent = Math.round(100 / this.config.items.length);
     //
-    //     $("#chart_1").on('dashboard.ready', function () {
-    //         console.log("RRRRRR")
-    //     });
-    //     $("#chart_1").on('dashboard.ready', _.bind(this._onMenuItemClick, this));
+    //     // $("#chart_1").on('dashboard.ready', function () {
+    //     //     console.log("RRRRRR")
+    //     // });
+    //     // $("#chart_1").on('dashboard.ready', _.bind(this._onMenuItemClick, this));
     //     this.dashboard.on(s.events.dashboardComponent.READY, function () {
     //         console.log("dashboardComponent.READY")
     //         // self._trigger(s.events.dashboard.READY);
-    //         $("#chart_1").trigger('dashboard.ready')
+    //         //$("#chart_1").trigger('dashboard.ready')
     //
     //         // self.dashboard._trigger()
     //         // self._trigger('dashboard.ready');

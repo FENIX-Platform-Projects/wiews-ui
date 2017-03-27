@@ -3,6 +3,8 @@ define(function () {
 
     "use strict";
     return {
-        "20": "1"
+        "20": {
+            position : "1"
+        }
     }
 });

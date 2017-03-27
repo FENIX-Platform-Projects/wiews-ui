@@ -4,7 +4,7 @@ define([
     'jquery',
     'loglevel',
     'underscore',
-    '../../html/common/progress-bar.hbs',
+    '../../html/common/progressBarTemplate.hbs',
     '../../nls/labels',
     'amplify-pubsub'
 ], function ($, log, _, template, i18nLabels, amplify) {

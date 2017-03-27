@@ -138,8 +138,10 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                    vd_filter_item_1: {
                        selector: {
                            id: "dropdown",
-                           default: VISUALIZE_DV["1_filter-vd_filter_item_1"]
-                           //default: ["abarema"]
+                           default: VISUALIZE_DV["1_filter-vd_filter_item_1"],
+                           config: {
+                               plugins: ['remove_button']
+                           }
                        },
                        cl: {
                            uid: "wiews_genus"
@@ -152,10 +154,13 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
 
                        selector: {
                            id: "dropdown",
-                           default: VISUALIZE_DV["1_filter-vd_filter_item_2"]
+                           default: VISUALIZE_DV["1_filter-vd_filter_item_2"],
+                           config: {
+                               plugins: ['remove_button']
+                           }
                        },
                        cl: {
-                           uid: "m49",
+                           uid: "wiews_m49",
                            level : "2",
                            levels : "1"
                        },
