@@ -108,7 +108,7 @@ define([
             indicator: this.selected_indicator_position
         });
 
-       // this.downloadDataTab.render();
+        //this.downloadDataTab.render();
     };
 
     // Events

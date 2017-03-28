@@ -141,7 +141,8 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                            default: VISUALIZE_DV["1_filter-vd_filter_item_1"],
                            config: {
                                plugins: ['remove_button']
-                           }
+                           },
+                           noElement: false
                        },
                        cl: {
                            uid: "wiews_genus"
@@ -157,7 +158,8 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                            default: VISUALIZE_DV["1_filter-vd_filter_item_2"],
                            config: {
                                plugins: ['remove_button']
-                           }
+                           },
+                           noElement: false
                        },
                        cl: {
                            uid: "wiews_m49",
