@@ -95,10 +95,10 @@ define([
     Domains.prototype._initTabs = function () {
 
         // this.downloadDataTab = new DownloadData({
-        //     el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
-        //     lang: this.lang,
-        //     environment: this.environment,
-        //     indicator: this.selected_indicator_position
+        //      el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
+        //      lang: this.lang,
+        //      environment: this.environment,
+        //      indicator: this.selected_indicator_position
         // });
 
         this.visualizeDataTab = new VisualizeData({
@@ -108,7 +108,7 @@ define([
             indicator: this.selected_indicator_position
         });
 
-        //this.downloadDataTab.render();
+        // this.downloadDataTab.render();
     };
 
     // Events
@@ -169,7 +169,7 @@ define([
         require("../../node_modules/fenix-ui-map-creator/dist/fenix-ui-map-creator.min.css");
 
         //tree selector
-        //require("../../node_modules/jstree/dist/themes/default/style.min.css");
+        require("../../node_modules/jstree/dist/themes/default/style.min.css");
         //range selector
         //require("../../node_modules/ion-rangeslider/css/ion.rangeSlider.css");
         //require("../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css");
@@ -182,7 +182,7 @@ define([
         // require("../../node_modules/fenix-ui-dropdown/dist/fenix-ui-dropdown.min.css");
 
         // bootstrap-table
-        //require("../../node_modules/bootstrap-table/dist/bootstrap-table.min.css");
+        require("../../node_modules/bootstrap-table/dist/bootstrap-table.min.css");
 
         //meta viewer requirements
         //require("jquery-treegrid-webpack/css/jquery.treegrid.css");

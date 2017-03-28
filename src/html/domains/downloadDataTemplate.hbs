@@ -1,8 +1,109 @@
-<div class="row">
-    <div class="col-xs-12" id="dd-progress-bar-holder">
+<div id="dd-filter-container">
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="nav nav-tabs" id="first_tab">
+                <li role="presentation" class="active"><a href="#iso3" data-toggle="tab">Countries (ISO3)</a></li>
+                <li role="presentation"><a href="#m49" data-toggle="tab">Regions (M49)</a></li>
+                <li role="presentation"><a href="#fao" data-toggle="tab">Regions (FAO)</a></li>
+                <li role="presentation"><a href="#mdg" data-toggle="tab">Regions (MDG)</a></li>
+                <li role="presentation"><a href="#sdg" data-toggle="tab">Regions (SDG)</a></li>
+                <li role="presentation"><a href="#cgrfa" data-toggle="tab">Special Groups (CGRFA)</a></li>
+                <li role="presentation"><a href="#itpgrfa" data-toggle="tab">Special Groups (ITPGFA)</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="iso3" class="tab-pane active">
+                    <div data-selector="dd_filter_item_1_1"> </div>
+                </div>
+                <div id="m49" class="tab-pane">
+                    <div data-selector="dd_filter_item_1_2"> </div>
+                </div>
+                <div id="fao" class="tab-pane">
+                    <div data-selector="dd_filter_item_1_3"> </div>
+                </div>
+                <div id="mdg" class="tab-pane">
+                    <div data-selector="dd_filter_item_1_4"> </div>
+                </div>
+                <div id="sdg" class="tab-pane">
+                    <div data-selector="dd_filter_item_1_5"> </div>
+                </div>
+                <div id="cgrfa" class="tab-pane">
+                    <div data-selector="dd_filter_item_1_6"> </div>
+                </div>
+                <div id="itpgrfa" class="tab-pane">
+                    <div data-selector="dd_filter_item_1_7"> </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        <div class='col-xs-6'>
+            <ul class="nav nav-tabs" id="second_tab">
+                <li role="presentation" class="active"><a href="#elements" data-toggle="tab">Elements</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="elements" class="tab-pane active">
+                    <div data-selector="dd_filter_item_2"> </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-xs-6'>
+            <ul class="nav nav-tabs" id="third_tab">
+                <li role="presentation" class="active"><a href="#items" data-toggle="tab">Periods</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="items" class="tab-pane active">
+                    <div data-selector="dd_filter_item_3"> </div>
+                </div>
+            </div>
+        </div>
+        <div class='col-xs-6'>
+            <ul class="nav nav-tabs" id="fourth_tab">
+                <li role="presentation" class="active"><a href="#years" data-toggle="tab">Stackholders</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="years" class="tab-pane active">
+                    <div data-selector="dd_filter_item_4"> </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">
-    <div class='col-xs-12' data-item="dd_item_1">
+    <div class="hidden-xs col-sm-4"></div>
+    <div class="col-xs-6 col-sm-4">
+        <button class="btn btn-primary btn-block waves-effect truncate" data-role="preview">
+            Show Data
+        </button>
     </div>
+    <div class="col-xs-6 col-sm-4">
+        <button disabled class="btn btn-default btn-block waves-effect waves-light truncate" data-role="export">
+            Download Data
+        </button>
+    </div>
+    <!--<div class="col-xs-12" id="dd-progress-bar-holder"></div>-->
+</div>
+<br>
+<div class="row" id="dd-download-output-container" style="">
+    <div class="col-xs-12">
+        <div class="dd-preview-container">
+            <div class="panel panel-default">
+
+                <div class="panel-heading clearfix">
+                    <h4>Show Data</h4>
+                </div>
+
+                <div class="panel-body dd-output-preview">
+
+                    <div data-item="dd_dashboard_item_1" data-role="content" class="dd-download-output-area"></div>
+
+                    <!-- fake data -->
+                    <div id="fake_data"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

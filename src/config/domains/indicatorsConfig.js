@@ -8,130 +8,132 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
     return {
        "1": {
            downloadData: {
-
-               environment : "develop",
-               cache : false,
-               uid: "adam_usd_commitment",
-
-               items: [
-                   {
-                       id: "dd_item_1", //ref [data-item=':id']
-                       type: "chart", //chart || map || olap,
-                       config: {
-                           type: "line",
-                           x: ["year"], //x axis
-                           series: ["indicator"], // series
-                           y: ["value"],//Y dimension
-                           aggregationFn: {"value": "sum"},
-                           useDimensionLabelsIfExist: false,// || default raw else fenixtool
-
-                           config: {
-                               xAxis: {
-                                   type: 'datetime'
-                               }
-                           }
+               filter: {
+                   dd_filter_item_1_1: {
+                       selector: {
+                           id: "tree"
                        },
-
-                       filterFor: {
-                           // "filter_total_ODA": ['fao_region_code', 'recipientcode', 'year', 'oda']
-                           "filter_total_ODA": ['recipientcode', 'year', 'oda']
+                       cl: {
+                           uid: "ISO3"
                        },
-
-                       postProcess: [
-                           {
-                               "name": "filter",
-                               "sid": [
-                                   {
-                                       "uid": "adam_usd_aggregation_table"
-                                   }
-                               ],
-                               "parameters": {
-                                   "columns": [
-                                       "year",
-                                       "value",
-                                       "unitcode"
-                                   ],
-                                   "rows": {
-                                       "oda": {
-                                           "enumeration": [
-                                               "usd_commitment"
-                                           ]
-                                       },
-                                       "recipientcode": {
-                                           "codes": [
-                                               {
-                                                   "uid": "crs_recipients",
-                                                   "version": "2016",
-                                                   "codes": [
-                                                       "625"
-                                                   ]
-                                               }
-                                           ]
-                                       },
-                                       "year": {
-                                           "time": [
-                                               {
-                                                   "from": 2000,
-                                                   "to": 2014
-                                               }
-                                           ]
-                                       }
-                                   }
-                               },
-                               "rid":{"uid":"filter_total_ODA"}
-                           },
-                           {
-                               "name": "group",
-                               "parameters": {
-                                   "by": [
-                                       "year"
-                                   ],
-                                   "aggregations": [
-                                       {
-                                           "columns": [
-                                               "value"
-                                           ],
-                                           "rule": "SUM"
-                                       },
-                                       {
-                                           "columns": [
-                                               "unitcode"
-                                           ],
-                                           "rule": "first"
-                                       }
-                                   ]
-                               },
-                               "rid": {
-                                   "uid": "total_oda"
-                               }
-                           },
-                           {
-                               "name": "addcolumn",
-                               "parameters": {
-                                   "column": {
-                                       "dataType": "text",
-                                       "id": "indicator",
-                                       "title": {
-                                           "EN": "Indicator"
-                                       },
-                                       "domain": {
-                                           "codes": [
-                                               {
-                                                   "extendedName": {
-                                                       "EN": "Adam Processes"
-                                                   },
-                                                   "idCodeList": "adam_processes"
-                                               }
-                                           ]
-                                       },
-                                       "subject": null
-                                   },
-                                   "value": "ODA"
-                               }
-                           }
-                       ]
+                       template: {
+                           hideSwitch: true,
+                           hideRemoveButton: true
+                       }
+                   },
+                   dd_filter_item_1_2: {
+                       selector: {
+                           id: "tree"
+                       },
+                       cl: {
+                           uid: "wiews_m49_region"
+                       },
+                       template: {
+                           hideSwitch: true,
+                           hideRemoveButton: true
+                       }
+                   },
+                   dd_filter_item_1_3: {
+                       selector: {
+                           id: "tree"
+                       },
+                       cl: {
+                           uid: "wiews_fao_region"
+                       },
+                       template: {
+                           hideSwitch: true,
+                           hideRemoveButton: true
+                       }
+                   },
+                   dd_filter_item_1_4: {
+                       selector: {
+                           id: "tree"
+                       },
+                       cl: {
+                           uid: "mdg_region"
+                       },
+                       template: {
+                           hideSwitch: true,
+                           hideRemoveButton: true
+                       }
+                   },
+                   dd_filter_item_1_5: {
+                       selector: {
+                           id: "tree"
+                       },
+                       cl: {
+                           uid: "sdg_region"
+                       },
+                       template: {
+                           hideSwitch: true,
+                           hideRemoveButton: true
+                       }
+                   },
+                   dd_filter_item_1_6: {
+                       selector: {
+                           id: "tree"
+                       },
+                       cl: {
+                           uid: "wiews_cgrfa"
+                       },
+                       template: {
+                           hideSwitch: true,
+                           hideRemoveButton: true
+                       }
+                   },
+                   dd_filter_item_1_7: {
+                       selector: {
+                           id: "tree"
+                       },
+                       cl: {
+                           uid: "wiews_itpgrfa"
+                       },
+                       template: {
+                           hideSwitch: true,
+                           hideRemoveButton: true
+                       }
+                   },
+                   dd_filter_item_2: {
+                       selector: {
+                           id: "tree",
+                           source: [
+                               {value: "20", label: "Number of accessions conserved ex situ under medium or long-term conditions"}
+                           ],
+                           default: ["20"]
+                       },
+                       template: {
+                           hideSwitch: true,
+                           hideRemoveButton: true
+                       }
+                   },
+                   dd_filter_item_3: {
+                       selector: {
+                           id: "tree"
+                       },
+                       cl: {
+                           uid: "wiews_iteration"
+                       },
+                       template: {
+                           hideSwitch: true,
+                           hideRemoveButton: true
+                       }
+                   },
+                   dd_filter_item_4: {
+                       selector: {
+                           id: "tree"
+                       },
+                       cl: {
+                           uid: "wiews_m49"
+                       },
+                       template: {
+                           hideSwitch: true,
+                           hideRemoveButton: true
+                       }
                    }
-               ]
+
+
+               },
+               dashboard: {}
            },
            visualizeData: {
                filter: {

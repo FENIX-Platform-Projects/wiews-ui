@@ -13,9 +13,10 @@ define([
     "../../nls/labels",
     "fenix-ui-bridge",
     "highcharts",
-    '../common/progressBar',
-    "jstree"
-], function ($, log, _, C, PAGC, INDICATORSC, template, Dashboard, Filter, FxUtils, Utils, labels, Bridge, Highcharts, ProgressBar) {
+    "jstree",
+    "bootstrap",
+    "bootstrap-table"
+], function ($, log, _, C, PAGC, INDICATORSC, template, Dashboard, Filter, FxUtils, Utils, labels, Bridge, Highcharts) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
@@ -23,19 +24,16 @@ define([
     var dashboardName = "downloadData";
 
     var s = {
-        bar: {
-            PROGRESS_BAR_CONTAINER: '#vd-progress-bar-holder',
-            PROGRESS_BAR_DATA_VARIABLE: 'progress-bar'
-        },
+        PROGRESS_BAR_CONTAINER: '#dd-progress-bar-holder',
 
         dashboard: {
             dashboard_config_item : 'dashboard',
-            dashboard_container : '#vd-dashboard-container'
+            dashboard_container : '#dd-dashboard-container'
         },
 
         filter: {
             filter_config_item : 'filter',
-            filter_container : '#vd-filter-container'
+            filter_container : '#dd-filter-container'
         },
 
         events: {
@@ -56,27 +54,17 @@ define([
         $.extend(true, this, opts);
 
         this._validateConfig();
-
         this._attach();
-
         this._initVariables();
 
     };
 
     DownloadData.prototype._validateConfig = function () {
-
-        if (!C.lang) {
-            alert("Please specify a valid LANGUAGE in config/config.js");
-        }
+        if (!C.lang) alert("Please specify a valid LANGUAGE in config/config.js");
     };
 
     DownloadData.prototype._attach = function () {
-
         $(this.el).html(template(labels[Clang]));
-        var indicatorSection = this.el.find('[data-section = "'+this.indicator+'"]');
-        var progressBar = this.el.find('[data-bar = "'+s.bar.PROGRESS_BAR_DATA_VARIABLE+'"]');//data-bar="progress-bar"
-        $(this.el).html(progressBar);
-        $(this.el).append(indicatorSection);
     };
 
     DownloadData.prototype._initVariables = function () {
@@ -91,17 +79,11 @@ define([
 
         this.channels = {};
 
-        this.progressBar = new ProgressBar({
-            container: s.bar.PROGRESS_BAR_CONTAINER,
-            lang: this.lang
-        });
     };
 
     DownloadData.prototype.render = function () {
 
-        if(this.dashboard){
-            this._disposeDashboard();
-        }
+        if(this.dashboard) this._disposeDashboard();
 
         var dashboardConf = this._getElemConfig(s.dashboard.dashboard_config_item),
             filterConfig = this._getElemConfig(s.filter.filter_config_item);
@@ -110,8 +92,7 @@ define([
 
         this._renderDashboard(dashboardConf);
 
-        this._loadProgressBar(dashboardConf);
-    }
+    };
 
     // Events
     DownloadData.prototype._bindEventListeners = function () {
@@ -119,52 +100,7 @@ define([
     };
 
     DownloadData.prototype._disposeDashboard = function () {
-        if (this.dashboard && $.isFunction(this.dashboard.dispose)) {
-            this.dashboard.dispose();
-        }
-    };
-
-    // DownloadData.prototype._loadProgressBar = function () {
-    //     this.progressBar.reset();
-    //     this.progressBar.show();
-    //
-    //     var self = this, increment = 0, percent = Math.round(100 / this.config.items.length);
-    //
-    //     // $("#chart_1").on('dashboard.ready', function () {
-    //     //     console.log("RRRRRR")
-    //     // });
-    //     // $("#chart_1").on('dashboard.ready', _.bind(this._onMenuItemClick, this));
-    //     this.dashboard.on(s.events.dashboardComponent.READY, function () {
-    //         console.log("dashboardComponent.READY")
-    //         // self._trigger(s.events.dashboard.READY);
-    //         //$("#chart_1").trigger('dashboard.ready')
-    //
-    //         // self.dashboard._trigger()
-    //         // self._trigger('dashboard.ready');
-    //         self.progressBar.finish();
-    //     });
-    //
-    //     this.dashboard.on(s.events.dashboardComponent.ITEM_READY, function (item) {
-    //         increment = increment + percent;
-    //         self.progressBar.update(increment);
-    //     });
-    // };
-
-    DownloadData.prototype._loadProgressBar = function (dashboardConf) {
-        this.progressBar.reset();
-        this.progressBar.show();
-
-        var self = this, increment = 0, percent = Math.round(100 / dashboardConf.items.length);
-
-        this.dashboard.on(s.events.dashboardComponent.READY, function () {
-            // self._trigger('dashboard.ready');
-            self.progressBar.finish();
-        });
-
-        this.dashboard.on(s.events.dashboardComponent.ITEM_READY, function (item) {
-            increment = increment + percent;
-            self.progressBar.update(increment);
-        });
+        if (this.dashboard && $.isFunction(this.dashboard.dispose)) this.dashboard.dispose();
     };
 
     DownloadData.prototype._getElemConfig = function (elem) {
@@ -191,13 +127,139 @@ define([
                 }
             }
         });
-    }
+    };
 
     DownloadData.prototype._renderDashboard = function (dashboardConfig) {
         // Build new dashboard
-        this.dashboard = new Dashboard(
-            dashboardConfig
-        );
+        /*
+         this.dashboard = new Dashboard(
+         dashboardConfig
+         );
+         */
+
+        this.bootstraptable = $('#fake_data');
+
+        this.bootstraptable.bootstrapTable({
+            data: [
+                {
+                    "id": 0,
+                    "name": "Item 0",
+                    "price": "$0"
+                },
+                {
+                    "id": 1,
+                    "name": "Item 1",
+                    "price": "$1"
+                },
+                {
+                    "id": 2,
+                    "name": "Item 2",
+                    "price": "$2"
+                },
+                {
+                    "id": 3,
+                    "name": "Item 3",
+                    "price": "$3"
+                },
+                {
+                    "id": 4,
+                    "name": "Item 4",
+                    "price": "$4"
+                },
+                {
+                    "id": 5,
+                    "name": "Item 5",
+                    "price": "$5"
+                },
+                {
+                    "id": 6,
+                    "name": "Item 6",
+                    "price": "$6"
+                },
+                {
+                    "id": 7,
+                    "name": "Item 7",
+                    "price": "$7"
+                },
+                {
+                    "id": 8,
+                    "name": "Item 8",
+                    "price": "$8"
+                },
+                {
+                    "id": 9,
+                    "name": "Item 9",
+                    "price": "$9"
+                },
+                {
+                    "id": 10,
+                    "name": "Item 10",
+                    "price": "$10"
+                },
+                {
+                    "id": 11,
+                    "name": "Item 11",
+                    "price": "$11"
+                },
+                {
+                    "id": 12,
+                    "name": "Item 12",
+                    "price": "$12"
+                },
+                {
+                    "id": 13,
+                    "name": "Item 13",
+                    "price": "$13"
+                },
+                {
+                    "id": 14,
+                    "name": "Item 14",
+                    "price": "$14"
+                },
+                {
+                    "id": 15,
+                    "name": "Item 15",
+                    "price": "$15"
+                },
+                {
+                    "id": 16,
+                    "name": "Item 16",
+                    "price": "$16"
+                },
+                {
+                    "id": 17,
+                    "name": "Item 17",
+                    "price": "$17"
+                },
+                {
+                    "id": 18,
+                    "name": "Item 18",
+                    "price": "$18"
+                },
+                {
+                    "id": 19,
+                    "name": "Item 19",
+                    "price": "$19"
+                },
+                {
+                    "id": 20,
+                    "name": "Item 20",
+                    "price": "$20"
+                }
+            ],
+            pagination: true,
+            columns: [{
+                field: 'id',
+                title: 'Item ID'
+            }, {
+                field: 'name',
+                title: 'Item Name'
+            }, {
+                field: 'price',
+                title: 'Item Price'
+            }]
+        });
+
     };
 
     DownloadData.prototype._trigger = function (channel) {
