@@ -51,7 +51,9 @@ define([
 
     function VisualizeData(opts){
 
-        require('highcharts-no-data-to-display')(Highcharts);
+       // require('highcharts-no-data-to-display')(Highcharts);
+        require('highcharts/modules/exporting')(Highcharts);
+        // require('highcharts-exporting')(Highcharts);//highcharts/modules/exporting
 
         $.extend(true, this, opts);
 

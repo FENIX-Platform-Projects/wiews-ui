@@ -11,7 +11,7 @@ define(function () {
     "loading_in_progress" : "Loading in progress",
     "completed" : "Completed",
     "1_filter-vd_filter_item_1_title" : "Genre",
-    "1_filter-vd_filter_item_2_title" : "Country/Region",
+    "1_filter-vd_filter_item_2_title" : "Location",
     "1_filter-vd_filter_item_3_title" : "Period"
 
 }
