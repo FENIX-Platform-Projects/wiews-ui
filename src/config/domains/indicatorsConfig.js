@@ -165,7 +165,8 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                            title: labels[Clang]['1_filter-vd_filter_item_1_title']
                        }
                    },
-                   vd_filter_item_2: {
+                   //vd_filter_item_2: {
+                   m49: {
 
                        selector: {
                            id: "dropdown",
@@ -184,7 +185,7 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                            title: labels[Clang]['1_filter-vd_filter_item_2_title']
                        }
                    },
-                   vd_filter_item_3: {
+                   iteration: {
 
                        selector: {
                            id: "dropdown",
@@ -434,9 +435,12 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                    boundaries: true
                               }
                            },
-                           // filterFor: {
-                           //         "wiews_m49": ['vd_filter_item_2']
-                           //     },
+                           filterFor: {
+                                   // area_filter: ['vd_filter_item_2'],
+                                   //  iteration_filter: ['vd_filter_item_3']
+                               area_filter: ['m49'],
+                               iteration_filter: ['iteration']
+                               },
                            //filterFor: ["vd_filter_item_1", "vd_filter_item_2", "vd_filter_item_3"],
                            postProcess: [
                            {
@@ -452,7 +456,8 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                            }
                                        ]
                                    }
-                               }
+                               },
+                               "rid":{"uid":"area_filter"}
                            },
 
                        {
@@ -493,7 +498,8 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                    }
 
                                }
-                           }
+                           },
+                           "rid":{"uid":"iteration_filter"}
                        },
 
                        {
