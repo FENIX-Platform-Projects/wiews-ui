@@ -94,12 +94,12 @@ define([
 
     Domains.prototype._initTabs = function () {
 
-        // this.downloadDataTab = new DownloadData({
-        //      el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
-        //      lang: this.lang,
-        //      environment: this.environment,
-        //      indicator: this.selected_indicator_position
-        // });
+        this.downloadDataTab = new DownloadData({
+              el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
+              lang: this.lang,
+              environment: this.environment,
+             indicator: this.selected_indicator_position
+        });
 
         this.visualizeDataTab = new VisualizeData({
             el: this.$el.find(s.VISUALIZE_DATA_TAB_EL),
@@ -108,7 +108,7 @@ define([
             indicator: this.selected_indicator_position
         });
 
-        // this.downloadDataTab.render();
+        this.downloadDataTab.render();
     };
 
     // Events

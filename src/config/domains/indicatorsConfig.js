@@ -11,7 +11,8 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                filter: {
                    dd_filter_item_1_1: {
                        selector: {
-                           id: "tree"
+                           id: "tree",
+                           hideSummary: true
                        },
                        cl: {
                            uid: "ISO3"
@@ -23,10 +24,11 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                    },
                    dd_filter_item_1_2: {
                        selector: {
-                           id: "tree"
+                           id: "tree",
+                           hideSummary: true
                        },
                        cl: {
-                           uid: "wiews_m49_region"
+                           uid: "wiews_m49_regions"
                        },
                        template: {
                            hideSwitch: true,
@@ -35,7 +37,8 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                    },
                    dd_filter_item_1_3: {
                        selector: {
-                           id: "tree"
+                           id: "tree",
+                           hideSummary: true
                        },
                        cl: {
                            uid: "wiews_fao_region"
@@ -47,7 +50,8 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                    },
                    dd_filter_item_1_4: {
                        selector: {
-                           id: "tree"
+                           id: "tree",
+                           hideSummary: true
                        },
                        cl: {
                            uid: "mdg_region"
@@ -59,7 +63,8 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                    },
                    dd_filter_item_1_5: {
                        selector: {
-                           id: "tree"
+                           id: "tree",
+                           hideSummary: true
                        },
                        cl: {
                            uid: "sdg_region"
@@ -71,7 +76,8 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                    },
                    dd_filter_item_1_6: {
                        selector: {
-                           id: "tree"
+                           id: "tree",
+                           hideSummary: true
                        },
                        cl: {
                            uid: "wiews_cgrfa"
@@ -83,7 +89,8 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                    },
                    dd_filter_item_1_7: {
                        selector: {
-                           id: "tree"
+                           id: "tree",
+                           hideSummary: true
                        },
                        cl: {
                            uid: "wiews_itpgrfa"
@@ -96,10 +103,12 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                    dd_filter_item_2: {
                        selector: {
                            id: "tree",
+                           hideSummary: true,
                            source: [
                                {value: "20", label: "Number of accessions conserved ex situ under medium or long-term conditions"}
                            ],
-                           default: ["20"]
+                           default: ["20"],
+                           disabled: true
                        },
                        template: {
                            hideSwitch: true,
@@ -108,7 +117,8 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                    },
                    dd_filter_item_3: {
                        selector: {
-                           id: "tree"
+                           id: "tree",
+                           hideSummary: true
                        },
                        cl: {
                            uid: "wiews_iteration"
@@ -120,10 +130,12 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                    },
                    dd_filter_item_4: {
                        selector: {
-                           id: "tree"
-                       },
-                       cl: {
-                           uid: "wiews_m49"
+                           id: "tree",
+                           hideSummary: true,
+                           source: [
+                               {value: "stk", label: "Stakeholders"}
+                           ]
+
                        },
                        template: {
                            hideSwitch: true,
