@@ -1,33 +1,35 @@
-<div class="row">
-    <div class="col-xs-10 col-sm-9 col-md-10 clearfix">
-        <h6 class="truncate" data-role="domain-title"></h6>
-    </div>
-</div>
-
-<div class="row">
-    <div class='col-lg-12'>
-        <ul id="domainsTab" class='nav nav-tabs' role='tablist'>
-            <li role='presentation'>
-                <a href='#downloadDataTab' data-tab='downloadData' data-section='downloadData' role='tab' data-toggle='tab'>
-                    {{download_data}}
-                </a>
-            </li>
-            <li role='presentation'>
-                <a href='#visualizeDataTab' data-tab='visualizeData' data-section='visualizeData'role='tab' data-toggle='tab'>
-                    {{visualize_data}}
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div class='row'>
-    <div class='col-md-9 fs-data-padding-top'>
-        <!-- Container tab-panels -->
-        <div class="tab-content">
-            <div class="tab-pane active" id="downloadDataTab">Download Data Content</div>
-            <div class="tab-pane" id="visualizeDataTab">Visualize Data Content</div>
+<div data-page='domains'>
+    <div class="row">
+        <div class="col-xs-10 col-sm-9 col-md-10 clearfix">
+            <h6 class="truncate" data-role="domain-title"></h6>
         </div>
     </div>
+
+    <div class="row">
+        <div class='col-lg-12'>
+            <ul id="domainsTab" class='nav nav-tabs' role='tablist'>
+                <li role='presentation'>
+                    <a href='#downloadDataTab' data-tab='downloadData' data-section='downloadData' role='tab' data-toggle='tab'>
+                        {{download_data}}
+                    </a>
+                </li>
+                <li role='presentation'>
+                    <a href='#visualizeDataTab' data-tab='visualizeData' data-section='visualizeData'role='tab' data-toggle='tab'>
+                        {{visualize_data}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-md-9 fs-data-padding-top'>
+            <!-- Container tab-panels -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="downloadDataTab">Download Data Content</div>
+                <div class="tab-pane" id="visualizeDataTab">Visualize Data Content</div>
+            </div>
+        </div>
+    </div>
+    <br>
 </div>
-<br>
