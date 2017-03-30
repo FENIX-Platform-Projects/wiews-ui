@@ -27,7 +27,7 @@ define([
         PROGRESS_BAR_CONTAINER: '#dd-progress-bar-holder',
 
         dashboard: {
-            dashboard_config_item : 'dashboard',
+            dashboard_config_item : '#dd_dashboard_item',
             dashboard_container : '#dd-dashboard-container'
         },
 
@@ -80,8 +80,8 @@ define([
         this.cache = C.cache;
         this.indicatorConfig = INDICATORSC[this.indicator];
         this.config = this.indicatorConfig[dashboardName];
-
         this.channels = {};
+        this.dashboardConfig = "";
 
         this._bindEventListeners();
 
@@ -95,8 +95,6 @@ define([
             filterConfig = this._getElemConfig(s.filter.filter_config_item);
 
         this._renderFilter(filterConfig);
-
-
 
     };
 
@@ -120,9 +118,7 @@ define([
         var config;
 
         if((this.config)&&(elem)&&(this.config[elem]))
-        {
             config = this.config[elem];
-        }
 
         return config;
     }
@@ -143,12 +139,13 @@ define([
 
     DownloadData.prototype._renderDashboard = function () {
         // Build new dashboard
-        /*
+
         this.dashboard = new Dashboard(
-        dashboardConfig
+            dashboardConfig
         );
-        */
+
         // Build fake data
+        /*
         this.bootstraptable = $('#fake_data');
 
         this.bootstraptable.bootstrapTable({
@@ -226,7 +223,8 @@ define([
                 }
             ],
             pagination: true,
-            columns: [{
+            columns: [
+            {
                 field: 'domain',
                 title: 'Domain'
             }, {
@@ -246,6 +244,7 @@ define([
                 title: 'Value'
             }]
         });
+        */
 
     };
 

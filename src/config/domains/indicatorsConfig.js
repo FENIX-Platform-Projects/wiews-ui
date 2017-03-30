@@ -145,7 +145,178 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
 
 
                },
-               dashboard: {}
+               dashboard: {
+                   uid: "DownloadDataDashboard",
+                   /*
+                   items: [{
+                       id: "dd_dashboard_item_1",
+                       type: "custom",
+                       config: {
+
+                       },
+                       filterFor : {},
+                       postProcess: [
+                           {
+                               "name": "wiews_area_filter",
+                               "sid": [ { "uid": "wiews_regions_mapping" } ],
+                               "result" : false,
+                               "parameters": {
+                                   "m49": {
+                                       "codes": [
+                                           {
+                                               "uid": "wiews_m49",
+                                               "codes": [ "WITC","150" ]
+                                           }
+                                       ]
+                                   }
+                               }
+                           },
+                           {
+                               "sid": [ { "uid": "indicator20" } ],
+                               "name":"addcolumn",
+                               "parameters":{
+                                   "column":{
+                                       "dataType":"text",
+                                       "id":"indicator_label",
+                                       "title":{
+                                           "EN":"Indicator"
+                                       }
+                                   },
+                                   "value": ""
+                               }
+                           },
+                           {
+                               "name" : "select",
+                               "parameters" : {
+                                   "query" : "where m49_country in <<required_countries>>",
+                                   "values" : {
+                                       "iteration" : null,
+                                       "domain" : null,
+                                       "element" : null,
+                                       "biologicalAccessionId" : null,
+                                       "country" : null,
+                                       "m49_country" : null,
+                                       "stakeholder" : null,
+                                       "value" : null,
+                                       "um" : null,
+                                       "indicator_label" : "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_en || ')' else element_en end"
+                                   }
+                               }
+                           },
+                           {
+                               "name": "filter",
+                               "parameters": {
+                                   "columns": [
+                                       "domain",
+                                       "m49_country",
+                                       "indicator",
+                                       "indicator_label",
+                                       "iteration",
+                                       "value",
+                                       "um",
+                                       "country",
+                                       "element"
+                                   ],
+                                   "rows": {
+                                       "element": {
+                                           "codes": [
+                                               {
+                                                   "uid": "wiews_elements",
+                                                   "codes": [ "ind", "nfp", "nfpa", "stk" ]
+                                               }
+                                           ]
+                                       },
+                                       "iteration": {
+                                           "codes": [
+                                               {
+                                                   "uid": "wiews_iteration",
+                                                   "codes": [ "1" ]
+                                               }
+                                           ]
+                                       }
+                                   }
+                               }
+                           }
+                       ]
+                   }]
+                   */
+                   // Fake from Adam
+                   items: [
+                       {
+                           id: "priorities-table",
+                           type: 'custom',
+                           config: {
+                               "groupedRow": false,
+                               "formatter": "localstring",
+                               "showRowHeaders": true,
+                               "rows": ["recipientcode", "purposecode", "undaf_stated_priority", "cpf_stated_priority"],
+                               "aggregations": [],
+                               inputFormat: "fenixtool",
+
+                               // 878 total width
+                               config: {
+                                   pageSize: 150,
+                                   autoSelectFirstRow: false,
+                                   columns: [
+                                       {id: "recipientcode", fieldIndex: "0", width: 150},
+                                       {id: "purposecode", fieldIndex: "1", width: 200},
+                                       {id: "undaf_stated_priority", fieldIndex: "2", width: 220},
+                                       {id: "cpf_stated_priority",fieldIndex: "3",  width: 220}
+                                   ]
+                               }
+                           },
+
+                           filterFor: {
+                               "filter_priorities": ['recipientcode']
+                           },
+
+                           postProcess: [
+                               {
+                                   "name": "filter",
+                                   "sid": [
+                                       {
+                                           "uid": "adam_cpf_undaf_priorities_table"
+                                       }
+                                   ],
+                                   "parameters": {
+                                       "columns": [
+                                           "purposecode",
+                                           "undaf_stated_priority",
+                                           "cpf_stated_priority",
+                                           "undaf_period",
+                                           "cpf_period",
+                                           "recipientcode"
+                                       ],
+                                       "rows": {
+                                           "recipientcode": {
+                                               "codes": [
+                                                   {
+                                                       "uid": "crs_recipients",
+                                                       "version": "2016",
+                                                       "codes": [
+                                                           "625"
+                                                       ]
+                                                   }
+                                               ]
+                                           }
+                                       }
+                                   },
+                                   "rid": {"uid": "filter_priorities"}
+                               },
+                               {
+                                   "name": "group",
+                                   "parameters": {
+                                       "by": [
+                                           "purposecode", "undaf_stated_priority", "cpf_stated_priority", "undaf_period", "cpf_period", "recipientcode"
+                                       ],
+                                       "aggregations": []
+                                   }
+                               }
+                           ]
+                       }
+                   ]
+
+               }
            },
            visualizeData: {
                filter: {
