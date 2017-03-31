@@ -42,6 +42,8 @@ define([
 
         console.clear();
 
+        // silent trace
+
         log.setLevel("silent");
 
         this._importThirdPartyCss();
@@ -167,6 +169,7 @@ define([
         require("../../node_modules/leaflet/dist/leaflet.css");
 
         require("../../node_modules/fenix-ui-map-creator/dist/fenix-ui-map-creator.min.css");
+        require("../../node_modules/fenix-ui-table-creator/dist/fenix-ui-table-creator.min.css");
 
         //tree selector
         require("../../node_modules/jstree/dist/themes/default/style.min.css");
