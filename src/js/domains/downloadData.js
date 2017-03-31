@@ -78,7 +78,8 @@ define([
         this.lang = Clang;
         this.environment = C.ENVIRONMENT;
         this.cache = C.cache;
-        this.indicatorConfig = INDICATORSC[this.indicator.position];
+        this.indicatorConfig = INDICATORSC[this.indicator]; // BARBARA .position;
+
         this.config = this.indicatorConfig[dashboardName];
         this.channels = {};
         this.dashboardConfig = this.config['dashboard'];
