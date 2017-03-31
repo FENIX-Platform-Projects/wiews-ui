@@ -12,7 +12,8 @@ define(function () {
     "completed" : "Completed",
     "1_filter-vd_filter_item_1_title" : "Genre",
     "1_filter-vd_filter_item_2_title" : "Location",
-    "1_filter-vd_filter_item_3_title" : "Period"
+    "1_filter-vd_filter_item_3_title" : "Period",
+    "1_filter-vd_filter_button_1_title" : "Show"
 
 }
 });

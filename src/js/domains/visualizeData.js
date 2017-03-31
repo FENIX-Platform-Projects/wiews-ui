@@ -23,6 +23,9 @@ define([
     var dashboardName = "visualizeData";
 
     var s = {
+
+        indicator_renders_path : './renders/visualizeData/indicator',
+
         bar: {
             PROGRESS_BAR_CONTAINER: '#vd-progress-bar-holder',
             PROGRESS_BAR_DATA_VARIABLE: 'progress-bar'
@@ -44,7 +47,8 @@ define([
                 ITEM_READY : 'ready.item'
             },
             dashboard :{
-                READY : 'dashboard.ready'
+                READY : 'dashboard.ready',
+                DASHBOARD_CONFIG : "new_dashoboard_config_ready"
             }
         }
     };
@@ -113,11 +117,12 @@ define([
         this._renderDashboard(dashboardConf);
 
         this._loadProgressBar(dashboardConf);
+
+        this._renderIndicator(dashboardConf);
     }
 
     // Events
     VisualizeData.prototype._bindEventListeners = function () {
-
     };
 
     VisualizeData.prototype._disposeDashboard = function () {
@@ -126,32 +131,6 @@ define([
         }
     };
 
-    // VisualizeData.prototype._loadProgressBar = function () {
-    //     this.progressBar.reset();
-    //     this.progressBar.show();
-    //
-    //     var self = this, increment = 0, percent = Math.round(100 / this.config.items.length);
-    //
-    //     // $("#chart_1").on('dashboard.ready', function () {
-    //     //     console.log("RRRRRR")
-    //     // });
-    //     // $("#chart_1").on('dashboard.ready', _.bind(this._onMenuItemClick, this));
-    //     this.dashboard.on(s.events.dashboardComponent.READY, function () {
-    //         console.log("dashboardComponent.READY")
-    //         // self._trigger(s.events.dashboard.READY);
-    //         //$("#chart_1").trigger('dashboard.ready')
-    //
-    //         // self.dashboard._trigger()
-    //         // self._trigger('dashboard.ready');
-    //         self.progressBar.finish();
-    //     });
-    //
-    //     this.dashboard.on(s.events.dashboardComponent.ITEM_READY, function (item) {
-    //         increment = increment + percent;
-    //         self.progressBar.update(increment);
-    //     });
-    // };
-
     VisualizeData.prototype._loadProgressBar = function (dashboardConf) {
         this.progressBar.reset();
         this.progressBar.show();
@@ -159,7 +138,6 @@ define([
         var self = this, increment = 0, percent = Math.round(100 / dashboardConf.items.length);
 
         this.dashboard.on(s.events.dashboardComponent.READY, function () {
-            // self._trigger('dashboard.ready');
             self.progressBar.finish();
         });
 
@@ -201,6 +179,37 @@ define([
             dashboardConfig
         );
     };
+
+    VisualizeData.prototype._getIndicatorRender = function () {
+        return require(this._getIndicatorScriptPath());
+    };
+
+    VisualizeData.prototype._getIndicatorScriptPath = function () {
+        return s.indicator_renders_path + this.indicator;
+    };
+
+    VisualizeData.prototype._renderIndicator = function (dashboardConfig) {
+        // Calling the indicator actions file
+        var Indicator = this._getIndicatorRender();
+        var it = new Indicator({
+            el : this.el,
+            filter : this.filter,
+            dashboard_config : dashboardConfig,
+            dashboard : this.dashboard
+        });
+
+        it.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))
+
+    };
+
+    VisualizeData.prototype._dashboardRecreate = function (param) {
+
+        if(this.dashboard){
+            this._disposeDashboard();
+        }
+
+        this._renderDashboard(param.dashboardConfig);
+    }
 
     VisualizeData.prototype._trigger = function (channel) {
 
