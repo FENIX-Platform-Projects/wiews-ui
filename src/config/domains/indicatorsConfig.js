@@ -270,7 +270,7 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": [ "1" ]
+                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_3"]
                                                     }
                                                 ]
                                             }
@@ -435,7 +435,7 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                             "codes": [
                                                 {
                                                     "uid": "wiews_m49",
-                                                    "codes": ["142"]
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_2"]
                                                 }
                                             ]
                                         }
@@ -475,7 +475,7 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": ["1"]
+                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_3"]
                                                     }
                                                 ]
                                             }
@@ -606,7 +606,7 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                             "codes": [
                                                 {
                                                     "uid": "wiews_m49",
-                                                    "codes": ["150"]
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_2"]
                                                 }
                                             ]
                                         }
@@ -644,7 +644,7 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": ["1"]
+                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_3"]
                                                     }
                                                 ]
                                             },
@@ -652,7 +652,7 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_genus",
-                                                        "codes": ["abarema"]
+                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_1"]
                                                     }
                                                 ]
                                             }
@@ -736,7 +736,7 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                             "codes": [
                                                 {
                                                     "uid": "wiews_m49",
-                                                    "codes": ["150"]
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_2"]
                                                 }
                                             ]
                                         }
@@ -775,7 +775,7 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": ["1"]
+                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_3"]
                                                     }
                                                 ]
                                             }
@@ -868,7 +868,7 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                             "codes": [
                                                 {
                                                     "uid": "wiews_m49",
-                                                    "codes": ["150"]
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_2"]
                                                 }
                                             ]
                                         }
@@ -907,7 +907,7 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": ["1"]
+                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_3"]
                                                     }
                                                 ]
                                             },
