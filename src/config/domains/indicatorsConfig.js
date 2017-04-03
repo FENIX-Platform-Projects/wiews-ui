@@ -1,5 +1,10 @@
 /*global define*/
-define(["highcharts", "../../config/config", "../../nls/labels", "../../config/domains/downloadDataDefaultValues", "../../config/domains/visualizeDataDefaultValues"], function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
+define(["highcharts",
+        "../../config/config",
+        "../../nls/labels",
+        "../../config/domains/downloadDataDefaultValues",
+        "../../config/domains/visualizeDataDefaultValues"],
+function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
 
     "use strict";
 
@@ -11,155 +16,79 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                 filter: {
                     dd_filter_item_1_1: {
                         selector: {
-                            id: "tree",
-                            hideSummary: true
+                            id: "tree"
                         },
                         cl: {
                             uid: "ISO3"
-                        },
-                        template: {
-                            hideSwitch: true,
-                            hideRemoveButton: true
                         }
                     },
                     dd_filter_item_1_2: {
                         selector: {
-                            id: "tree",
-                            hideSummary: true
+                            id: "tree"
                         },
                         cl: {
                             uid: "wiews_m49_regions"
-                        },
-                        template: {
-                            hideSwitch: true,
-                            hideRemoveButton: true
                         }
                     },
                     dd_filter_item_1_3: {
                         selector: {
-                            id: "tree",
-                            hideSummary: true
+                            id: "tree"
                         },
                         cl: {
                             uid: "wiews_fao_region"
-                        },
-                        template: {
-                            hideSwitch: true,
-                            hideRemoveButton: true
-                        }
-                    },
-                    dd_filter_item_1_4: {
-                        selector: {
-                            id: "tree",
-                            hideSummary: true
-                        },
-                        cl: {
-                            uid: "mdg_region"
-                        },
-                        template: {
-                            hideSwitch: true,
-                            hideRemoveButton: true
-                        }
-                    },
-                    dd_filter_item_1_5: {
-                        selector: {
-                            id: "tree",
-                            hideSummary: true
-                        },
-                        cl: {
-                            uid: "sdg_region"
-                        },
-                        template: {
-                            hideSwitch: true,
-                            hideRemoveButton: true
-                        }
-                    },
-                    dd_filter_item_1_6: {
-                        selector: {
-                            id: "tree",
-                            hideSummary: true
-                        },
-                        cl: {
-                            uid: "wiews_cgrfa"
-                        },
-                        template: {
-                            hideSwitch: true,
-                            hideRemoveButton: true
-                        }
-                    },
-                    dd_filter_item_1_7: {
-                        selector: {
-                            id: "tree",
-                            hideSummary: true
-                        },
-                        cl: {
-                            uid: "wiews_itpgrfa"
-                        },
-                        template: {
-                            hideSwitch: true,
-                            hideRemoveButton: true
                         }
                     },
                     dd_filter_item_2: {
                         selector: {
                             id: "tree",
-                            hideSummary: true,
                             source: [
                                 {value: "20", label: "Number of accessions conserved ex situ under medium or long-term conditions"}
                             ],
-                            default: ["20"],
-                            disabled: true
-                        },
-                        template: {
-                            hideSwitch: true,
-                            hideRemoveButton: true
+                            default: ["20"]
                         }
                     },
                     dd_filter_item_3: {
                         selector: {
                             id: "tree",
-                            hideSummary: true
+                            default: ['1']
                         },
                         cl: {
                             uid: "wiews_iteration"
-                        },
-                        template: {
-                            hideSwitch: true,
-                            hideRemoveButton: true
                         }
                     },
                     dd_filter_item_4: {
                         selector: {
                             id: "tree",
-                            hideSummary: true,
                             source: [
                                 {value: "stk", label: "Stakeholders"}
                             ]
-
-                        },
-                        template: {
-                            hideSwitch: true,
-                            hideRemoveButton: true
                         }
                     }
-
-
                 },
                 dashboard: {
-                    "uid": "adam_cpf_undaf_priorities_table",
+                    "uid": "DownloadDataDashboard",
                     "items": [
                         {
                             "id": "dd_dashboard_item",
                             "type": "table",
+
+                            // WIEWS
+
                             "config": {
                                 "groupedRow": false,
                                 "formatter": "localstring",
                                 "showRowHeaders": true,
                                 "rows": [
-                                    "recipientcode",
-                                    "purposecode",
-                                    "undaf_stated_priority",
-                                    "cpf_stated_priority"
+                                    "domain",
+                                    "m49_country",
+                                    //"indicator",
+                                    //"indicator_label",
+                                    "iteration",
+                                    //"value"
+                                    //"um",
+                                    //"country",
+                                    "element"
+
                                 ],
                                 "aggregations": [],
                                 "inputFormat": "fenixtool",
@@ -168,34 +97,33 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                     "autoSelectFirstRow": false,
                                     "columns": [
                                         {
-                                            "id": "recipientcode",
-                                            "fieldIndex": "0",
+                                            "id": "m49_country",
+                                            "fieldIndex": 0,
                                             "width": 150
                                         },
                                         {
-                                            "id": "purposecode",
-                                            "fieldIndex": "1",
+                                            "id": "iteration",
+                                            "fieldIndex": 1,
                                             "width": 200
                                         },
                                         {
-                                            "id": "undaf_stated_priority",
-                                            "fieldIndex": "2",
+                                            "id": "domain",
+                                            "fieldIndex": 2,
                                             "width": 220
                                         },
                                         {
-                                            "id": "cpf_stated_priority",
-                                            "fieldIndex": "3",
+                                            "id": "element",
+                                            "fieldIndex": 3,
                                             "width": 220
                                         }
                                     ]
                                 }
                             },
                             "filterFor": {
-                                "filter_priorities": [
-                                    "recipientcode"
-                                ]
+                                "wiews_iteration" : ["element", "iteration", "m49_country", "domain"]
                             },
-                            "postProcess": [ //wiews_regions_mapping | indicator20 |
+                            "postProcess": [
+
                                 {
                                     "name": "wiews_area_filter",
                                     "sid": [ { "uid": "wiews_regions_mapping" } ],
@@ -270,69 +198,136 @@ define(["highcharts", "../../config/config", "../../nls/labels", "../../config/d
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_3"]
+                                                        "codes": [ "1" ]
                                                     }
                                                 ]
                                             }
                                         }
                                     }
                                 }
+                            ],
+
+
+
+                            // ADAM
+/*
+                            "config": {
+                                "groupedRow": false,
+                                "formatter": "localstring",
+                                "showRowHeaders": true,
+                                "rows": [
+                                    "purposecode",
+                                    "undaf_stated_priority",
+                                    "cpf_stated_priority",
+                                    "undaf_period",
+                                    "cpf_period",
+                                    "recipientcode"
+                                ],
+                                "aggregations": [],
+                                "inputFormat": "fenixtool",
+                                "config": {
+                                    "pageSize": 150,
+                                    "autoSelectFirstRow": false,
+                                    "columns": []
+                                }
+                            },
+                            "filterFor": {
+                                "filter_priorities": ["recipientcode"]
+                            },
+                            "postProcess": [
+                                {
+                                    "name": "filter",
+                                    "sid": [
+                                        {
+                                            "uid": "adam_cpf_undaf_priorities_table"
+                                        }
+                                    ],
+                                    "parameters": {
+                                        "columns": [
+                                            "purposecode",
+                                            "undaf_stated_priority",
+                                            "cpf_stated_priority",
+                                            "undaf_period",
+                                            "cpf_period",
+                                            "recipientcode"
+                                        ],
+                                        "rows": {
+                                            "recipientcode": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "crs_recipients",
+                                                        "version": "2016",
+                                                        "codes": [
+                                                            "625"
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "rid": {
+                                        "uid": "filter_priorities"
+                                    }
+                                },
+                                {
+                                    "name": "group",
+                                    "parameters": {
+                                        "by": [
+                                            "purposecode",
+                                            "undaf_stated_priority",
+                                            "cpf_stated_priority",
+                                            "undaf_period",
+                                            "cpf_period",
+                                            "recipientcode"
+                                        ],
+                                        "aggregations": []
+                                    }
+                                }
                             ]
-                            /*
-                             "postProcess": [
-                             {
-                             "name": "filter",
-                             "sid": [
-                             {
-                             "uid": "adam_cpf_undaf_priorities_table"
-                             }
-                             ],
-                             "parameters": {
-                             "columns": [
-                             "purposecode",
-                             "undaf_stated_priority",
-                             "cpf_stated_priority",
-                             "undaf_period",
-                             "cpf_period",
-                             "recipientcode"
-                             ],
-                             "rows": {
-                             "recipientcode": {
-                             "codes": [
-                             {
-                             "uid": "crs_recipients",
-                             "version": "2016",
-                             "codes": [
-                             "625"
-                             ]
-                             }
-                             ]
-                             }
-                             }
-                             },
-                             "rid": {
-                             "uid": "filter_priorities"
-                             }
-                             },
-                             {
-                             "name": "group",
-                             "parameters": {
-                             "by": [
-                             "purposecode",
-                             "undaf_stated_priority",
-                             "cpf_stated_priority",
-                             "undaf_period",
-                             "cpf_period",
-                             "recipientcode"
-                             ],
-                             "aggregations": []
-                             }
-                             }
-                             ]
-                             */
+*/
+
                         }
                     ],
-                    "environment": "demo"
+                    /*
+                     "filter": {
+                     "valid": true,
+                     "labels": {
+                     "recipientcode": {
+                     "555": "Afghanistan"
+                     },
+                     "donorcode": {
+                     "all": "All"
+                     },
+                     "year-from": [],
+                     "year-to": [],
+                     "year": {
+                     "range": "2015-2015"
+                     }
+                     },
+                     "values": {
+                     "recipientcode": [
+                     "555"
+                     ],
+                     "donorcode": [],
+                     "year-from": [],
+                     "year-to": [],
+                     "year": [
+                     {
+                     "value": "2015",
+                     "parent": "from"
+                     },
+                     {
+                     "value": "2015",
+                     "parent": "to"
+                     }
+                     ],
+                     "uid": []
+                     }
+                     },
+                     */
+
+                    //"environment": "demo" // < ADAM
+                    "environment": "production" // < WIEWS
                 }
 
             },

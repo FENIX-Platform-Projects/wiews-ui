@@ -53,8 +53,6 @@ define([
 
     function DownloadData(opts){
 
-        require('highcharts-no-data-to-display')(Highcharts);
-
         $.extend(true, this, opts);
 
         this._validateConfig();
@@ -83,7 +81,9 @@ define([
         this.config = this.indicatorConfig[dashboardName];
         this.channels = {};
         this.dashboardConfig = this.config['dashboard'];
-        //this.dashboardConfig.environment = this.environment;
+        this.dashboardConfig.environment = this.environment;
+
+        console.log('conversion:' , this.conversion)
 
         console.log(this.dashboardConfig);
 
@@ -107,8 +107,6 @@ define([
     DownloadData.prototype._bindEventListeners = function () {
 
         var self = this;
-
-
 
         $(s.button.show_data).on('click', function () {
             self._renderDashboard(self.filter.getValues());
@@ -137,6 +135,7 @@ define([
             common: {
                 template: {
                     hideSwitch: true,
+                    hideHeader: true,
                     hideRemoveButton: true
                 }
             }
@@ -146,158 +145,12 @@ define([
     DownloadData.prototype._renderDashboard = function (filters) {
         // Build new dashboard
 
-        console.log(this.dashboardConfig);
+        // // Plain
+        // this.dashboardConfig.filter = this.filter.getValues();
+        // Formatted
+        this.dashboardConfig.filter = this._getFormattedValues();
 
-        this.dashboardConfig.filter = this.filter.getValues();
-
-        var adamconf = {
-            "uid": "adam_cpf_undaf_priorities_table",
-            "items": [
-                {
-                    "id": "dd_dashboard_item",
-                    "type": "table",
-                    "config": {
-                        "groupedRow": false,
-                        "formatter": "localstring",
-                        "showRowHeaders": true,
-                        "rows": [
-                            "recipientcode",
-                            "purposecode",
-                            "undaf_stated_priority",
-                            "cpf_stated_priority"
-                        ],
-                        "aggregations": [],
-                        "inputFormat": "fenixtool",
-                        "config": {
-                            "pageSize": 150,
-                            "autoSelectFirstRow": false,
-                            "columns": [
-                                {
-                                    "id": "recipientcode",
-                                    "fieldIndex": "0",
-                                    "width": 150
-                                },
-                                {
-                                    "id": "purposecode",
-                                    "fieldIndex": "1",
-                                    "width": 200
-                                },
-                                {
-                                    "id": "undaf_stated_priority",
-                                    "fieldIndex": "2",
-                                    "width": 220
-                                },
-                                {
-                                    "id": "cpf_stated_priority",
-                                    "fieldIndex": "3",
-                                    "width": 220
-                                }
-                            ]
-                        }
-                    },
-                    "filterFor": {
-                        "filter_priorities": [
-                            "recipientcode"
-                        ]
-                    },
-                    "postProcess": [
-                        {
-                            "name": "filter",
-                            "sid": [
-                                {
-                                    "uid": "adam_cpf_undaf_priorities_table"
-                                }
-                            ],
-                            "parameters": {
-                                "columns": [
-                                    "purposecode",
-                                    "undaf_stated_priority",
-                                    "cpf_stated_priority",
-                                    "undaf_period",
-                                    "cpf_period",
-                                    "recipientcode"
-                                ],
-                                "rows": {
-                                    "recipientcode": {
-                                        "codes": [
-                                            {
-                                                "uid": "crs_recipients",
-                                                "version": "2016",
-                                                "codes": [
-                                                    "625"
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                }
-                            },
-                            "rid": {
-                                "uid": "filter_priorities"
-                            }
-                        },
-                        {
-                            "name": "group",
-                            "parameters": {
-                                "by": [
-                                    "purposecode",
-                                    "undaf_stated_priority",
-                                    "cpf_stated_priority",
-                                    "undaf_period",
-                                    "cpf_period",
-                                    "recipientcode"
-                                ],
-                                "aggregations": []
-                            }
-                        }
-                    ]
-                }
-            ],
-/*
-            "filter": {
-                "valid": true,
-                "labels": {
-                    "recipientcode": {
-                        "555": "Afghanistan"
-                    },
-                    "donorcode": {
-                        "all": "All"
-                    },
-                    "year-from": [],
-                    "year-to": [],
-                    "year": {
-                        "range": "2015-2015"
-                    }
-                },
-                "values": {
-                    "recipientcode": [
-                        "555"
-                    ],
-                    "donorcode": [],
-                    "year-from": [],
-                    "year-to": [],
-                    "year": [
-                        {
-                            "value": "2015",
-                            "parent": "from"
-                        },
-                        {
-                            "value": "2015",
-                            "parent": "to"
-                        }
-                    ],
-                    "uid": []
-                }
-            },
-*/
-            "environment": "demo"
-        };
-
-        adamconf.filter = this.filter.getValues();
-
-        this.dashboard = new Dashboard(
-          //  this.dashboardConfig
-            adamconf
-        );
+        this.dashboard = new Dashboard( this.dashboardConfig );
 
         console.log(this.dashboardConfig);
 
@@ -405,11 +258,37 @@ define([
 
     };
 
+    DownloadData.prototype._getFormattedValues = function () {
+
+        var object = this.filter.getValues(),
+            self = this;
+
+        //console.log('after', JSON.stringify(object));
+
+        _.each(Object.keys(object), function (element) {
+            _.each(Object.keys(object[element]), function (convertible){
+                //console.log ('!! converting ' + convertible + ' > ' + self.conversion[convertible]);
+                if (convertible != "" ) self._renameKey(object[element], convertible, self.conversion[convertible]);
+            });
+        });
+
+        //console.log('before' , JSON.stringify(object));
+
+        return object;
+
+    };
+
+    DownloadData.prototype._renameKey = function (item, oldName, newName) {
+        if (item.hasOwnProperty(oldName)) {
+            item[newName] = item[oldName];
+            delete item[oldName];
+        }
+        return item;
+    }
+
     DownloadData.prototype._trigger = function (channel) {
 
-        if (!this.channels[channel]) {
-            return false;
-        }
+        if (!this.channels[channel]) return false;
         var args = Array.prototype.slice.call(arguments, 1);
         for (var i = 0, l = this.channels[channel].length; i < l; i++) {
             var subscription = this.channels[channel][i];
@@ -421,9 +300,7 @@ define([
 
     DownloadData.prototype.on = function (channel, fn, context) {
         var _context = context || this;
-        if (!this.channels[channel]) {
-            this.channels[channel] = [];
-        }
+        if (!this.channels[channel]) this.channels[channel] = [];
         this.channels[channel].push({context: _context, callback: fn});
         return this;
     };

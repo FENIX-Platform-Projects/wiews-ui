@@ -100,7 +100,8 @@ define([
               el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
               lang: this.lang,
               environment: this.environment,
-             indicator: this.selected_indicator_position
+              indicator: this.selected_indicator_position,
+              conversion: CATEG[this.selected_indicator.code].downloadConversion
         });
 
         this.visualizeDataTab = new VisualizeData({
@@ -191,7 +192,7 @@ define([
         //require("jquery-treegrid-webpack/css/jquery.treegrid.css");
 
         //Wiews CSS
-        //require("../css/wiews.css");
+        require("../css/wiews.css");
 
     };
 
