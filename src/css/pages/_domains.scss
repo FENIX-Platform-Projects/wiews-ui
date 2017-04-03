@@ -137,6 +137,21 @@
     border: 0 solid #337ab7; position: relative; top: 3px; left: -5px;}
 
 
+  /* ################ VISUALIZE DATA ########################## */
+
+  .selectize-dropdown {z-index:99999;}
+  .selectize-control {font-size: 13px;}
+  .selectize-input {border: 1px solid #b9b9b9;}
+
+  .selector-header {padding-bottom: 4px; padding-left: 3px;}
+
+  #vd-filter-container button.btn-primary {margin-top: -25px; margin-bottom: 15px;}
+
+  .leaflet-popup-content {width: 115px;}
+  .fm-popup {font-size: 15px;}
+  .fm-popup-join-content {font-size: 13px; }
+
+
 }
 
 

@@ -393,7 +393,7 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                             type: "map", //chart || map || olap,
                             config: {
                                 geoSubject: 'Gaul0',
-                                colorRamp: 'GnBu',  //Blues, Greens,
+                                colorRamp: 'Blues',  //GnBu, Greens,
                                 //colorRamp values: http://fenixrepo.fao.org/cdn/fenix/fenix-ui-map-datasets/colorramp.png
 
                                 legendtitle: 'WIEWS',
@@ -697,7 +697,7 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                                     title: {
                                         text: 'Accessions by country'
                                     },
-                                    colors: ['#008080'],
+                                    colors: ['#336699'],
                                     legend: {
                                         enabled: false
                                         // title: {
@@ -829,7 +829,7 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                                     title: {
                                         text: 'Accessions by stakeholder'
                                     },
-                                    colors: ['#008080'],
+                                    colors: ['#336699'],
                                     legend: {
                                         enabled: false
                                         // title: {
