@@ -14,7 +14,8 @@ define([
     "fenix-ui-bridge",
     "highcharts",
     '../common/progressBar',
-    "jstree"
+    "jstree",
+    "highcharts-exporting"
 ], function ($, log, _, C, PAGC, INDICATORSC, template, Dashboard, Filter, FxUtils, Utils, labels, Bridge, Highcharts, ProgressBar) {
 
     "use strict";
@@ -195,7 +196,10 @@ define([
             el : this.el,
             filter : this.filter,
             dashboard_config : dashboardConfig,
-            dashboard : this.dashboard
+            dashboard : this.dashboard,
+            lang : this.lang,
+            enviroment : this.environment,
+            cache : this.cache
         });
 
         it.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))

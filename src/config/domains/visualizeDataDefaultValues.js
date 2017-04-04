@@ -5,7 +5,8 @@ define(function () {
     return {
 
         "1_filter-vd_filter_item_1" : ["abarema"],
-        "1_filter-vd_filter_item_2" : ["142"],
+        // "1_filter-vd_filter_item_2" : ["142"],
+        "1_filter-vd_filter_item_2" : ["150"],
         "1_filter-vd_filter_item_3" : ["1"]
 
     };
