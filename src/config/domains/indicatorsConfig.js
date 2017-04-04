@@ -694,9 +694,6 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                                 useDimensionLabelsIfExist: true,// || default raw else fenixtool
 
                                 config: {
-                                    title: {
-                                        text: 'Accessions by country'
-                                    },
                                     colors: ['#336699'],
                                     legend: {
                                         enabled: false
@@ -826,9 +823,6 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                                 useDimensionLabelsIfExist: true,// || default raw else fenixtool
 
                                 config: {
-                                    title: {
-                                        text: 'Accessions by stakeholder'
-                                    },
                                     colors: ['#336699'],
                                     legend: {
                                         enabled: false

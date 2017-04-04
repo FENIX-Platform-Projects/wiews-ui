@@ -97,6 +97,7 @@ define([
         this.config = this.indicatorConfig[dashboardName];
 
         this.channels = {};
+        this.models = {};
 
         this.progressBar = new ProgressBar({
             container: s.bar.PROGRESS_BAR_CONTAINER,
@@ -119,7 +120,7 @@ define([
 
         this._loadProgressBar(dashboardConf);
 
-        this._renderIndicator(dashboardConf);
+        //this._renderIndicator(dashboardConf);
     }
 
     // Events
@@ -140,9 +141,15 @@ define([
 
         this.dashboard.on(s.events.dashboardComponent.READY, function () {
             self.progressBar.finish();
+            self._renderIndicator(dashboardConf);
         });
 
         this.dashboard.on(s.events.dashboardComponent.ITEM_READY, function (item) {
+            if((typeof item != 'undefined')&&(item != null)&&(typeof item.model != 'undefined')&&(item.model != null)&&(typeof item.model.metadata != 'undefined')&&(item.model.metadata != null)&&(typeof item.model.data != 'undefined')&&(item.model.data != null)){
+                var itemId = item.id;
+                self.models[itemId] = {metadata : item.model.metadata, data : item.model.data};
+            }
+
             increment = increment + percent;
             self.progressBar.update(increment);
         });
@@ -191,6 +198,9 @@ define([
 
     VisualizeData.prototype._renderIndicator = function (dashboardConfig) {
         // Calling the indicator actions file
+        console.log("Before render indicator")
+        console.log(this.models)
+
         var Indicator = this._getIndicatorRender();
         var it = new Indicator({
             el : this.el,
@@ -199,7 +209,9 @@ define([
             dashboard : this.dashboard,
             lang : this.lang,
             enviroment : this.environment,
-            cache : this.cache
+            cache : this.cache,
+            models : this.models,
+            prova : "svbsbvds"
         });
 
         it.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))

@@ -126,9 +126,7 @@ define([
 
     Domains.prototype._onDashboardReady = function (tab) {
 
-        console.log("_onDashboardReady", tab)
         if((tab)&&(tab.tabName)&&(tab.tabName==s.VISUALIZE_DATA_TAB)){
-            s.visualizeDataTab_created = true;
             s.visualizeDataTab_created = true;
         }
     };

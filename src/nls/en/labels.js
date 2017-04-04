@@ -13,7 +13,12 @@ define(function () {
     "1_filter-vd_filter_item_1_title" : "Genre",
     "1_filter-vd_filter_item_2_title" : "Location",
     "1_filter-vd_filter_item_3_title" : "Period",
-    "1_filter-vd_filter_button_1_title" : "Show"
+    "1_filter-vd_filter_button_1_title" : "Show",
+
+    "1_vd_dashboard_item_1_uid" : "Indicator 20",
+    "1_vd_dashboard_item_2_uid" : "Indicator 20",
+    "1_vd_dashboard_item_3_uid" : "Indicator 20",
+    "1_vd_dashboard_item_4_uid" : "Indicator 20"
 
 }
 });
