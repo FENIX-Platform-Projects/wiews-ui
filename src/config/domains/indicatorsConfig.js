@@ -44,7 +44,12 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                             source: [
                                 {value: "20", label: "Number of accessions conserved ex situ under medium or long-term conditions"}
                             ],
-                            default: ["20"]
+                            default: ["20"],
+                            config: {
+                                core: {
+                                    multiple: false
+                                }
+                            }
                         }
                     },
                     dd_filter_item_3: {
@@ -78,16 +83,18 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                                 "groupedRow": false,
                                 "formatter": "localstring",
                                 "showRowHeaders": true,
+                                "values": [
+                                    'value',
+                                    'indicator_label'
+                                ],
                                 "rows": [
                                     "domain",
                                     "m49_country",
-                                    //"indicator",
-                                    //"indicator_label",
                                     "iteration",
-                                    //"value"
+                                    //"indicator",
                                     //"um",
                                     //"country",
-                                    "element"
+                                    //"element"
 
                                 ],
                                 "aggregations": [],
@@ -96,31 +103,45 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                                     "pageSize": 150,
                                     "autoSelectFirstRow": false,
                                     "columns": [
+
                                         {
-                                            "id": "m49_country",
+                                            "id": "domain",
                                             "fieldIndex": 0,
                                             "width": 150
                                         },
                                         {
-                                            "id": "iteration",
+                                            "id": "m49_country",
                                             "fieldIndex": 1,
                                             "width": 200
                                         },
                                         {
-                                            "id": "domain",
+                                            "id": "iteration",
                                             "fieldIndex": 2,
-                                            "width": 220
+                                            "width": 100
                                         },
                                         {
-                                            "id": "element",
+                                            "id": "value",
                                             "fieldIndex": 3,
-                                            "width": 220
+                                            "width": 100
+                                        },
+                                        {
+                                            "id": "indicator_label",
+                                            "fieldIndex": 4,
+                                            "width": 6000
                                         }
+                                        /*
+                                        ,{
+                                            "id": "indicator",
+                                            "fieldIndex": 5,
+                                            "width": 350
+                                        }
+                                        */
+
                                     ]
                                 }
                             },
                             "filterFor": {
-                                "wiews_iteration" : ["element", "iteration", "m49_country", "domain"]
+                                "wiews_filter_selection" : ["element", "iteration", "m49_country", "domain"]
                             },
                             "postProcess": [
 
@@ -203,14 +224,16 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                                                 ]
                                             }
                                         }
-                                    }
+                                    },
+                                    "rid": {"uid": "wiews_filter_selection"}
                                 }
+
                             ],
 
 
 
                             // ADAM
-/*
+                            /*
                             "config": {
                                 "groupedRow": false,
                                 "formatter": "localstring",
