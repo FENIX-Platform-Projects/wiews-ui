@@ -4,24 +4,28 @@
 //@import "fenix-ui-catalog";
 //@import "fenix-ui-filter";
 
+.fx-sandbox{
+
 //@import 'base/variables';
-@import 'themes/fx-variables';
-@import 'utils/fx-utils';
+  @import 'themes/fx-variables';
+  @import 'utils/fx-utils';
 
-@import 'base/fx-buttons';
-@import 'base/fx-fixed-height';
-@import 'base/fx-fonts-import';
-@import 'base/fx-icons';
-@import 'base/fx-radio-checkbox';
-@import 'base/fx-typography';
+  @import 'base/fx-buttons';
+  @import 'base/fx-fixed-height';
+  @import 'base/fx-fonts-import';
+  @import 'base/fx-icons';
+  @import 'base/fx-radio-checkbox';
+  @import 'base/fx-typography';
+  //pages
+  @import 'pages/home';
+  @import 'pages/domains';
+
+  @import 'themes/variables';
+  @import "themes/default";
+  @import 'themes/fx-material-theme-light';
+  @import 'themes/unified-style';
+  @import 'themes/typo3-fix';
 
 
-//pages
-@import 'pages/home';
-@import 'pages/domains';
 
-@import 'themes/variables';
-@import "themes/default";
-@import 'themes/fx-material-theme-light';
-@import 'themes/unified-style';
-@import 'themes/typo3-fix';
+}
