@@ -2,9 +2,9 @@
 
 [data-page='domains'] {
 
-  .container-breadcrumb {
-    display: none;
-  }
+  body {font-family: inherit;}
+
+  .container-breadcrumb {display: none;}
 
   /* body {font-size: 1.5em!important;} */
 
@@ -88,7 +88,6 @@
 
   /* #domainsTab.nav-tabs > li > a {font-size: 1.4em;}
   #domainsTab.nav-tabs {border-bottom: none;}
-
   .tab-content .nav-tabs > li > a {font-size: 1.5em;}
   */
 
