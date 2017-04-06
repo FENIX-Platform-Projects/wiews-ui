@@ -214,11 +214,11 @@ define([
 
     Indicator1.prototype.downloadData = function (model, uid) {
         //var model2 = {"metadata":{"rid":"9_11457","uid":"adam_browse_sector_oda","dsd":{"cache":{"storage":"postgres"},"rid":"63_324","columns":[{"dataType":"code","key":true,"id":"gaul0","title":{"EN":"GAUL Country"},"domain":{"codes":[{"version":"2014","idCodeList":"GAUL0","extendedName":{"EN":"Global administrative unit layer country level"}}]},"subject":"geo"},{"dataType":"number","key":false,"id":"value","title":{"EN":"Value"},"subject":"value"},{"dataType":"code","key":false,"id":"unitcode","title":{"EN":"Measurement unit"},"domain":{"codes":[{"version":"2016","idCodeList":"crs_units","extendedName":{"EN":"OECD Units"}}]},"subject":"um"},{"dataType":"text","key":false,"id":"unitcode_EN","title":{"EN":"Measurement unit"},"virtual":false,"transposed":false},{"dataType":"text","key":false,"id":"gaul0_EN","title":{"EN":"GAUL Country"},"virtual":false,"transposed":false}],"contextSystem":"D3P"}},"data":[["181",3365.9938246499987,"million_usd","Million USD","Niger"],["254",568.9503590609995,"million_usd","Million USD","Ukraine"],["94",3751.3433445219976,"million_usd","Million USD","Ghana"],["243",481.72791288200006,"million_usd","Million USD","Togo"],["135",117.32736094599994,"million_usd","Million USD","Kiribati"],["79",14754.829214275996,"million_usd","Million USD","Ethiopia"],["196",3717.813645854998,"million_usd","Million USD","Philippines"],["4",508.3454585730001,"million_usd","Million USD","Algeria"],["107",868.852734545,"million_usd","Million USD","Guyana"],["40764",7421.549451951,"million_usd","Million USD","Sudan (ex)"],["205",2140.399058609001,"million_usd","Million USD","Rwanda"],["240",538.3631362360005,"million_usd","Million USD","Thailand"],["207",12.142791729999999,"million_usd","Million USD","Saint Helena"],["34",836.9131206080002,"million_usd","Million USD","Bosnia and Herzegovina"],["161",137.63201255,"million_usd","Million USD","Mayotte"],["68",3752.0364044950015,"million_usd","Million USD","Democratic Republic of the Congo"],["157",63.234144195000006,"million_usd","Million USD","Marshall Islands"],["43",1563.765752489,"million_usd","Million USD","Burundi"],["221",870.0060937989999,"million_usd","Million USD","Sierra Leone"],["156",0.0210849,"million_usd","Million USD","Malta"],["47",383.25892923900017,"million_usd","Million USD","Cape Verde"],["75",606.0823101330001,"million_usd","Million USD","El Salvador"],["217",3416.1782833740012,"million_usd","Million USD","Senegal"],["175",3097.1827506100017,"million_usd","Million USD","Nepal"],["76",15.952551659000003,"million_usd","Million USD","Equatorial Guinea"],["239",1102.534424734,"million_usd","Million USD","Tajikistan"],["250",44.312355069999995,"million_usd","Million USD","Turkmenistan"],["71",141.036150463,"million_usd","Million USD","Dominica"],["26",106.84980788700003,"million_usd","Million USD","Belarus"],["154",160.19288558300013,"million_usd","Million USD","Maldives"],["3",653.3022639359998,"million_usd","Million USD","Albania"],["248",1229.938683014,"million_usd","Million USD","Tunisia"],["31",276.942531754,"million_usd","Million USD","Bhutan"],["35",106.67483927800001,"million_usd","Million USD","Botswana"],["147295",7811.033758178414,"million_usd","Million USD","China"],["192",673.5400445839997,"million_usd","Million USD","Papua New Guinea"],["155",4175.799400400995,"million_usd","Million USD","Mali"],["241",417.59318784399954,"million_usd","Million USD","The former Yugoslav Republic of Macedonia"],["133",6418.99199705617,"million_usd","Million USD","Kenya"],["130",1467.4101994460002,"million_usd","Million USD","Jordan"],["141",757.0849790279995,"million_usd","Million USD","Lebanon"],["215",2.3587486559999995,"million_usd","Million USD","Saudi Arabia"],["40765",3395.4028414939994,"million_usd","Million USD","Egypt"],["115",15437.21778359978,"million_usd","Million USD","India"],["72",501.01526116999975,"million_usd","Million USD","Dominican Republic"],["144",1039.0959067419997,"million_usd","Million USD","Liberia"],["33",3355.1078021429994,"million_usd","Million USD","Bolivia"],["269",2642.742587750999,"million_usd","Million USD","Yemen"]]};
-
+//format: "table",
         model.metadata.uid = uid;
         // console.log("downloadData")
-         console.log(uid)
-        console.log(JSON.stringify(model))
+        //  console.log(uid)
+        // console.log(JSON.stringify(model))
         var payload = {
             resource: model,
             input: {
@@ -227,14 +227,22 @@ define([
             output: {
                 config: {
                     lang: this.lang.toUpperCase()
+                    //fileName: 'prova.xlsx'
                 }
             }
         };
 
+        // this.report.exportData({
+        //     config: payload,
+        //     format: "table"
+        // });
+        //
+        // fenixExport.init("metadataExport");
+
 
         this.report.export({
-            format: "table",
-            config: payload
+            config: payload,
+            format: "table"
         });
     };
 

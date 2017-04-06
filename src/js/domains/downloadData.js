@@ -148,11 +148,13 @@ define([
         // // Plain
         // this.dashboardConfig.filter = this.filter.getValues();
         // Formatted
+        console.log(this.dashboardConfig)
         this.dashboardConfig.filter = this._getFormattedValues();
 
+        console.log(this.dashboardConfig)
         this.dashboard = new Dashboard( this.dashboardConfig );
 
-        console.log(this.dashboardConfig);
+        //console.log(this.dashboardConfig);
 
         // Build fake data
         /*
@@ -263,7 +265,7 @@ define([
         var object = this.filter.getValues(),
             self = this;
 
-        //console.log('after', JSON.stringify(object));
+        console.log('before', JSON.stringify(object));
 
         _.each(Object.keys(object), function (element) {
             _.each(Object.keys(object[element]), function (convertible){
@@ -272,7 +274,7 @@ define([
             });
         });
 
-        //console.log('before' , JSON.stringify(object));
+        console.log('after' , JSON.stringify(object));
 
         return object;
 
