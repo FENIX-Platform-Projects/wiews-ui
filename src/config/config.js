@@ -4,8 +4,9 @@ define(function () {
     'use strict';
 
     return {
-        //ENVIRONMENT : "develop"
-        ENVIRONMENT : "production",
+        //ENVIRONMENT : "develop",
+        //ENVIRONMENT : "production",
+        ENVIRONMENT : "demo",
 
         cache: false,
         lang: "EN"

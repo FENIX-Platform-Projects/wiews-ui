@@ -114,6 +114,8 @@ define([
         var dashboardConf = this._getElemConfig(s.dashboard.dashboard_config_item),
             filterConfig = this._getElemConfig(s.filter.filter_config_item);
 
+        dashboardConf.environment = this.environment;
+
         this._renderFilter(filterConfig);
 
         this._renderDashboard(dashboardConf);
@@ -198,8 +200,6 @@ define([
 
     VisualizeData.prototype._renderIndicator = function (dashboardConfig) {
         // Calling the indicator actions file
-        console.log("Before render indicator")
-        console.log(this.models)
 
         var Indicator = this._getIndicatorRender();
         var it = new Indicator({

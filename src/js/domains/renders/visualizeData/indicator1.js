@@ -53,15 +53,11 @@ define([
 
     function Indicator1(o) {
 
-        console.log(this)
-        console.log(o)
         var self = this;
 
         $.extend(true, this, o);
 
-        console.log(this)
         this.models = o.models;
-        console.log(this)
 
         this._initVariables();
 

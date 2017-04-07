@@ -28,11 +28,11 @@ module.exports = sections.map(function (section) {
             alias: {
                 'bootstrap-table': Path.join(__dirname, 'node_modules/bootstrap-table/dist/bootstrap-table.min.js'),
                 'handlebars': Path.join(__dirname, 'node_modules/handlebars/dist/handlebars.js'),
-                'jquery': Path.join(__dirname, 'node_modules/jquery/dist/jquery'),
+                'jquery': Path.join(__dirname, 'node_modules/jquery/dist/jquery')
                 //'fenix-ui-chart-creator': Path.join(__dirname, 'node_modules/fenix-ui-chart-creator/src/js/index.js')
                 //'fenix-ui-filter': Path.join(__dirname, 'node_modules/fenix-ui-filter/src/js/index.js')
                 //'fenix-ui-dashboard': Path.join(__dirname, 'node_modules/fenix-ui-dashboard/src/js/index.js')
-                'fenix-ui-reports': Path.join(__dirname, 'node_modules/fenix-ui-reports/src/js/index.js')
+                //'fenix-ui-reports': Path.join(__dirname, 'node_modules/fenix-ui-reports/src/js/index.js')
 
             }
         },
@@ -71,6 +71,11 @@ module.exports = sections.map(function (section) {
                 inject: "body",
                 chunks: [section],
                 template: devFolderPath + "/" + section + ".template.html"
+            })),
+            isDemo(new HtmlWebpackPlugin({
+                inject: "body",
+                chunks: [section],
+                template: devFolderPath + "/" + section + ".template.html"
             }))
         ])
     }
@@ -90,6 +95,12 @@ function getOutput() {
             };
             break;
         case "develop" :
+            output = {
+                path: Path.join(__dirname, devFolderPath),
+                filename: "[name].js"
+            };
+            break;
+        case "demo" :
             output = {
                 path: Path.join(__dirname, devFolderPath),
                 filename: "[name].js"
@@ -128,6 +139,11 @@ function isProduction(valid, invalid) {
 function isDevelop(valid, invalid) {
 
     return isEnvironment('develop') ? valid : invalid;
+}
+
+function isDemo(valid, invalid) {
+
+    return isEnvironment('demo') ? valid : invalid;
 }
 
 function isEnvironment(env) {

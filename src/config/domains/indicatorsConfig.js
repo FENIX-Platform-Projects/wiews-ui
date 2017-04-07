@@ -349,8 +349,8 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                      },
                      */
 
-                    //"environment": "demo" // < ADAM
-                    "environment": "production" // < WIEWS
+                    "environment": "demo" // < ADAM
+                    //"environment": "production" // < WIEWS
                 }
 
             },
@@ -972,7 +972,8 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                         }
 
                     ]
-                }
+                },
+                "environment": "demo"
             }
         }
     }
