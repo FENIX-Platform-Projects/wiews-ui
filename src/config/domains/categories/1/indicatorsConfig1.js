@@ -414,6 +414,23 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                             //Average annual growth rate 010103
                             id: "vd_dashboard_item_1", //ref [data-item=':id'] // 010103  Average annual growth rate
                             type: "map", //chart || map || olap,
+                            hostConfig : {
+                                itemContainer : {
+                                    class : 'fs-map panel panel-default fs-map hoverable',
+                                    // height : '400px',
+                                    title : {
+                                        text : 'Map title to be placed here'
+                                    },
+                                    buttons : {
+                                        export :{
+                                            show : true //Default= true
+                                        }
+                                    },
+                                    footer : {
+                                        text : 'The designations employed and the presentation of material in the maps do not imply the expression of any opinion whatsoever on the part of FAO concerning the legal or constitutional status of any country, territory or sea area, or concerning the delimitation of frontiers. South Sudan declared its independence on July 9, 2011. Due to data availability, the assessment presented in the map for Sudan and South Sudan reflects the situation up to 2011 for the former Sudan.'
+                                    }
+                                }
+                            },
                             config: {
                                 geoSubject: 'Gaul0',
                                 colorRamp: 'Blues',  //GnBu, Greens,
@@ -526,6 +543,17 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                         {
                             id: 'vd_dashboard_item_2', // TOP RECIPIENTS Vs OTHER RECIPIENTS
                             type: 'chart',
+                            hostConfig : {
+                                itemContainer : {
+                                    class : 'fs-chart panel panel-default hoverable',
+                                    title : {
+                                        text : 'Chart title to be placed here'
+                                    },
+                                    footer : {
+                                        show : false
+                                    }
+                                }
+                            },
                             config: {
                                 type: "pieold",
                                 x: ["biologicalAccessionId"], //x axis and series
@@ -708,6 +736,17 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                         {
                             id: 'vd_dashboard_item_3', // TOP DONORS
                             type: 'chart',
+                            hostConfig : {
+                                itemContainer : {
+                                    class : 'fs-chart panel panel-default hoverable',
+                                    title : {
+                                        text : 'Accessions by country'
+                                    },
+                                    footer : {
+                                        show : false
+                                    }
+                                }
+                            },
                             config: {
                                 type: "column",
                                 x: ["country"], //x axis
@@ -837,6 +876,17 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                         {
                             id: 'vd_dashboard_item_4', // TOP DONORS
                             type: 'chart',
+                            hostConfig : {
+                                itemContainer : {
+                                    class : 'fs-chart panel panel-default hoverable',
+                                    title : {
+                                        text : 'Accessions by stakeholder'
+                                    },
+                                    footer : {
+                                        show : false
+                                    }
+                                }
+                            },
                             config: {
                                 type: "column",
                                 x: ["stakeholder"], //x axis

@@ -4,7 +4,6 @@ define([
     "underscore",
     "../../config/config",
     "../../config/domains/config",
-    "../../config/domains/indicatorsConfig",
     "../../html/domains/downloadDataTemplate.hbs",
     "fenix-ui-dashboard",
     "fenix-ui-filter",
@@ -16,7 +15,7 @@ define([
     "jstree",
     "bootstrap",
     "bootstrap-table"
-], function ($, log, _, C, PAGC, INDICATORSC, template, Dashboard, Filter, FxUtils, Utils, labels, Bridge, Highcharts) {
+], function ($, log, _, C, PAGC, template, Dashboard, Filter, FxUtils, Utils, labels, Bridge, Highcharts) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
@@ -24,6 +23,7 @@ define([
     var dashboardName = "downloadData";
 
     var s = {
+        indicator_categories_path : '../../config/domains/categories',
         PROGRESS_BAR_CONTAINER: '#dd-progress-bar-holder',
 
         dashboard: {
@@ -76,8 +76,8 @@ define([
         this.lang = Clang;
         this.environment = C.ENVIRONMENT;
         this.cache = C.cache;
-        this.indicatorConfig = INDICATORSC[this.indicator]; // BARBARA .position;
-
+        //this.indicatorConfig = INDICATORSC[this.indicatorProperties.dashboard_category]; // BARBARA .position;
+        this.indicatorConfig = require(this._getIndicatorConfig());
         this.config = this.indicatorConfig[dashboardName];
         this.channels = {};
         this.dashboardConfig = this.config['dashboard'];
@@ -276,6 +276,14 @@ define([
 
         return object;
 
+    };
+
+    DownloadData.prototype._getIndicatorConfig = function () {
+        return require(this._getIndicatorConfigPath());
+    };
+
+    DownloadData.prototype._getIndicatorConfigPath = function () {
+        return s.indicator_categories_path + '/'+ this.indicatorProperties.dashboard_category + '/indicatorConfig'+ this.indicatorProperties.indicator_id;
     };
 
     DownloadData.prototype._renameKey = function (item, oldName, newName) {

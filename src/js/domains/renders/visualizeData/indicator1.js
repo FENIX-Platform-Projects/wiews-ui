@@ -6,18 +6,17 @@ define([
     "../../../../config/errors",
     "../../../../config/events",
     "../../../../config/domains/config",
-    "../../../../config/domains/indicatorsConfig",
     "./indicatorProcesses1",
     'fenix-ui-reports',
     "../../../../nls/labels"
-], function ($, log, _, C, ERR, EVT, DM, DIM, IP, Report, labels) {
+], function ($, log, _, C, ERR, EVT, DM, IP, Report, labels) {
 
     'use strict';
 
     var defaultOptions = {};
 
     var s = {
-        indicatorPosition : '1',
+        indicatorCategory : '1',
 
         filter_button : {
             button_1 : "vd_filter_button_1"
@@ -154,10 +153,10 @@ define([
         });
 
         this.uid_items = {
-                item_1 : labels[this.lang][''+s.indicatorPosition+ '_'+s.dashboard_items.item_1+'_uid'],
-                item_2 : labels[this.lang][''+s.indicatorPosition+ '_'+s.dashboard_items.item_2+'_uid'],
-                item_3 : labels[this.lang][''+s.indicatorPosition+ '_'+s.dashboard_items.item_3+'_uid'],
-                item_4 : labels[this.lang][''+s.indicatorPosition+ '_'+s.dashboard_items.item_4+'_uid']
+                item_1 : labels[this.lang][''+s.indicatorCategory+ '_'+s.dashboard_items.item_1+'_uid'],
+                item_2 : labels[this.lang][''+s.indicatorCategory+ '_'+s.dashboard_items.item_2+'_uid'],
+                item_3 : labels[this.lang][''+s.indicatorCategory+ '_'+s.dashboard_items.item_3+'_uid'],
+                item_4 : labels[this.lang][''+s.indicatorCategory+ '_'+s.dashboard_items.item_4+'_uid']
         }
     };
 
@@ -208,7 +207,7 @@ define([
         this.recreateItem(s.dashboard_items.item_3, values);
         this.recreateItem(s.dashboard_items.item_4, values);
 
-        this._trigger(s.event.DASHBOARD_CONFIG, {indicator_position : s.indicatorPosition, dashboardConfig : this.dashboard_config, values: values, dashboard: this.dashboard})
+        this._trigger(s.event.DASHBOARD_CONFIG, {indicator_category : s.indicatorCategory, dashboardConfig : this.dashboard_config, values: values, dashboard: this.dashboard})
     }
 
 

@@ -4,11 +4,12 @@ define([
     "underscore",
     "../../config/config",
     "../../config/domains/config",
-    "../../config/domains/indicatorsConfig",
-    "../../html/domains/visualizeDataTemplate.hbs",
+    "../../html/domains/visualizeDataFilterTemplate.hbs",
+    "../../html/domains/visualizeDataDashboardTemplate.hbs",
     "fenix-ui-dashboard",
     "fenix-ui-filter",
     "fenix-ui-filter-utils",
+    "./renders/visualizeData/IndicatorCommon",
     "../../lib/utils",
     "../../nls/labels",
     "fenix-ui-bridge",
@@ -16,16 +17,20 @@ define([
     '../common/progressBar',
     "jstree",
     "highcharts-exporting"
-], function ($, log, _, C, PAGC, INDICATORSC, template, Dashboard, Filter, FxUtils, Utils, labels, Bridge, Highcharts, ProgressBar) {
+], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, Utils, labels, Bridge, Highcharts, ProgressBar) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
 
     var dashboardName = "visualizeData";
 
+    var indicatorCommon;
+
     var s = {
 
         indicator_renders_path : './renders/visualizeData/indicator',
+        // indicator_categories_path : '../../config/domains/categories',
+        indicator_categories_path : './visualizeData/categories',
 
         bar: {
             PROGRESS_BAR_CONTAINER: '#vd-progress-bar-holder',
@@ -79,21 +84,29 @@ define([
 
     VisualizeData.prototype._attach = function () {
 
-        $(this.el).html(template(labels[Clang]));
-        var indicatorSection = this.el.find('[data-section = "'+this.indicator+'"]');
+        $(this.el).html(filterTemplate(labels[Clang]));
+        var indicatorFilterSection = this.el.find('[data-section = "'+this.indicatorProperties.filter_category+'"]');
+        //dashboardSection
+        $(this.el).append(dashboardTemplate(labels[Clang]));
+        var indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dashboard_category+'"]');
         var progressBar = this.el.find('[data-bar = "'+s.bar.PROGRESS_BAR_DATA_VARIABLE+'"]');//data-bar="progress-bar"
         $(this.el).html(progressBar);
-        $(this.el).append(indicatorSection);
+        $(this.el).append(indicatorFilterSection);
+        $(indicatorFilterSection).append(indicatorDashboardSection);
+
     };
 
     VisualizeData.prototype._initVariables = function () {
+
+        //var INDICATOR = require(this._getIndicatorConfig());
+        indicatorCommon = new ICommon();
 
         this.$el = $(s.EL);
 
         this.lang = Clang;
         this.environment = C.ENVIRONMENT;
         this.cache = C.cache;
-        this.indicatorConfig = INDICATORSC[this.indicator];
+        this.indicatorConfig = this._getIndicatorConfig();
         this.config = this.indicatorConfig[dashboardName];
 
         this.channels = {};
@@ -113,6 +126,8 @@ define([
 
         var dashboardConf = this._getElemConfig(s.dashboard.dashboard_config_item),
             filterConfig = this._getElemConfig(s.filter.filter_config_item);
+
+        indicatorCommon.indicatorSectionInit(this.el, dashboardConf, this.indicatorProperties);
 
         this._renderFilter(filterConfig);
 
@@ -188,12 +203,26 @@ define([
         );
     };
 
+    VisualizeData.prototype._getIndicatorConfig = function () {
+        return require(this._getIndicatorConfigPath());
+    };
+
+    VisualizeData.prototype._getIndicatorConfigPath = function () {
+
+        // console.log(s.indicator_renders_path + this.indicatorProperties.dashboard_category)
+        // return CATEGORIES + '/1/indicatorsConfig1';
+
+       // return '../../config/domains/categories/1/indicatorsConfig1.js';
+       //  return '../base'
+       return s.indicator_categories_path + '/'+ this.indicatorProperties.dashboard_category + '/indicatorConfig'+ this.indicatorProperties.indicator_id+'.js';
+    };
+
     VisualizeData.prototype._getIndicatorRender = function () {
         return require(this._getIndicatorScriptPath());
     };
 
     VisualizeData.prototype._getIndicatorScriptPath = function () {
-        return s.indicator_renders_path + this.indicator;
+        return s.indicator_renders_path + this.indicatorProperties.dashboard_category;
     };
 
     VisualizeData.prototype._renderIndicator = function (dashboardConfig) {

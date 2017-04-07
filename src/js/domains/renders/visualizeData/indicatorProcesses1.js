@@ -6,9 +6,8 @@ define([
     "../../../../config/errors",
     "../../../../config/events",
     "../../../../config/domains/config",
-    "../../../../config/domains/indicatorsConfig",
     'fenix-ui-chart-creator'
-], function ($, log, _, C, ERR, EVT, DM, DIM) {
+], function ($, log, _, C, ERR, EVT, DM) {
 
     'use strict';
 

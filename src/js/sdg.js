@@ -12,8 +12,9 @@ define([
     "../lib/utils",
     "../nls/labels",
     "fenix-ui-dashboard",
+    "../config/domains/indicatorsConfig",
     "bootstrap"
-], function ($, log, _, C, PAGC, CATEG, template, DownloadData, VisualizeData, Filter, Utils, labels, Dashboard) {
+], function ($, log, _, C, PAGC, CATEG, template, DownloadData, VisualizeData, Filter, Utils, labels, Dashboard, INDICATORSC) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
@@ -81,8 +82,7 @@ define([
         this.cache = C.cache;
 
         this.selected_indicator = selected;
-        this.selected_indicator_category = CATEG[this.selected_indicator.code].category;
-        this.indicatorProperties = CATEG[this.selected_indicator.code];
+        this.selected_indicator_position = CATEG[this.selected_indicator.code].position;
         this.$tabs = this.$el.find(s.TABS_A);
 
         s.visualizeDataTab_created = false;
@@ -96,25 +96,22 @@ define([
 
     Domains.prototype._initTabs = function () {
 
-        // this.downloadDataTab = new DownloadData({
-        //       el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
-        //       lang: this.lang,
-        //       environment: this.environment,
-        //       indicator: this.selected_indicator_category,
-        //       indicatorProperties: this.indicatorProperties,
-        //       conversion: CATEG[this.selected_indicator.code].downloadConversion
-        // });
+        this.downloadDataTab = new DownloadData({
+              el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
+              lang: this.lang,
+              environment: this.environment,
+              indicator: this.selected_indicator_position,
+              conversion: CATEG[this.selected_indicator.code].downloadConversion
+        });
 
         this.visualizeDataTab = new VisualizeData({
             el: this.$el.find(s.VISUALIZE_DATA_TAB_EL),
             lang: this.lang,
             environment: this.environment,
-            //indicator: this.selected_indicator_category,
-            indicatorProperties: this.indicatorProperties
+            indicator: this.selected_indicator_position
         });
 
-        //this.downloadDataTab.render();
-        this.visualizeDataTab.render();
+        this.downloadDataTab.render();
     };
 
     // Events
@@ -161,15 +158,12 @@ define([
     Domains.prototype._importThirdPartyCss = function () {
 
         //SANDBOXED BOOTSTRAP
-        require("../css/sandboxed-bootstrap.css");
+        //require("../../css/sandboxed-bootstrap.css");
         //Bootstrap
-        //require('bootstrap/dist/css/bootstrap.css');
+        require('bootstrap/dist/css/bootstrap.css');
+
         //dropdown selector
         require("../../node_modules/selectize/dist/css/selectize.bootstrap3.css");
-
-
-        //material icons
-        require("../../node_modules/material-design-icons/iconfont/material-icons.css");
 
         require("../../node_modules/leaflet/dist/leaflet.css");
 
@@ -197,8 +191,6 @@ define([
 
         //Wiews CSS
         require("../css/wiews.css");
-
-
 
     };
 
