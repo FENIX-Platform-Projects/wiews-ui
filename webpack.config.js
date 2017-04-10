@@ -71,6 +71,11 @@ module.exports = sections.map(function (section) {
                 inject: "body",
                 chunks: [section],
                 template: devFolderPath + "/" + section + ".template.html"
+            })),
+            isDemo(new HtmlWebpackPlugin({
+                inject: "body",
+                chunks: [section],
+                template: devFolderPath + "/" + section + ".template.html"
             }))
         ])
     }
@@ -90,6 +95,12 @@ function getOutput() {
             };
             break;
         case "develop" :
+            output = {
+                path: Path.join(__dirname, devFolderPath),
+                filename: "[name].js"
+            };
+            break;
+        case "demo" :
             output = {
                 path: Path.join(__dirname, devFolderPath),
                 filename: "[name].js"
@@ -128,6 +139,11 @@ function isProduction(valid, invalid) {
 function isDevelop(valid, invalid) {
 
     return isEnvironment('develop') ? valid : invalid;
+}
+
+function isDemo(valid, invalid) {
+
+    return isEnvironment('demo') ? valid : invalid;
 }
 
 function isEnvironment(env) {

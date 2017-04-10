@@ -1,10 +1,6 @@
 /*global define*/
-define(["highcharts",
-        "../../config/config",
-        "../../nls/labels",
-        "../../config/domains/downloadDataDefaultValues",
-        "../../config/domains/visualizeDataDefaultValues"],
-function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
+define(["highcharts", "../../../config", "../../visualizeDataDefaultValues"],
+function (Highcharts, C, VISUALIZE_DV) {
 
     "use strict";
 
@@ -349,8 +345,8 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                      },
                      */
 
-                    //"environment": "demo" // < ADAM
-                    "environment": "production" // < WIEWS
+                    "environment": "demo" // < ADAM
+                    //"environment": "production" // < WIEWS
                 }
 
             },
@@ -1022,7 +1018,8 @@ function (Highcharts, C, labels, DOWNLOAD_DV, VISUALIZE_DV) {
                         }
 
                     ]
-                }
+                },
+                "environment": "demo"
             }
         }
     }

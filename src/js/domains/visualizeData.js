@@ -29,8 +29,7 @@ define([
     var s = {
 
         indicator_renders_path : './renders/visualizeData/indicator',
-        // indicator_categories_path : '../../config/domains/categories',
-        indicator_categories_path : './visualizeData/categories',
+        indicator_categories_path : './renders/visualizeData/indicatorConfig',
 
         bar: {
             PROGRESS_BAR_CONTAINER: '#vd-progress-bar-holder',
@@ -107,6 +106,11 @@ define([
         this.environment = C.ENVIRONMENT;
         this.cache = C.cache;
         this.indicatorConfig = this._getIndicatorConfig();
+        console.log("Before")
+        //this.indicatorConfig = this._getIndicatorRender();
+
+        console.log(this.indicatorConfig)
+        //this.config = this.indicatorConfig[dashboardName];
         this.config = this.indicatorConfig[dashboardName];
 
         this.channels = {};
@@ -126,6 +130,8 @@ define([
 
         var dashboardConf = this._getElemConfig(s.dashboard.dashboard_config_item),
             filterConfig = this._getElemConfig(s.filter.filter_config_item);
+
+        dashboardConf.environment = this.environment;
 
         indicatorCommon.indicatorSectionInit(this.el, dashboardConf, this.indicatorProperties);
 
@@ -214,7 +220,8 @@ define([
 
        // return '../../config/domains/categories/1/indicatorsConfig1.js';
        //  return '../base'
-       return s.indicator_categories_path + '/'+ this.indicatorProperties.dashboard_category + '/indicatorConfig'+ this.indicatorProperties.indicator_id+'.js';
+        return s.indicator_categories_path + this.indicatorProperties.indicator_id+'.js';
+       //return s.indicator_categories_path + '/'+ this.indicatorProperties.dashboard_category + '/indicatorsConfig'+ this.indicatorProperties.indicator_id+'.js';
     };
 
     VisualizeData.prototype._getIndicatorRender = function () {
@@ -239,8 +246,7 @@ define([
             lang : this.lang,
             enviroment : this.environment,
             cache : this.cache,
-            models : this.models,
-            prova : "svbsbvds"
+            models : this.models
         });
 
         it.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))

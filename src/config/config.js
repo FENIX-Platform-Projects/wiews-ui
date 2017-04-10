@@ -5,7 +5,8 @@ define(function () {
 
     return {
         //ENVIRONMENT : "develop"
-        ENVIRONMENT : "production",
+        // ENVIRONMENT : "production",
+        ENVIRONMENT : "demo",
 
         cache: false,
         lang: "EN"

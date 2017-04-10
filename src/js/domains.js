@@ -114,7 +114,7 @@ define([
         });
 
         //this.downloadDataTab.render();
-        this.visualizeDataTab.render();
+        //this.visualizeDataTab.render();
     };
 
     // Events
