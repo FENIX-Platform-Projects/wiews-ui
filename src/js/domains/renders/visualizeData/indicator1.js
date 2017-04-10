@@ -6,16 +6,19 @@ define([
     "../../../../config/errors",
     "../../../../config/events",
     "../../../../config/domains/config",
-    "./indicatorProcesses1",
+   // "./indicatorProcesses1",
     'fenix-ui-reports',
     "../../../../nls/labels"
-], function ($, log, _, C, ERR, EVT, DM, IP, Report, labels) {
+], function ($, log, _, C, ERR, EVT, DM, Report, labels) {
 
     'use strict';
 
     var defaultOptions = {};
 
     var s = {
+
+        indicator_processes_renders_path : './indicatorProcesses',
+
         indicatorCategory : '1',
 
         filter_button : {
@@ -132,6 +135,15 @@ define([
 
     Indicator1.prototype._initVariables = function () {
 
+        console.log(this)
+        //indicatorProperties
+        var IndicatorProcessesRender = this._getIndicatorProcessesRender();
+        console.log(JSON.stringify(IndicatorProcessesRender))
+        console.log(IndicatorProcessesRender)
+        this.indicatorProcesses = new IndicatorProcessesRender();
+
+        console.log(JSON.stringify(this.indicatorProcesses))
+
         this.$el = $(this.el);
         //Init status
         this.status = {};
@@ -139,9 +151,9 @@ define([
         // pub/sub
         this.channels = {};
 
-        this.indicatorProcesses = new IP();
+        // this.indicatorProcesses = new IP();
 
-        this.indicatorType = this.indicatorType;
+        //this.indicatorType = this.indicatorType;
 
         if (this.report && $.isFunction(this.report.dispose)) {
             this.report.dispose();
@@ -160,6 +172,15 @@ define([
         }
     };
 
+    Indicator1.prototype._getIndicatorProcessesRender = function () {
+        return require(this._getIndicatorProcessesPath());
+    };
+
+    Indicator1.prototype._getIndicatorProcessesPath = function () {
+        console.log(JSON.stringify(s.indicator_processes_renders_path + this.indicatorProperties.processType))
+        return s.indicator_processes_renders_path + this.indicatorProperties.processType;
+    };
+
     Indicator1.prototype._destroyIndicator = function () {
 
         //TODO
@@ -172,11 +193,11 @@ define([
 
         var self = this;
 
-        var filter_button_1 = this.el.find('[data-button = "'+s.filter_button.button_1+'"]');
-
-        if(filter_button_1){
-            filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self.onClick_button1, this));
-        }
+        // var filter_button_1 = this.el.find('[data-button = "'+s.filter_button.button_1+'"]');
+        //
+        // if(filter_button_1){
+        //     filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self.onClick_button1, this));
+        // }
 
         var dashboard_button_1 = this.el.find('[data-button = "'+s.dashboard_button.button_1+'"]');
 
@@ -202,10 +223,15 @@ define([
     
     Indicator1.prototype.onClick_button1 = function () {
         var values = this.filter.getValues();
-        this.recreateItem(s.dashboard_items.item_1, values);
-        this.recreateItem(s.dashboard_items.item_2, values);
-        this.recreateItem(s.dashboard_items.item_3, values);
-        this.recreateItem(s.dashboard_items.item_4, values);
+        // this.recreateItem(s.dashboard_items.item_1, values);
+        // this.recreateItem(s.dashboard_items.item_2, values);
+        // this.recreateItem(s.dashboard_items.item_3, values);
+        // this.recreateItem(s.dashboard_items.item_4, values);
+        //
+        // this.dashboard_config = this.indicatorProcesses.element_configuration_update(this.dashboard_config, element, values);
+
+        console.log(JSON.stringify(this.indicatorProcesses))
+        this.dashboard_config = this.indicatorProcesses.onClick_button1(this.dashboard_config, values);
 
         this._trigger(s.event.DASHBOARD_CONFIG, {indicator_category : s.indicatorCategory, dashboardConfig : this.dashboard_config, values: values, dashboard: this.dashboard})
     }

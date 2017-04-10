@@ -30,6 +30,7 @@ define([
 
         indicator_renders_path : './renders/visualizeData/indicator',
         indicator_categories_path : './renders/visualizeData/indicatorConfig',
+        indicator_processes_renders_path : './renders/visualizeData/indicatorProcesses',
 
         bar: {
             PROGRESS_BAR_CONTAINER: '#vd-progress-bar-holder',
@@ -98,7 +99,6 @@ define([
     VisualizeData.prototype._initVariables = function () {
 
         //var INDICATOR = require(this._getIndicatorConfig());
-        indicatorCommon = new ICommon();
 
         this.$el = $(s.EL);
 
@@ -132,6 +132,18 @@ define([
             filterConfig = this._getElemConfig(s.filter.filter_config_item);
 
         dashboardConf.environment = this.environment;
+
+        indicatorCommon = new ICommon({
+            el : this.el,
+            indicatorProperties : this.indicatorProperties,
+            //filter : this.filter,
+            //dashboard_config : dashboardConfig,
+            //dashboard : this.dashboard,
+            lang : this.lang,
+            enviroment : this.environment,
+            cache : this.cache
+            //models : this.models
+        });
 
         indicatorCommon.indicatorSectionInit(this.el, dashboardConf, this.indicatorProperties);
 
@@ -235,14 +247,31 @@ define([
         return s.indicator_renders_path + this.indicatorProperties.dashboard_category;
     };
 
+    VisualizeData.prototype._getIndicatorProcessesRender = function () {
+        return require(this._getIndicatorProcessesPath());
+    };
+
+    VisualizeData.prototype._getIndicatorProcessesPath = function () {
+        console.log(JSON.stringify(s.indicator_processes_renders_path + '1'))
+        return s.indicator_processes_renders_path + this.indicatorProperties.processType;
+    };
+
     VisualizeData.prototype._renderIndicator = function (dashboardConfig) {
         // Calling the indicator actions file
         console.log("Before render indicator")
         console.log(this.models)
 
+        indicatorCommon.render({
+            filter : this.filter,
+            dashboard_config : dashboardConfig,
+            dashboard : this.dashboard,
+            models : this.models
+        });
+
         var Indicator = this._getIndicatorRender();
         var it = new Indicator({
             el : this.el,
+            indicatorProperties : this.indicatorProperties,
             filter : this.filter,
             dashboard_config : dashboardConfig,
             dashboard : this.dashboard,
@@ -252,11 +281,12 @@ define([
             models : this.models
         });
 
-        it.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))
+        indicatorCommon.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))
 
     };
 
     VisualizeData.prototype._dashboardRecreate = function (param) {
+        console.log('dashboard recreate')
 
         if(this.dashboard){
             this._disposeDashboard();

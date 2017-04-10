@@ -6,17 +6,21 @@ define([
     "../../../../config/errors",
     "../../../../config/events",
     "../../../../config/domains/config",
-    "./indicatorProcesses1",
+    // "./indicatorProcesses1",
     "./filterSelectors",
     'fenix-ui-reports',
     "../../../../nls/labels"
-], function ($, log, _, C, ERR, EVT, DM, IP, FilterSelectors, Report, labels) {
+], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, Report, labels) {
+// ], function ($, log, _, C, ERR, EVT, DM, IP, FilterSelectors, Report, labels) {
 
     'use strict';
 
     var defaultOptions = {};
 
     var s = {
+        indicator_processes_renders_path : './indicatorProcesses',
+
+
         indicatorCategory : '1',
 
         filter_button : {
@@ -52,7 +56,49 @@ define([
     }
 
     function IndicatorCommon(o) {
+
+        $.extend(true, this, defaultOptions, o);
+        this._initVariables();
+
+
+        return this;
     }
+
+    IndicatorCommon.prototype._initVariables = function () {
+
+        console.log(this.indicatorProperties)
+        //indicatorProperties
+        var IndicatorProcessesRender = this._getIndicatorProcessesRender();
+        console.log(JSON.stringify(IndicatorProcessesRender))
+        console.log(IndicatorProcessesRender)
+        this.indicatorProcesses = new IndicatorProcessesRender();
+
+        // pub/sub
+        this.channels = {};
+
+        console.log(this.indicatorProcesses)
+
+    };
+
+    //This method is called after the dashboard render
+    IndicatorCommon.prototype.render = function (obj) {
+
+        this.filter = obj.filter;
+        this.dashboard_config = obj.dashboard_config;
+        this.dashboard = obj.dashboard;
+        this.models = obj.models;
+
+        this._bindEventListeners();
+    }
+
+    IndicatorCommon.prototype._getIndicatorProcessesRender = function () {
+        return require(this._getIndicatorProcessesPath());
+    };
+
+    IndicatorCommon.prototype._getIndicatorProcessesPath = function () {
+        console.log(JSON.stringify(s.indicator_processes_renders_path + '1'))
+        return s.indicator_processes_renders_path + this.indicatorProperties.processType;
+    };
 
 
     IndicatorCommon.prototype.indicatorSectionInit = function (visualizeDataPage, dashboardConfig, indicator_properties) {
@@ -195,6 +241,92 @@ define([
 
         return newFilterConfig;
     }
+
+    IndicatorCommon.prototype._bindEventListeners = function () {
+
+        var self = this;
+
+        var filter_button_1 = this.el.find('[data-button = "'+s.filter_button.button_1+'"]');
+
+        console.log(this.indicatorProcesses)
+        if(filter_button_1){
+            filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self.onClick_button1, this));
+        }
+
+        // if((this.dashboard_config!=null)&&(typeof this.dashboard_config != 'undefined')){
+        //     var itemsArray = this.dashboard_config.items;
+        //     var itemCount = 1;
+        //     var itemId = '';
+        //     itemsArray.forEach(function (item) {
+        //
+        //         if ((item != null) && (typeof item != 'undefined')) {
+        //             itemId = item.id;
+        //             var dashboard_button = this.el.find('[data-button = "'+s.dashboard_button.button+'"]');
+        //             //
+        //             // if(dashboard_button_1){
+        //             //     console.log(s.dashboard_items.item_1, JSON.stringify(self.uid_items[s.dashboard_items.item_1]))
+        //             //     dashboard_button_1.on(s.event.BUTTON_CLICK, _.bind(self.downloadData, this, self.models[s.dashboard_items.item_1], self.uid_items.item_1));
+        //             // }
+        //         }
+        //     });
+        // }
+
+        // var dashboard_button_1 = this.el.find('[data-button = "'+s.dashboard_button.button_1+'"]');
+        //
+        // if(dashboard_button_1){
+        //     console.log(s.dashboard_items.item_1, JSON.stringify(self.uid_items[s.dashboard_items.item_1]))
+        //     dashboard_button_1.on(s.event.BUTTON_CLICK, _.bind(self.downloadData, this, self.models[s.dashboard_items.item_1], self.uid_items.item_1));
+        // }
+        //
+        // var dashboard_button_3 = this.el.find('[data-button = "'+s.dashboard_button.button_3+'"]');
+        //
+        // if(dashboard_button_3){
+        //     console.log(s.dashboard_items.item_3, JSON.stringify(self.uid_items[s.dashboard_items.item_3]))
+        //     dashboard_button_3.on(s.event.BUTTON_CLICK, _.bind(self.downloadData, this, self.models[s.dashboard_items.item_3], self.uid_items.item_3));
+        // }
+        //
+        // var dashboard_button_4 = this.el.find('[data-button = "'+s.dashboard_button.button_4+'"]');
+        //
+        // if(dashboard_button_4){
+        //     console.log(s.dashboard_items.item_4, JSON.stringify(self.uid_items[s.dashboard_items.item_4]))
+        //     dashboard_button_4.on(s.event.BUTTON_CLICK, _.bind(self.downloadData, this, self.models[s.dashboard_items.item_4], self.uid_items.item_4));
+        // }
+    };
+
+    IndicatorCommon.prototype.onClick_button1 = function () {
+        var values = this.filter.getValues();
+        this.dashboard_config = this.indicatorProcesses.onClickButton(this.dashboard_config, values);
+
+        this._trigger(s.event.DASHBOARD_CONFIG, {indicator_category : s.indicatorCategory, dashboardConfig : this.dashboard_config, values: values, dashboard: this.dashboard})
+    }
+
+    /**
+     * pub/sub
+     * @return {Object} component instance
+     */
+    IndicatorCommon.prototype.on = function (channel, fn, context) {
+        var _context = context || this;
+        if (!this.channels[channel]) {
+            this.channels[channel] = [];
+        }
+        this.channels[channel].push({context: _context, callback: fn});
+        return this;
+    };
+
+    IndicatorCommon.prototype._trigger = function (channel) {
+
+        if (!this.channels[channel]) {
+            return false;
+        }
+        var args = Array.prototype.slice.call(arguments, 1);
+        for (var i = 0, l = this.channels[channel].length; i < l; i++) {
+            var subscription = this.channels[channel][i];
+            subscription.callback.apply(subscription.context, args);
+        }
+
+        return this;
+    };
+
 
     return IndicatorCommon;
 

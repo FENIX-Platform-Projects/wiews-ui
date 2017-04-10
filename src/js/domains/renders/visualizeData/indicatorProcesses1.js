@@ -43,7 +43,33 @@ define([
 
     };
 
-    IndicatorProcesses1.prototype.element_configuration_update = function (dashboardConfig, element, values) {
+    //In this way this action is indipendent by the number of items in the configuration
+    //Test it removing some items in the configuration
+    IndicatorProcesses1.prototype.onClickButton = function (dashboardConfig, values) {
+        var newDashboardConfig ={};
+        var self = this;
+        $.extend(true, newDashboardConfig, dashboardConfig);
+
+        if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
+            var itemsArray = dashboardConfig.items;
+            var itemCount = 1;
+            itemsArray.forEach(function (item) {
+
+                if ((item != null) && (typeof item != 'undefined')) {
+                    newDashboardConfig = self._element_configuration_update(newDashboardConfig, item.id, values);
+                }
+            });
+        }
+
+        // var d = this._element_configuration_update(dashboardConfig, s.dashboard_items.item_1, values);
+        // d = this._element_configuration_update(d, s.dashboard_items.item_2, values);
+        // d = this._element_configuration_update(d, s.dashboard_items.item_3, values);
+        // d = this._element_configuration_update(d, s.dashboard_items.item_4, values);
+
+        return newDashboardConfig;
+    };
+
+    IndicatorProcesses1.prototype._element_configuration_update = function (dashboardConfig, element, values) {
 
         switch(element){
             case s.dashboard_items.item_1:
@@ -65,9 +91,9 @@ define([
 
         //Map
         var newDashboardConfig = '';
-        console.log("Before _element1_configuration_update")
-        console.log(dashboardConfig)
-        console.log(values)
+        // console.log("Before _element1_configuration_update")
+        // console.log(dashboardConfig)
+        // console.log(values)
         if((dashboardConfig)&&(dashboardConfig.items[0].postProcess)){
             //newDashboardConfig = dashboardConfig.items[0].postProcess
             dashboardConfig.items[0].postProcess[0].parameters["m49"].codes[0].codes = values.values[s.filter_items.item_2];
@@ -75,8 +101,8 @@ define([
             newDashboardConfig = dashboardConfig;
         }
 
-        console.log("After _element1_configuration_update")
-        console.log(newDashboardConfig)
+        // console.log("After _element1_configuration_update")
+        // console.log(newDashboardConfig)
         return newDashboardConfig;
     };
 
