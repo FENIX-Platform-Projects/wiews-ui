@@ -135,6 +135,9 @@ define([
 
         indicatorCommon.indicatorSectionInit(this.el, dashboardConf, this.indicatorProperties);
 
+        console.log(filterConfig)
+        filterConfig = indicatorCommon.indicatorFilterConfigInit(filterConfig);
+
         this._renderFilter(filterConfig);
 
         this._renderDashboard(dashboardConf);

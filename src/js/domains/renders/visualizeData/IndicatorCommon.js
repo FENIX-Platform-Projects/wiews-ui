@@ -7,9 +7,10 @@ define([
     "../../../../config/events",
     "../../../../config/domains/config",
     "./indicatorProcesses1",
+    "./filterSelectors",
     'fenix-ui-reports',
     "../../../../nls/labels"
-], function ($, log, _, C, ERR, EVT, DM, IP, Report, labels) {
+], function ($, log, _, C, ERR, EVT, DM, IP, FilterSelectors, Report, labels) {
 
     'use strict';
 
@@ -51,7 +52,6 @@ define([
     }
 
     function IndicatorCommon(o) {
-        //return this;
     }
 
 
@@ -69,27 +69,6 @@ define([
             itemsArray.forEach(function (item) {
 
                 if((item.hostConfig!=null)&&(typeof item.hostConfig!='undefined')){
-                    /*
-                    * itemContainer : {
-                     class : 'fs-map panel panel-default fs-map hoverable',
-                     itemClass : '',
-
-                     title : {
-                     text : 'Map title to be placed here'
-                     },
-                     subtitle : {
-                     text : 'Map subtitle to be placed here'
-                     },
-                     buttons : {
-                     export :{
-                     show : true //Default= true
-                     }
-                     },
-                     footer : {
-                     show : true, //Default= true
-                     text : 'The designations employed and the presentation of material in the maps do not imply the expression of any opinion whatsoever on the part of FAO concerning the legal or constitutional status of any country, territory or sea area, or concerning the delimitation of frontiers. South Sudan declared its independence on July 9, 2011. Due to data availability, the assessment presented in the map for Sudan and South Sudan reflects the situation up to 2011 for the former Sudan.'
-                     }
-                     }*/
                     var itemContainerConfig = item.hostConfig.itemContainer;
                     if((itemContainerConfig!= null)&&(typeof itemContainerConfig!= 'undefined')){
                         //Container class setting
@@ -176,6 +155,45 @@ define([
                 itemCount++;
             })
         }
+    }
+
+    IndicatorCommon.prototype.indicatorFilterConfigInit = function (filterConfig) {
+
+        var newFilterConfig = {};
+
+        if((filterConfig!=null)&&(typeof filterConfig != 'undefined')){
+            var itemsArray = filterConfig.items;
+            var itemCount = 1, selectorConfig, id, type, defaultValue, title;
+
+            itemsArray.forEach(function (item) {
+
+                id = item.id;
+                type = item.type;
+                defaultValue = item.default;
+                title = item.title;
+
+                selectorConfig = FilterSelectors[type];
+
+                if((selectorConfig!=null)&&(typeof selectorConfig!= 'undefined')){
+                    //Setting default value
+                    if((selectorConfig.selector!=null)&&(typeof selectorConfig.selector!= 'undefined')){
+                        if((defaultValue!=null)&&(typeof defaultValue!= 'undefined')){
+                            selectorConfig.selector.default = defaultValue;
+                        }
+                    }
+
+                    //Setting title
+                    if((selectorConfig.template!=null)&&(typeof selectorConfig.template!= 'undefined')){
+                        if((title!=null)&&(typeof title!= 'undefined')){
+                            selectorConfig.template.title = title;
+                        }
+                    }
+                }
+                newFilterConfig[id] = selectorConfig;
+            });
+        }
+
+        return newFilterConfig;
     }
 
     return IndicatorCommon;

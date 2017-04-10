@@ -350,55 +350,25 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
         },
         visualizeData: {
             filter: {
-                vd_filter_item_1: {
-                    selector: {
-                        id: "dropdown",
-                        default: VISUALIZE_DV["1_filter-vd_filter_item_1"],
-                        config: {
-                            plugins: ['remove_button']
-                        },
-                        noElement: false
-                    },
-                    cl: {
-                        uid: "wiews_genus"
-                    },
-                    template: {
-                        title: labels[Clang]['1_filter-vd_filter_item_1_title']
-                    }
+                items: [
+                 {
+                    id: 'vd_filter_item_1',
+                    type: 'genreDropdown',
+                    default: VISUALIZE_DV["1_filter-vd_filter_item_1"],
+                    title: labels[Clang]['1_filter-vd_filter_item_1_title']
                 },
-                vd_filter_item_2: {
-                    selector: {
-                        id: "dropdown",
-                        default: VISUALIZE_DV["1_filter-vd_filter_item_2"],
-                        config: {
-                            plugins: ['remove_button']
-                        },
-                        noElement: false
-                    },
-                    cl: {
-                        uid: "wiews_m49",
-                        level: "2",
-                        levels: "1"
-                    },
-                    template: {
-                        title: labels[Clang]['1_filter-vd_filter_item_2_title']
-                    }
+                {
+                    id: 'vd_filter_item_2',
+                    type: 'locationDropdown',
+                    default: VISUALIZE_DV["1_filter-vd_filter_item_2"],
+                    title: labels[Clang]['1_filter-vd_filter_item_2_title']
                 },
-                vd_filter_item_3: {
-                    selector: {
-                        id: "dropdown",
-                        default: VISUALIZE_DV["1_filter-vd_filter_item_3"],
-                        config: {
-                            maxItems: 1
-                        }
-                    },
-                    cl: {
-                        uid: "wiews_iteration"
-                    },
-                    template: {
-                        title: labels[Clang]['1_filter-vd_filter_item_3_title']
-                    }
-                }
+                {
+                    id: 'vd_filter_item_3',
+                    type: 'periodDropdown',
+                    default: VISUALIZE_DV["1_filter-vd_filter_item_3"],
+                    title: labels[Clang]['1_filter-vd_filter_item_3_title']
+                }]
             },
             dashboard: {
 
@@ -413,7 +383,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                 class : 'fs-map panel panel-default fs-map hoverable',
                                 // height : '400px',
                                 title : {
-                                    text : 'Map title to be placed here'
+                                    text : labels[Clang]['1_vd_dashboard_item_1_title']
                                 },
                                 buttons : {
                                     export :{
@@ -421,7 +391,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                     }
                                 },
                                 footer : {
-                                    text : 'The designations employed and the presentation of material in the maps do not imply the expression of any opinion whatsoever on the part of FAO concerning the legal or constitutional status of any country, territory or sea area, or concerning the delimitation of frontiers. South Sudan declared its independence on July 9, 2011. Due to data availability, the assessment presented in the map for Sudan and South Sudan reflects the situation up to 2011 for the former Sudan.'
+                                    text : labels[Clang]['1_vd_dashboard_item_1_footer']
                                 }
                             }
                         },
@@ -541,7 +511,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                             itemContainer : {
                                 class : 'fs-chart panel panel-default hoverable',
                                 title : {
-                                    text : 'Chart title to be placed here'
+                                    text : labels[Clang]['1_vd_dashboard_item_2_title']
                                 },
                                 footer : {
                                     show : false
@@ -734,7 +704,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                             itemContainer : {
                                 class : 'fs-chart panel panel-default hoverable',
                                 title : {
-                                    text : 'Accessions by country'
+                                    text : labels[Clang]['1_vd_dashboard_item_3_title']
                                 },
                                 footer : {
                                     show : false
@@ -874,7 +844,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                             itemContainer : {
                                 class : 'fs-chart panel panel-default hoverable',
                                 title : {
-                                    text : 'Accessions by stakeholder'
+                                    text : labels[Clang]['1_vd_dashboard_item_4_title']
                                 },
                                 footer : {
                                     show : false
