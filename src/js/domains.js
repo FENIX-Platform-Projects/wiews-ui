@@ -4,16 +4,13 @@ define([
     "underscore",
     "../config/config",
     "../config/domains/config",
-    "../config/domains/indicatorsCategories",
+    "../config/domains/indicatorsProperties",
     "../html/domains/template.hbs",
     "./domains/downloadData",
     "./domains/visualizeData",
-    "fenix-ui-filter-utils",
-    "../lib/utils",
     "../nls/labels",
-    "fenix-ui-dashboard",
     "bootstrap"
-], function ($, log, _, C, PAGC, CATEG, template, DownloadData, VisualizeData, Filter, Utils, labels, Dashboard) {
+], function ($, log, _, C, PAGC, CATEG, template, DownloadData, VisualizeData, labels) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
@@ -96,24 +93,25 @@ define([
 
     Domains.prototype._initTabs = function () {
 
-        // this.downloadDataTab = new DownloadData({
-        //       el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
-        //       lang: this.lang,
-        //       environment: this.environment,
-        //       indicator: this.selected_indicator_category,
-        //       indicatorProperties: this.indicatorProperties,
-        //       conversion: CATEG[this.selected_indicator.code].downloadConversion
-        // });
+        this.downloadDataTab = new DownloadData({
+              el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
+              lang: this.lang,
+              environment: this.environment,
+              indicator: this.selected_indicator_category,
+              indicatorProperties: this.indicatorProperties,
+              conversion: CATEG[this.selected_indicator.code].downloadConversion
+        });
 
         this.visualizeDataTab = new VisualizeData({
             el: this.$el.find(s.VISUALIZE_DATA_TAB_EL),
             lang: this.lang,
             environment: this.environment,
+            cache : this.cache,
             //indicator: this.selected_indicator_category,
             indicatorProperties: this.indicatorProperties
         });
 
-        //this.downloadDataTab.render();
+        this.downloadDataTab.render();
         //this.visualizeDataTab.render();
     };
 
@@ -197,8 +195,6 @@ define([
 
         //Wiews CSS
         require("../css/wiews.css");
-
-
 
     };
 

@@ -7,9 +7,7 @@ define(function () {
         //ENVIRONMENT : "develop"
         // ENVIRONMENT : "production",
         ENVIRONMENT : "demo",
-
         cache: false,
         lang: "EN"
-
     };
 });

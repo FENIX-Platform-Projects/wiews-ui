@@ -10,14 +10,11 @@ define([
     "fenix-ui-filter",
     "fenix-ui-filter-utils",
     "./renders/visualizeData/IndicatorCommon",
-    "../../lib/utils",
     "../../nls/labels",
-    "fenix-ui-bridge",
     "highcharts",
     '../common/progressBar',
-    "jstree",
     "highcharts-exporting"
-], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, Utils, labels, Bridge, Highcharts, ProgressBar) {
+], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, labels, Highcharts, ProgressBar) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
@@ -62,7 +59,7 @@ define([
     function VisualizeData(opts){
 
        // require('highcharts-no-data-to-display')(Highcharts);
-        require('highcharts/modules/exporting')(Highcharts);
+       // require('highcharts/modules/exporting')(Highcharts);
         // require('highcharts-exporting')(Highcharts);//highcharts/modules/exporting
 
         $.extend(true, this, opts);
@@ -136,16 +133,12 @@ define([
         indicatorCommon = new ICommon({
             el : this.el,
             indicatorProperties : this.indicatorProperties,
-            //filter : this.filter,
-            //dashboard_config : dashboardConfig,
-            //dashboard : this.dashboard,
             lang : this.lang,
-            enviroment : this.environment,
+            environment : this.environment,
             cache : this.cache
-            //models : this.models
         });
 
-        indicatorCommon.indicatorSectionInit(this.el, dashboardConf, this.indicatorProperties);
+        indicatorCommon.indicatorSectionInit(dashboardConf);
 
         console.log(filterConfig)
         filterConfig = indicatorCommon.indicatorFilterConfigInit(filterConfig);
@@ -218,6 +211,7 @@ define([
     }
 
     VisualizeData.prototype._renderDashboard = function (dashboardConfig) {
+        console.log(dashboardConfig)
         // Build new dashboard
         this.dashboard = new Dashboard(
             dashboardConfig
@@ -268,18 +262,26 @@ define([
             models : this.models
         });
 
-        var Indicator = this._getIndicatorRender();
-        var it = new Indicator({
-            el : this.el,
-            indicatorProperties : this.indicatorProperties,
-            filter : this.filter,
-            dashboard_config : dashboardConfig,
-            dashboard : this.dashboard,
-            lang : this.lang,
-            enviroment : this.environment,
-            cache : this.cache,
-            models : this.models
-        });
+        // indicatorCommon = new ICommon({
+        //     el : this.el,
+        //     indicatorProperties : this.indicatorProperties,
+        //     lang : this.lang,
+        //     environment : this.environment,
+        //     cache : this.cache
+        // });
+
+        // var Indicator = this._getIndicatorRender();
+        // var it = new Indicator({
+        //     el : this.el,
+        //     indicatorProperties : this.indicatorProperties,
+        //     filter : this.filter,
+        //     dashboard_config : dashboardConfig,
+        //     dashboard : this.dashboard,
+        //     lang : this.lang,
+        //     environment : this.environment,
+        //     cache : this.cache,
+        //     models : this.models
+        // });
 
         indicatorCommon.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))
 

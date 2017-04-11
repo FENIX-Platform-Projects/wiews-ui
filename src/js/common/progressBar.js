@@ -5,9 +5,8 @@ define([
     'loglevel',
     'underscore',
     '../../html/common/progressBarTemplate.hbs',
-    '../../nls/labels',
-    'amplify-pubsub'
-], function ($, log, _, template, i18nLabels, amplify) {
+    '../../nls/labels'
+], function ($, log, _, template, i18nLabels) {
 
     'use strict';
 

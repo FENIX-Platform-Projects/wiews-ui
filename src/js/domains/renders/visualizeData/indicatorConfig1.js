@@ -395,6 +395,8 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                 }
                             }
                         },
+                        //This is used for the export button action
+                        uid : labels[Clang]['1_vd_dashboard_item_1_uid'],
                         config: {
                             geoSubject: 'Gaul0',
                             colorRamp: 'Blues',  //GnBu, Greens,
@@ -518,6 +520,8 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                 }
                             }
                         },
+                        //This is used for the export button action
+                        uid : labels[Clang]['1_vd_dashboard_item_2_uid'],
                         config: {
                             type: "pieold",
                             x: ["biologicalAccessionId"], //x axis and series
@@ -711,6 +715,8 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                 }
                             }
                         },
+                        //This is used for the export button action
+                        uid : labels[Clang]['1_vd_dashboard_item_3_uid'],
                         config: {
                             type: "column",
                             x: ["country"], //x axis
@@ -851,6 +857,8 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                 }
                             }
                         },
+                        //This is used for the export button action
+                        uid : labels[Clang]['1_vd_dashboard_item_4_uid'],
                         config: {
                             type: "column",
                             x: ["stakeholder"], //x axis
