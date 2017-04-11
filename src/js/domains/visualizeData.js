@@ -11,23 +11,17 @@ define([
     "fenix-ui-filter-utils",
     "./renders/visualizeData/IndicatorCommon",
     "../../nls/labels",
-    "highcharts",
     '../common/progressBar',
-    "highcharts-exporting"
-], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, labels, Highcharts, ProgressBar) {
+], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, labels, ProgressBar) {
 
     "use strict";
-    var Clang = C.lang.toLowerCase();
 
     var dashboardName = "visualizeData";
 
     var indicatorCommon;
 
     var s = {
-
-        indicator_renders_path : './renders/visualizeData/indicator',
-        indicator_categories_path : './renders/visualizeData/indicatorConfig',
-        indicator_processes_renders_path : './renders/visualizeData/indicatorProcesses',
+        indicator_config_path : './renders/visualizeData/indicatorConfig',
 
         bar: {
             PROGRESS_BAR_CONTAINER: '#vd-progress-bar-holder',
@@ -50,17 +44,12 @@ define([
                 ITEM_READY : 'ready.item'
             },
             dashboard :{
-                READY : 'dashboard.ready',
                 DASHBOARD_CONFIG : "new_dashoboard_config_ready"
             }
         }
     };
 
     function VisualizeData(opts){
-
-       // require('highcharts-no-data-to-display')(Highcharts);
-       // require('highcharts/modules/exporting')(Highcharts);
-        // require('highcharts-exporting')(Highcharts);//highcharts/modules/exporting
 
         $.extend(true, this, opts);
 
@@ -74,17 +63,14 @@ define([
 
     VisualizeData.prototype._validateConfig = function () {
 
-        if (!C.lang) {
-            alert("Please specify a valid LANGUAGE in config/config.js");
-        }
     };
 
     VisualizeData.prototype._attach = function () {
 
-        $(this.el).html(filterTemplate(labels[Clang]));
+        $(this.el).html(filterTemplate(labels[this.lang]));
         var indicatorFilterSection = this.el.find('[data-section = "'+this.indicatorProperties.filter_category+'"]');
         //dashboardSection
-        $(this.el).append(dashboardTemplate(labels[Clang]));
+        $(this.el).append(dashboardTemplate(labels[this.lang]));
         var indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dashboard_category+'"]');
         var progressBar = this.el.find('[data-bar = "'+s.bar.PROGRESS_BAR_DATA_VARIABLE+'"]');//data-bar="progress-bar"
         $(this.el).html(progressBar);
@@ -95,19 +81,8 @@ define([
 
     VisualizeData.prototype._initVariables = function () {
 
-        //var INDICATOR = require(this._getIndicatorConfig());
-
         this.$el = $(s.EL);
-
-        this.lang = Clang;
-        this.environment = C.ENVIRONMENT;
-        this.cache = C.cache;
         this.indicatorConfig = this._getIndicatorConfig();
-        console.log("Before")
-        //this.indicatorConfig = this._getIndicatorRender();
-
-        console.log(this.indicatorConfig)
-        //this.config = this.indicatorConfig[dashboardName];
         this.config = this.indicatorConfig[dashboardName];
 
         this.channels = {};
@@ -140,7 +115,6 @@ define([
 
         indicatorCommon.indicatorSectionInit(dashboardConf);
 
-        console.log(filterConfig)
         filterConfig = indicatorCommon.indicatorFilterConfigInit(filterConfig);
 
         this._renderFilter(filterConfig);
@@ -148,8 +122,6 @@ define([
         this._renderDashboard(dashboardConf);
 
         this._loadProgressBar(dashboardConf);
-
-        //this._renderIndicator(dashboardConf);
     }
 
     // Events
@@ -211,7 +183,6 @@ define([
     }
 
     VisualizeData.prototype._renderDashboard = function (dashboardConfig) {
-        console.log(dashboardConfig)
         // Build new dashboard
         this.dashboard = new Dashboard(
             dashboardConfig
@@ -224,36 +195,11 @@ define([
 
     VisualizeData.prototype._getIndicatorConfigPath = function () {
 
-        // console.log(s.indicator_renders_path + this.indicatorProperties.dashboard_category)
-        // return CATEGORIES + '/1/indicatorsConfig1';
-
-       // return '../../config/domains/categories/1/indicatorsConfig1.js';
-       //  return '../base'
-        return s.indicator_categories_path + this.indicatorProperties.indicator_id+'.js';
-       //return s.indicator_categories_path + '/'+ this.indicatorProperties.dashboard_category + '/indicatorsConfig'+ this.indicatorProperties.indicator_id+'.js';
-    };
-
-    VisualizeData.prototype._getIndicatorRender = function () {
-        return require(this._getIndicatorScriptPath());
-    };
-
-    VisualizeData.prototype._getIndicatorScriptPath = function () {
-        return s.indicator_renders_path + this.indicatorProperties.dashboard_category;
-    };
-
-    VisualizeData.prototype._getIndicatorProcessesRender = function () {
-        return require(this._getIndicatorProcessesPath());
-    };
-
-    VisualizeData.prototype._getIndicatorProcessesPath = function () {
-        console.log(JSON.stringify(s.indicator_processes_renders_path + '1'))
-        return s.indicator_processes_renders_path + this.indicatorProperties.processType;
+        return s.indicator_config_path + this.indicatorProperties.indicator_id+'.js';
     };
 
     VisualizeData.prototype._renderIndicator = function (dashboardConfig) {
         // Calling the indicator actions file
-        console.log("Before render indicator")
-        console.log(this.models)
 
         indicatorCommon.render({
             filter : this.filter,
@@ -262,33 +208,11 @@ define([
             models : this.models
         });
 
-        // indicatorCommon = new ICommon({
-        //     el : this.el,
-        //     indicatorProperties : this.indicatorProperties,
-        //     lang : this.lang,
-        //     environment : this.environment,
-        //     cache : this.cache
-        // });
-
-        // var Indicator = this._getIndicatorRender();
-        // var it = new Indicator({
-        //     el : this.el,
-        //     indicatorProperties : this.indicatorProperties,
-        //     filter : this.filter,
-        //     dashboard_config : dashboardConfig,
-        //     dashboard : this.dashboard,
-        //     lang : this.lang,
-        //     environment : this.environment,
-        //     cache : this.cache,
-        //     models : this.models
-        // });
-
         indicatorCommon.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))
 
     };
 
     VisualizeData.prototype._dashboardRecreate = function (param) {
-        console.log('dashboard recreate')
 
         if(this.dashboard){
             this._disposeDashboard();

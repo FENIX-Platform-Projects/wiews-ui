@@ -6,12 +6,10 @@ define([
     "../../../../config/errors",
     "../../../../config/events",
     "../../../../config/domains/config",
-    // "./indicatorProcesses1",
     "../../../../config/domains/filterSelectors",
     'fenix-ui-reports',
     "../../../../nls/labels"
 ], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, Report, labels) {
-// ], function ($, log, _, C, ERR, EVT, DM, IP, FilterSelectors, Report, labels) {
 
     'use strict';
 
@@ -20,7 +18,6 @@ define([
     var s = {
         indicator_processes_renders_path : './indicatorProcesses',
 
-
         indicatorCategory : '1',
 
         filter_button : {
@@ -28,25 +25,7 @@ define([
         },
 
         dashboard_button : {
-            export : "vd_dashboard_button_export_",
-            button_1 : "vd_dashboard_button_1",
-            button_2 : "vd_dashboard_button_2",
-            button_3 : "vd_dashboard_button_3",
-            button_4 : "vd_dashboard_button_4"
-        },
-
-        filter_items : {
-            item_1 : "vd_filter_item_1",
-            item_2 : "vd_filter_item_2",
-            item_3 : "vd_filter_item_3",
-            item_4 : "vd_filter_item_4"
-        },
-
-        dashboard_items : {
-            item_1 : "vd_dashboard_item_1",
-            item_2 : "vd_dashboard_item_2",
-            item_3 : "vd_dashboard_item_3",
-            item_4 : "vd_dashboard_item_4"
+            export : "vd_dashboard_button_export_"
         },
 
         event: {
@@ -67,11 +46,8 @@ define([
 
     IndicatorCommon.prototype._initVariables = function () {
 
-        console.log(this.indicatorProperties)
         //indicatorProperties
         var IndicatorProcessesRender = this._getIndicatorProcessesRender();
-        console.log(JSON.stringify(IndicatorProcessesRender))
-        console.log(IndicatorProcessesRender)
         this.indicatorProcesses = new IndicatorProcessesRender();
 
         this.$el = $(this.el);
@@ -127,7 +103,6 @@ define([
                         if((itemContainerConfig.class!= null)&&(typeof itemContainerConfig.class!= 'undefined')){
                             var elem = indicatorSection.find('[data-itemContainer = "vd_dashboard_item_container_'+itemCount+'"]');
                             if((elem!= null)&&(typeof elem!= 'undefined')){
-                                console.log("BEFORE ADD CLASS")
                                 elem.addClass(itemContainerConfig.class);
                             }
                         }
@@ -151,7 +126,7 @@ define([
                             }
                         }
 
-                        //Container buttons data-button="vd_dashboard_button_export_2"
+                        //Container buttons
                         if((itemContainerConfig.buttons!= null)&&(typeof itemContainerConfig.buttons!= 'undefined')){
                             if((itemContainerConfig.buttons.export!= null)&&(typeof itemContainerConfig.buttons.export!= 'undefined')){
                                 if((itemContainerConfig.buttons.export.show!= null)&&(typeof itemContainerConfig.buttons.export.show!= 'undefined')&&(!itemContainerConfig.buttons.export.show)){
@@ -183,7 +158,6 @@ define([
                         }
 
                         //Footer
-                        //Container buttons //data-itemContainerFooter="vd_dashboard_item_container_footer_2"
                         if((itemContainerConfig.footer!= null)&&(typeof itemContainerConfig.footer!= 'undefined')){
                             if((itemContainerConfig.footer.show!= null)&&(typeof itemContainerConfig.footer.show!= 'undefined')&&(!itemContainerConfig.footer.show)){
                                 elem = indicatorSection.find('[data-itemContainerFooter = "vd_dashboard_item_container_footer_'+itemCount+'"]');
@@ -193,7 +167,6 @@ define([
                             }
                             else{
                                 //The footer has to be shown
-                                //data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_1"
                                 if((itemContainerConfig.footer.text!= null)&&(typeof itemContainerConfig.footer.text!= 'undefined')){
                                     elem = indicatorSection.find('[data-itemContainerFooterContent = "vd_dashboard_item_container_footerContent_'+itemCount+'"]');
                                     if((elem!= null)&&(typeof elem!= 'undefined')){
@@ -242,6 +215,7 @@ define([
                     }
                 }
                 newFilterConfig[id] = selectorConfig;
+                itemCount++;
             });
         }
 
@@ -275,29 +249,9 @@ define([
                         dashboard_button.on(s.event.BUTTON_CLICK, _.bind(self.downloadData, self, self.models[itemId], uid));
                     }
                 }
+                itemCount++;
             });
         }
-
-        // var dashboard_button_1 = this.el.find('[data-button = "'+s.dashboard_button.button_1+'"]');
-        //
-        // if(dashboard_button_1){
-        //     console.log(s.dashboard_items.item_1, JSON.stringify(self.uid_items[s.dashboard_items.item_1]))
-        //     dashboard_button_1.on(s.event.BUTTON_CLICK, _.bind(self.downloadData, this, self.models[s.dashboard_items.item_1], self.uid_items.item_1));
-        // }
-        //
-        // var dashboard_button_3 = this.el.find('[data-button = "'+s.dashboard_button.button_3+'"]');
-        //
-        // if(dashboard_button_3){
-        //     console.log(s.dashboard_items.item_3, JSON.stringify(self.uid_items[s.dashboard_items.item_3]))
-        //     dashboard_button_3.on(s.event.BUTTON_CLICK, _.bind(self.downloadData, this, self.models[s.dashboard_items.item_3], self.uid_items.item_3));
-        // }
-        //
-        // var dashboard_button_4 = this.el.find('[data-button = "'+s.dashboard_button.button_4+'"]');
-        //
-        // if(dashboard_button_4){
-        //     console.log(s.dashboard_items.item_4, JSON.stringify(self.uid_items[s.dashboard_items.item_4]))
-        //     dashboard_button_4.on(s.event.BUTTON_CLICK, _.bind(self.downloadData, this, self.models[s.dashboard_items.item_4], self.uid_items.item_4));
-        // }
     };
 
     IndicatorCommon.prototype.onClick_button1 = function () {
@@ -308,13 +262,8 @@ define([
     }
 
     IndicatorCommon.prototype.downloadData = function (model, uid) {
-        console.log("in bind", item)
-        //var model2 = {"metadata":{"rid":"9_11457","uid":"adam_browse_sector_oda","dsd":{"cache":{"storage":"postgres"},"rid":"63_324","columns":[{"dataType":"code","key":true,"id":"gaul0","title":{"EN":"GAUL Country"},"domain":{"codes":[{"version":"2014","idCodeList":"GAUL0","extendedName":{"EN":"Global administrative unit layer country level"}}]},"subject":"geo"},{"dataType":"number","key":false,"id":"value","title":{"EN":"Value"},"subject":"value"},{"dataType":"code","key":false,"id":"unitcode","title":{"EN":"Measurement unit"},"domain":{"codes":[{"version":"2016","idCodeList":"crs_units","extendedName":{"EN":"OECD Units"}}]},"subject":"um"},{"dataType":"text","key":false,"id":"unitcode_EN","title":{"EN":"Measurement unit"},"virtual":false,"transposed":false},{"dataType":"text","key":false,"id":"gaul0_EN","title":{"EN":"GAUL Country"},"virtual":false,"transposed":false}],"contextSystem":"D3P"}},"data":[["181",3365.9938246499987,"million_usd","Million USD","Niger"],["254",568.9503590609995,"million_usd","Million USD","Ukraine"],["94",3751.3433445219976,"million_usd","Million USD","Ghana"],["243",481.72791288200006,"million_usd","Million USD","Togo"],["135",117.32736094599994,"million_usd","Million USD","Kiribati"],["79",14754.829214275996,"million_usd","Million USD","Ethiopia"],["196",3717.813645854998,"million_usd","Million USD","Philippines"],["4",508.3454585730001,"million_usd","Million USD","Algeria"],["107",868.852734545,"million_usd","Million USD","Guyana"],["40764",7421.549451951,"million_usd","Million USD","Sudan (ex)"],["205",2140.399058609001,"million_usd","Million USD","Rwanda"],["240",538.3631362360005,"million_usd","Million USD","Thailand"],["207",12.142791729999999,"million_usd","Million USD","Saint Helena"],["34",836.9131206080002,"million_usd","Million USD","Bosnia and Herzegovina"],["161",137.63201255,"million_usd","Million USD","Mayotte"],["68",3752.0364044950015,"million_usd","Million USD","Democratic Republic of the Congo"],["157",63.234144195000006,"million_usd","Million USD","Marshall Islands"],["43",1563.765752489,"million_usd","Million USD","Burundi"],["221",870.0060937989999,"million_usd","Million USD","Sierra Leone"],["156",0.0210849,"million_usd","Million USD","Malta"],["47",383.25892923900017,"million_usd","Million USD","Cape Verde"],["75",606.0823101330001,"million_usd","Million USD","El Salvador"],["217",3416.1782833740012,"million_usd","Million USD","Senegal"],["175",3097.1827506100017,"million_usd","Million USD","Nepal"],["76",15.952551659000003,"million_usd","Million USD","Equatorial Guinea"],["239",1102.534424734,"million_usd","Million USD","Tajikistan"],["250",44.312355069999995,"million_usd","Million USD","Turkmenistan"],["71",141.036150463,"million_usd","Million USD","Dominica"],["26",106.84980788700003,"million_usd","Million USD","Belarus"],["154",160.19288558300013,"million_usd","Million USD","Maldives"],["3",653.3022639359998,"million_usd","Million USD","Albania"],["248",1229.938683014,"million_usd","Million USD","Tunisia"],["31",276.942531754,"million_usd","Million USD","Bhutan"],["35",106.67483927800001,"million_usd","Million USD","Botswana"],["147295",7811.033758178414,"million_usd","Million USD","China"],["192",673.5400445839997,"million_usd","Million USD","Papua New Guinea"],["155",4175.799400400995,"million_usd","Million USD","Mali"],["241",417.59318784399954,"million_usd","Million USD","The former Yugoslav Republic of Macedonia"],["133",6418.99199705617,"million_usd","Million USD","Kenya"],["130",1467.4101994460002,"million_usd","Million USD","Jordan"],["141",757.0849790279995,"million_usd","Million USD","Lebanon"],["215",2.3587486559999995,"million_usd","Million USD","Saudi Arabia"],["40765",3395.4028414939994,"million_usd","Million USD","Egypt"],["115",15437.21778359978,"million_usd","Million USD","India"],["72",501.01526116999975,"million_usd","Million USD","Dominican Republic"],["144",1039.0959067419997,"million_usd","Million USD","Liberia"],["33",3355.1078021429994,"million_usd","Million USD","Bolivia"],["269",2642.742587750999,"million_usd","Million USD","Yemen"]]};
 
         model.metadata.uid = uid;
-        // console.log("downloadData")
-        console.log(uid)
-        console.log(JSON.stringify(model))
         var payload = {
             resource: model,
             input: {

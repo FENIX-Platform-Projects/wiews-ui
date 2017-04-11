@@ -62,12 +62,6 @@ define([
             });
         }
 
-        // var d = this._element_configuration_update(dashboardConfig, s.dashboard_items.item_1, values);
-        // d = this._element_configuration_update(d, s.dashboard_items.item_2, values);
-        // d = this._element_configuration_update(d, s.dashboard_items.item_3, values);
-        // d = this._element_configuration_update(d, s.dashboard_items.item_4, values);
-
-        console.log(JSON.stringify(newDashboardConfig))
         return newDashboardConfig;
     };
 
@@ -93,9 +87,6 @@ define([
 
         //Map
         var newDashboardConfig = '';
-        // console.log("Before _element1_configuration_update")
-        // console.log(dashboardConfig)
-        // console.log(values)
         if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
             //newDashboardConfig = dashboardConfig.items[0].postProcess
             dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values.values[s.filter_items.item_2];
@@ -103,8 +94,6 @@ define([
             newDashboardConfig = dashboardConfig;
         }
 
-        // console.log("After _element1_configuration_update")
-        // console.log(newDashboardConfig)
         return newDashboardConfig;
     };
 
@@ -125,9 +114,6 @@ define([
 
     IndicatorProcesses1.prototype._element3_configuration_update = function (dashboardConfig, values, itemCount) {
 
-       // console.log("ELEMENT 3 CONFIGURATION UPDATE!!! ")
-        // console.log(JSON.stringify(values.values[s.filter_items.item_2]))
-        // console.log(JSON.stringify(values.values[s.filter_items.item_3]))
         //Second Chart
         var newDashboardConfig = '';
         if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
@@ -136,7 +122,6 @@ define([
             dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_3];
             newDashboardConfig = dashboardConfig;
         }
-       // console.log(newDashboardConfig)
         return newDashboardConfig;
     };
 
