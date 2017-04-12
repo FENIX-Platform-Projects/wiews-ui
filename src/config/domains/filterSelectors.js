@@ -11,7 +11,8 @@ define(
                     config: {
                         plugins: ['remove_button']
                     },
-                    noElement: false
+                    noElement: false,
+                    hideSummary : true
                 },
                 cl: {
                     uid: "wiews_genus"
@@ -22,7 +23,8 @@ define(
             },
             genreTree :{
                 selector: {
-                    id: "tree"
+                    id: "tree",
+                    hideSummary : true
                 },
                 cl: {
                     uid: "wiews_genus"
@@ -38,7 +40,8 @@ define(
                     config: {
                         plugins: ['remove_button']
                     },
-                    noElement: false
+                    noElement: false,
+                    hideSummary : true
                 },
                 cl: {
                     uid: "wiews_m49",
@@ -51,7 +54,8 @@ define(
             },
             locationTree :{
                 selector: {
-                    id: "tree"
+                    id: "tree",
+                    hideSummary : true
                 },
                 cl: {
                     uid: "wiews_m49",
@@ -68,7 +72,8 @@ define(
                     default: '',
                     config: {
                         maxItems: 1
-                    }
+                    },
+                    hideSummary : true
                 },
                 cl: {
                     uid: "wiews_iteration"
@@ -79,7 +84,8 @@ define(
             },
             periodTree :{
                 selector: {
-                    id: "tree"
+                    id: "tree",
+                    hideSummary : true
                 },
                 cl: {
                     uid: "wiews_iteration"
@@ -89,6 +95,5 @@ define(
                 }
             }
         };
-
 
     });
