@@ -131,6 +131,7 @@ define([
 
     DownloadData.prototype._renderFilter = function (filterConfig) {
 
+        console.log(filterConfig)
         this.filter = new Filter({
             el: s.filter.filter_container,
             selectors: filterConfig,

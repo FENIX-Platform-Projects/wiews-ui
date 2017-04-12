@@ -4,10 +4,6 @@
 
   body {font-family: inherit;}
 
-  div.csc-default ul li {margin-bottom: 0px; left: 0em;}
-
-  .container-breadcrumb {display: none;}
-
   /* body {font-size: 1.5em!important;} */
 
   h6.truncate {font-size:15px; height: 26px;}
@@ -29,32 +25,32 @@
   }
 
   .nav-tabs>li>a:before {
-      -webkit-transition: all .3s ease 0s;
-      -moz-transition: all .3s ease 0s;
-      -ms-transition: all .3s ease 0s;
-      -o-transition: all .3s ease 0s;
-      transition: all .3s ease 0s;
-      content: '';
-      position: absolute;
-      /* width: calc(100% - 10px); */
-      /* left: 10px; */
-      width: calc(100% - 10px);
-      height: 2px;
-      background-color: #337ab7;
-      bottom: -2px;
-      pointer-events: none;
-      -ms-transform: scaleX(0);
-      -webkit-transform: scaleX(0);
-      transform: scaleX(0);
+    -webkit-transition: all .3s ease 0s;
+    -moz-transition: all .3s ease 0s;
+    -ms-transition: all .3s ease 0s;
+    -o-transition: all .3s ease 0s;
+    transition: all .3s ease 0s;
+    content: '';
+    position: absolute;
+    /* width: calc(100% - 10px); */
+    /* left: 10px; */
+    width: calc(100% - 10px);
+    height: 2px;
+    background-color: #337ab7;
+    bottom: -2px;
+    pointer-events: none;
+    -ms-transform: scaleX(0);
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
   }
 
   .nav-tabs > li > a {
-      padding: 5px;
-      position: relative;
-      color: #434343;
-      font-weight: 500;
-      font-size: 12px;
-      text-transform: uppercase;
+    padding: 5px;
+    position: relative;
+    color: #434343;
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
   }
 
   .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:active, .nav-tabs>li.active>a:visited, .nav-tabs>li.active>a:focus {
@@ -114,6 +110,8 @@
   i.left {float: left; margin-right: 10px; font-size: 20px;}
 
   .form-control {font-size: 13px; border: none; border-radius: 0px; border-bottom: 1px solid #ccc;}
+  .form-control ul li {margin-bottom: 0px !important; left: 0em !important;}
+
   .fx-tree-search {margin-bottom: 0px; font-size: 14px;}
   .btn i, .btn-flat i {font-size: 1.3rem; line-height: inherit;}
 
@@ -142,7 +140,6 @@
   .fx-sandbox .btn {font-size: 13px;}
   .selector-footer .list-unstyled {margin: 5px 7px;}
   .code-brk {margin: 0px 5px 0px 3px;}
-
 
   /* ################ VISUALIZE DATA ########################## */
 
