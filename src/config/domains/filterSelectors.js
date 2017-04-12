@@ -20,6 +20,17 @@ define(
                     title: ''
                 }
             },
+            genreTree :{
+                selector: {
+                    id: "tree"
+                },
+                cl: {
+                    uid: "wiews_genus"
+                },
+                template: {
+                    title: ''
+                }
+            },
             locationDropdown :{
                 selector: {
                     id: "dropdown",
@@ -38,6 +49,19 @@ define(
                     title: ''
                 }
             },
+            locationTree :{
+                selector: {
+                    id: "tree"
+                },
+                cl: {
+                    uid: "wiews_m49",
+                    level: "2",
+                    levels: "1"
+                },
+                template: {
+                    title: ''
+                }
+            },
             periodDropdown :{
                 selector: {
                     id: "dropdown",
@@ -45,6 +69,17 @@ define(
                     config: {
                         maxItems: 1
                     }
+                },
+                cl: {
+                    uid: "wiews_iteration"
+                },
+                template: {
+                    title: ''
+                }
+            },
+            periodTree :{
+                selector: {
+                    id: "tree"
                 },
                 cl: {
                     uid: "wiews_iteration"

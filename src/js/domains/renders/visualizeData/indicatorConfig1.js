@@ -4,6 +4,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
     "use strict";
 
     var Clang = C.lang.toLowerCase();
+    var ClangUp = C.lang.toUpperCase();
 
     return {
         downloadData: {
@@ -353,19 +354,19 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                 items: [
                  {
                     id: 'vd_filter_item_1',
-                    type: 'genreDropdown',
+                    type: 'genreTree',
                     default: VISUALIZE_DV["1_filter-vd_filter_item_1"],
                     title: labels[Clang]['1_filter-vd_filter_item_1_title']
                 },
                 {
                     id: 'vd_filter_item_2',
-                    type: 'locationDropdown',
+                    type: 'locationTree',
                     default: VISUALIZE_DV["1_filter-vd_filter_item_2"],
                     title: labels[Clang]['1_filter-vd_filter_item_2_title']
                 },
                 {
                     id: 'vd_filter_item_3',
-                    type: 'periodDropdown',
+                    type: 'periodTree',
                     default: VISUALIZE_DV["1_filter-vd_filter_item_3"],
                     title: labels[Clang]['1_filter-vd_filter_item_3_title']
                 }]
@@ -524,7 +525,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                         uid : labels[Clang]['1_vd_dashboard_item_2_uid'],
                         config: {
                             type: "pieold",
-                            x: ["biologicalAccessionId"], //x axis and series
+                            x: ["biologicalAccessionId_"+ClangUp], //x axis and series
                             series: ["unitname"], // series
                             y: ["value"],//Y dimension
                             aggregationFn: {"value": "sum"},
