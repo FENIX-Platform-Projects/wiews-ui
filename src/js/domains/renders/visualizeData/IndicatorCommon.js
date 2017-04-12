@@ -21,7 +21,8 @@ define([
         indicatorCategory : '1',
 
         filter_button : {
-            button_1 : "vd_filter_button_1"
+            button_1 : "vd_filter_button_1",
+            buttonMsg_1 : "vd_filter_button_1_msg"
         },
 
         dashboard_button : {
@@ -54,8 +55,6 @@ define([
         // pub/sub
         this.channels = {};
 
-        console.log(this.indicatorProcesses)
-
         if (this.report && $.isFunction(this.report.dispose)) {
             this.report.dispose();
         }
@@ -82,7 +81,6 @@ define([
     };
 
     IndicatorCommon.prototype._getIndicatorProcessesPath = function () {
-        console.log(JSON.stringify(s.indicator_processes_renders_path + '1'))
         return s.indicator_processes_renders_path + this.indicatorProperties.processType;
     };
 
@@ -227,10 +225,10 @@ define([
         var self = this;
 
         var filter_button_1 = this.el.find('[data-button = "'+s.filter_button.button_1+'"]');
+        var filter_div_msg_1 = this.el.find('[data-buttonMsg = "'+s.filter_button.buttonMsg_1+'"]');
 
-        console.log(this.indicatorProcesses)
-        if(filter_button_1){
-            filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self.onClick_button1, this));
+        if((filter_button_1!=null)&&(typeof filter_button_1!='undefined')&&(filter_div_msg_1!=null)&&(typeof filter_div_msg_1!='undefined')){
+            filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self.onClick_button1, this, {lang: this.lang, filterDivMsg_1: filter_div_msg_1}));
         }
 
         if((this.dashboard_config!=null)&&(typeof this.dashboard_config != 'undefined')){
@@ -240,9 +238,10 @@ define([
             itemsArray.forEach(function (item) {
 
                 if ((item != null) && (typeof item != 'undefined')) {
-                    console.log("in bind", item)
                     itemId = item.id;
                     uid = item.uid;
+
+                    //Dashboard Export
                     var dashboard_button = self.el.find('[data-button = "'+s.dashboard_button.export+itemCount+'"]');
 
                     if(dashboard_button){
@@ -252,13 +251,24 @@ define([
                 itemCount++;
             });
         }
+
+        if((this.filter!=null)&&(typeof this.filter!= 'undefined')){
+            this.filter.on('select', _.bind(self.onSelectFilter, self, {filterDivMsg_1: filter_div_msg_1}));
+        }
     };
 
-    IndicatorCommon.prototype.onClick_button1 = function () {
+    IndicatorCommon.prototype.onClick_button1 = function (param) {
         var values = this.filter.getValues();
-        this.dashboard_config = this.indicatorProcesses.onClickButton(this.dashboard_config, values);
+        var newDashboardConfig = this.indicatorProcesses.onClickButton(this.dashboard_config, values, param);
+        if((newDashboardConfig!= null)&&(typeof newDashboardConfig!= 'undefined')){
+            this.dashboard_config = newDashboardConfig;
+            this._trigger(s.event.DASHBOARD_CONFIG, {indicator_category : s.indicatorCategory, dashboardConfig : this.dashboard_config, values: values, dashboard: this.dashboard})
+        }
+    }
 
-        this._trigger(s.event.DASHBOARD_CONFIG, {indicator_category : s.indicatorCategory, dashboardConfig : this.dashboard_config, values: values, dashboard: this.dashboard})
+    IndicatorCommon.prototype.onSelectFilter = function (hostParam, filterResponse) {
+
+        var res = this.indicatorProcesses.onSelectFilter(hostParam, filterResponse);
     }
 
     IndicatorCommon.prototype.downloadData = function (model, uid) {

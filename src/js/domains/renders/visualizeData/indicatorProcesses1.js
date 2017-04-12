@@ -6,14 +6,17 @@ define([
     "../../../../config/errors",
     "../../../../config/events",
     "../../../../config/domains/config",
-    'fenix-ui-chart-creator'
-], function ($, log, _, C, ERR, EVT, DM) {
+    "../../../../nls/labels"
+], function ($, log, _, C, ERR, EVT, DM, labels) {
 
     'use strict';
 
     var defaultOptions = {};
 
     var s = {
+        buttonMsg : {
+            button_1 : "vd_filter_button_1_msg"
+        },
 
         filter_items : {
             item_1 : "vd_filter_item_1",
@@ -43,27 +46,77 @@ define([
 
     };
 
+    IndicatorProcesses1.prototype.filterSelectionValidation = function (values, params) {
+
+        var valid = true;
+        var filterDivMsg1 = params.filterDivMsg_1;
+        if ((values != null) && (typeof values != 'undefined') && (filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined') && (values.values != null) && (typeof values.values != 'undefined')) {
+
+            for(var key in values.values) {
+                if((values.values[key] != null) && (typeof values.values[key] != 'undefined') && (values.values[key].length>0))
+                {
+                    valid = true;
+                }
+                else{
+                    valid = false;
+                    break;
+                }
+            }
+
+        }
+        else {
+            valid = false;
+        }
+
+        if(!valid){
+            filterDivMsg1.html(labels[params.lang][s.buttonMsg.button_1])
+            filterDivMsg1.show();
+        }
+
+        return valid;
+    }
+
     //In this way this action is indipendent by the number of items in the configuration
     //Test it removing some items in the configuration
-    IndicatorProcesses1.prototype.onClickButton = function (dashboardConfig, values) {
-        var newDashboardConfig ={};
-        var self = this;
-        $.extend(true, newDashboardConfig, dashboardConfig);
+    IndicatorProcesses1.prototype.onClickButton = function (dashboardConfig, values, params) {
 
-        if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
-            var itemsArray = dashboardConfig.items;
-            var itemCount = 1;
-            itemsArray.forEach(function (item) {
+        var newDashboardConfig =null;
+        if(this.filterSelectionValidation(values, params))
+        {
+            var self = this;
+            newDashboardConfig ={};
+            $.extend(true, newDashboardConfig, dashboardConfig, {});
 
-                if ((item != null) && (typeof item != 'undefined')) {
-                    newDashboardConfig = self._element_configuration_update(newDashboardConfig, item.id, values, itemCount-1);
-                }
-                itemCount++;
-            });
+            if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
+                var itemsArray = dashboardConfig.items;
+                var itemCount = 1;
+                itemsArray.forEach(function (item) {
+
+                    if ((item != null) && (typeof item != 'undefined')) {
+                        newDashboardConfig = self._element_configuration_update(newDashboardConfig, item.id, values, itemCount-1);
+                    }
+                    itemCount++;
+                });
+            }
         }
 
         return newDashboardConfig;
     };
+
+    IndicatorProcesses1.prototype.onSelectFilter = function (hostParam, filterResponse) {
+        var filterDivMsg1 = hostParam.filterDivMsg_1;
+
+        if((filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined'))
+        {
+            filterDivMsg1.html('')
+            filterDivMsg1.show()
+        }
+        else{
+           return false;
+        }
+
+        return true;
+    }
 
     IndicatorProcesses1.prototype._element_configuration_update = function (dashboardConfig, element, values, itemCount) {
 

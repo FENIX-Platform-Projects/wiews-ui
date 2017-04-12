@@ -10,6 +10,7 @@ define(function () {
 
     "loading_in_progress" : "Loading in progress",
     "completed" : "Completed",
+    "vd_filter_button_1_msg" : "The selection is not valid. Please, select at least an item for each selector.",
     "1_filter-vd_filter_item_1_title" : "Genre",
     "1_filter-vd_filter_item_2_title" : "Location",
     "1_filter-vd_filter_item_3_title" : "Period",
