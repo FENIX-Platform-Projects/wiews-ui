@@ -4,28 +4,24 @@ define([
     "underscore",
     "../../config/config",
     "../../config/domains/config",
-    "../../config/domains/indicatorsConfig",
-    "../../html/domains/visualizeDataTemplate.hbs",
+    "../../html/domains/visualizeDataFilterTemplate.hbs",
+    "../../html/domains/visualizeDataDashboardTemplate.hbs",
     "fenix-ui-dashboard",
     "fenix-ui-filter",
     "fenix-ui-filter-utils",
-    "../../lib/utils",
+    "./renders/visualizeData/IndicatorCommon",
     "../../nls/labels",
-    "fenix-ui-bridge",
-    "highcharts",
     '../common/progressBar',
-    "jstree",
-    "highcharts-exporting"
-], function ($, log, _, C, PAGC, INDICATORSC, template, Dashboard, Filter, FxUtils, Utils, labels, Bridge, Highcharts, ProgressBar) {
+], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, labels, ProgressBar) {
 
     "use strict";
-    var Clang = C.lang.toLowerCase();
 
     var dashboardName = "visualizeData";
 
-    var s = {
+    var indicatorCommon;
 
-        indicator_renders_path : './renders/visualizeData/indicator',
+    var s = {
+        indicator_config_path : './renders/visualizeData/indicatorConfig',
 
         bar: {
             PROGRESS_BAR_CONTAINER: '#vd-progress-bar-holder',
@@ -48,17 +44,12 @@ define([
                 ITEM_READY : 'ready.item'
             },
             dashboard :{
-                READY : 'dashboard.ready',
                 DASHBOARD_CONFIG : "new_dashoboard_config_ready"
             }
         }
     };
 
     function VisualizeData(opts){
-
-       // require('highcharts-no-data-to-display')(Highcharts);
-        require('highcharts/modules/exporting')(Highcharts);
-        // require('highcharts-exporting')(Highcharts);//highcharts/modules/exporting
 
         $.extend(true, this, opts);
 
@@ -72,28 +63,26 @@ define([
 
     VisualizeData.prototype._validateConfig = function () {
 
-        if (!C.lang) {
-            alert("Please specify a valid LANGUAGE in config/config.js");
-        }
     };
 
     VisualizeData.prototype._attach = function () {
 
-        $(this.el).html(template(labels[Clang]));
-        var indicatorSection = this.el.find('[data-section = "'+this.indicator+'"]');
+        $(this.el).html(filterTemplate(labels[this.lang]));
+        var indicatorFilterSection = this.el.find('[data-section = "'+this.indicatorProperties.filter_category+'"]');
+        //dashboardSection
+        $(this.el).append(dashboardTemplate(labels[this.lang]));
+        var indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dashboard_category+'"]');
         var progressBar = this.el.find('[data-bar = "'+s.bar.PROGRESS_BAR_DATA_VARIABLE+'"]');//data-bar="progress-bar"
         $(this.el).html(progressBar);
-        $(this.el).append(indicatorSection);
+        $(this.el).append(indicatorFilterSection);
+        $(indicatorFilterSection).append(indicatorDashboardSection);
+
     };
 
     VisualizeData.prototype._initVariables = function () {
 
         this.$el = $(s.EL);
-
-        this.lang = Clang;
-        this.environment = C.ENVIRONMENT;
-        this.cache = C.cache;
-        this.indicatorConfig = INDICATORSC[this.indicator];
+        this.indicatorConfig = this._getIndicatorConfig();
         this.config = this.indicatorConfig[dashboardName];
 
         this.channels = {};
@@ -116,13 +105,23 @@ define([
 
         dashboardConf.environment = this.environment;
 
+        indicatorCommon = new ICommon({
+            el : this.el,
+            indicatorProperties : this.indicatorProperties,
+            lang : this.lang,
+            environment : this.environment,
+            cache : this.cache
+        });
+
+        indicatorCommon.indicatorSectionInit(dashboardConf);
+
+        filterConfig = indicatorCommon.indicatorFilterConfigInit(filterConfig);
+
         this._renderFilter(filterConfig);
 
         this._renderDashboard(dashboardConf);
 
         this._loadProgressBar(dashboardConf);
-
-        //this._renderIndicator(dashboardConf);
     }
 
     // Events
@@ -190,31 +189,26 @@ define([
         );
     };
 
-    VisualizeData.prototype._getIndicatorRender = function () {
-        return require(this._getIndicatorScriptPath());
+    VisualizeData.prototype._getIndicatorConfig = function () {
+        return require(this._getIndicatorConfigPath());
     };
 
-    VisualizeData.prototype._getIndicatorScriptPath = function () {
-        return s.indicator_renders_path + this.indicator;
+    VisualizeData.prototype._getIndicatorConfigPath = function () {
+
+        return s.indicator_config_path + this.indicatorProperties.indicator_id+'.js';
     };
 
     VisualizeData.prototype._renderIndicator = function (dashboardConfig) {
         // Calling the indicator actions file
 
-        var Indicator = this._getIndicatorRender();
-        var it = new Indicator({
-            el : this.el,
+        indicatorCommon.render({
             filter : this.filter,
             dashboard_config : dashboardConfig,
             dashboard : this.dashboard,
-            lang : this.lang,
-            enviroment : this.environment,
-            cache : this.cache,
-            models : this.models,
-            prova : "svbsbvds"
+            models : this.models
         });
 
-        it.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))
+        indicatorCommon.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))
 
     };
 

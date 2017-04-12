@@ -4,17 +4,13 @@ define([
     "underscore",
     "../config/config",
     "../config/domains/config",
-    "../config/domains/indicatorsCategories",
+    "../config/domains/indicatorsProperties",
     "../html/domains/template.hbs",
     "./domains/downloadData",
     "./domains/visualizeData",
-    "fenix-ui-filter-utils",
-    "../lib/utils",
     "../nls/labels",
-    "fenix-ui-dashboard",
-    "../config/domains/indicatorsConfig",
     "bootstrap"
-], function ($, log, _, C, PAGC, CATEG, template, DownloadData, VisualizeData, Filter, Utils, labels, Dashboard, INDICATORSC) {
+], function ($, log, _, C, PAGC, CATEG, template, DownloadData, VisualizeData, labels) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
@@ -82,7 +78,8 @@ define([
         this.cache = C.cache;
 
         this.selected_indicator = selected;
-        this.selected_indicator_position = CATEG[this.selected_indicator.code].position;
+        this.selected_indicator_category = CATEG[this.selected_indicator.code].category;
+        this.indicatorProperties = CATEG[this.selected_indicator.code];
         this.$tabs = this.$el.find(s.TABS_A);
 
         s.visualizeDataTab_created = false;
@@ -100,7 +97,8 @@ define([
               el: this.$el.find(s.DOWNLOAD_DATA_TAB_EL),
               lang: this.lang,
               environment: this.environment,
-              indicator: this.selected_indicator_position,
+              indicator: this.selected_indicator_category,
+              indicatorProperties: this.indicatorProperties,
               conversion: CATEG[this.selected_indicator.code].downloadConversion
         });
 
@@ -108,10 +106,13 @@ define([
             el: this.$el.find(s.VISUALIZE_DATA_TAB_EL),
             lang: this.lang,
             environment: this.environment,
-            indicator: this.selected_indicator_position
+            cache : this.cache,
+            //indicator: this.selected_indicator_category,
+            indicatorProperties: this.indicatorProperties
         });
 
         this.downloadDataTab.render();
+        //this.visualizeDataTab.render();
     };
 
     // Events
@@ -194,8 +195,6 @@ define([
 
         //Wiews CSS
         require("../css/wiews.css");
-
-
 
     };
 

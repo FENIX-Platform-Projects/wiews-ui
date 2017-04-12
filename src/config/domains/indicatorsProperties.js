@@ -4,7 +4,9 @@ define(function () {
     "use strict";
     return {
         "20": {
-            position : "1",
+            indicator_id : "1",
+            filter_category : "1",
+            dashboard_category : "1",
             processType : "1",
             downloadConversion : {
                 dd_filter_item_1_1 : "iso3",

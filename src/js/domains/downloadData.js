@@ -4,19 +4,19 @@ define([
     "underscore",
     "../../config/config",
     "../../config/domains/config",
-    "../../config/domains/indicatorsConfig",
     "../../html/domains/downloadDataTemplate.hbs",
     "fenix-ui-dashboard",
     "fenix-ui-filter",
     "fenix-ui-filter-utils",
     "../../lib/utils",
     "../../nls/labels",
+    "../../config/domains/indicatorConfig",
     "fenix-ui-bridge",
     "highcharts",
     "jstree",
     "bootstrap",
     "bootstrap-table"
-], function ($, log, _, C, PAGC, INDICATORSC, template, Dashboard, Filter, FxUtils, Utils, labels, Bridge, Highcharts) {
+], function ($, log, _, C, PAGC, template, Dashboard, Filter, FxUtils, Utils, labels, INDICATORSC, Bridge, Highcharts) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
@@ -24,6 +24,7 @@ define([
     var dashboardName = "downloadData";
 
     var s = {
+        indicator_categories_path : '../../config/domains/categories',
         PROGRESS_BAR_CONTAINER: '#dd-progress-bar-holder',
 
         dashboard: {
@@ -76,8 +77,9 @@ define([
         this.lang = Clang;
         this.environment = C.ENVIRONMENT;
         this.cache = C.cache;
-        this.indicatorConfig = INDICATORSC[this.indicator]; // BARBARA .position;
-
+        // this.indicatorConfig = INDICATORSC[this.indicatorProperties.dashboard_category]; // BARBARA .position;
+        this.indicatorConfig = INDICATORSC['1']; // BARBARA .position;
+        //this.indicatorConfig = require(this._getIndicatorConfig());
         this.config = this.indicatorConfig[dashboardName];
         this.channels = {};
         this.dashboardConfig = this.config['dashboard'];
@@ -148,13 +150,11 @@ define([
         // // Plain
         // this.dashboardConfig.filter = this.filter.getValues();
         // Formatted
-        console.log(this.dashboardConfig)
         this.dashboardConfig.filter = this._getFormattedValues();
 
-        console.log(this.dashboardConfig)
         this.dashboard = new Dashboard( this.dashboardConfig );
 
-        //console.log(this.dashboardConfig);
+        console.log(this.dashboardConfig);
 
         // Build fake data
         /*
@@ -265,7 +265,7 @@ define([
         var object = this.filter.getValues(),
             self = this;
 
-        console.log('before', JSON.stringify(object));
+        //console.log('after', JSON.stringify(object));
 
         _.each(Object.keys(object), function (element) {
             _.each(Object.keys(object[element]), function (convertible){
@@ -274,7 +274,7 @@ define([
             });
         });
 
-        console.log('after' , JSON.stringify(object));
+        //console.log('before' , JSON.stringify(object));
 
         return object;
 
