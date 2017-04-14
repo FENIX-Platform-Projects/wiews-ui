@@ -22,7 +22,10 @@ define([
             item_1 : "vd_filter_item_1",
             item_2 : "vd_filter_item_2",
             item_3 : "vd_filter_item_3",
-            item_4 : "vd_filter_item_4"
+            item_4 : "vd_filter_item_4",
+            item_5 : "vd_filter_item_5",
+            item_6 : "vd_filter_item_6",
+            item_7 : "vd_filter_item_7"
         },
 
         dashboard_items : {
@@ -85,7 +88,7 @@ define([
         {
             var self = this;
             newDashboardConfig ={};
-            $.extend(true, newDashboardConfig, dashboardConfig, {});
+            $.extend(true, newDashboardConfig, dashboardConfig);
 
             if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
                 var itemsArray = dashboardConfig.items;
@@ -142,8 +145,8 @@ define([
         var newDashboardConfig = '';
         if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
             //newDashboardConfig = dashboardConfig.items[0].postProcess
-            dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values.values[s.filter_items.item_2];
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_3];
+            dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values.values[s.filter_items.item_3];
+            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_7];
             newDashboardConfig = dashboardConfig;
         }
 
@@ -156,9 +159,9 @@ define([
         var newDashboardConfig = '';
         if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
             //newDashboardConfig = dashboardConfig.items[0].postProcess
-            dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values.values[s.filter_items.item_2];
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_3];
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["genus"].codes[0].codes = values.values[s.filter_items.item_1];
+            dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values.values[s.filter_items.item_3];
+            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_7];
+            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["genus"].codes[0].codes = values.values[s.filter_items.item_6];
             newDashboardConfig = dashboardConfig;
         }
 
@@ -171,8 +174,8 @@ define([
         var newDashboardConfig = '';
         if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
             //newDashboardConfig = dashboardConfig.items[0].postProcess
-            dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values.values[s.filter_items.item_2];
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_3];
+            dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values.values[s.filter_items.item_3];
+            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_7];
             newDashboardConfig = dashboardConfig;
         }
         return newDashboardConfig;
@@ -184,8 +187,8 @@ define([
         var newDashboardConfig = '';
         if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
             //newDashboardConfig = dashboardConfig.items[0].postProcess
-            dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values.values[s.filter_items.item_2];
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_3];
+            dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values.values[s.filter_items.item_3];
+            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_7];
             newDashboardConfig = dashboardConfig;
         }
 

@@ -12,6 +12,9 @@ define([
     "./renders/visualizeData/IndicatorCommon",
     "../../nls/labels",
     '../common/progressBar',
+    "jstree",
+    "bootstrap",
+    "bootstrap-table"
 ], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, labels, ProgressBar) {
 
     "use strict";
@@ -37,6 +40,8 @@ define([
             filter_config_item : 'filter',
             filter_container : '#vd-filter-container'
         },
+
+        showDashboardSection : 'showDashboard',
 
         events: {
             dashboardComponent :{
@@ -73,8 +78,10 @@ define([
         $(this.el).append(dashboardTemplate(labels[this.lang]));
         var indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dashboard_category+'"]');
         var progressBar = this.el.find('[data-bar = "'+s.bar.PROGRESS_BAR_DATA_VARIABLE+'"]');//data-bar="progress-bar"
+        var showDashboardSection = this.el.find('[data-section = "'+s.showDashboardSection+'"]');
         $(this.el).html(progressBar);
         $(this.el).append(indicatorFilterSection);
+        $(indicatorFilterSection).append(showDashboardSection);
         $(indicatorFilterSection).append(indicatorDashboardSection);
 
     };
@@ -114,6 +121,9 @@ define([
         });
 
         indicatorCommon.indicatorSectionInit(dashboardConf);
+
+        //Setting the titles of the tab
+        indicatorCommon.indicatorFilterTemplateUpdate(filterConfig);
 
         filterConfig = indicatorCommon.indicatorFilterConfigInit(filterConfig);
 
@@ -173,6 +183,7 @@ define([
         this.filter = new Filter({
             el: s.filter.filter_container,
             selectors: filterConfig,
+            //groups: filterConfig,
             common: {
                 template: {
                     hideSwitch: true,

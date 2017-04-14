@@ -36,6 +36,7 @@ define(
                     }
                 }
             },
+
             genreDropdown :{
                 selector: {
                     id: "dropdown",
@@ -65,6 +66,17 @@ define(
                     title: ''
                 }
             },
+            locationRadio: {
+                selector: {
+                    id: "input",
+                    type: "radio",
+                    source: [
+                        {value: "1", label: "Item 1"},
+                        {value: "2", label: "Item 2"},
+                        {value: "3", label: "Item 3"}
+                    ]
+                }
+            },
             locationDropdown :{
                 selector: {
                     id: "dropdown",
@@ -84,18 +96,31 @@ define(
                     title: ''
                 }
             },
-            locationTree :{
+            locationTree_ISO3 :{
                 selector: {
                     id: "tree",
                     hideSummary : true
                 },
                 cl: {
-                    uid: "wiews_m49",
-                    level: "2",
-                    levels: "1"
+                    uid: "ISO3"
+                }
+            },
+            locationTree_m49 :{
+                selector: {
+                    id: "tree",
+                    hideSummary : true
                 },
-                template: {
-                    title: ''
+                cl: {
+                    uid: "wiews_m49_regions"
+                }
+            },
+            locationTree_FAO :{
+                selector: {
+                    id: "tree",
+                    hideSummary : true
+                },
+                cl: {
+                    uid: "wiews_fao_region"
                 }
             },
             periodDropdown :{

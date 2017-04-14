@@ -33,6 +33,10 @@ define([
             READY : "indicator-ready",
             BUTTON_CLICK : "click",
             DASHBOARD_CONFIG : "new_dashoboard_config_ready"
+        },
+
+        filterSelectorTypes: {
+            radio : 'radio'
         }
     }
 
@@ -180,6 +184,27 @@ define([
         }
     }
 
+
+    IndicatorCommon.prototype.indicatorFilterTemplateUpdate = function (filterConfigBeforeParsing) {
+
+        if((filterConfigBeforeParsing!=null)&&(typeof filterConfigBeforeParsing != 'undefined')) {
+            var itemsArray = filterConfigBeforeParsing.items;
+            var itemCount = 1, selectorConfig, id, type, defaultValue, title;
+            var self = this;
+
+            itemsArray.forEach(function (item) {
+
+                id = item.id;
+                title = item.title;
+                var itemElem = self.el.find('[data-tabLabel = "' + id + '_tab"]');
+                if ((itemElem != null) && (typeof itemElem != 'undefined')) {
+                    itemElem.html(title)
+                }
+
+            });
+        }
+    }
+
     IndicatorCommon.prototype.indicatorFilterConfigInit = function (filterConfig) {
 
         var newFilterConfig = {};
@@ -195,7 +220,8 @@ define([
                 defaultValue = item.default;
                 title = item.title;
 
-                selectorConfig = FilterSelectors[type];
+                selectorConfig = {};
+                $.extend(true, selectorConfig, FilterSelectors[type]);
 
                 if((selectorConfig!=null)&&(typeof selectorConfig!= 'undefined')){
                     //Setting default value
@@ -205,10 +231,27 @@ define([
                         }
                     }
 
-                    //Setting title
-                    if((selectorConfig.template!=null)&&(typeof selectorConfig.template!= 'undefined')){
-                        if((title!=null)&&(typeof title!= 'undefined')){
-                            selectorConfig.template.title = title;
+                    // //Setting title for all the selectors
+                    // if((selectorConfig.template!=null)&&(typeof selectorConfig.template!= 'undefined')){
+                    //     if((title!=null)&&(typeof title!= 'undefined')){
+                    //         selectorConfig.template.title = title;
+                    //     }
+                    // }
+
+                    //Setting title for radio button selector(title is an array)
+                    if((selectorConfig.selector!=null)&&(typeof selectorConfig.selector!= 'undefined')){
+                        if(selectorConfig.selector.type==s.filterSelectorTypes.radio){
+                            var itemTitleCount = 1;
+
+                            //console.log(title)
+                            if((title!=null)&&(typeof title!= 'undefined')&&(title.length>0)){
+                                selectorConfig.selector.source =[];
+                                title.forEach(function (titleItem) {
+                                    var obj = {value: itemTitleCount, label: titleItem};
+                                    selectorConfig.selector.source.push(obj);
+                                    itemTitleCount++;
+                                })
+                            }
                         }
                     }
                 }
