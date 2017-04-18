@@ -39,7 +39,8 @@ define([
         },
 
         filterSelectorTypes: {
-            radio : 'radio'
+            radio : 'radio',
+            checkbox : 'checkbox'
         }
     }
 
@@ -243,7 +244,7 @@ define([
 
                     //Setting title for radio button selector(title is an array)
                     if((selectorConfig.selector!=null)&&(typeof selectorConfig.selector!= 'undefined')){
-                        if(selectorConfig.selector.type==s.filterSelectorTypes.radio){
+                        if((selectorConfig.selector.type==s.filterSelectorTypes.radio)||(selectorConfig.selector.type==s.filterSelectorTypes.checkbox)){
                             var itemTitleCount = 1;
 
                             //console.log(title)

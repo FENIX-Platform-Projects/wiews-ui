@@ -96,6 +96,16 @@ define(
                     title: ''
                 }
             },
+            locationCheckbox: {
+                selector: {
+                    id: "input",
+                    type: "checkbox",
+                    source: [
+                        {value: "1", label: "Item 1"},
+                        {value: "2", label: "Item 2"}
+                    ]
+                }
+            },
             locationTree_ISO3 :{
                 selector: {
                     id: "tree",

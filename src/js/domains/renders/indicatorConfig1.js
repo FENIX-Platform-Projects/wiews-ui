@@ -399,33 +399,45 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
             },
             {
                 id: 'vd_filter_item_3',
-                type: 'locationTree_m49',
-                default: VISUALIZE_DV["1_filter-vd_filter_item_3"],
-                title: labels[Clang]['1_filter-vd_filter_item_3_title']
+                type: 'locationCheckbox',
+                default: ["1", "2"],
+                title: [labels[Clang]["1_filter-vd_filter_item_3_title1"], labels[Clang]["1_filter-vd_filter_item_3_title2"]]
             },
             {
                 id: 'vd_filter_item_4',
-                type: 'locationRadio',
-                default: ["1"],
-                title: [labels[Clang]["1_filter-vd_filter_item_4_title1"], labels[Clang]["1_filter-vd_filter_item_4_title2"]]
+                type: 'locationTree_m49',
+                default: VISUALIZE_DV["1_filter-vd_filter_item_4"],
+                title: labels[Clang]['1_filter-vd_filter_item_4_title']
             },
             {
                 id: 'vd_filter_item_5',
-                type: 'locationTree_FAO',
-                default: VISUALIZE_DV["1_filter-vd_filter_item_5"],
-                title: labels[Clang]['1_filter-vd_filter_item_5_title']
+                type: 'locationRadio',
+                default: ["1"],
+                title: [labels[Clang]["1_filter-vd_filter_item_5_title1"], labels[Clang]["1_filter-vd_filter_item_5_title2"]]
             },
             {
                 id: 'vd_filter_item_6',
-                type: 'genreTree',
-                default: VISUALIZE_DV["1_filter-vd_filter_item_6"],
-                title: labels[Clang]['1_filter-vd_filter_item_6_title']
+                type: 'locationCheckbox',
+                default: ["1", "2"],
+                title: [labels[Clang]["1_filter-vd_filter_item_6_title1"], labels[Clang]["1_filter-vd_filter_item_6_title2"]]
             },
             {
                 id: 'vd_filter_item_7',
-                type: 'periodTree',
+                type: 'locationTree_FAO',
                 default: VISUALIZE_DV["1_filter-vd_filter_item_7"],
                 title: labels[Clang]['1_filter-vd_filter_item_7_title']
+            },
+            {
+                id: 'vd_filter_item_8',
+                type: 'genreTree',
+                default: VISUALIZE_DV["1_filter-vd_filter_item_8"],
+                title: labels[Clang]['1_filter-vd_filter_item_8_title']
+            },
+            {
+                id: 'vd_filter_item_9',
+                type: 'periodTree',
+                default: VISUALIZE_DV["1_filter-vd_filter_item_9"],
+                title: labels[Clang]['1_filter-vd_filter_item_9_title']
             }]
     },
             dashboard: {
@@ -494,7 +506,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                         "codes": [
                                             {
                                                 "uid": "wiews_m49",
-                                                "codes": VISUALIZE_DV["1_filter-vd_filter_item_3"]
+                                                "codes": VISUALIZE_DV["1_filter-vd_filter_item_4"]
                                             }
                                         ]
                                     }
@@ -534,7 +546,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                             "codes": [
                                                 {
                                                     "uid": "wiews_iteration",
-                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_7"]
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_9"]
                                                 }
                                             ]
                                         }
@@ -678,7 +690,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                         "codes": [
                                             {
                                                 "uid": "wiews_m49",
-                                                "codes": VISUALIZE_DV["1_filter-vd_filter_item_3"]
+                                                "codes": VISUALIZE_DV["1_filter-vd_filter_item_4"]
                                             }
                                         ]
                                     }
@@ -716,7 +728,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                             "codes": [
                                                 {
                                                     "uid": "wiews_iteration",
-                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_7"]
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_9"]
                                                 }
                                             ]
                                         },
@@ -724,7 +736,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                             "codes": [
                                                 {
                                                     "uid": "wiews_genus",
-                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_6"]
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_8"]
                                                 }
                                             ]
                                         }
@@ -818,7 +830,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                         "codes": [
                                             {
                                                 "uid": "wiews_m49",
-                                                "codes": VISUALIZE_DV["1_filter-vd_filter_item_3"]
+                                                "codes": VISUALIZE_DV["1_filter-vd_filter_item_4"]
                                             }
                                         ]
                                     }
@@ -857,7 +869,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                             "codes": [
                                                 {
                                                     "uid": "wiews_iteration",
-                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_7"]
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_9"]
                                                 }
                                             ]
                                         }
@@ -960,7 +972,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                         "codes": [
                                             {
                                                 "uid": "wiews_m49",
-                                                "codes": VISUALIZE_DV["1_filter-vd_filter_item_3"]
+                                                "codes": VISUALIZE_DV["1_filter-vd_filter_item_4"]
                                             }
                                         ]
                                     }
@@ -999,7 +1011,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                             "codes": [
                                                 {
                                                     "uid": "wiews_iteration",
-                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_7"]
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_9"]
                                                 }
                                             ]
                                         },
