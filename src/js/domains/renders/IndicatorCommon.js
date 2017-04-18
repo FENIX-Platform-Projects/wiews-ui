@@ -2,13 +2,13 @@ define([
     "jquery",
     "loglevel",
     'underscore',
-    "../../../../config/config",
-    "../../../../config/errors",
-    "../../../../config/events",
-    "../../../../config/domains/config",
-    "../../../../config/domains/filterSelectors",
+    "../../../config/config",
+    "../../../config/errors",
+    "../../../config/events",
+    "../../../config/domains/config",
+    "../../../config/domains/filterSelectors",
     'fenix-ui-reports',
-    "../../../../nls/labels"
+    "../../../nls/labels"
 ], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, Report, labels) {
 
     'use strict';
@@ -16,9 +16,12 @@ define([
     var defaultOptions = {};
 
     var s = {
-        indicator_processes_renders_path : './indicatorProcesses',
+        indicator_processes_renders_path : './visualizeData/indicatorProcesses',
 
-        indicatorCategory : '1',
+        mainTabNames : {
+            visualizeData : "visualizeData",
+            downloadData : "downloadData"
+        },
 
         filter_button : {
             button_1 : "vd_filter_button_1",
@@ -305,7 +308,9 @@ define([
         var newDashboardConfig = this.indicatorProcesses.onClickButton(this.dashboard_config, values, param);
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig!= 'undefined')){
             this.dashboard_config = newDashboardConfig;
-            this._trigger(s.event.DASHBOARD_CONFIG, {indicator_category : s.indicatorCategory, dashboardConfig : this.dashboard_config, values: values, dashboard: this.dashboard})
+            if(this.mainTabName == s.mainTabNames.visualizeData){
+                this._trigger(s.event.DASHBOARD_CONFIG, {indicator_properties : this.indicatorProperties, dashboardConfig : this.dashboard_config, values: values, dashboard: this.dashboard})
+            }
         }
     }
 

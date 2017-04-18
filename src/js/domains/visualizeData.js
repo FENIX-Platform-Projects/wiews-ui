@@ -9,7 +9,7 @@ define([
     "fenix-ui-dashboard",
     "fenix-ui-filter",
     "fenix-ui-filter-utils",
-    "./renders/visualizeData/IndicatorCommon",
+    "./renders/IndicatorCommon",
     "../../nls/labels",
     '../common/progressBar',
     "jstree",
@@ -19,12 +19,12 @@ define([
 
     "use strict";
 
-    var dashboardName = "visualizeData";
+    var mainTabName = "visualizeData";
 
     var indicatorCommon;
 
     var s = {
-        indicator_config_path : './renders/visualizeData/indicatorConfig',
+        indicator_config_path : './renders/indicatorConfig',
 
         bar: {
             PROGRESS_BAR_CONTAINER: '#vd-progress-bar-holder',
@@ -90,7 +90,7 @@ define([
 
         this.$el = $(s.EL);
         this.indicatorConfig = this._getIndicatorConfig();
-        this.config = this.indicatorConfig[dashboardName];
+        this.config = this.indicatorConfig[mainTabName];
 
         this.channels = {};
         this.models = {};
@@ -117,7 +117,8 @@ define([
             indicatorProperties : this.indicatorProperties,
             lang : this.lang,
             environment : this.environment,
-            cache : this.cache
+            cache : this.cache,
+            mainTabName : mainTabName
         });
 
         indicatorCommon.indicatorSectionInit(dashboardConf);

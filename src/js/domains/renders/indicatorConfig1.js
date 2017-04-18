@@ -1,4 +1,4 @@
-define(["highcharts", "../../../../config/config", "../../../../config/domains/visualizeDataDefaultValues", "../../../../nls/labels"],
+define(["highcharts", "../../../config/config", "../../../config/domains/visualizeDataDefaultValues", "../../../nls/labels"],
 function (Highcharts, C, VISUALIZE_DV, labels) {
 
     "use strict";
