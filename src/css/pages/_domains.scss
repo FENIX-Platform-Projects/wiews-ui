@@ -77,12 +77,30 @@
 
   .panel.panel-default .panel-heading {color: #434343; background-color: #f9f9f9; border-color: transparent; border-bottom-color: #ddd;}
   .panel-heading {padding: 10px 15px; border-bottom: 1px solid transparent; border-top-left-radius: 3px; border-top-right-radius: 3px;}
+  .panel-heading.long-header {padding-left:7px;}
   .panel-body {padding: 10px 15px;}
   .panel-footer {margin-top: 0px; font-size: 12px;}
 
   .panel-border .panel-body {padding: 10px 0px;}
 
   .fs-data-padding-top {padding-top: 15px;}
+
+  #vd_filter_item_tab_4 [data-selector='vd_filter_item_2'] .clearfix,
+  #vd_filter_item_tab_4 [data-selector='vd_filter_item_2'] .help-block,
+  #vd_filter_item_tab_7 [data-selector='vd_filter_item_5'] .clearfix,
+  #vd_filter_item_tab_7 [data-selector='vd_filter_item_5'] .help-block {display: none;}
+  #vd_filter_item_tab_4 [data-selector='vd_filter_item_2'] .form-group,
+  #vd_filter_item_tab_7 [data-selector='vd_filter_item_5'] .form-group {margin-bottom: 0px; padding-bottom: 10px; border-bottom: 1px solid #eaeaea;}
+  /* regions */
+  #vd_filter_item_tab_4 [data-selector='vd_filter_item_2'] .filter-radio-list {padding-left: 10px; margin-bottom: 0px;}
+  /* special group */
+  #vd_filter_item_tab_7 [data-selector='vd_filter_item_5'] .filter-radio-list {padding-left: 35px; margin-bottom: 0px;}
+
+
+  #vd_filter_item_tab_4 [data-selector='vd_filter_item_3'] .clearfix,
+  #vd_filter_item_tab_7 [data-selector='vd_filter_item_6'] .clearfix {display: none;}
+  #vd_filter_item_tab_4 [data-selector='vd_filter_item_3'] .form-group,
+  #vd_filter_item_tab_7 [data-selector='vd_filter_item_6'] .form-group {margin-bottom: -15px; margin-top: 6px;}
 
   /*
   #domainsTab.nav-tabs > li > a {font-size: 1.4em;}
@@ -137,7 +155,7 @@
   input[type="radio"]+label:before {content: ''; display: inline-block; height: 15px; width: 15px; background-color: #ddd; -webkit-border-radius: 100%; -moz-border-radius: 100%; -ms-border-radius: 100%; border-radius: 100%;
     border: 0 solid #337ab7; position: relative; top: 3px; left: -5px;}
 
-  .fx-sandbox .btn {font-size: 13px;}
+  /* .fx-sandbox .btn {font-size: 13px !important;} */
   .selector-footer .list-unstyled {margin: 5px 7px;}
   .code-brk {margin: 0px 5px 0px 3px;}
 
