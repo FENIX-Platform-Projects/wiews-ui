@@ -11,6 +11,7 @@ define(function () {
     "loading_in_progress" : "Loading in progress",
     "completed" : "Completed",
     "vd_filter_button_1_msg" : "The selection is not valid. Please, select at least an item for each selector.",
+    "vd_filter_button_1_list_msg" : "The selection is not valid. Please, select list or total in the geographical selector.",
     "1_filter-vd_filter_item_1_title" : "COUNTRIES",
     "1_filter-vd_filter_item_4_title" : "REGIONS",
     "1_filter-vd_filter_item_7_title" : "SPECIAL GROUPS",

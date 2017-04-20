@@ -57,7 +57,13 @@ define([
 
         //indicatorProperties
         var IndicatorProcessesRender = this._getIndicatorProcessesRender();
-        this.indicatorProcesses = new IndicatorProcessesRender();
+        var filter_btnMsg1Obj = this.el.find('[data-buttonMsg = "'+s.filter_button.buttonMsg_1+'"]');
+        var o = {};
+        if((filter_btnMsg1Obj!=null)&&(typeof filter_btnMsg1Obj!='undefined')){
+            o["filterDivMsg1"] = filter_btnMsg1Obj;
+        }
+
+        this.indicatorProcesses = new IndicatorProcessesRender(o);
 
         this.$el = $(this.el);
         // pub/sub
@@ -215,7 +221,7 @@ define([
 
         if((filterConfig!=null)&&(typeof filterConfig != 'undefined')){
             var itemsArray = filterConfig.items;
-            var itemCount = 1, selectorConfig, id, type, defaultValue, title;
+            var itemCount = 1, selectorConfig, id, type, defaultValue, title, codelist, maxItems;
 
             itemsArray.forEach(function (item) {
 
@@ -223,24 +229,47 @@ define([
                 type = item.type;
                 defaultValue = item.default;
                 title = item.title;
+                codelist = item.clUid;
+                maxItems = item.maxItems;
 
                 selectorConfig = {};
                 $.extend(true, selectorConfig, FilterSelectors[type]);
 
                 if((selectorConfig!=null)&&(typeof selectorConfig!= 'undefined')){
-                    //Setting default value
-                    if((selectorConfig.selector!=null)&&(typeof selectorConfig.selector!= 'undefined')){
-                        if((defaultValue!=null)&&(typeof defaultValue!= 'undefined')){
-                            selectorConfig.selector.default = defaultValue;
+                        //Setting default value
+                        if((selectorConfig.selector!=null)&&(typeof selectorConfig.selector!= 'undefined')){
+                            if((defaultValue!=null)&&(typeof defaultValue!= 'undefined')){
+                                selectorConfig.selector.default = defaultValue;
+                            }
                         }
-                    }
 
-                    // //Setting title for all the selectors
-                    // if((selectorConfig.template!=null)&&(typeof selectorConfig.template!= 'undefined')){
-                    //     if((title!=null)&&(typeof title!= 'undefined')){
-                    //         selectorConfig.template.title = title;
-                    //     }
-                    // }
+                        // //Setting title for all the selectors
+                        // if((selectorConfig.template!=null)&&(typeof selectorConfig.template!= 'undefined')){
+                        //     if((title!=null)&&(typeof title!= 'undefined')){
+                        //         selectorConfig.template.title = title;
+                        //     }
+                        // }
+
+                        //Setting codelist for the selector
+                        if((codelist!=null)&&(typeof codelist!= 'undefined')){
+                            if((selectorConfig.cl!=null)&&(typeof selectorConfig.cl!= 'undefined')){
+                                selectorConfig.cl.uid = codelist;
+                            }
+                            else{
+                                selectorConfig.cl = {uid: codelist};
+                            }
+                        }
+
+                        //Max number of element to select(only for dropdown)
+                        if((maxItems!=null)&&(typeof maxItems!= 'undefined')){
+                            if((selectorConfig.config!=null)&&(typeof selectorConfig.config!= 'undefined')){
+                                selectorConfig.config.maxItems = maxItems;
+                            }
+                            else{
+                                selectorConfig.config = {maxItems: maxItems};
+                            }
+
+                        }
 
                     //Setting title for radio button selector(title is an array)
                     if((selectorConfig.selector!=null)&&(typeof selectorConfig.selector!= 'undefined')){
@@ -273,9 +302,11 @@ define([
 
         var filter_button_1 = this.el.find('[data-button = "'+s.filter_button.button_1+'"]');
         var filter_div_msg_1 = this.el.find('[data-buttonMsg = "'+s.filter_button.buttonMsg_1+'"]');
+        //var filter_div_msg_1 = s.filter_btnMsg1Obj;
 
         if((filter_button_1!=null)&&(typeof filter_button_1!='undefined')&&(filter_div_msg_1!=null)&&(typeof filter_div_msg_1!='undefined')){
-            filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self.onClick_button1, this, {lang: this.lang, filterDivMsg_1: filter_div_msg_1}));
+            // filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self.onClick_button1, this, {lang: this.lang, filterDivMsg_1: filter_div_msg_1}));
+            filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self.onClick_button1, this, {lang: this.lang}));
         }
 
         if((this.dashboard_config!=null)&&(typeof this.dashboard_config != 'undefined')){
@@ -302,6 +333,8 @@ define([
         if((this.filter!=null)&&(typeof this.filter!= 'undefined')){
             this.filter.on('select', _.bind(self.onSelectFilter, self, {filterDivMsg_1: filter_div_msg_1}));
         }
+
+        this.indicatorProcesses.bindEventListener();
     };
 
     IndicatorCommon.prototype.onClick_button1 = function (param) {

@@ -387,57 +387,63 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
         items: [
             {
                 id: 'vd_filter_item_1',
-                type: 'locationTree_ISO3',
+                type: 'tree',
                 default: VISUALIZE_DV["1_filter-vd_filter_item_1"],
-                title: labels[Clang]['1_filter-vd_filter_item_1_title']
+                title: labels[Clang]['1_filter-vd_filter_item_1_title'],
+                clUid: "ISO3"
             },
             {
                 id: 'vd_filter_item_2',
-                type: 'locationRadio',
+                type: 'radio',
                 default: ["1"],
                 title: [labels[Clang]["1_filter-vd_filter_item_2_title1"], labels[Clang]["1_filter-vd_filter_item_2_title2"], labels[Clang]["1_filter-vd_filter_item_2_title3"], labels[Clang]["1_filter-vd_filter_item_2_title4"]]
             },
             {
                 id: 'vd_filter_item_3',
-                type: 'locationCheckbox',
+                type: 'checkbox',
                 default: ["1", "2"],
                 title: [labels[Clang]["1_filter-vd_filter_item_3_title1"], labels[Clang]["1_filter-vd_filter_item_3_title2"]]
             },
             {
                 id: 'vd_filter_item_4',
-                type: 'locationTree_m49',
+                type: 'tree',
                 default: VISUALIZE_DV["1_filter-vd_filter_item_4"],
-                title: labels[Clang]['1_filter-vd_filter_item_4_title']
+                title: labels[Clang]['1_filter-vd_filter_item_4_title'],
+                clUid: "wiews_fao_region"
             },
             {
                 id: 'vd_filter_item_5',
-                type: 'locationRadio',
+                type: 'radio',
                 default: ["1"],
                 title: [labels[Clang]["1_filter-vd_filter_item_5_title1"], labels[Clang]["1_filter-vd_filter_item_5_title2"]]
             },
             {
                 id: 'vd_filter_item_6',
-                type: 'locationCheckbox',
+                type: 'checkbox',
                 default: ["1", "2"],
                 title: [labels[Clang]["1_filter-vd_filter_item_6_title1"], labels[Clang]["1_filter-vd_filter_item_6_title2"]]
             },
             {
                 id: 'vd_filter_item_7',
-                type: 'locationTree_FAO',
+                type: 'tree',
                 default: VISUALIZE_DV["1_filter-vd_filter_item_7"],
-                title: labels[Clang]['1_filter-vd_filter_item_7_title']
+                title: labels[Clang]['1_filter-vd_filter_item_7_title'],
+                clUid: "wiews_cgrfa"
             },
             {
                 id: 'vd_filter_item_8',
-                type: 'genreTree',
+                type: 'tree',
                 default: VISUALIZE_DV["1_filter-vd_filter_item_8"],
-                title: labels[Clang]['1_filter-vd_filter_item_8_title']
+                title: labels[Clang]['1_filter-vd_filter_item_8_title'],
+                clUid: "wiews_genus"
             },
             {
                 id: 'vd_filter_item_9',
-                type: 'periodTree',
+                type: 'tree',
                 default: VISUALIZE_DV["1_filter-vd_filter_item_9"],
-                title: labels[Clang]['1_filter-vd_filter_item_9_title']
+                title: labels[Clang]['1_filter-vd_filter_item_9_title'],
+                clUid: "wiews_iteration",
+                maxItems: 1
             }]
     },
             dashboard: {
@@ -496,39 +502,42 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                 boundaries: true
                             }
                         },
-                        postProcess: [
+                        postProcess : [
                             {
                                 "name": "wiews_area_filter",
-                                "sid": [{"uid": "wiews_regions_mapping"}],
-                                "result": false,
+                                "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                                "rid" : { "uid" : "area_selection" },
+                                "result" : false,
                                 "parameters": {
-                                    "m49": {
-                                        "codes": [
-                                            {
-                                                "uid": "wiews_m49",
-                                                "codes": VISUALIZE_DV["1_filter-vd_filter_item_4"]
-                                            }
-                                        ]
+                                    "total" : false,
+                                    "filter" : {
+                                        "iso3": {
+                                            "codes": [
+                                                {
+                                                    "uid": "ISO3",
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_1"]
+                                                }
+                                            ]
+                                        }
                                     }
-                                },
-                                "rid": {"uid": "area_filter"}
+                                }
                             },
 
                             {
-                                "sid": [{"uid": "indicator20"}],
-                                "name": "select",
-                                "parameters": {
-                                    "query": "where m49_country in <<required_countries>>",
-                                    "values": {
-                                        "genus": null,
-                                        "iteration": null,
-                                        "domain": null,
-                                        "element": null,
-                                        "biologicalAccessionId": null,
-                                        "country": null,
-                                        "stakeholder": null,
-                                        "value": null,
-                                        "um": null
+                                "sid": [ { "uid": "indicator20" }, { "uid": "area_selection" } ],
+                                "name" : "select",
+                                "parameters" : {
+                                    "query" : "where wiews_region in <<required_countries>>",
+                                    "values" : {
+                                        "genus":null,
+                                        "iteration" : null,
+                                        "domain" : null,
+                                        "element" : null,
+                                        "biologicalAccessionId" : null,
+                                        "country" : null,
+                                        "stakeholder" : null,
+                                        "value" : null,
+                                        "um" : null
                                     }
                                 }
                             },
@@ -549,11 +558,18 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                                     "codes": VISUALIZE_DV["1_filter-vd_filter_item_9"]
                                                 }
                                             ]
+                                        },
+                                        "genus": {
+                                            "codes": [
+                                                {
+                                                    "uid": "wiews_genus",
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_8"]
+                                                }
+                                            ]
                                         }
 
                                     }
-                                },
-                                "rid": {"uid": "iteration_filter"}
+                                }
                             },
 
                             {
@@ -564,11 +580,11 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                     ],
                                     "aggregations": [
                                         {
-                                            "columns": ["value"],
+                                            "columns": [ "value" ],
                                             "rule": "SUM"
                                         },
                                         {
-                                            "columns": ["um"],
+                                            "columns": [ "um" ],
                                             "rule": "max"
                                         }
                                     ]
@@ -680,38 +696,41 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                 }
                             }
                         },
-                        postProcess: [
+                        postProcess : [
                             {
                                 "name": "wiews_area_filter",
-                                "sid": [{"uid": "wiews_regions_mapping"}],
-                                "result": false,
+                                "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                                "rid" : { "uid" : "area_selection" },
+                                "result" : false,
                                 "parameters": {
-                                    "m49": {
-                                        "codes": [
-                                            {
-                                                "uid": "wiews_m49",
-                                                "codes": VISUALIZE_DV["1_filter-vd_filter_item_4"]
-                                            }
-                                        ]
+                                    "filter" : {
+                                        "iso3": {
+                                            "codes": [
+                                                {
+                                                    "uid": "ISO3",
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_1"]
+                                                }
+                                            ]
+                                        }
                                     }
                                 }
                             },
 
                             {
-                                "sid": [{"uid": "indicator20"}],
-                                "name": "select",
-                                "parameters": {
-                                    "query": "where m49_country in <<required_countries>>",
-                                    "values": {
-                                        "genus": null,
-                                        "iteration": null,
-                                        "domain": null,
-                                        "element": null,
-                                        "biologicalAccessionId": null,
-                                        "country": null,
-                                        "stakeholder": null,
-                                        "value": null,
-                                        "um": null
+                                "sid": [ { "uid": "indicator20" }, { "uid": "area_selection" } ],
+                                "name" : "select",
+                                "parameters" : {
+                                    "query" : "where wiews_region in <<required_countries>>",
+                                    "values" : {
+                                        "genus":null,
+                                        "iteration" : null,
+                                        "domain" : null,
+                                        "element" : null,
+                                        "biologicalAccessionId" : null,
+                                        "country" : null,
+                                        "stakeholder" : null,
+                                        "value" : null,
+                                        "um" : null
                                     }
                                 }
                             },
@@ -748,7 +767,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                             {
                                 "name": "select",
                                 "parameters": {
-                                    "query": "WHERE biologicalAccessionId is not NULL",
+                                    "query": "WHERE biologicalAccessionId is not NULL and biologicalAccessionId<>'na'",
                                     "queryParameters": []
                                 }
                             },
@@ -761,14 +780,12 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                     ],
                                     "aggregations": [
                                         {
-                                            "columns": ["value"],
+                                            "columns": [ "value" ],
                                             "rule": "SUM"
                                         }
                                     ]
                                 }
                             }
-
-
                         ]
                     },
                     {
@@ -820,38 +837,41 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                             }
 
                         },
-                        postProcess: [
+                        postProcess : [
                             {
                                 "name": "wiews_area_filter",
-                                "sid": [{"uid": "wiews_regions_mapping"}],
-                                "result": false,
+                                "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                                "rid" : { "uid" : "area_selection" },
+                                "result" : false,
                                 "parameters": {
-                                    "m49": {
-                                        "codes": [
-                                            {
-                                                "uid": "wiews_m49",
-                                                "codes": VISUALIZE_DV["1_filter-vd_filter_item_4"]
-                                            }
-                                        ]
+                                    "total" : false,
+                                    "filter" : {
+                                        "iso3": {
+                                            "codes": [
+                                                {
+                                                    "uid": "ISO3",
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_1"]
+                                                }
+                                            ]
+                                        }
                                     }
                                 }
                             },
-
                             {
-                                "sid": [{"uid": "indicator20"}],
-                                "name": "select",
-                                "parameters": {
-                                    "query": "where m49_country in <<required_countries>>",
-                                    "values": {
-                                        "genus": null,
-                                        "iteration": null,
-                                        "domain": null,
-                                        "element": null,
-                                        "biologicalAccessionId": null,
-                                        "country": null,
-                                        "stakeholder": null,
-                                        "value": null,
-                                        "um": null
+                                "sid": [ { "uid": "indicator20" }, { "uid": "area_selection" } ],
+                                "name" : "select",
+                                "parameters" : {
+                                    "query" : "where wiews_region in <<required_countries>>",
+                                    "values" : {
+                                        "genus":null,
+                                        "iteration" : null,
+                                        "domain" : null,
+                                        "element" : null,
+                                        "biologicalAccessionId" : null,
+                                        "country" : null,
+                                        "stakeholder" : null,
+                                        "value" : null,
+                                        "um" : null
                                     }
                                 }
                             },
@@ -885,11 +905,11 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                     ],
                                     "aggregations": [
                                         {
-                                            "columns": ["value"],
+                                            "columns": [ "value" ],
                                             "rule": "SUM"
                                         },
                                         {
-                                            "columns": ["um"],
+                                            "columns": [ "um" ],
                                             "rule": "max"
                                         }
                                     ]
@@ -908,10 +928,7 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                     "page": 1
                                 }
                             }
-
-
                         ]
-
                     },
                     {
                         id: 'vd_dashboard_item_4', // TOP DONORS
@@ -962,38 +979,41 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                             }
 
                         },
-                        postProcess: [
+                        postProcess : [
                             {
                                 "name": "wiews_area_filter",
-                                "sid": [{"uid": "wiews_regions_mapping"}],
-                                "result": false,
+                                "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                                "rid" : { "uid" : "area_selection" },
+                                "result" : false,
                                 "parameters": {
-                                    "m49": {
-                                        "codes": [
-                                            {
-                                                "uid": "wiews_m49",
-                                                "codes": VISUALIZE_DV["1_filter-vd_filter_item_4"]
-                                            }
-                                        ]
+                                    "filter" : {
+                                        "iso3": {
+                                            "codes": [
+                                                {
+                                                    "uid": "ISO3",
+                                                    "codes": VISUALIZE_DV["1_filter-vd_filter_item_1"]
+                                                }
+                                            ]
+                                        }
                                     }
                                 }
                             },
 
                             {
-                                "sid": [{"uid": "indicator20"}],
-                                "name": "select",
-                                "parameters": {
-                                    "query": "where m49_country in <<required_countries>>",
-                                    "values": {
-                                        "genus": null,
-                                        "iteration": null,
-                                        "domain": null,
-                                        "element": null,
-                                        "biologicalAccessionId": null,
-                                        "country": null,
-                                        "stakeholder": null,
-                                        "value": null,
-                                        "um": null
+                                "sid": [ { "uid": "indicator20" }, { "uid": "area_selection" } ],
+                                "name" : "select",
+                                "parameters" : {
+                                    "query" : "where wiews_region in <<required_countries>>",
+                                    "values" : {
+                                        "genus":null,
+                                        "iteration" : null,
+                                        "domain" : null,
+                                        "element" : null,
+                                        "biologicalAccessionId" : null,
+                                        "country" : null,
+                                        "stakeholder" : null,
+                                        "value" : null,
+                                        "um" : null
                                     }
                                 }
                             },
@@ -1015,11 +1035,11 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                                 }
                                             ]
                                         },
-                                        "!stakeholder": {
+                                        "element" :{
                                             "codes": [
                                                 {
-                                                    "uid": "wiews_stakeholder",
-                                                    "codes": ["ZZZ"]
+                                                    "uid": "wiews_elements",
+                                                    "codes": [ "stk" ]
                                                 }
                                             ]
                                         }
@@ -1035,11 +1055,11 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                     ],
                                     "aggregations": [
                                         {
-                                            "columns": ["value"],
+                                            "columns": [ "value" ],
                                             "rule": "SUM"
                                         },
                                         {
-                                            "columns": ["um"],
+                                            "columns": [ "um" ],
                                             "rule": "max"
                                         }
                                     ]
@@ -1058,11 +1078,8 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                                     "page": 1
                                 }
                             }
-
                         ]
-
                     }
-
                 ]
             }
         }
