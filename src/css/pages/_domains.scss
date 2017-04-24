@@ -78,7 +78,7 @@
   .panel.panel-default .panel-heading {color: #434343; background-color: #f9f9f9; border-color: transparent; border-bottom-color: #efefef;}
   .panel-heading {padding: 10px 15px; border-bottom: 1px solid transparent; border-top-left-radius: 3px; border-top-right-radius: 3px;}
   .panel-heading.long-header {padding:10px 0px !important;}
-/*   .panel-heading.long-header .nav-tabs {margin-left: -4px !important;} */
+  /*   .panel-heading.long-header .nav-tabs {margin-left: -4px !important;} */
 
   .panel-body {padding: 10px 15px;}
   .panel-footer {margin-top: 0px; font-size: 12px;}
@@ -93,29 +93,36 @@
   .panel-border .panel-body .form-group .help-block {display: none;}
   .panel-border .panel-body .active .form-group .filter-radio-list {padding-left: 10px; padding-bottom: 6px; margin-bottom: 0px; border-bottom: 1px solid #eaeaea; margin-top: 5px;}
   .panel-border .panel-body .active .clearfix {display: none;}
+  .panel-border .panel-body .active .selector-footer {display: block; max-height: 115px; overflow-y: auto;}
+
+  .panel-border .panel-body .active .selector-footer ul div span.code-brk:after {content: ''; height: 15px; width: 15px; background: url(http://www.fao.org/faostat/en/submodules/fenix-ui-common/css/img/fenix-catalog-sprite-small.svg) no-repeat 0 -15px;
+    background-size: 150px 30px; display: inline-block; position: relative; top: 3px;}
+  .panel-border .panel-body .active .selector-footer ul div span:hover {cursor:pointer; text-decoration: underline;}
+
+
 
 
   .fs-map .panel-body {padding: 0px;}
 
   .fs-data-padding-top {padding-top: 15px;}
-/*
-  #vd_filter_item_tab_4 [data-selector='vd_filter_item_2'] .clearfix,
-  #vd_filter_item_tab_4 [data-selector='vd_filter_item_2'] .help-block,
-  #vd_filter_item_tab_7 [data-selector='vd_filter_item_5'] .clearfix,
-  #vd_filter_item_tab_7 [data-selector='vd_filter_item_5'] .help-block {display: none;}
-  #vd_filter_item_tab_4 [data-selector='vd_filter_item_2'] .form-group,
-  #vd_filter_item_tab_7 [data-selector='vd_filter_item_5'] .form-group {margin-bottom: 0px; padding-bottom: 10px; border-bottom: 1px solid #eaeaea;}
-  /* regions
-  #vd_filter_item_tab_4 [data-selector='vd_filter_item_2'] .filter-radio-list {padding-left: 10px; margin-bottom: 0px;}
-  /* special group
-  #vd_filter_item_tab_7 [data-selector='vd_filter_item_5'] .filter-radio-list {padding-left: 35px; margin-bottom: 0px;}
+  /*
+    #vd_filter_item_tab_4 [data-selector='vd_filter_item_2'] .clearfix,
+    #vd_filter_item_tab_4 [data-selector='vd_filter_item_2'] .help-block,
+    #vd_filter_item_tab_7 [data-selector='vd_filter_item_5'] .clearfix,
+    #vd_filter_item_tab_7 [data-selector='vd_filter_item_5'] .help-block {display: none;}
+    #vd_filter_item_tab_4 [data-selector='vd_filter_item_2'] .form-group,
+    #vd_filter_item_tab_7 [data-selector='vd_filter_item_5'] .form-group {margin-bottom: 0px; padding-bottom: 10px; border-bottom: 1px solid #eaeaea;}
+    /* regions
+    #vd_filter_item_tab_4 [data-selector='vd_filter_item_2'] .filter-radio-list {padding-left: 10px; margin-bottom: 0px;}
+    /* special group
+    #vd_filter_item_tab_7 [data-selector='vd_filter_item_5'] .filter-radio-list {padding-left: 35px; margin-bottom: 0px;}
 
 
-  #vd_filter_item_tab_4 [data-selector='vd_filter_item_3'] .clearfix,
-  #vd_filter_item_tab_7 [data-selector='vd_filter_item_6'] .clearfix {display: none;}
-  #vd_filter_item_tab_4 [data-selector='vd_filter_item_3'] .form-group,
-  #vd_filter_item_tab_7 [data-selector='vd_filter_item_6'] .form-group {margin-bottom: -15px; margin-top: 6px;}
-  */
+    #vd_filter_item_tab_4 [data-selector='vd_filter_item_3'] .clearfix,
+    #vd_filter_item_tab_7 [data-selector='vd_filter_item_6'] .clearfix {display: none;}
+    #vd_filter_item_tab_4 [data-selector='vd_filter_item_3'] .form-group,
+    #vd_filter_item_tab_7 [data-selector='vd_filter_item_6'] .form-group {margin-bottom: -15px; margin-top: 6px;}
+    */
   /*
   #domainsTab.nav-tabs > li > a {font-size: 1.4em;}
   #domainsTab.nav-tabs {border-bottom: none;}
@@ -136,8 +143,8 @@
   .btn-default {color: #fff; background: #2BBBAD;}
 
   .btn-group-justified > .btn-group .btn {width: 100%; background: #0D6CAC; color: #fff;}
-  .btn-group > .btn-group:last-child:not(:first-child) > .btn:first-child {width: 30%; min-width: 105px;}
-  .btn-group > .btn-group:first-child:not(:last-child) > .btn:last-child, .btn-group > .btn-group:first-child:not(:last-child) > .dropdown-toggle {width: 30%; min-width: 105px; float: right;}
+  .btn-group > .btn-group:last-child:not(:first-child) > .btn:first-child {/* width: 30%; min-width: 105px; */ max-width: 60%;}
+  .btn-group > .btn-group:first-child:not(:last-child) > .btn:last-child, .btn-group > .btn-group:first-child:not(:last-child) > .dropdown-toggle {/* width: 30%; min-width: 105px;*/ max-width: 60%; float: right;}
 
   i.left {float: left; margin-right: 10px; font-size: 20px;}
 
