@@ -8,8 +8,9 @@ define([
     "../../../config/domains/config",
     "../../../config/domains/filterSelectors",
     'fenix-ui-reports',
-    "../../../nls/labels"
-], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, Report, labels) {
+    "../../../nls/labels",
+    "fenix-ui-bridge"
+], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, Report, labels, Bridge) {
 
     'use strict';
 
@@ -48,8 +49,6 @@ define([
 
         $.extend(true, this, defaultOptions, o);
         this._initVariables();
-
-
         return this;
     }
 
@@ -58,7 +57,7 @@ define([
         //indicatorProperties
         var IndicatorProcessesRender = this._getIndicatorProcessesRender();
         var filter_btnMsg1Obj = this.el.find('[data-buttonMsg = "'+s.filter_button.buttonMsg_1+'"]');
-        var o = {};
+        var o = {environment: this.environment};
         if((filter_btnMsg1Obj!=null)&&(typeof filter_btnMsg1Obj!='undefined')){
             o["filterDivMsg1"] = filter_btnMsg1Obj;
         }
@@ -77,6 +76,10 @@ define([
             environment: this.environment,
             cache: this.cache
         });
+
+        this.bridge = new Bridge({
+            environment : this.environment
+        });
     };
 
     //This method is called after the dashboard render
@@ -86,6 +89,8 @@ define([
         this.dashboard_config = obj.dashboard_config;
         this.dashboard = obj.dashboard;
         this.models = obj.models;
+
+        this.indicatorProcesses.updateVariables({filter : this.filter});
 
         this._bindEventListeners();
     }
@@ -350,7 +355,8 @@ define([
 
     IndicatorCommon.prototype.onSelectFilter = function (hostParam, filterResponse) {
 
-        var res = this.indicatorProcesses.onSelectFilter(hostParam, filterResponse);
+        var commonParam = {bridge : this.bridge};
+        var res = this.indicatorProcesses.onSelectFilter(hostParam, filterResponse, commonParam);
     }
 
     IndicatorCommon.prototype.downloadData = function (model, uid) {

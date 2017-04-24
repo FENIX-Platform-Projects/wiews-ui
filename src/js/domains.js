@@ -119,10 +119,6 @@ define([
     Domains.prototype._bindEventListeners = function () {
 
         this.$tabs.on("click", _.bind(this._onTabClick, this))
-
-        //console.log("_bindEventListeners", this.$el.find(s.DOWNLOAD_DATA_TAB_EL))
-        //this.$el.find(s.DOWNLOAD_DATA_TAB_EL).on('dashboard.ready', _.bind(this._onDashboardReady, this))
-        //this.$tabs.on(s.events.dashboard.READY, _.bind(this._onDashboardReady, this))
     };
 
     Domains.prototype._onDashboardReady = function (tab) {

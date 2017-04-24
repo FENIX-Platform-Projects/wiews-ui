@@ -7,7 +7,8 @@ define(
             tree :{
                 selector: {
                     id: "tree",
-                    hideSummary : true
+                    hideSummary : false,
+                    sort : true
                 },
                 cl: {
                     uid: ""
@@ -24,7 +25,7 @@ define(
                         plugins: ['remove_button']
                     },
                     noElement: false,
-                    hideSummary : true
+                    hideSummary : false
                 },
                 cl: {
                     uid: "wiews_genus"

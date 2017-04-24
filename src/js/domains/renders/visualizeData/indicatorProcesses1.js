@@ -86,7 +86,19 @@ define([
             sdg : 'sdg',
             mdg : 'mdg',
             cgrfa : 'cgrfa',
-            itpgrfa : 'itpgrfa'
+            itpgrfa : 'itpgrfa',
+            position : {
+                regions : {
+                    1 : 'wiews_fao_region',
+                    2 : 'wiews_m49_regions',
+                    3 : 'sdg_region',
+                    4 : 'mdg_region'
+                },
+                specialGroups : {
+                    1 : 'wiews_cgrfa',
+                    2 : 'wiews_itpgrfa'
+                }
+            }
         },
 
         buttonMsg : {
@@ -142,50 +154,18 @@ define([
 
         s.vd_tab_active.geo_item = s.filter_items.tabItem_1;
         s.filterDivMsg1 = this.filterDivMsg1;
-        console.log(s.filterDivMsg1)
 
     };
 
     IndicatorProcesses1.prototype._filterSelectionValidation = function (values, params) {
 
-        var valid = false;
-        //var filterDivMsg1 = params.filterDivMsg_1;
-        var newValues = '';
-        var textMsg = '';
-        // if ((values != null) && (typeof values != 'undefined') && (filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined') && (values.values != null) && (typeof values.values != 'undefined')) {
-        //
-        //     //The geo element has updated
-        //     newValues = this._geoItemSelectionValidation(values);
-        //
-        //     console.log(newValues)
-        //     if((newValues!= null) && (typeof newValues!= 'undefined'))
-        //     {
-        //         console.log('IN')
-        //         for(var key in newValues.values) {
-        //             if((newValues.values[key] != null) && (typeof newValues.values[key] != 'undefined') && (newValues.values[key].length>0))
-        //             {
-        //                 valid = true;
-        //             }
-        //             else{
-        //                 valid = false;
-        //                 break;
-        //             }
-        //         }
-        //     }
-        //     else {
-        //         valid = false;
-        //     }
-        // }
-        // else {
-        //     valid = false;
-        // }
+        var valid = false, newValues = '', textMsg = '';
 
         if ((values != null) && (typeof values != 'undefined') && (s.filterDivMsg1 != null) && (typeof s.filterDivMsg1 != 'undefined') && (values.values != null) && (typeof values.values != 'undefined')) {
 
             //The geo element has been checked and updated
             newValues = this._geoItemSelectionValidation(values);
 
-            console.log(newValues)
             if((newValues!= null) && (typeof newValues!= 'undefined'))
             {
                 for(var key in newValues) {
@@ -218,7 +198,6 @@ define([
         }
 
         if(!valid){
-            console.log("false")
             newValues = '';
         }
         else{
@@ -229,18 +208,13 @@ define([
     }
 
     IndicatorProcesses1.prototype._geoItemSelectionValidation = function (values) {
-        console.log("geoItemSelectionValidation")
         s.filterDivMsg1_text = '';
-        console.log(JSON.stringify(values))
         var newValues = '', codelist = '', listType = '';
         var toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_3, s.filter_items.item_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7];
         if((s.vd_tab_active.geo_item!=null)&&(typeof s.vd_tab_active.geo_item != 'undefined')){
             switch (s.vd_tab_active.geo_item){
                 case s.filter_items.tabItem_1:
-                    //console.log(values.values[s.filter_items.item_1])
-                    // newValues = this._selectionValidation(values.values[s.filter_items.item_1]);
                     newValues = values.values[s.filter_items.item_1];
-                    console.log(newValues, newValues.length)
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
                         codelist = s.choices_code.iso3;
                         listType = [];
@@ -250,7 +224,6 @@ define([
                     }
                     break;
                 case s.filter_items.tabItem_4:
-                    //newValues = this._selectionValidation(values.values[s.filter_items.item_4], values.values[s.filter_items.item_2]);
                     newValues = values.values[s.filter_items.item_4];
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
                         codelist = this._getCodelist(values.values[s.filter_items.item_2], s.filter_items.item_2);
@@ -265,10 +238,6 @@ define([
                     }
                     break;
                 case s.filter_items.tabItem_7:
-                    //newValues = this._selectionValidation(values.values[s.filter_items.item_7], values.values[s.filter_items.item_5]);
-                    // codelist = this._getCodelist(values.values[s.filter_items.item_5], s.filter_items.item_5);
-                    // listType = this._getListType(values.values[s.filter_items.item_6], s.filter_items.item_6);
-                    // newValues = this._valuesUpdate(values.values, newValues, toDelete, codelist, listType);
                     newValues = values.values[s.filter_items.item_7];
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
                         codelist = this._getCodelist(values.values[s.filter_items.item_5], s.filter_items.item_5);
@@ -320,7 +289,6 @@ define([
                 }
                 break;
         }
-        console.log(codelist)
 
         return codelist;
     }
@@ -341,7 +309,6 @@ define([
                 break;
         }
 
-        console.log(listType)
         return listType;
 
     }
@@ -379,7 +346,6 @@ define([
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params);
-        console.log(newValues)
         if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
         {
             var self = this;
@@ -399,7 +365,6 @@ define([
             }
         }
 
-        console.log(newDashboardConfig)
         return newDashboardConfig;
     };
 
@@ -412,7 +377,6 @@ define([
 			anchor = $( evt.target ).attr( 'href' );
             // Trim the leading '#' from the href attribute
             anchor = anchor.substr( 1, anchor.length );
-            console.log(anchor)
             if((anchor!=null)&&(typeof anchor!='undefined')){
                 switch (anchor){
                     case s.filter_items.tabItem_1:
@@ -429,13 +393,47 @@ define([
         });
     }
 
-    IndicatorProcesses1.prototype.onSelectFilter = function (hostParam, filterResponse) {
+    IndicatorProcesses1.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
         var filterDivMsg1 = hostParam.filterDivMsg_1;
-        //var filterDivMsg1 = s.filterDivMsg1;
         if((filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined'))
         {
             filterDivMsg1.html('')
             filterDivMsg1.hide()
+
+            //Refresh the geographical selector
+            console.log(filterResponse)
+            if((filterResponse!=null)&&(typeof filterResponse!='undefined')){
+                var selectorId = filterResponse.id;
+                if((selectorId!=null)&&(typeof selectorId!='undefined')){
+                    switch (selectorId){
+                        case s.filter_items.item_2 :
+                            var value = filterResponse.values[0];
+                            if((value!=null)&&(typeof value!='undefined')){
+                                var codelist = s.choices_code.position.regions[value];
+                                console.log(value, codelist)
+                                commonParam.codelist = codelist;
+                                this.geoCodelistSelector = s.filter_items.item_4;
+                                this._loadCodelist(commonParam).then(
+                                    _.bind(this._loadCodelistSuccess, this)
+                                );
+                            }
+                            break;
+                        case s.filter_items.item_5 :
+                            var value = filterResponse.values[0];
+                            if((value!=null)&&(typeof value!='undefined')){
+                                var codelist = s.choices_code.position.specialGroups[value];
+                                console.log(value, codelist)
+                                commonParam.codelist = codelist;
+                                this.geoCodelistSelector = s.filter_items.item_7;
+                                this._loadCodelist(commonParam).then(
+                                    _.bind(this._loadCodelistSuccess, this)
+                                );
+                            }
+                            break;
+                    }
+                }
+            }
+
         }
         else{
            return false;
@@ -443,6 +441,98 @@ define([
 
         return true;
     }
+
+    IndicatorProcesses1.prototype._loadCodelist = function (commonParam) {
+        return commonParam.bridge.getCodeList({serviceProvider:"http://fenix.fao.org/", codeListService:"d3s/msd/codes/filter/", type:"POST", body: {"uid": commonParam.codelist}});
+        // return commonParam.bridge.getCodeList({serviceProvider:"http://fenix.fao.org/", codeListService:"d3s/msd/codes/filter/", type:"POST", body: {"uid":"wiews_m49_regions", "level" : 1, "levels": 1}});
+    }
+
+    IndicatorProcesses1.prototype._buildTreeModelFromCodelist = function (fxResource, parent, cl) {
+
+        // console.log(JSON.stringfy(fxResource))
+        //console.log(fxResource)
+        var data = [],
+            selector = this;
+            // selectorConfig = selector.selector || {},
+            // blacklist = selectorConfig.blacklist || [],
+            // bl = blacklist.map(function (item) {
+            //     return item.toString()
+            // });
+
+        _.each(fxResource, _.bind(function (item) {
+
+
+            data.push({
+                id: item.code,
+                text: item.title[selector.lang] || item.title["EN"],
+                parent: parent || '#'
+            });
+
+
+            if (Array.isArray(item.children) && item.children.length > 0) {
+                data = _.union(data, this._buildTreeModelFromCodelist(item.children, item.code, cl));
+            }
+
+        }, this));
+
+        //console.log(data);
+        return data;
+    };
+
+
+    IndicatorProcesses1.prototype._loadCodelistSuccess = function (resource) {
+        console.log("SUCCESS")
+        console.log(resource)
+
+        var keyTest = s.filter_items.item_4;
+        var sources = {};
+
+        var dataX = this._buildTreeModelFromCodelist(resource);
+        console.log(dataX);
+        dataX = dataX.sort(
+           function (a, b) {
+                if (a.text < b.text) return -1;
+                if (a.text > b.text) return 1;
+                return 0;
+            });
+        sources[this.geoCodelistSelector] = dataX;
+        //sources[keyTest] = dataX;
+       // sources[keyTest] = resource;
+       //  sources[keyTest] = [
+       //      {value: "selector_1", label: "Item 1"},
+       //      {value: "selector_11", label: "Item 11", parent: "selector_1"},
+       //      {value: "selector_2", label: "Item 2"},
+       //      {value: "selector_22", label: "Item 22", parent: "selector_2"},
+       //  ];
+
+        //sources[keyTest] = [{"id":"1","text":"World343434","parent":"#"},{"id":"21","text":"Northern America","parent":"1"},{"id":"202","text":"Sub-Saharan Africa","parent":"1"},{"id":"17","text":"Middle Africa","parent":"202"},{"id":"18","text":"Southern Africa","parent":"202"},{"id":"14","text":"Eastern Africa","parent":"202"},{"id":"11","text":"Western Africa","parent":"202"},{"id":"150","text":"Europe","parent":"1"},{"id":"151","text":"Eastern Europe","parent":"150"},{"id":"39","text":"Southern Europe","parent":"150"},{"id":"155","text":"Western Europe","parent":"150"},{"id":"154","text":"Northern Europe","parent":"150"},{"id":"419","text":"Latin America and the Caribbean","parent":"1"},{"id":"5","text":"South America","parent":"419"},{"id":"13","text":"Central America","parent":"419"},{"id":"29","text":"Caribbean","parent":"419"},{"id":"15","text":"Northern Africa","parent":"1"},{"id":"9","text":"Oceania","parent":"1"},{"id":"57","text":"Micronesia","parent":"9"},{"id":"53","text":"Australia and New Zealand","parent":"9"},{"id":"54","text":"Melanesia","parent":"9"},{"id":"61","text":"Polynesia","parent":"9"},{"id":"142","text":"Asia","parent":"1"},{"id":"143","text":"Central Asia","parent":"142"},{"id":"145","text":"Western Asia","parent":"142"},{"id":"30","text":"Eastern Asia","parent":"142"},{"id":"35","text":"South-eastern Asia","parent":"142"},{"id":"34","text":"Southern Asia","parent":"142"}];
+        this.filter.setSources(sources);
+        // sources[keyTest] = resource;
+        // this.filter.setDomain(sources);
+
+        // for(var i=0; i<resource.length; i++){
+        //     //
+        //     //         var policy_type_code = resource[i].code;
+        //     //         var policy_type_name = resource[i].title["EN"];
+        //     //
+        //     //         switch(policy_type_code) {
+        //     //             case s.custom_code.biofuel_targets.code:
+        //     //                 s.custom_code.biofuel_targets.name = policy_type_name;
+        //     //                 break;
+        //     //         }
+        //     //     }
+    }
+
+    IndicatorProcesses1.prototype._loadCodelistError = function () {
+        console.log("ERROR")
+
+    }
+
+    IndicatorProcesses1.prototype.updateVariables = function (obj) {
+
+        this.filter = obj.filter;
+    }
+
 
     IndicatorProcesses1.prototype._element_configuration_update = function (dashboardConfig, element, values, itemCount) {
 
@@ -463,8 +553,6 @@ define([
     };
 
     IndicatorProcesses1.prototype._element1_configuration_update = function (dashboardConfig, values, itemCount) {
-
-        console.log(values)
 
         //Map
         var newDashboardConfig = '';
@@ -489,19 +577,11 @@ define([
                 dashboardConfig.items[itemCount].postProcess[0].parameters.list = false;
             }
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
-            console.log(dashboardConfig.items[itemCount].postProcess[0].parameters.filter)
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
             dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
             dashboardConfig.items[itemCount].postProcess[2].parameters.rows["genus"].codes[0].codes = values[s.filter_items.item_8];
             newDashboardConfig = dashboardConfig;
         }
-        // if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
-        //     //newDashboardConfig = dashboardConfig.items[0].postProcess
-        //     dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values[s.geo_property].values;
-        //     dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_9];
-        //     newDashboardConfig = dashboardConfig;
-        // }
-        console.log(newDashboardConfig)
 
         return newDashboardConfig;
     };
@@ -510,13 +590,6 @@ define([
 
         //First Chart
         var newDashboardConfig = '';
-        // if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
-        //     //newDashboardConfig = dashboardConfig.items[0].postProcess
-        //     dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values[s.geo_property].values;
-        //     dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_9];
-        //     dashboardConfig.items[itemCount].postProcess[2].parameters.rows["genus"].codes[0].codes = values.values[s.filter_items.item_8];
-        //     newDashboardConfig = dashboardConfig;
-        // }
 
         if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
             //newDashboardConfig = dashboardConfig.items[0].postProcess
@@ -552,12 +625,6 @@ define([
 
         //Second Chart
         var newDashboardConfig = '';
-        // if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
-        //     //newDashboardConfig = dashboardConfig.items[0].postProcess
-        //     dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values[s.geo_property].values;
-        //     dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_9];
-        //     newDashboardConfig = dashboardConfig;
-        // }
 
         if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
             //newDashboardConfig = dashboardConfig.items[0].postProcess
@@ -592,12 +659,6 @@ define([
 
         //Third Chart
         var newDashboardConfig = '';
-        // if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
-        //     //newDashboardConfig = dashboardConfig.items[0].postProcess
-        //     dashboardConfig.items[itemCount].postProcess[0].parameters["m49"].codes[0].codes = values[s.geo_property].values;
-        //     dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values.values[s.filter_items.item_9];
-        //     newDashboardConfig = dashboardConfig;
-        // }
 
         if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
             //newDashboardConfig = dashboardConfig.items[0].postProcess
