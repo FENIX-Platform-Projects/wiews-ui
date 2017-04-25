@@ -69,9 +69,10 @@
   .jstree-anchor.jstree-clicked {background-color:#cfe1f2 !important;}
   .jstree-default>.jstree-no-dots .jstree-leaf>.jstree-ocl { display: none;}
 
-  .jstree-container-ul .jstree-anchor {width: 90%;}
-  .jstree-container-ul .jstree-children .jstree-anchor {width: 210px; padding-right: 0px;}
-  .jstree-container-ul ul.jstree-children ul.jstree-children .jstree-anchor {width: 185px; padding-right: 0px;}
+  .jstree-container-ul .jstree-anchor {width: 100%;}
+  .jstree-container-ul .jstree-open .jstree-anchor {max-width: 235px; padding-right: 0px;}
+  .jstree-container-ul .jstree-children .jstree-anchor {max-width: 210px; padding-right: 0px;}
+  .jstree-container-ul ul.jstree-children ul.jstree-children .jstree-anchor {max-width: 185px; padding-right: 0px;}
 
   .panel.panel-default {background-color: white; transition: box-shadow .25s; -webkit-border-radius: 2px; -moz-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px; box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12); border-color: transparent;
     border: 0;}
