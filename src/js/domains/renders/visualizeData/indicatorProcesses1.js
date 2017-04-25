@@ -401,6 +401,7 @@ define([
             filterDivMsg1.hide()
 
             //Refresh the geographical selector
+            console.log("filterResponse//////////////////////////////////////////////////////////////////////")
             console.log(filterResponse)
             if((filterResponse!=null)&&(typeof filterResponse!='undefined')){
                 var selectorId = filterResponse.id;
@@ -507,6 +508,10 @@ define([
 
         //sources[keyTest] = [{"id":"1","text":"World343434","parent":"#"},{"id":"21","text":"Northern America","parent":"1"},{"id":"202","text":"Sub-Saharan Africa","parent":"1"},{"id":"17","text":"Middle Africa","parent":"202"},{"id":"18","text":"Southern Africa","parent":"202"},{"id":"14","text":"Eastern Africa","parent":"202"},{"id":"11","text":"Western Africa","parent":"202"},{"id":"150","text":"Europe","parent":"1"},{"id":"151","text":"Eastern Europe","parent":"150"},{"id":"39","text":"Southern Europe","parent":"150"},{"id":"155","text":"Western Europe","parent":"150"},{"id":"154","text":"Northern Europe","parent":"150"},{"id":"419","text":"Latin America and the Caribbean","parent":"1"},{"id":"5","text":"South America","parent":"419"},{"id":"13","text":"Central America","parent":"419"},{"id":"29","text":"Caribbean","parent":"419"},{"id":"15","text":"Northern Africa","parent":"1"},{"id":"9","text":"Oceania","parent":"1"},{"id":"57","text":"Micronesia","parent":"9"},{"id":"53","text":"Australia and New Zealand","parent":"9"},{"id":"54","text":"Melanesia","parent":"9"},{"id":"61","text":"Polynesia","parent":"9"},{"id":"142","text":"Asia","parent":"1"},{"id":"143","text":"Central Asia","parent":"142"},{"id":"145","text":"Western Asia","parent":"142"},{"id":"30","text":"Eastern Asia","parent":"142"},{"id":"35","text":"South-eastern Asia","parent":"142"},{"id":"34","text":"Southern Asia","parent":"142"}];
         this.filter.setSources(sources);
+        this.filter.deselectAll(this.geoCodelistSelector);
+
+        console.log("Before deselect all")
+
         // sources[keyTest] = resource;
         // this.filter.setDomain(sources);
 
