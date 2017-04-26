@@ -405,11 +405,32 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                 title: [labels[Clang]["1_filter-vd_filter_item_3_title1"], labels[Clang]["1_filter-vd_filter_item_3_title2"]]
             },
             {
-                id: 'vd_filter_item_4',
+                id: 'vd_filter_item_4_1',
                 type: 'tree',
-                default: VISUALIZE_DV["1_filter-vd_filter_item_4"],
-                title: labels[Clang]['1_filter-vd_filter_item_4_title'],
+                default: VISUALIZE_DV["1_filter-vd_filter_item_4_1"],
+                title: labels[Clang]['1_filter-vd_filter_item_4_1_title'],
                 clUid: "wiews_fao_region"
+            },
+            {
+                id: 'vd_filter_item_4_2',
+                type: 'tree',
+                default: VISUALIZE_DV["1_filter-vd_filter_item_4_2"],
+                title: labels[Clang]['1_filter-vd_filter_item_4_1_title'],
+                clUid: "wiews_m49_regions"
+            },
+            {
+                id: 'vd_filter_item_4_3',
+                type: 'tree',
+                default: VISUALIZE_DV["1_filter-vd_filter_item_4_3"],
+                title: labels[Clang]['1_filter-vd_filter_item_4_1_title'],
+                clUid: "sdg_region"
+            },
+            {
+                id: 'vd_filter_item_4_4',
+                type: 'tree',
+                default: VISUALIZE_DV["1_filter-vd_filter_item_4_4"],
+                title: labels[Clang]['1_filter-vd_filter_item_4_1_title'],
+                clUid: "mdg_region"
             },
             {
                 id: 'vd_filter_item_5',
@@ -424,11 +445,18 @@ function (Highcharts, C, VISUALIZE_DV, labels) {
                 title: [labels[Clang]["1_filter-vd_filter_item_6_title1"], labels[Clang]["1_filter-vd_filter_item_6_title2"]]
             },
             {
-                id: 'vd_filter_item_7',
+                id: 'vd_filter_item_7_1',
                 type: 'tree',
-                default: VISUALIZE_DV["1_filter-vd_filter_item_7"],
+                default: VISUALIZE_DV["1_filter-vd_filter_item_7_1"],
                 title: labels[Clang]['1_filter-vd_filter_item_7_title'],
                 clUid: "wiews_cgrfa"
+            },
+            {
+                id: 'vd_filter_item_7_2',
+                type: 'tree',
+                default: VISUALIZE_DV["1_filter-vd_filter_item_7_2"],
+                title: labels[Clang]['1_filter-vd_filter_item_7_title'],
+                clUid: "wiews_itpgrfa"
             },
             {
                 id: 'vd_filter_item_8',

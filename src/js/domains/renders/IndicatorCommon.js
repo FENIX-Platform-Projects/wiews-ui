@@ -57,7 +57,7 @@ define([
         //indicatorProperties
         var IndicatorProcessesRender = this._getIndicatorProcessesRender();
         var filter_btnMsg1Obj = this.el.find('[data-buttonMsg = "'+s.filter_button.buttonMsg_1+'"]');
-        var o = {environment: this.environment};
+        var o = {environment: this.environment, el : this.el};
         if((filter_btnMsg1Obj!=null)&&(typeof filter_btnMsg1Obj!='undefined')){
             o["filterDivMsg1"] = filter_btnMsg1Obj;
         }
