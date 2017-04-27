@@ -4,36 +4,30 @@ define([
     "underscore",
     "../../config/config",
     "../../config/domains/config",
-    "../../html/domains/downloadDataTemplate.hbs",
+    "../../html/domains/downloadDataFilterTemplate.hbs",
+    "../../html/domains/downloadDataDashboardTemplate.hbs",
     "fenix-ui-dashboard",
     "fenix-ui-filter",
     "fenix-ui-filter-utils",
-    "../../lib/utils",
+    "./renders/IndicatorCommon",
     "../../nls/labels",
-    "../../config/domains/indicatorConfig",
-    "fenix-ui-bridge",
-    "highcharts",
     "jstree",
     "bootstrap",
     "bootstrap-table"
-], function ($, log, _, C, PAGC, template, Dashboard, Filter, FxUtils, Utils, labels, INDICATORSC, Bridge, Highcharts) {
+], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, labels) {
 
     "use strict";
-    var Clang = C.lang.toLowerCase();
 
-    var dashboardName = "downloadData";
+    var mainTabName = "downloadData";
+
+    var indicatorCommon;
 
     var s = {
-        indicator_categories_path : '../../config/domains/categories',
-        PROGRESS_BAR_CONTAINER: '#dd-progress-bar-holder',
+        indicator_config_path : './renders/indicatorConfig',
 
         dashboard: {
-            dashboard_config_item : '#dd_dashboard_item',
+            dashboard_config_item : 'dashboard',
             dashboard_container : '#dd-dashboard-container'
-        },
-
-        button: {
-            show_data : '#dd-showdata-button'
         },
 
         filter: {
@@ -41,13 +35,15 @@ define([
             filter_container : '#dd-filter-container'
         },
 
+        showDashboardSection : 'showDashboard',
+
         events: {
             dashboardComponent :{
                 READY : 'ready',
                 ITEM_READY : 'ready.item'
             },
             dashboard :{
-                READY : 'dashboard.ready'
+                DASHBOARD_CONFIG : "new_dashoboard_config_ready"
             }
         }
     };
@@ -57,74 +53,110 @@ define([
         $.extend(true, this, opts);
 
         this._validateConfig();
+
         this._attach();
+
         this._initVariables();
 
     };
 
     DownloadData.prototype._validateConfig = function () {
-        if (!C.lang) alert("Please specify a valid LANGUAGE in config/config.js");
+
     };
 
     DownloadData.prototype._attach = function () {
-        $(this.el).html(template(labels[Clang]));
+
+        $(this.el).html(filterTemplate(labels[this.lang]));
+        var indicatorFilterSection = this.el.find('[data-section = "'+this.indicatorProperties.filter_category+'"]');
+        //dashboardSection
+        $(this.el).append(dashboardTemplate(labels[this.lang]));
+        var indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dashboard_category+'"]');
+        var showDashboardSection = this.el.find('[data-section = "'+s.showDashboardSection+'"]');
+        $(this.el).append(indicatorFilterSection);
+        $(indicatorFilterSection).append(showDashboardSection);
+        $(indicatorFilterSection).append(indicatorDashboardSection);
+
     };
 
     DownloadData.prototype._initVariables = function () {
 
         this.$el = $(s.EL);
+        this.indicatorConfig = this._getIndicatorConfig();
+        this.config = this.indicatorConfig[mainTabName];
 
-        this.lang = Clang;
-        this.environment = C.ENVIRONMENT;
-        this.cache = C.cache;
-        // this.indicatorConfig = INDICATORSC[this.indicatorProperties.dashboard_category]; // BARBARA .position;
-        this.indicatorConfig = INDICATORSC['1']; // BARBARA .position;
-        //this.indicatorConfig = require(this._getIndicatorConfig());
-        this.config = this.indicatorConfig[dashboardName];
         this.channels = {};
-        this.dashboardConfig = this.config['dashboard'];
-        this.dashboardConfig.environment = this.environment;
-
-        console.log('conversion:' , this.conversion)
-
-        console.log(this.dashboardConfig);
-
-        this._bindEventListeners();
-
+        this.models = {};
     };
 
     DownloadData.prototype.render = function () {
 
-        if(this.dashboard) this._disposeDashboard();
+        if(this.dashboard){
+            this._disposeDashboard();
+        }
 
-        var filterConfig = this._getElemConfig(s.filter.filter_config_item);
+        var dashboardConf = this._getElemConfig(s.dashboard.dashboard_config_item),
+            filterConfig = this._getElemConfig(s.filter.filter_config_item);
 
-        console.log(filterConfig);
+        dashboardConf.environment = this.environment;
+
+        indicatorCommon = new ICommon({
+            el : this.el,
+            indicatorProperties : this.indicatorProperties,
+            lang : this.lang,
+            environment : this.environment,
+            cache : this.cache,
+            mainTabName : mainTabName
+        });
+
+        indicatorCommon.indicatorSectionInit(dashboardConf);
+
+        //Setting the titles of the tab
+        indicatorCommon.indicatorFilterTemplateUpdate(filterConfig);
+
+        filterConfig = indicatorCommon.indicatorFilterConfigInit(filterConfig);
 
         this._renderFilter(filterConfig);
 
-    };
+        this._renderDashboard(dashboardConf);
+
+        this._loadProgressBar(dashboardConf);
+    }
 
     // Events
     DownloadData.prototype._bindEventListeners = function () {
-
-        var self = this;
-
-        $(s.button.show_data).on('click', function () {
-            self._renderDashboard(self.filter.getValues());
-        });
-
     };
 
     DownloadData.prototype._disposeDashboard = function () {
-        if (this.dashboard && $.isFunction(this.dashboard.dispose)) this.dashboard.dispose();
+        if (this.dashboard && $.isFunction(this.dashboard.dispose)) {
+            this.dashboard.dispose();
+        }
+    };
+
+    DownloadData.prototype._loadProgressBar = function (dashboardConf) {
+
+        var self = this;
+
+        this.dashboard.on(s.events.dashboardComponent.READY, function () {
+            self._renderIndicator(dashboardConf);
+        });
+
+        this.dashboard.on(s.events.dashboardComponent.ITEM_READY, function (item) {
+            if((typeof item != 'undefined')&&(item != null)&&(typeof item.model != 'undefined')&&(item.model != null)&&(typeof item.model.metadata != 'undefined')&&(item.model.metadata != null)&&(typeof item.model.data != 'undefined')&&(item.model.data != null)){
+                var itemId = item.id;
+                self.models[itemId] = {metadata : item.model.metadata, data : item.model.data};
+            }
+
+        });
     };
 
     DownloadData.prototype._getElemConfig = function (elem) {
 
         var config;
 
-        if((this.config)&&(elem)&&(this.config[elem])) config = this.config[elem];
+        if((this.config)&&(elem)&&(this.config[elem]))
+        {
+            config = this.config[elem];
+        }
 
         return config;
     }
@@ -132,166 +164,69 @@ define([
     DownloadData.prototype._renderFilter = function (filterConfig) {
 
         console.log(filterConfig)
+        console.log(this.cache)
         this.filter = new Filter({
             el: s.filter.filter_container,
             selectors: filterConfig,
+            environment: this.environment,
+            cache : this.cache,
+
+            //groups: filterConfig,
             common: {
                 template: {
                     hideSwitch: true,
-                    hideHeader: true,
                     hideRemoveButton: true
                 }
             }
         });
-    };
 
-    DownloadData.prototype._renderDashboard = function (filters) {
+        $("#dd_filter_item_tab_12").attr('disabled','disabled');
+    }
+
+    DownloadData.prototype._renderDashboard = function (dashboardConfig) {
         // Build new dashboard
+        this.dashboard = new Dashboard(
+            dashboardConfig
+        );
+    };
 
-        // // Plain
-        // this.dashboardConfig.filter = this.filter.getValues();
-        // Formatted
-        this.dashboardConfig.filter = this._getFormattedValues();
+    DownloadData.prototype._getIndicatorConfig = function () {
+        return require(this._getIndicatorConfigPath());
+    };
 
-        this.dashboard = new Dashboard( this.dashboardConfig );
+    DownloadData.prototype._getIndicatorConfigPath = function () {
 
-        console.log(this.dashboardConfig);
+        return s.indicator_config_path + this.indicatorProperties.indicator_id+'.js';
+    };
 
-        // Build fake data
-        /*
-        this.bootstraptable = $('#fake_data');
+    DownloadData.prototype._renderIndicator = function (dashboardConfig) {
+        // Calling the indicator actions file
 
-        this.bootstraptable.bootstrapTable({
-            data: [
-                {
-                    "domain": "Crops",
-                    "m49_country": "Ecuador",
-                    "indicator": "Production",
-                    "indicator_label": "Anise, badian, fennel, coriander",
-                    "iteration": "2011",
-                    "value": "11"
-                },{
-                    "domain": "Crops",
-                    "m49_country": "Ecuador",
-                    "indicator": "Production",
-                    "indicator_label": "Anise, badian, fennel, coriander",
-                    "iteration": "2011",
-                    "value": "11"
-                },{
-                    "domain": "Crops",
-                    "m49_country": "Ecuador",
-                    "indicator": "Production",
-                    "indicator_label": "Anise, badian, fennel, coriander",
-                    "iteration": "2011",
-                    "value": "11"
-                },{
-                    "domain": "Crops",
-                    "m49_country": "Ecuador",
-                    "indicator": "Production",
-                    "indicator_label": "Anise, badian, fennel, coriander",
-                    "iteration": "2011",
-                    "value": "11"
-                },{
-                    "domain": "Crops",
-                    "m49_country": "Ecuador",
-                    "indicator": "Production",
-                    "indicator_label": "Anise, badian, fennel, coriander",
-                    "iteration": "2011",
-                    "value": "11"
-                },{
-                    "domain": "Crops",
-                    "m49_country": "Ecuador",
-                    "indicator": "Production",
-                    "indicator_label": "Anise, badian, fennel, coriander",
-                    "iteration": "2011",
-                    "value": "11"
-                },{
-                    "domain": "Crops",
-                    "m49_country": "Ecuador",
-                    "indicator": "Production",
-                    "indicator_label": "Anise, badian, fennel, coriander",
-                    "iteration": "2011",
-                    "value": "11"
-                },{
-                    "domain": "Crops",
-                    "m49_country": "Ecuador",
-                    "indicator": "Production",
-                    "indicator_label": "Anise, badian, fennel, coriander",
-                    "iteration": "2011",
-                    "value": "11"
-                },{
-                    "domain": "Crops",
-                    "m49_country": "Ecuador",
-                    "indicator": "Production",
-                    "indicator_label": "Anise, badian, fennel, coriander",
-                    "iteration": "2011",
-                    "value": "11"
-                },{
-                    "domain": "Crops",
-                    "m49_country": "Ecuador",
-                    "indicator": "Production",
-                    "indicator_label": "Anise, badian, fennel, coriander",
-                    "iteration": "2011",
-                    "value": "11"
-                }
-            ],
-            pagination: true,
-            columns: [
-            {
-                field: 'domain',
-                title: 'Domain'
-            }, {
-                field: 'm49_country',
-                title: 'Country'
-            }, {
-                field: 'indicator',
-                title: 'Element'
-            }, {
-                field: 'indicator_label',
-                title: 'Indicator and Rating'
-            }, {
-                field: 'iteration',
-                title: 'Period'
-            }, {
-                field: 'value',
-                title: 'Value'
-            }]
+        indicatorCommon.render({
+            filter : this.filter,
+            dashboard_config : dashboardConfig,
+            dashboard : this.dashboard,
+            models : this.models
         });
-        */
+
+        indicatorCommon.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))
 
     };
 
-    DownloadData.prototype._getFormattedValues = function () {
+    DownloadData.prototype._dashboardRecreate = function (param) {
 
-        var object = this.filter.getValues(),
-            self = this;
-
-        //console.log('after', JSON.stringify(object));
-
-        _.each(Object.keys(object), function (element) {
-            _.each(Object.keys(object[element]), function (convertible){
-                //console.log ('!! converting ' + convertible + ' > ' + self.conversion[convertible]);
-                if (convertible != "" ) self._renameKey(object[element], convertible, self.conversion[convertible]);
-            });
-        });
-
-        //console.log('before' , JSON.stringify(object));
-
-        return object;
-
-    };
-
-    DownloadData.prototype._renameKey = function (item, oldName, newName) {
-        if (item.hasOwnProperty(oldName)) {
-            item[newName] = item[oldName];
-            delete item[oldName];
+        if(this.dashboard){
+            this._disposeDashboard();
         }
-        return item;
+
+        this._renderDashboard(param.dashboardConfig);
     }
 
     DownloadData.prototype._trigger = function (channel) {
 
-        if (!this.channels[channel]) return false;
+        if (!this.channels[channel]) {
+            return false;
+        }
         var args = Array.prototype.slice.call(arguments, 1);
         for (var i = 0, l = this.channels[channel].length; i < l; i++) {
             var subscription = this.channels[channel][i];
@@ -303,7 +238,9 @@ define([
 
     DownloadData.prototype.on = function (channel, fn, context) {
         var _context = context || this;
-        if (!this.channels[channel]) this.channels[channel] = [];
+        if (!this.channels[channel]) {
+            this.channels[channel] = [];
+        }
         this.channels[channel].push({context: _context, callback: fn});
         return this;
     };

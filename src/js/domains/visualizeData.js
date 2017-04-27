@@ -181,10 +181,14 @@ define([
 
     VisualizeData.prototype._renderFilter = function (filterConfig) {
 
-        //console.log(filterConfig)
+        console.log(filterConfig)
+        console.log(this.cache)
         this.filter = new Filter({
             el: s.filter.filter_container,
             selectors: filterConfig,
+            environment: this.environment,
+            cache : this.cache,
+
             //groups: filterConfig,
             common: {
                 template: {

@@ -17,7 +17,7 @@ define([
     var defaultOptions = {};
 
     var s = {
-        indicator_processes_renders_path : './visualizeData/indicatorProcesses',
+        indicator_processes_renders_path : '/indicatorProcesses',
 
         mainTabNames : {
             visualizeData : "visualizeData",
@@ -100,7 +100,7 @@ define([
     };
 
     IndicatorCommon.prototype._getIndicatorProcessesPath = function () {
-        return s.indicator_processes_renders_path + this.indicatorProperties.processType;
+        return './'+ this.mainTabName + s.indicator_processes_renders_path + this.indicatorProperties.processType;
     };
 
 
@@ -108,7 +108,7 @@ define([
 
         var indicatorSection = this.el.find('[data-section = "'+this.indicatorProperties.dashboard_category+'"]');
 
-        if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
+        if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')&&(dashboardConfig.items!=null)&&(typeof dashboardConfig.items != 'undefined')){
             var itemsArray = dashboardConfig.items;
             var itemCount = 1;
             itemsArray.forEach(function (item) {
@@ -226,7 +226,7 @@ define([
 
         if((filterConfig!=null)&&(typeof filterConfig != 'undefined')){
             var itemsArray = filterConfig.items;
-            var itemCount = 1, selectorConfig, id, type, defaultValue, title, codelist, maxItems;
+            var itemCount = 1, selectorConfig, id, type, defaultValue, title, choicesTitle, codelist, maxItems, source;
 
             itemsArray.forEach(function (item) {
 
@@ -234,8 +234,10 @@ define([
                 type = item.type;
                 defaultValue = item.default;
                 title = item.title;
+                choicesTitle = item.choicesTitle;
                 codelist = item.clUid;
                 maxItems = item.maxItems;
+                source = item.source;
 
                 selectorConfig = {};
                 $.extend(true, selectorConfig, FilterSelectors[type]);
@@ -245,6 +247,25 @@ define([
                         if((selectorConfig.selector!=null)&&(typeof selectorConfig.selector!= 'undefined')){
                             if((defaultValue!=null)&&(typeof defaultValue!= 'undefined')){
                                 selectorConfig.selector.default = defaultValue;
+                            }
+
+                            if((source!=null)&&(typeof source!= 'undefined')){
+                                selectorConfig.selector.source = source;
+                            }
+
+                            //Setting title for radio button selector(title is an array)
+                            if((selectorConfig.selector.type==s.filterSelectorTypes.radio)||(selectorConfig.selector.type==s.filterSelectorTypes.checkbox)){
+                                var itemTitleCount = 1;
+
+                                //console.log(title)
+                                if((choicesTitle!=null)&&(typeof choicesTitle!= 'undefined')&&(choicesTitle.length>0)){
+                                    selectorConfig.selector.source =[];
+                                    choicesTitle.forEach(function (choicesTitleItem) {
+                                        var obj = {value: itemTitleCount, label: choicesTitleItem};
+                                        selectorConfig.selector.source.push(obj);
+                                        itemTitleCount++;
+                                    })
+                                }
                             }
                         }
 
@@ -273,25 +294,7 @@ define([
                             else{
                                 selectorConfig.config = {maxItems: maxItems};
                             }
-
                         }
-
-                    //Setting title for radio button selector(title is an array)
-                    if((selectorConfig.selector!=null)&&(typeof selectorConfig.selector!= 'undefined')){
-                        if((selectorConfig.selector.type==s.filterSelectorTypes.radio)||(selectorConfig.selector.type==s.filterSelectorTypes.checkbox)){
-                            var itemTitleCount = 1;
-
-                            //console.log(title)
-                            if((title!=null)&&(typeof title!= 'undefined')&&(title.length>0)){
-                                selectorConfig.selector.source =[];
-                                title.forEach(function (titleItem) {
-                                    var obj = {value: itemTitleCount, label: titleItem};
-                                    selectorConfig.selector.source.push(obj);
-                                    itemTitleCount++;
-                                })
-                            }
-                        }
-                    }
                 }
                 newFilterConfig[id] = selectorConfig;
                 itemCount++;
@@ -316,23 +319,25 @@ define([
 
         if((this.dashboard_config!=null)&&(typeof this.dashboard_config != 'undefined')){
             var itemsArray = this.dashboard_config.items;
-            var itemCount = 1, itemId, uid, dashboard_button;
+            if((itemsArray!=null)&&(typeof itemsArray != 'undefined')) {
+                var itemCount = 1, itemId, uid, dashboard_button;
 
-            itemsArray.forEach(function (item) {
+                itemsArray.forEach(function (item) {
 
-                if ((item != null) && (typeof item != 'undefined')) {
-                    itemId = item.id;
-                    uid = item.uid;
+                    if ((item != null) && (typeof item != 'undefined')) {
+                        itemId = item.id;
+                        uid = item.uid;
 
-                    //Dashboard Export
-                    var dashboard_button = self.el.find('[data-button = "'+s.dashboard_button.export+itemCount+'"]');
+                        //Dashboard Export
+                        var dashboard_button = self.el.find('[data-button = "' + s.dashboard_button.export + itemCount + '"]');
 
-                    if(dashboard_button){
-                        dashboard_button.on(s.event.BUTTON_CLICK, _.bind(self.downloadData, self, self.models[itemId], uid));
+                        if (dashboard_button) {
+                            dashboard_button.on(s.event.BUTTON_CLICK, _.bind(self.downloadData, self, self.models[itemId], uid));
+                        }
                     }
-                }
-                itemCount++;
-            });
+                    itemCount++;
+                });
+            }
         }
 
         if((this.filter!=null)&&(typeof this.filter!= 'undefined')){
