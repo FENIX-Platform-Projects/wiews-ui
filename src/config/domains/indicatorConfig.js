@@ -154,7 +154,7 @@ define(["highcharts",
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_m49",
-                                                        "codes": [ "WITC","150" ]
+                                                        "codes": [ "WITC","150" ]//qui selettore geografico
                                                     }
                                                 ]
                                             }
@@ -211,7 +211,7 @@ define(["highcharts",
                                                     "codes": [
                                                         {
                                                             "uid": "wiews_elements",
-                                                            "codes": [ "ind", "nfp", "nfpa", "stk" ]
+                                                            "codes": [ "ind", "nfp", "nfpa", "stk" ]//qui
                                                         }
                                                     ]
                                                 },
@@ -219,7 +219,7 @@ define(["highcharts",
                                                     "codes": [
                                                         {
                                                             "uid": "wiews_iteration",
-                                                            "codes": [ "1" ]
+                                                            "codes": [ "1" ]//qui codice period
                                                         }
                                                     ]
                                                 }

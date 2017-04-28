@@ -226,7 +226,7 @@ define([
 
         if((filterConfig!=null)&&(typeof filterConfig != 'undefined')){
             var itemsArray = filterConfig.items;
-            var itemCount = 1, selectorConfig, id, type, defaultValue, title, choicesTitle, codelist, maxItems, source;
+            var itemCount = 1, selectorConfig, id, type, defaultValue, title, choicesTitle, codelist, maxItems, source, max;
 
             itemsArray.forEach(function (item) {
 
@@ -237,6 +237,7 @@ define([
                 choicesTitle = item.choicesTitle;
                 codelist = item.clUid;
                 maxItems = item.maxItems;
+                max = item.max;
                 source = item.source;
 
                 selectorConfig = {};
@@ -247,6 +248,10 @@ define([
                         if((selectorConfig.selector!=null)&&(typeof selectorConfig.selector!= 'undefined')){
                             if((defaultValue!=null)&&(typeof defaultValue!= 'undefined')){
                                 selectorConfig.selector.default = defaultValue;
+                            }
+
+                            if((max!=null)&&(typeof max!= 'undefined')){
+                                selectorConfig.selector.max = max;
                             }
 
                             if((source!=null)&&(typeof source!= 'undefined')){
@@ -295,6 +300,7 @@ define([
                                 selectorConfig.config = {maxItems: maxItems};
                             }
                         }
+
                 }
                 newFilterConfig[id] = selectorConfig;
                 itemCount++;
