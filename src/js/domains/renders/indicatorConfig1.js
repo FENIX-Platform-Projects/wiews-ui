@@ -229,7 +229,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             hostConfig: {
                                 itemContainer: {
                                     class: 'fs-map panel panel-default fs-map hoverable',
-                                    // height : '400px',
+                                    height : '400px',
                                     title: {
                                         text: labels[Clang]['1_vd_dashboard_item_1_title']
                                     },

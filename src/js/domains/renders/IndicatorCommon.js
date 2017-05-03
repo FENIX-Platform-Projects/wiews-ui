@@ -9,8 +9,9 @@ define([
     "../../../config/domains/filterSelectors",
     'fenix-ui-reports',
     "../../../nls/labels",
-    "fenix-ui-bridge"
-], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, Report, labels, Bridge) {
+    "fenix-ui-bridge",
+    "bootstrap-table"
+], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, Report, labels, Bridge, bootstrapTable) {
 
     'use strict';
 
@@ -25,8 +26,10 @@ define([
         },
 
         filter_button : {
-            button_1 : "vd_filter_button_1",
-            buttonMsg_1 : "vd_filter_button_1_msg"
+            vd_button_1 : "vd_filter_button_1",
+            vd_buttonMsg_1 : "vd_filter_button_1_msg",
+            dd_button_1 : "dd_filter_button_1",
+            dd_buttonMsg_1 : "dd_filter_button_1_msg"
         },
 
         dashboard_button : {
@@ -56,7 +59,15 @@ define([
 
         //indicatorProperties
         var IndicatorProcessesRender = this._getIndicatorProcessesRender();
-        var filter_btnMsg1Obj = this.el.find('[data-buttonMsg = "'+s.filter_button.buttonMsg_1+'"]');
+        var filter_btnMsg1Obj = '';
+
+        if(this.mainTabName == s.mainTabNames.visualizeData){
+            filter_btnMsg1Obj = this.el.find('[data-buttonMsg = "'+s.filter_button.vd_buttonMsg_1+'"]');
+        }
+        else{
+            filter_btnMsg1Obj = this.el.find('[data-buttonMsg = "'+s.filter_button.dd_buttonMsg_1+'"]');
+        }
+
         var o = {environment: this.environment, el : this.el};
         if((filter_btnMsg1Obj!=null)&&(typeof filter_btnMsg1Obj!='undefined')){
             o["filterDivMsg1"] = filter_btnMsg1Obj;
@@ -164,14 +175,9 @@ define([
 
                             //height
                             if((itemContainerConfig.height!= null)&&(typeof itemContainerConfig.height!= 'undefined')){
-                                // console.log(itemContainerConfig.height)
-                                // elem.style.height = itemContainerConfig.height;
-                                //$(elem).setAttribute('style', 'height: 500px');
-                                //console.log(elem.style)
-                                //elem.style.height = '2500px';
-                                //elem.attr('style: height' , '2500px');
-                            }
 
+                                $('[data-item = "vd_dashboard_item_'+itemCount+'"]').height(itemContainerConfig.height);
+                            }
                         }
 
                         //Footer
@@ -262,7 +268,6 @@ define([
                             if((selectorConfig.selector.type==s.filterSelectorTypes.radio)||(selectorConfig.selector.type==s.filterSelectorTypes.checkbox)){
                                 var itemTitleCount = 1;
 
-                                //console.log(title)
                                 if((choicesTitle!=null)&&(typeof choicesTitle!= 'undefined')&&(choicesTitle.length>0)){
                                     selectorConfig.selector.source =[];
                                     choicesTitle.forEach(function (choicesTitleItem) {
@@ -312,15 +317,27 @@ define([
 
     IndicatorCommon.prototype._bindEventListeners = function () {
 
+        if(this.mainTabName == s.mainTabNames.visualizeData){
+            //Visualize Data Event Listener
+            this._VD_bindEventListeners();
+        }
+        else {
+            //Download Data Event Listener
+            this._DD_bindEventListeners();
+        }
+
+        this.indicatorProcesses.bindEventListener();
+    };
+
+    IndicatorCommon.prototype._VD_bindEventListeners = function () {
+
         var self = this;
 
-        var filter_button_1 = this.el.find('[data-button = "'+s.filter_button.button_1+'"]');
-        var filter_div_msg_1 = this.el.find('[data-buttonMsg = "'+s.filter_button.buttonMsg_1+'"]');
-        //var filter_div_msg_1 = s.filter_btnMsg1Obj;
+        var filter_button_1 = this.el.find('[data-button = "'+s.filter_button.vd_button_1+'"]');
+        var filter_div_msg_1 = this.el.find('[data-buttonMsg = "'+s.filter_button.vd_buttonMsg_1+'"]');
 
         if((filter_button_1!=null)&&(typeof filter_button_1!='undefined')&&(filter_div_msg_1!=null)&&(typeof filter_div_msg_1!='undefined')){
-            // filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self.onClick_button1, this, {lang: this.lang, filterDivMsg_1: filter_div_msg_1}));
-            filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self.onClick_button1, this, {lang: this.lang}));
+            filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self._VD_onClick_button1, this, {lang: this.lang}));
         }
 
         if((this.dashboard_config!=null)&&(typeof this.dashboard_config != 'undefined')){
@@ -349,11 +366,27 @@ define([
         if((this.filter!=null)&&(typeof this.filter!= 'undefined')){
             this.filter.on('select', _.bind(self.onSelectFilter, self, {filterDivMsg_1: filter_div_msg_1}));
         }
-
-        this.indicatorProcesses.bindEventListener();
     };
 
-    IndicatorCommon.prototype.onClick_button1 = function (param) {
+    IndicatorCommon.prototype._DD_bindEventListeners = function () {
+
+        var self = this;
+
+        var filter_button_1 = this.el.find('[data-button = "'+s.filter_button.dd_button_1+'"]');
+        var filter_div_msg_1 = this.el.find('[data-buttonMsg = "'+s.filter_button.dd_buttonMsg_1+'"]');
+
+        var indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dashboard_category+'"]');
+
+        if((filter_button_1!=null)&&(typeof filter_button_1!='undefined')&&(filter_div_msg_1!=null)&&(typeof filter_div_msg_1!='undefined')){
+            filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self._DD_onClick_button1, this, {lang: this.lang, indicatorDashboardSection: indicatorDashboardSection}));
+        }
+
+        if((this.filter!=null)&&(typeof this.filter!= 'undefined')){
+            this.filter.on('select', _.bind(self.onSelectFilter, self, {filterDivMsg_1: filter_div_msg_1}));
+        }
+    };
+
+    IndicatorCommon.prototype._VD_onClick_button1 = function (param) {
         var values = this.filter.getValues();
         var newDashboardConfig = this.indicatorProcesses.onClickButton(this.dashboard_config, values, param);
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig!= 'undefined')){
@@ -362,6 +395,282 @@ define([
                 this._trigger(s.event.DASHBOARD_CONFIG, {indicator_properties : this.indicatorProperties, dashboardConfig : this.dashboard_config, values: values, dashboard: this.dashboard})
             }
         }
+    }
+
+    IndicatorCommon.prototype._DD_onClick_button1 = function (param) {
+
+        console.log("_DD_onClick_button1 start ")
+        var values = this.filter.getValues();
+        console.log(param)
+        //var table = this.indicatorProcesses.onClickButton(this.dashboard_config, values, param);
+
+        //this._tableRender('', param);
+       // this._tableRender(table, param);
+        // var newDashboardConfig = this.indicatorProcesses.onClickButton(this.dashboard_config, values, param);
+        // if((newDashboardConfig!= null)&&(typeof newDashboardConfig!= 'undefined')){
+        //     this.dashboard_config = newDashboardConfig;
+        //     if(this.mainTabName == s.mainTabNames.visualizeData){
+        //         this._trigger(s.event.DASHBOARD_CONFIG, {indicator_properties : this.indicatorProperties, dashboardConfig : this.dashboard_config, values: values, dashboard: this.dashboard})
+        //     }
+        // }
+
+        this._DD_getTableData(param)
+    }
+
+
+    IndicatorCommon.prototype._DD_getTableData = function (param) {
+        var self = this;
+
+        var process =  [
+            {
+                "name": "wiews_area_filter",
+                "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                "rid" : { "uid" : "area_selection" },
+                "result" : false,
+                "parameters": {
+                    "filter" : {
+                        "m49": {
+                            "codes": [
+                                {
+                                    "uid": "wiews_m49_regions",
+                                    "codes": [ "WITC","1" ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+
+            {
+                "sid": [ { "uid": "indicator20" }, { "uid": "area_selection" } ],
+                "name": "filter",
+                "parameters": {
+                    "columns": [
+                        "domain",
+                        "rank",
+                        "wiews_region",
+                        "indicator",
+                        "iteration",
+                        "value",
+                        "um",
+                        "country",
+                        "element",
+                        "biologicalAccessionId",
+                        "stakeholder"
+                    ],
+                    "rows": {
+                        "iteration": {
+                            "codes": [
+                                {
+                                    "uid": "wiews_iteration",
+                                    "codes": [ "1" ]
+                                }
+                            ]
+                        },
+                        "element": {
+                            "codes": [
+                                {
+                                    "uid": "wiews_elements",
+                                    "codes": [ "ind", "nfp", "nfpa", "stk" ]
+                                }
+                            ]
+                        },
+                        "wiews_region" : {
+                            "variable" : "required_countries"
+                        }
+                    }
+                }
+            },
+
+            {
+                "name":"addcolumn",
+                "index" : -2,
+                "parameters":{
+                    "column":{
+                        "dataType":"text",
+                        "id":"indicator_label",
+                        "title":{
+                            "EN":"Indicator"
+                        }
+                    },
+                    "value": ""
+                }
+            },
+
+            {
+                "name" : "select",
+                "parameters" : {
+                    "values" : {
+                        "iteration" : null,
+                        "domain" : null,
+                        "element" : null,
+                        "biologicalAccessionId" : null,
+                        "rank" : null,
+                        "country" : null,
+                        "wiews_region" : null,
+                        "stakeholder" : null,
+                        "value" : null,
+                        "um" : null,
+                        "indicator" : null,
+                        "indicator_label" : "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_en || ')' else element_en end"
+                    }
+                }
+            },
+
+            {
+                "name": "order",
+                "parameters": {
+                    "rank" : "ASC",
+                    "wiews_region" : "ASC"
+                }
+            }
+        ];
+
+        var tableColumns = ['domain', 'wiews_region', 'indicator', 'indicator_label', 'iteration', 'value'];
+
+        param.tableColumns = tableColumns;
+
+        this.bridge.getProcessedResource({contentType: "application/json", body : process, params : {language : param.lang}}).then(
+            _.bind(function (result) {
+
+                console.log(result)
+
+                var data = Array.isArray(result.data) ? result.data : [],
+                    dsdColumns = Array.isArray(result.metadata.dsd.columns) ? result.metadata.dsd.columns : [],
+                    source = [];
+
+                console.log(param)
+                var columnsMap = this._columnMapCreation(param, dsdColumns);
+                var tableData = this._tableDataCreation(param, columnsMap, data);
+                this._tableRender(tableData, param);
+
+            }, this),
+            function (r) {
+                log.error(r);
+            }
+        )
+    }
+
+    IndicatorCommon.prototype._columnMapCreation = function (param, dsdColumns) {
+
+        var lang = param.lang.toUpperCase();
+        var tableColumns = param.tableColumns;
+        var columnsMap = {};
+        console.log(tableColumns)
+        _.each(tableColumns, function (tableCol) {
+
+            for(var dsdColImdex = 0; dsdColImdex< dsdColumns.length; dsdColImdex++) {
+                var dsdColumnId = dsdColumns[dsdColImdex].id;
+                console.log(tableCol, dsdColumnId)
+                console.log(tableCol +'_'+ lang, dsdColumnId)
+                if(tableCol +'_'+ lang == dsdColumnId){
+                    columnsMap[tableCol+'_text'] = dsdColImdex;
+                }
+
+                if(tableCol == dsdColumnId){
+                    columnsMap[tableCol+'_value'] = dsdColImdex;
+                }
+            };
+
+        });
+
+        console.log(columnsMap);
+        return columnsMap;
+
+    }
+
+    IndicatorCommon.prototype._tableDataCreation = function (param, columnsMap, data) {
+        var tableData = [];
+        var tableColumns = param.tableColumns;
+        for(var iData = 0; iData<data.length; iData++)
+        {
+            var row = [];
+            for(var iTableColumns = 0; iTableColumns<tableColumns.length; iTableColumns++)
+            {
+                var tableCol = tableColumns[iTableColumns];
+                switch (tableCol) {
+                    case 'domain' :
+                        row['domain'] = data[iData][columnsMap[tableCol+'_text']]
+                        break;
+                    case 'wiews_region' :
+                        row['wiews_region'] = data[iData][columnsMap[tableCol+'_text']]
+                        break;
+                    case 'indicator' :
+                        row['indicator'] = data[iData][columnsMap[tableCol+'_text']]
+                        break;
+                    case 'indicator_label' :
+                        row['indicator_label' ] = data[iData][columnsMap[tableCol+'_text']]
+                        break;
+                    case 'iteration' :
+                        row['iteration'] = data[iData][columnsMap[tableCol+'_text']]
+                        break;
+                    case 'value' :
+                        row['value'] = data[iData][columnsMap[tableCol+'_value']]
+                        break;
+                }
+
+
+            }
+
+            tableData.push(row);
+        }
+        console.log(tableData)
+        return tableData;
+    }
+
+    IndicatorCommon.prototype._tableRender = function (table, param) {
+        console.log("In table render")
+        var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
+        // var data = [
+        //     {
+        //         "Name": "bootstrap-table",
+        //         "stargazers_count": "526",
+        //         "forks_count": "122",
+        //         "description": "An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3) "
+        //     },
+        //     {
+        //         "Name": "multiple-select",
+        //         "stargazers_count": "288",
+        //         "forks_count": "150",
+        //         "description": "A jQuery plugin to select multiple elements with checkboxes :)"
+        //     },
+        //     {
+        //         "Name": "bootstrap-show-password",
+        //         "stargazers_count": "32",
+        //         "forks_count": "11",
+        //         "description": "Show/hide password plugin for twitter bootstrap."
+        //     },
+        //     {
+        //         "Name": "blog",
+        //         "stargazers_count": "13",
+        //         "forks_count": "4",
+        //         "description": "my blog"
+        //     },
+        //     {
+        //         "Name": "scutech-redmine",
+        //         "stargazers_count": "6",
+        //         "forks_count": "3",
+        //         "description": "Redmine notification tools for chrome extension."
+        //     }
+        // ];
+
+        //console.log(mydata)
+        param.indicatorDashboardSection.show();
+        $('[data-table = "dd-dashboard-table"]').bootstrapTable({
+            data : table
+       //    $('#testTable').bootstrapTable({
+               // pagination: true,
+               // data: data
+           //data: mydata
+       });
+        //param.indicatorDashboardSection.html(table);
+
+        console.log($('#testTable'))
+    }
+
+    IndicatorCommon.prototype.onClick_button2 = function (param) {
+        var values = this.filter.getValues();
+        var newDashboardConfig = this.indicatorProcesses.onClickButton(this.dashboard_config, values, param);
     }
 
     IndicatorCommon.prototype.onSelectFilter = function (hostParam, filterResponse) {

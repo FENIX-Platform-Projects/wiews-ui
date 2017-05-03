@@ -1,21 +1,19 @@
-    <div data-dashboardSection = "1" id = "dd-dashboard-container">
-        <div class="row">
-            <div class='col-xs-12'>
-                <div data-itemContainer="dd_dashboard_item_container_1">
-                    <div class="panel-heading" data-itemExport="dd_dashboard_itemExport_1">
-                            <div class="pull-right flip">
-                                <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="dd_dashboard_button_export_1"><i class="material-icons">file_download</i> </a>
-                            </div>
-                        <h5 class="truncate" data-itemContainerTitle="dd_dashboard_item_container_title_1"></h5>
-                        <h6 data-itemContainerSubtitle="dd_dashboard_item_container_subtitle_1">&nbsp;</h6>
-                    </div>
-                    <div class="panel-body">
-                        <div style= "height:400px" data-item="dd_dashboard_item_1"> </div>
-                    </div>
-                    <div class="panel-footer" data-itemContainerFooter="dd_dashboard_item_container_footer_1">
-                        <p><i data-itemContainerFooterContent="dd_dashboard_item_container_footerContent_1"></i></p>
-                    </div>
-                </div>
-            </div>
-       </div>
+<div data-dashboardSection = "1" id = "dd-dashboard-container">
+    <div class="row">
+        <div class='col-xs-12'>
+            <table id="testTable" data-table = "dd-dashboard-table">
+                <thead>
+                <tr>
+                    <th data-field="domain">Domain</th>
+                    <th data-field="wiews_region">Country</th>
+                    <th data-field="indicator">Element</th>
+                    <th data-field="indicator_label">Indicator and Rating</th>
+                    <th data-field="iteration">Period</th>
+                    <th data-field="value">Value</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
     </div>
+</div>
+

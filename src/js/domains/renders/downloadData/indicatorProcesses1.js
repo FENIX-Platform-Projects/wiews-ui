@@ -372,31 +372,49 @@ define([
     //Test it removing some items in the configuration
     IndicatorProcesses1.prototype.onClickButton = function (dashboardConfig, values, params) {
 
-        var newDashboardConfig =null;
-        var newValues = this._filterSelectionValidation(values, params);
-        if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
-        {
-            var self = this;
-            newDashboardConfig ={};
-            $.extend(true, newDashboardConfig, dashboardConfig);
+        var table = this._tableCreation();
 
-            if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
-                var itemsArray = dashboardConfig.items;
-                var itemCount = 1;
-                itemsArray.forEach(function (item) {
+        return table;
+        // var newDashboardConfig =null;
 
-                    if ((item != null) && (typeof item != 'undefined')) {
-                        newDashboardConfig = self._element_configuration_update(newDashboardConfig, item.id, newValues, itemCount-1);
-                    }
-                    itemCount++;
-                });
-            }
-        }
+        // params.indicatorDashboardSection.show();
 
-        return newDashboardConfig;
+
+        // var newValues = this._filterSelectionValidation(values, params);
+        // if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
+        // {
+        //     var self = this;
+        //     newDashboardConfig ={};
+        //     $.extend(true, newDashboardConfig, dashboardConfig);
+        //
+        //     if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
+        //         var itemsArray = dashboardConfig.items;
+        //         var itemCount = 1;
+        //         itemsArray.forEach(function (item) {
+        //
+        //             if ((item != null) && (typeof item != 'undefined')) {
+        //                 newDashboardConfig = self._element_configuration_update(newDashboardConfig, item.id, newValues, itemCount-1);
+        //             }
+        //             itemCount++;
+        //         });
+        //     }
+        // }
+
+        //return newDashboardConfig;
     };
 
-    IndicatorProcesses1.prototype.bindEventListener = function () {
+    IndicatorProcesses1.prototype._tableCreation = function (dashboardConfig, values, params) {
+
+        var table = '';
+        table = '<div class="row"><div class="col-xs-12"><table data-toggle="table"><thead><tr><th>Name</th><th>Stars</th><th>Forks</th><th>Description</th></tr></thead>';
+        table = table + '<tbody><tr id="tr-id-1" class="tr-class-1"><td id="td-id-1" class="td-class-1"><a href="https://github.com/wenzhixin/bootstrap-table">bootstrap-table</a></td><td>526</td><td>122</td><td>An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3)</td></tr>';
+        table = table + '<tr id="tr-id-1" class="tr-class-1"><td id="td-id-1" class="td-class-1"><a href="https://github.com/wenzhixin/bootstrap-table">bootstrap-table</a></td><td>526</td><td>122</td><td>An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3)</td></tr>';
+        table = table + '<tr id="tr-id-1" class="tr-class-1"><td id="td-id-1" class="td-class-1"><a href="https://github.com/wenzhixin/bootstrap-table">bootstrap-table</a></td><td>526</td><td>122</td><td>An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3)</td></tr>';
+        table = table + '</tbody></table></div></div>';
+        return table;
+    }
+
+        IndicatorProcesses1.prototype.bindEventListener = function () {
         var self = this;
         var anchor;
         $( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function( evt ) {

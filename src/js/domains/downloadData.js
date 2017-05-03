@@ -42,6 +42,9 @@ define([
                 READY : 'ready',
                 ITEM_READY : 'ready.item'
             },
+            filterComponent :{
+                READY : 'ready'
+            },
             dashboard :{
                 DASHBOARD_CONFIG : "new_dashoboard_config_ready"
             }
@@ -75,7 +78,7 @@ define([
         $(this.el).append(indicatorFilterSection);
         $(indicatorFilterSection).append(showDashboardSection);
         $(indicatorFilterSection).append(indicatorDashboardSection);
-
+        indicatorDashboardSection.hide();
     };
 
     DownloadData.prototype._initVariables = function () {
@@ -85,20 +88,21 @@ define([
         this.config = this.indicatorConfig[mainTabName];
 
         this.channels = {};
-        this.models = {};
+        //this.models = {};
     };
 
     DownloadData.prototype.render = function () {
 
-        if(this.dashboard){
-            this._disposeDashboard();
-        }
+        // if(this.dashboard){
+        //     this._disposeDashboard();
+        // }
 
         var dashboardConf = this._getElemConfig(s.dashboard.dashboard_config_item),
             filterConfig = this._getElemConfig(s.filter.filter_config_item);
 
         dashboardConf.environment = this.environment;
 
+        console.log(this.indicatorProperties)
         indicatorCommon = new ICommon({
             el : this.el,
             indicatorProperties : this.indicatorProperties,
@@ -117,9 +121,9 @@ define([
 
         this._renderFilter(filterConfig);
 
-        this._renderDashboard(dashboardConf);
+        //this._renderDashboard(dashboardConf);
 
-        this._loadProgressBar(dashboardConf);
+        //this._loadProgressBar(dashboardConf);
     }
 
     // Events
@@ -132,22 +136,22 @@ define([
         }
     };
 
-    DownloadData.prototype._loadProgressBar = function (dashboardConf) {
-
-        var self = this;
-
-        this.dashboard.on(s.events.dashboardComponent.READY, function () {
-            self._renderIndicator(dashboardConf);
-        });
-
-        this.dashboard.on(s.events.dashboardComponent.ITEM_READY, function (item) {
-            if((typeof item != 'undefined')&&(item != null)&&(typeof item.model != 'undefined')&&(item.model != null)&&(typeof item.model.metadata != 'undefined')&&(item.model.metadata != null)&&(typeof item.model.data != 'undefined')&&(item.model.data != null)){
-                var itemId = item.id;
-                self.models[itemId] = {metadata : item.model.metadata, data : item.model.data};
-            }
-
-        });
-    };
+    // DownloadData.prototype._loadProgressBar = function (dashboardConf) {
+    //
+    //     var self = this;
+    //
+    //     this.dashboard.on(s.events.dashboardComponent.READY, function () {
+    //         self._renderIndicator(dashboardConf);
+    //     });
+    //
+    //     this.dashboard.on(s.events.dashboardComponent.ITEM_READY, function (item) {
+    //         if((typeof item != 'undefined')&&(item != null)&&(typeof item.model != 'undefined')&&(item.model != null)&&(typeof item.model.metadata != 'undefined')&&(item.model.metadata != null)&&(typeof item.model.data != 'undefined')&&(item.model.data != null)){
+    //             var itemId = item.id;
+    //             self.models[itemId] = {metadata : item.model.metadata, data : item.model.data};
+    //         }
+    //
+    //     });
+    // };
 
     DownloadData.prototype._getElemConfig = function (elem) {
 
@@ -163,8 +167,8 @@ define([
 
     DownloadData.prototype._renderFilter = function (filterConfig) {
 
+        var self = this;
         console.log(filterConfig)
-        console.log(this.cache)
         this.filter = new Filter({
             el: s.filter.filter_container,
             selectors: filterConfig,
@@ -180,15 +184,19 @@ define([
             }
         });
 
+        this.filter.on(s.events.filterComponent.READY, _.bind(self._renderIndicator, self)
+            //self._renderIndicator();
+                );
+
         $("#dd_filter_item_tab_12").attr('disabled','disabled');
     }
 
-    DownloadData.prototype._renderDashboard = function (dashboardConfig) {
-        // Build new dashboard
-        this.dashboard = new Dashboard(
-            dashboardConfig
-        );
-    };
+    // DownloadData.prototype._renderDashboard = function (dashboardConfig) {
+    //     // Build new dashboard
+    //     this.dashboard = new Dashboard(
+    //         dashboardConfig
+    //     );
+    // };
 
     DownloadData.prototype._getIndicatorConfig = function () {
         return require(this._getIndicatorConfigPath());
@@ -199,17 +207,17 @@ define([
         return s.indicator_config_path + this.indicatorProperties.indicator_id+'.js';
     };
 
-    DownloadData.prototype._renderIndicator = function (dashboardConfig) {
+    DownloadData.prototype._renderIndicator = function (/*dashboardConfig*/) {
         // Calling the indicator actions file
 
         indicatorCommon.render({
-            filter : this.filter,
-            dashboard_config : dashboardConfig,
-            dashboard : this.dashboard,
-            models : this.models
+            filter : this.filter
+            //dashboard_config : dashboardConfig,
+            //dashboard : this.dashboard,
+            //models : this.models
         });
 
-        indicatorCommon.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))
+        //indicatorCommon.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))
 
     };
 
