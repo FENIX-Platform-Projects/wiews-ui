@@ -30,8 +30,7 @@ define([
             vd_buttonMsg_1 : "vd_filter_button_1_msg",
             dd_button_1 : "dd_filter_button_1",
             dd_buttonMsg_1 : "dd_filter_button_1_msg",
-            dd_button_2 : "dd_filter_button_2",
-            dd_buttonMsg_2 : "dd_filter_button_2_msg"
+            dd_button_2 : "dd_filter_button_2"
         },
 
         dashboard_button : {
@@ -119,8 +118,13 @@ define([
 
 
     IndicatorCommon.prototype.indicatorSectionInit = function (dashboardConfig) {
-
-        var indicatorSection = this.el.find('[data-section = "'+this.indicatorProperties.dashboard_category+'"]');
+        var indicatorSection = '';
+        if(this.mainTabName == s.mainTabNames.visualizeData){
+            indicatorSection = this.el.find('[data-section = "'+this.indicatorProperties.vd_dashboard_category+'"]');
+        }
+        else {
+            indicatorSection = this.el.find('[data-section = "'+this.indicatorProperties.dd_dashboard_category+'"]');
+        }
 
         if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')&&(dashboardConfig.items!=null)&&(typeof dashboardConfig.items != 'undefined')){
             var itemsArray = dashboardConfig.items;
@@ -390,14 +394,21 @@ define([
         var filter_button_1 = this.el.find('[data-button = "'+s.filter_button.dd_button_1+'"]');
         var filter_div_msg_1 = this.el.find('[data-buttonMsg = "'+s.filter_button.dd_buttonMsg_1+'"]');
 
-        var indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dashboard_category+'"]');
+        var indicatorDashboardSection = '';
+
+        if(this.mainTabName == s.mainTabNames.visualizeData){
+            indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.vd_dashboard_category+'"]');
+        }
+        else {
+            indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dd_dashboard_category+'"]');
+        }
 
         if((filter_button_1!=null)&&(typeof filter_button_1!='undefined')&&(filter_div_msg_1!=null)&&(typeof filter_div_msg_1!='undefined')){
             filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self._DD_onClick_button1, this, {lang: this.lang, indicatorDashboardSection: indicatorDashboardSection}));
         }
 
         var filter_button_2 = this.el.find('[data-button = "'+s.filter_button.dd_button_2+'"]');
-        var filter_div_msg_2 = this.el.find('[data-buttonMsg = "'+s.filter_button.dd_buttonMsg_2+'"]');
+        var filter_div_msg_2 = this.el.find('[data-buttonMsg = "'+s.filter_button.dd_buttonMsg_1+'"]');
         if((filter_button_2!=null)&&(typeof filter_button_2!='undefined')&&(filter_div_msg_2!=null)&&(typeof filter_div_msg_2!='undefined')){
             filter_button_2.on(s.event.BUTTON_CLICK, _.bind(self._DD_onClick_button2, this, {lang: this.lang, indicatorDashboardSection: indicatorDashboardSection}));
         }
@@ -425,7 +436,7 @@ define([
 
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
         {
-            this._DD_getTableData(param, newDashboardConfig)
+            this._DD_getTableData(param, newDashboardConfig, values)
         }
     }
 
@@ -440,7 +451,7 @@ define([
     }
 
 
-    IndicatorCommon.prototype._DD_getTableData = function (param, newDashboardConfig) {
+    IndicatorCommon.prototype._DD_getTableData = function (param, newDashboardConfig, filterValues) {
         var self = this;
 
         param.tableColumns = newDashboardConfig.tableColumns;
@@ -453,7 +464,7 @@ define([
                     source = [];
 
                 var columnsMap = this._columnMapCreation(param, dsdColumns);
-                var tableData = this.indicatorProcesses.tableDataCreation(param, columnsMap, data);
+                var tableData = this.indicatorProcesses.tableDataCreation(param, columnsMap, data, filterValues);
                 this._tableRender(tableData, param);
 
             }, this),
@@ -488,6 +499,7 @@ define([
     IndicatorCommon.prototype._tableRender = function (table, param) {
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
         param.indicatorDashboardSection.show();
+
         $('[data-table = "dd-dashboard-table"]').bootstrapTable({
             //data : table,
             pagination: true,

@@ -10,11 +10,26 @@
                     <th data-field="3" data-sortable="true"></th>
                     <th data-field="4" data-sortable="true"></th>
                     <th data-field="5" data-sortable="true"></th>
-                    <th data-field="6" data-sortable="true"></th>
+                    <th id = "dd-dashboard-table-value1" value="1" data-field="6" data-sortable="true" data-formatter="noneFormatter"></th>
                 </tr>
                 </thead>
             </table>
         </div>
     </div>
+    <script>
+        function noneFormatter(value) {
+            debugger
+            console.log($('#dd-dashboard-table-value1'))
+            var typeFormat = document.getElementById("dd-dashboard-table-value1");
+            debugger
+//            console.log(typeFormat)
+   //     var typeFormat = document.getElementById("dd-dashboard-table-value1").getAttribute('data-typeFormat')
+//        debugger;
+     //   console.log(typeFormat)
+        console.log(value)
+        return 'kkkkkk' + value ;
+    }
+        </script>
+
 </div>
 

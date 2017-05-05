@@ -102,8 +102,8 @@ define([
         },
 
         buttonMsg : {
-            button_1 : "vd_filter_button_1_msg",
-            button_1_list : "vd_filter_button_1_list_msg"
+            button_1 : "1_vd_filter_button_1_msg",
+            button_1_list : "1_vd_filter_button_1_list_msg"
         },
 
         error_type : {

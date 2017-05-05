@@ -73,10 +73,10 @@ define([
     VisualizeData.prototype._attach = function () {
 
         $(this.el).html(filterTemplate(labels[this.lang]));
-        var indicatorFilterSection = this.el.find('[data-section = "'+this.indicatorProperties.filter_category+'"]');
+        var indicatorFilterSection = this.el.find('[data-section = "'+this.indicatorProperties.vd_filter_category+'"]');
         //dashboardSection
         $(this.el).append(dashboardTemplate(labels[this.lang]));
-        var indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dashboard_category+'"]');
+        var indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.vd_dashboard_category+'"]');
         var progressBar = this.el.find('[data-bar = "'+s.bar.PROGRESS_BAR_DATA_VARIABLE+'"]');//data-bar="progress-bar"
         var showDashboardSection = this.el.find('[data-section = "'+s.showDashboardSection+'"]');
         $(this.el).html(progressBar);

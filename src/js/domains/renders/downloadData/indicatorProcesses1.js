@@ -102,8 +102,10 @@ define([
         },
 
         buttonMsg : {
-            button_1 : "dd_filter_button_1_msg",
-            button_1_list : "dd_filter_button_1_list_msg"
+            button_1 : "1_dd_filter_button_1_msg",
+            button_1_list : "1_dd_filter_button_1_list_msg",
+            button_2 : "1_dd_filter_button_2_msg",
+            button_2_list : "1_dd_filter_button_2_list_msg"
         },
 
         error_type : {
@@ -198,7 +200,7 @@ define([
         }
     }
 
-    IndicatorProcesses1.prototype._filterSelectionValidation = function (values, params) {
+    IndicatorProcesses1.prototype._filterSelectionValidation = function (values, params, button_type) {
 
         var valid = false, newValues = '', textMsg = '';
 
@@ -227,13 +229,22 @@ define([
         }
 
         if(!valid){
-            if(s.filterDivMsg1_text == s.error_type.list){
-                textMsg = labels[params.lang][s.buttonMsg.button_1_list];
+            if(button_type == "1"){
+                if(s.filterDivMsg1_text == s.error_type.list){
+                    textMsg = labels[params.lang][s.buttonMsg.button_1_list];
+                }
+                else{
+                    textMsg = labels[params.lang][s.buttonMsg.button_1];
+                }
             }
-            else{
-                textMsg = labels[params.lang][s.buttonMsg.button_1];
+            else if(button_type == "2"){
+                if(s.filterDivMsg1_text == s.error_type.list){
+                    textMsg = labels[params.lang][s.buttonMsg.button_2_list];
+                }
+                else{
+                    textMsg = labels[params.lang][s.buttonMsg.button_2];
+                }
             }
-
             s.filterDivMsg1.html(textMsg)
             s.filterDivMsg1.show();
         }
@@ -390,10 +401,18 @@ define([
         $('[data-field = "6"]').attr('data-field', s.table_columns.value);
         $('[data-field = "'+s.table_columns.value+'"]').text(dashboardConfig.columntableName[5]);
 
+        // function noneFormatter(value) {
+        //     console.log('VVVVVVVVVVVVVVVVVVVVVVVVV')
+        //     console.log(value)
+        //     return 'NNN' + value + 'NNN';};
+        //
+        //$('[data-field = "'+s.table_columns.value+'"]').attr('data-formatter', commaFormatter);
+
+
         var tableColumns = [s.table_columns.domain, s.table_columns.wiews_region, s.table_columns.indicator, s.table_columns.indicator_label, s.table_columns.iteration, s.table_columns.value];
 
         var newDashboardConfig =null;
-        var newValues = this._filterSelectionValidation(values, params);
+        var newValues = this._filterSelectionValidation(values, params, "1");
         if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
         {
             var self = this;
@@ -413,7 +432,7 @@ define([
     IndicatorProcesses1.prototype.onClickButton2 = function (values, dashboardConfig, params) {
 
         var newDashboardConfig =null;
-        var newValues = this._filterSelectionValidation(values, params);
+        var newValues = this._filterSelectionValidation(values, params, "2");
         if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
         {
             var self = this;
@@ -465,7 +484,9 @@ define([
         });
     }
 
-    IndicatorProcesses1.prototype.tableDataCreation = function (param, columnsMap, data) {
+    IndicatorProcesses1.prototype.tableDataCreation = function (param, columnsMap, data, filterValues) {
+
+        //this.valuesFormatter(filterValues);
         var tableData = [];
         var tableColumns = param.tableColumns;
         for(var iData = 0; iData<data.length; iData++)
@@ -500,6 +521,33 @@ define([
         }
         return tableData;
     }
+
+    // IndicatorProcesses1.prototype.valuesFormatter = function (filterValues) {
+    //
+    //     var separator = filterValues.values[s.filter_items.item_11][0];
+    //     console.log(separator)
+    //     var formatter = '';
+    //
+    //     switch (separator){
+    //         case '1':
+    //             formatter = function noneFormatter(value) {
+    //                 console.log('VVVVVVVVVVVVVVVVVVVVVVVVV')
+    //                 console.log(value)
+    //                 return 'NNN' + value + 'NNN';};
+    //             break;
+    //         case '2':
+    //             formatter = function noneFormatter(value) {
+    //                 return 'CCC' + value + 'CCC';};
+    //             break;
+    //         case '3':
+    //             formatter = function noneFormatter(value) {
+    //                 return 'PPP' + value + 'PPP';};
+    //             break;
+    //     }
+    //
+    //   // $('[data-field = "'+s.table_columns.value+'"]').attr('data-formatter', formatter);
+    //
+    // }
 
     IndicatorProcesses1.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
         var filterDivMsg1 = hostParam.filterDivMsg_1;
