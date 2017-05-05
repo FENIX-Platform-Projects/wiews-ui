@@ -28,12 +28,12 @@ module.exports = sections.map(function (section) {
             alias: {
                 'bootstrap-table': Path.join(__dirname, 'node_modules/bootstrap-table/dist/bootstrap-table.min.js'),
                 'handlebars': Path.join(__dirname, 'node_modules/handlebars/dist/handlebars.js'),
-                'jquery': Path.join(__dirname, 'node_modules/jquery/dist/jquery')
+                'jquery': Path.join(__dirname, 'node_modules/jquery/dist/jquery'),
+                'bootstrap-table-locale': Path.join(__dirname, 'node_modules/bootstrap-table/dist/bootstrap-table-locale-all.min')
                 //'fenix-ui-chart-creator': Path.join(__dirname, 'node_modules/fenix-ui-chart-creator/src/js/index.js')
                 //'fenix-ui-filter': Path.join(__dirname, 'node_modules/fenix-ui-filter/src/js/index.js')
                 //'fenix-ui-dashboard': Path.join(__dirname, 'node_modules/fenix-ui-dashboard/src/js/index.js')
                 //'fenix-ui-reports': Path.join(__dirname, 'node_modules/fenix-ui-reports/src/js/index.js')
-
             }
         },
 

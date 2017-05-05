@@ -130,7 +130,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
 
                     uid: "DownloadDataDashboard",
                     columntableName : [labels[Clang]['1_dd_table_title_col_1'], labels[Clang]['1_dd_table_title_col_2'], labels[Clang]['1_dd_table_title_col_3'], labels[Clang]['1_dd_table_title_col_4'], labels[Clang]['1_dd_table_title_col_5'], labels[Clang]['1_dd_table_title_col_6']],
-                    process : [
+                    tableProcess : [
                         {
                             "name": "wiews_area_filter",
                             "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
@@ -233,7 +233,68 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 "wiews_region" : "ASC"
                             }
                         }
-                    ]
+                    ],
+                    downloadProcess : [
+                        {
+                        "name": "wiews_area_filter",
+                        "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                        "rid" : { "uid" : "area_selection" },
+                        "result" : false,
+                        "parameters": {
+                            "filter" : {
+                                "m49": {
+                                    "codes": [
+                                        {
+                                            "uid": "wiews_m49_regions",
+                                            "codes": [ "WITC","150" ]
+                                        }
+                                    ]
+                                },
+                                "fao": {
+                                    "codes": [
+                                        {
+                                            "uid": "wiews_fao_region",
+                                            "codes": [ "5400" ]
+                                        }
+                                    ]
+                                },
+                                "iso3": {
+                                    "codes": [
+                                        {
+                                            "uid": "ISO3",
+                                            "codes": [ "SSD","EGY" ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                        {
+                            "name": "filter",
+                            "sid": [ { "uid": "raw_indicator20" }, { "uid": "area_selection" } ],
+                            "parameters": {
+                                "rows": {
+                                    "iteration": {
+                                        "codes": [
+                                            {
+                                                "uid": "wiews_iteration",
+                                                "codes": [ "1" ]
+                                            }
+                                        ]
+                                    },
+                                    "country" : {
+                                        "variable" : "required_countries"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "order",
+                            "parameters": {
+                                "country" : "ASC",
+                                "id" : "ASC"
+                            }
+                        }]
                 }
             },
             visualizeData: {

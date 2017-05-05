@@ -185,7 +185,6 @@ define([
 
     IndicatorProcesses1.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
-        console.log(item_to_show_prefix, item_to_show, codelistMaxIndex)
         var index = 1;
         for(index = 1; index<= codelistMaxIndex; index++) {
             var indicatorFilterSection = this.el.find('[data-selector = "'+item_to_show_prefix+'_'+index+'"]');
@@ -246,13 +245,10 @@ define([
             console.log("true")
         }
 
-        console.log(newValues)
         return newValues;
     }
 
     IndicatorProcesses1.prototype._geoItemSelectionValidation = function (values) {
-        console.log(s.dd_tab_active.geo_item)
-        console.log(values)
         s.filterDivMsg1_text = '';
         var newValues = '', codelist = '', listType = '';
         var toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_3, s.filter_items.item_4_1, s.filter_items.item_4_2, s.filter_items.item_4_3, s.filter_items.item_4_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7_1, s.filter_items.item_7_2];
@@ -398,7 +394,6 @@ define([
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params);
-        console.log(newValues)
         if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
         {
             var self = this;
@@ -407,7 +402,26 @@ define([
             $.extend(true, newDashboardConfig, dashboardConfig);
 
             if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
-                newDashboardConfig = self._element_configuration_update(newDashboardConfig, newValues, params);
+                newDashboardConfig = self._table_element_configuration_update(newDashboardConfig, newValues, params);
+            }
+        }
+
+        return newDashboardConfig;
+
+    };
+
+    IndicatorProcesses1.prototype.onClickButton2 = function (values, dashboardConfig, params) {
+
+        var newDashboardConfig =null;
+        var newValues = this._filterSelectionValidation(values, params);
+        if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
+        {
+            var self = this;
+            newDashboardConfig ={};
+            $.extend(true, newDashboardConfig, dashboardConfig);
+
+            if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
+                newDashboardConfig = self._download_element_configuration_update(newDashboardConfig, newValues, params);
             }
         }
 
@@ -484,7 +498,6 @@ define([
 
             tableData.push(row);
         }
-        console.log(tableData)
         return tableData;
     }
 
@@ -532,14 +545,10 @@ define([
 
         this.filter = obj.filter;
         this.filter_host_config = obj.filter_host_config;
-        console.log(this.filter_host_config)
-        console.log(this.filter_host_config.geoSelector)
         if((this.filter_host_config!=null)&&(typeof this.filter_host_config!= 'undefined')&&
             (this.filter_host_config.geoSelector!=null)&&(typeof this.filter_host_config.geoSelector!= 'undefined')&&
             (this.filter_host_config.geoSelector.default!=null)&&(typeof this.filter_host_config.geoSelector.default!= 'undefined')){
             this.geoCodelistSelector = this.filter_host_config.geoSelector.default;
-            console.log(this.geoCodelistSelector)
-            console.log(s.filter_items.item_1, s.filter_items.item_4_1)
             switch(this.geoCodelistSelector){
                 case s.filter_items.item_1:
                     s.dd_tab_active.geo_item = s.filter_items.tabItem_1;
@@ -560,20 +569,15 @@ define([
             s.dd_tab_active.geo_item = s.filter_items.tabItem_4;
             this.geoCodelistSelector = s.filter_items.item_4_1;
         }
-
-        console.log(s.dd_tab_active.geo_item)
     }
 
-    IndicatorProcesses1.prototype._element_configuration_update = function (dashboardConfig, values, params) {
-
-        console.log(dashboardConfig)
+    IndicatorProcesses1.prototype._table_element_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
-        dashboardConfig.process[0].parameters.filter = {};
-        dashboardConfig.process[0].parameters.filter[codelist] = s.geo_filter[codelist];
-        dashboardConfig.process[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-        dashboardConfig.process[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-        console.log(dashboardConfig.process[0].parameters.filter)
+        dashboardConfig.tableProcess[0].parameters.filter = {};
+        dashboardConfig.tableProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
+        dashboardConfig.tableProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.tableProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
         var codes = '';
         if((values[s.filter_items.item_10]!=null)&&(typeof values[s.filter_items.item_10]!='undefined')&&(values[s.filter_items.item_10].length>0)){
             codes= [ "ind", "nfp", "nfpa", "stk" ];
@@ -581,12 +585,21 @@ define([
         else{
             codes= [ "ind", "nfp", "nfpa" ];
         }
-        dashboardConfig.process[1].parameters.rows["element"].codes[0].codes = codes;
+        dashboardConfig.tableProcess[1].parameters.rows["element"].codes[0].codes = codes;
 
         var indicator_label = "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_"+params.lang+" || ')' else element_"+params.lang+" end"
-        dashboardConfig.process[3].parameters.values["indicator_label"] = indicator_label;
+        dashboardConfig.tableProcess[3].parameters.values["indicator_label"] = indicator_label;
 
-        console.log(dashboardConfig)
+        return dashboardConfig;
+    };
+
+    IndicatorProcesses1.prototype._download_element_configuration_update = function (dashboardConfig, values, params) {
+
+        var codelist = values[s.geo_property].codelist;
+        dashboardConfig.downloadProcess[0].parameters.filter = {};
+        dashboardConfig.downloadProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
+        dashboardConfig.downloadProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.downloadProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
 
         return dashboardConfig;
     };

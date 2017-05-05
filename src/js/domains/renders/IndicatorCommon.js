@@ -231,7 +231,6 @@ define([
 
     IndicatorCommon.prototype.indicatorFilterHostConfigInit = function (filterConfig) {
 
-        console.log(filterConfig)
         var newFilterHostConfig = {};
 
         if ((filterConfig != null) && (typeof filterConfig != 'undefined')) {
@@ -239,7 +238,6 @@ define([
                 $.extend(true, newFilterHostConfig, filterConfig.hostConfig);
             }
         }
-        console.log(newFilterHostConfig)
         return newFilterHostConfig;
     }
 
@@ -422,9 +420,7 @@ define([
 
     IndicatorCommon.prototype._DD_onClick_button1 = function (param) {
 
-        console.log("_DD_onClick_button1 start ")
         var values = this.filter.getValues();
-        console.log(param)
         var newDashboardConfig = this.indicatorProcesses.onClickButton1(values, this.dashboard_config, param);
 
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
@@ -435,10 +431,12 @@ define([
 
     IndicatorCommon.prototype._DD_onClick_button2 = function (param) {
 
-        console.log("_DD_onClick_button2 start ")
         var values = this.filter.getValues();
-        console.log(param)
-        this._downloadTableData();
+        var newDashboardConfig = this.indicatorProcesses.onClickButton2(values, this.dashboard_config, param);
+        if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
+        {
+            this._downloadTableData(newDashboardConfig);
+        }
     }
 
 
@@ -447,19 +445,14 @@ define([
 
         param.tableColumns = newDashboardConfig.tableColumns;
 
-        this.bridge.getProcessedResource({contentType: "application/json", body : newDashboardConfig.process, params : {language : param.lang}}).then(
+        this.bridge.getProcessedResource({contentType: "application/json", body : newDashboardConfig.tableProcess, params : {language : param.lang}}).then(
             _.bind(function (result) {
-
-                console.log(result)
 
                 var data = Array.isArray(result.data) ? result.data : [],
                     dsdColumns = Array.isArray(result.metadata.dsd.columns) ? result.metadata.dsd.columns : [],
                     source = [];
 
-                console.log(param)
                 var columnsMap = this._columnMapCreation(param, dsdColumns);
-                console.log(this.indicatorProcesses)
-                console.log(data.length)
                 var tableData = this.indicatorProcesses.tableDataCreation(param, columnsMap, data);
                 this._tableRender(tableData, param);
 
@@ -479,8 +472,6 @@ define([
 
             for(var dsdColImdex = 0; dsdColImdex< dsdColumns.length; dsdColImdex++) {
                 var dsdColumnId = dsdColumns[dsdColImdex].id;
-                console.log(tableCol, dsdColumnId)
-                console.log(tableCol +'_'+ lang, dsdColumnId)
                 if(tableCol +'_'+ lang == dsdColumnId){
                     columnsMap[tableCol+'_text'] = dsdColImdex;
                 }
@@ -495,8 +486,6 @@ define([
     }
 
     IndicatorCommon.prototype._tableRender = function (table, param) {
-        console.log("In table render")
-        console.log(table)
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
         param.indicatorDashboardSection.show();
         $('[data-table = "dd-dashboard-table"]').bootstrapTable({
@@ -545,76 +534,19 @@ define([
     };
 
 
-    IndicatorCommon.prototype._downloadTableData = function () {
+    IndicatorCommon.prototype._downloadTableData = function (newDashboardConfig) {
 
-        var flow_model =  {
+        var flow_model = {
             "outConfig": {
                 "plugin": "outputCSV"
             },
-            "flow": [
-                {
-                    "name": "wiews_area_filter",
-                    "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
-                    "rid" : { "uid" : "area_selection" },
-                    "result" : false,
-                    "parameters": {
-                        "filter" : {
-                            "m49": {
-                                "codes": [
-                                    {
-                                        "uid": "wiews_m49_regions",
-                                        "codes": [ "WITC","150" ]
-                                    }
-                                ]
-                            },
-                            "fao": {
-                                "codes": [
-                                    {
-                                        "uid": "wiews_fao_region",
-                                        "codes": [ "5400" ]
-                                    }
-                                ]
-                            },
-                            "iso3": {
-                                "codes": [
-                                    {
-                                        "uid": "ISO3",
-                                        "codes": [ "SSD","EGY" ]
-                                    }
-                                ]
-                            }
-                        }
-                    }
+            options : {
+                params : {
+                    maxSize : 2000000
                 },
-
-                {
-                    "name": "filter",
-                    "sid": [ { "uid": "raw_indicator20" }, { "uid": "area_selection" } ],
-                    "parameters": {
-                        "rows": {
-                            "iteration": {
-                                "codes": [
-                                    {
-                                        "uid": "wiews_iteration",
-                                        "codes": [ "1" ]
-                                    }
-                                ]
-                            },
-                            "country" : {
-                                "variable" : "required_countries"
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "order",
-                    "parameters": {
-                        "country" : "ASC",
-                        "id" : "ASC"
-                    }
-                }
-            ]
-        };
+            },
+            "flow":newDashboardConfig.downloadProcess
+        }
 
         this.report.export({
             format: "flow",
