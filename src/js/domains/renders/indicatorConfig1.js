@@ -101,7 +101,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             default: DOWNLOAD_DV["1_filter-dd_filter_item_9"],
                             title: labels[Clang]['1_filter-dd_filter_item_9_title'],
                             clUid: "wiews_iteration",
-                            maxItems: 1
+                            max: 1
                         },
                         {
                             id: 'dd_filter_item_10',

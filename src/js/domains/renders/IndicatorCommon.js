@@ -7,7 +7,7 @@ define([
     "../../../config/events",
     "../../../config/domains/config",
     "../../../config/domains/filterSelectors",
-    'fenix-ui-reports',
+    "fenix-ui-reports",
     "../../../nls/labels",
     "fenix-ui-bridge",
     "bootstrap-table"
@@ -438,6 +438,7 @@ define([
         console.log("_DD_onClick_button2 start ")
         var values = this.filter.getValues();
         console.log(param)
+        this._downloadTableData();
     }
 
 
@@ -540,6 +541,84 @@ define([
         this.report.export({
             format: "table",
             config: payload
+        });
+    };
+
+
+    IndicatorCommon.prototype._downloadTableData = function () {
+
+        var flow_model =  {
+            "outConfig": {
+                "plugin": "outputCSV"
+            },
+            "flow": [
+                {
+                    "name": "wiews_area_filter",
+                    "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                    "rid" : { "uid" : "area_selection" },
+                    "result" : false,
+                    "parameters": {
+                        "filter" : {
+                            "m49": {
+                                "codes": [
+                                    {
+                                        "uid": "wiews_m49_regions",
+                                        "codes": [ "WITC","150" ]
+                                    }
+                                ]
+                            },
+                            "fao": {
+                                "codes": [
+                                    {
+                                        "uid": "wiews_fao_region",
+                                        "codes": [ "5400" ]
+                                    }
+                                ]
+                            },
+                            "iso3": {
+                                "codes": [
+                                    {
+                                        "uid": "ISO3",
+                                        "codes": [ "SSD","EGY" ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+
+                {
+                    "name": "filter",
+                    "sid": [ { "uid": "raw_indicator20" }, { "uid": "area_selection" } ],
+                    "parameters": {
+                        "rows": {
+                            "iteration": {
+                                "codes": [
+                                    {
+                                        "uid": "wiews_iteration",
+                                        "codes": [ "1" ]
+                                    }
+                                ]
+                            },
+                            "country" : {
+                                "variable" : "required_countries"
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "order",
+                    "parameters": {
+                        "country" : "ASC",
+                        "id" : "ASC"
+                    }
+                }
+            ]
+        };
+
+        this.report.export({
+            format: "flow",
+            config: flow_model
         });
     };
 
