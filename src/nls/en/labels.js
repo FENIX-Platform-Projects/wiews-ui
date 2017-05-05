@@ -72,7 +72,14 @@ define(function () {
     "1_vd_dashboard_item_1_uid" : "Indicator20",
     "1_vd_dashboard_item_2_uid" : "Indicator20",
     "1_vd_dashboard_item_3_uid" : "Indicator20",
-    "1_vd_dashboard_item_4_uid" : "Indicator20"
+    "1_vd_dashboard_item_4_uid" : "Indicator20",
+
+    "1_dd_table_title_col_1" : "Domain",
+    "1_dd_table_title_col_2" : "Country",
+    "1_dd_table_title_col_3" : "Element",
+    "1_dd_table_title_col_4" : "Indicator and Rating",
+    "1_dd_table_title_col_5" : "Period",
+    "1_dd_table_title_col_6" : "Value"
 
     }
 });

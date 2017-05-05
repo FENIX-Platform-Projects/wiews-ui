@@ -102,6 +102,8 @@ define([
 
         dashboardConf.environment = this.environment;
 
+        this.dashboardConfig = dashboardConf;
+
         console.log(this.indicatorProperties)
         indicatorCommon = new ICommon({
             el : this.el,
@@ -116,6 +118,9 @@ define([
 
         //Setting the titles of the tab
         indicatorCommon.indicatorFilterTemplateUpdate(filterConfig);
+
+        var filterHostConfig = indicatorCommon.indicatorFilterHostConfigInit(filterConfig);
+        this.filterHostConfig = filterHostConfig;
 
         filterConfig = indicatorCommon.indicatorFilterConfigInit(filterConfig);
 
@@ -185,7 +190,7 @@ define([
         });
 
         this.filter.on(s.events.filterComponent.READY, _.bind(self._renderIndicator, self)
-            //self._renderIndicator();
+                // self._renderIndicator();
                 );
 
         $("#dd_filter_item_tab_12").attr('disabled','disabled');
@@ -207,12 +212,14 @@ define([
         return s.indicator_config_path + this.indicatorProperties.indicator_id+'.js';
     };
 
-    DownloadData.prototype._renderIndicator = function (/*dashboardConfig*/) {
+    DownloadData.prototype._renderIndicator = function (dashboardConfig) {
         // Calling the indicator actions file
+        console.log(this)
 
         indicatorCommon.render({
-            filter : this.filter
-            //dashboard_config : dashboardConfig,
+            filter : this.filter,
+            filter_host_config : this.filterHostConfig,
+            dashboard_config : this.dashboardConfig,
             //dashboard : this.dashboard,
             //models : this.models
         });

@@ -29,7 +29,9 @@ define([
             vd_button_1 : "vd_filter_button_1",
             vd_buttonMsg_1 : "vd_filter_button_1_msg",
             dd_button_1 : "dd_filter_button_1",
-            dd_buttonMsg_1 : "dd_filter_button_1_msg"
+            dd_buttonMsg_1 : "dd_filter_button_1_msg",
+            dd_button_2 : "dd_filter_button_2",
+            dd_buttonMsg_2 : "dd_filter_button_2_msg"
         },
 
         dashboard_button : {
@@ -97,11 +99,12 @@ define([
     IndicatorCommon.prototype.render = function (obj) {
 
         this.filter = obj.filter;
+        this.filter_host_config = obj.filter_host_config;
         this.dashboard_config = obj.dashboard_config;
         this.dashboard = obj.dashboard;
         this.models = obj.models;
 
-        this.indicatorProcesses.updateVariables({filter : this.filter});
+        this.indicatorProcesses.updateVariables({filter : this.filter, filter_host_config : this.filter_host_config});
 
         this._bindEventListeners();
     }
@@ -224,6 +227,20 @@ define([
 
             });
         }
+    }
+
+    IndicatorCommon.prototype.indicatorFilterHostConfigInit = function (filterConfig) {
+
+        console.log(filterConfig)
+        var newFilterHostConfig = {};
+
+        if ((filterConfig != null) && (typeof filterConfig != 'undefined')) {
+            if ((filterConfig.hostConfig != null) && (typeof filterConfig.hostConfig != 'undefined')) {
+                $.extend(true, newFilterHostConfig, filterConfig.hostConfig);
+            }
+        }
+        console.log(newFilterHostConfig)
+        return newFilterHostConfig;
     }
 
     IndicatorCommon.prototype.indicatorFilterConfigInit = function (filterConfig) {
@@ -381,6 +398,12 @@ define([
             filter_button_1.on(s.event.BUTTON_CLICK, _.bind(self._DD_onClick_button1, this, {lang: this.lang, indicatorDashboardSection: indicatorDashboardSection}));
         }
 
+        var filter_button_2 = this.el.find('[data-button = "'+s.filter_button.dd_button_2+'"]');
+        var filter_div_msg_2 = this.el.find('[data-buttonMsg = "'+s.filter_button.dd_buttonMsg_2+'"]');
+        if((filter_button_2!=null)&&(typeof filter_button_2!='undefined')&&(filter_div_msg_2!=null)&&(typeof filter_div_msg_2!='undefined')){
+            filter_button_2.on(s.event.BUTTON_CLICK, _.bind(self._DD_onClick_button2, this, {lang: this.lang, indicatorDashboardSection: indicatorDashboardSection}));
+        }
+
         if((this.filter!=null)&&(typeof this.filter!= 'undefined')){
             this.filter.on('select', _.bind(self.onSelectFilter, self, {filterDivMsg_1: filter_div_msg_1}));
         }
@@ -402,135 +425,28 @@ define([
         console.log("_DD_onClick_button1 start ")
         var values = this.filter.getValues();
         console.log(param)
-        //var table = this.indicatorProcesses.onClickButton(this.dashboard_config, values, param);
+        var newDashboardConfig = this.indicatorProcesses.onClickButton1(values, this.dashboard_config, param);
 
-        //this._tableRender('', param);
-       // this._tableRender(table, param);
-        // var newDashboardConfig = this.indicatorProcesses.onClickButton(this.dashboard_config, values, param);
-        // if((newDashboardConfig!= null)&&(typeof newDashboardConfig!= 'undefined')){
-        //     this.dashboard_config = newDashboardConfig;
-        //     if(this.mainTabName == s.mainTabNames.visualizeData){
-        //         this._trigger(s.event.DASHBOARD_CONFIG, {indicator_properties : this.indicatorProperties, dashboardConfig : this.dashboard_config, values: values, dashboard: this.dashboard})
-        //     }
-        // }
+        if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
+        {
+            this._DD_getTableData(param, newDashboardConfig)
+        }
+    }
 
-        this._DD_getTableData(param)
+    IndicatorCommon.prototype._DD_onClick_button2 = function (param) {
+
+        console.log("_DD_onClick_button2 start ")
+        var values = this.filter.getValues();
+        console.log(param)
     }
 
 
-    IndicatorCommon.prototype._DD_getTableData = function (param) {
+    IndicatorCommon.prototype._DD_getTableData = function (param, newDashboardConfig) {
         var self = this;
 
-        var process =  [
-            {
-                "name": "wiews_area_filter",
-                "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
-                "rid" : { "uid" : "area_selection" },
-                "result" : false,
-                "parameters": {
-                    "filter" : {
-                        "m49": {
-                            "codes": [
-                                {
-                                    "uid": "wiews_m49_regions",
-                                    "codes": [ "WITC","1" ]
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
+        param.tableColumns = newDashboardConfig.tableColumns;
 
-            {
-                "sid": [ { "uid": "indicator20" }, { "uid": "area_selection" } ],
-                "name": "filter",
-                "parameters": {
-                    "columns": [
-                        "domain",
-                        "rank",
-                        "wiews_region",
-                        "indicator",
-                        "iteration",
-                        "value",
-                        "um",
-                        "country",
-                        "element",
-                        "biologicalAccessionId",
-                        "stakeholder"
-                    ],
-                    "rows": {
-                        "iteration": {
-                            "codes": [
-                                {
-                                    "uid": "wiews_iteration",
-                                    "codes": [ "1" ]
-                                }
-                            ]
-                        },
-                        "element": {
-                            "codes": [
-                                {
-                                    "uid": "wiews_elements",
-                                    "codes": [ "ind", "nfp", "nfpa", "stk" ]
-                                }
-                            ]
-                        },
-                        "wiews_region" : {
-                            "variable" : "required_countries"
-                        }
-                    }
-                }
-            },
-
-            {
-                "name":"addcolumn",
-                "index" : -2,
-                "parameters":{
-                    "column":{
-                        "dataType":"text",
-                        "id":"indicator_label",
-                        "title":{
-                            "EN":"Indicator"
-                        }
-                    },
-                    "value": ""
-                }
-            },
-
-            {
-                "name" : "select",
-                "parameters" : {
-                    "values" : {
-                        "iteration" : null,
-                        "domain" : null,
-                        "element" : null,
-                        "biologicalAccessionId" : null,
-                        "rank" : null,
-                        "country" : null,
-                        "wiews_region" : null,
-                        "stakeholder" : null,
-                        "value" : null,
-                        "um" : null,
-                        "indicator" : null,
-                        "indicator_label" : "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_en || ')' else element_en end"
-                    }
-                }
-            },
-
-            {
-                "name": "order",
-                "parameters": {
-                    "rank" : "ASC",
-                    "wiews_region" : "ASC"
-                }
-            }
-        ];
-
-        var tableColumns = ['domain', 'wiews_region', 'indicator', 'indicator_label', 'iteration', 'value'];
-
-        param.tableColumns = tableColumns;
-
-        this.bridge.getProcessedResource({contentType: "application/json", body : process, params : {language : param.lang}}).then(
+        this.bridge.getProcessedResource({contentType: "application/json", body : newDashboardConfig.process, params : {language : param.lang}}).then(
             _.bind(function (result) {
 
                 console.log(result)
@@ -541,7 +457,9 @@ define([
 
                 console.log(param)
                 var columnsMap = this._columnMapCreation(param, dsdColumns);
-                var tableData = this._tableDataCreation(param, columnsMap, data);
+                console.log(this.indicatorProcesses)
+                console.log(data.length)
+                var tableData = this.indicatorProcesses.tableDataCreation(param, columnsMap, data);
                 this._tableRender(tableData, param);
 
             }, this),
@@ -556,7 +474,6 @@ define([
         var lang = param.lang.toUpperCase();
         var tableColumns = param.tableColumns;
         var columnsMap = {};
-        console.log(tableColumns)
         _.each(tableColumns, function (tableCol) {
 
             for(var dsdColImdex = 0; dsdColImdex< dsdColumns.length; dsdColImdex++) {
@@ -573,99 +490,25 @@ define([
             };
 
         });
-
-        console.log(columnsMap);
         return columnsMap;
-
-    }
-
-    IndicatorCommon.prototype._tableDataCreation = function (param, columnsMap, data) {
-        var tableData = [];
-        var tableColumns = param.tableColumns;
-        for(var iData = 0; iData<data.length; iData++)
-        {
-            var row = [];
-            for(var iTableColumns = 0; iTableColumns<tableColumns.length; iTableColumns++)
-            {
-                var tableCol = tableColumns[iTableColumns];
-                switch (tableCol) {
-                    case 'domain' :
-                        row['domain'] = data[iData][columnsMap[tableCol+'_text']]
-                        break;
-                    case 'wiews_region' :
-                        row['wiews_region'] = data[iData][columnsMap[tableCol+'_text']]
-                        break;
-                    case 'indicator' :
-                        row['indicator'] = data[iData][columnsMap[tableCol+'_text']]
-                        break;
-                    case 'indicator_label' :
-                        row['indicator_label' ] = data[iData][columnsMap[tableCol+'_text']]
-                        break;
-                    case 'iteration' :
-                        row['iteration'] = data[iData][columnsMap[tableCol+'_text']]
-                        break;
-                    case 'value' :
-                        row['value'] = data[iData][columnsMap[tableCol+'_value']]
-                        break;
-                }
-
-
-            }
-
-            tableData.push(row);
-        }
-        console.log(tableData)
-        return tableData;
     }
 
     IndicatorCommon.prototype._tableRender = function (table, param) {
         console.log("In table render")
+        console.log(table)
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
-        // var data = [
-        //     {
-        //         "Name": "bootstrap-table",
-        //         "stargazers_count": "526",
-        //         "forks_count": "122",
-        //         "description": "An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3) "
-        //     },
-        //     {
-        //         "Name": "multiple-select",
-        //         "stargazers_count": "288",
-        //         "forks_count": "150",
-        //         "description": "A jQuery plugin to select multiple elements with checkboxes :)"
-        //     },
-        //     {
-        //         "Name": "bootstrap-show-password",
-        //         "stargazers_count": "32",
-        //         "forks_count": "11",
-        //         "description": "Show/hide password plugin for twitter bootstrap."
-        //     },
-        //     {
-        //         "Name": "blog",
-        //         "stargazers_count": "13",
-        //         "forks_count": "4",
-        //         "description": "my blog"
-        //     },
-        //     {
-        //         "Name": "scutech-redmine",
-        //         "stargazers_count": "6",
-        //         "forks_count": "3",
-        //         "description": "Redmine notification tools for chrome extension."
-        //     }
-        // ];
-
-        //console.log(mydata)
         param.indicatorDashboardSection.show();
         $('[data-table = "dd-dashboard-table"]').bootstrapTable({
-            data : table
-       //    $('#testTable').bootstrapTable({
-               // pagination: true,
-               // data: data
-           //data: mydata
+            //data : table,
+            pagination: true,
+            pageSize: 20,
+            pageList: [10, 25, 50, 100, 200],
+            search: true,
+            sortable: true
        });
-        //param.indicatorDashboardSection.html(table);
 
-        console.log($('#testTable'))
+        $('[data-table = "dd-dashboard-table"]').bootstrapTable('load', {data: table});
+        //$('[data-table = "dd-dashboard-table"]').refresh({data : table})
     }
 
     IndicatorCommon.prototype.onClick_button2 = function (param) {

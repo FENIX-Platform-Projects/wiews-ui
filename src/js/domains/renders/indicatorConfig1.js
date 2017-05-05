@@ -9,6 +9,11 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
         return {
             downloadData: {
                 filter: {
+                    hostConfig: {
+                        geoSelector: {
+                            default: 'dd_filter_item_4_1'
+                        }
+                    },
                     items: [
                         {
                             id: 'dd_filter_item_1',
@@ -123,11 +128,121 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                 },
                 dashboard: {
 
-                    uid: "DownloadDataDashboard"
+                    uid: "DownloadDataDashboard",
+                    columntableName : [labels[Clang]['1_dd_table_title_col_1'], labels[Clang]['1_dd_table_title_col_2'], labels[Clang]['1_dd_table_title_col_3'], labels[Clang]['1_dd_table_title_col_4'], labels[Clang]['1_dd_table_title_col_5'], labels[Clang]['1_dd_table_title_col_6']],
+                    process : [
+                        {
+                            "name": "wiews_area_filter",
+                            "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                            "rid" : { "uid" : "area_selection" },
+                            "result" : false,
+                            "parameters": {
+                                "filter" : {
+                                    "iso3": {
+                                        "codes": [
+                                            {
+                                                "uid": "ISO3",
+                                                "codes": DOWNLOAD_DV["1_filter-dd_filter_item_1"]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+
+                        {
+                            "sid": [ { "uid": "indicator20" }, { "uid": "area_selection" } ],
+                            "name": "filter",
+                            "parameters": {
+                                "columns": [
+                                    "domain",
+                                    "rank",
+                                    "wiews_region",
+                                    "indicator",
+                                    "iteration",
+                                    "value",
+                                    "um",
+                                    "country",
+                                    "element",
+                                    "biologicalAccessionId",
+                                    "stakeholder"
+                                ],
+                                "rows": {
+                                    "iteration": {
+                                        "codes": [
+                                            {
+                                                "uid": "wiews_iteration",
+                                                "codes": DOWNLOAD_DV["1_filter-vd_filter_item_9"]
+                                            }
+                                        ]
+                                    },
+                                    "element": {
+                                        "codes": [
+                                            {
+                                                "uid": "wiews_elements",
+                                                "codes": [ "ind", "nfp", "nfpa", "stk" ]
+                                            }
+                                        ]
+                                    },
+                                    "wiews_region" : {
+                                        "variable" : "required_countries"
+                                    }
+                                }
+                            }
+                        },
+
+                        {
+                            "name":"addcolumn",
+                            "index" : -2,
+                            "parameters":{
+                                "column":{
+                                    "dataType":"text",
+                                    "id":"indicator_label",
+                                    "title":{
+                                        "EN":"Indicator"
+                                    }
+                                },
+                                "value": ""
+                            }
+                        },
+
+                        {
+                            "name" : "select",
+                            "parameters" : {
+                                "values" : {
+                                    "iteration" : null,
+                                    "domain" : null,
+                                    "element" : null,
+                                    "biologicalAccessionId" : null,
+                                    "rank" : null,
+                                    "country" : null,
+                                    "wiews_region" : null,
+                                    "stakeholder" : null,
+                                    "value" : null,
+                                    "um" : null,
+                                    "indicator" : null,
+                                    "indicator_label" : "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_en || ')' else element_en end"
+                                }
+                            }
+                        },
+
+                        {
+                            "name": "order",
+                            "parameters": {
+                                "rank" : "ASC",
+                                "wiews_region" : "ASC"
+                            }
+                        }
+                    ]
                 }
             },
             visualizeData: {
                 filter: {
+                    hostConfig: {
+                        geoSelector: {
+                            default: 'vd_filter_item_4_1'
+                        }
+                    },
                     items: [
                         {
                             id: 'vd_filter_item_1',

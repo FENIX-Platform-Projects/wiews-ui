@@ -160,9 +160,10 @@ define([
 
     IndicatorProcesses1.prototype._initVariables = function () {
 
-        s.vd_tab_active.geo_item = s.filter_items.tabItem_1;
+        //Setting Default Tab and Item
+        //s.vd_tab_active.geo_item = s.filter_items.tabItem_4;
         s.filterDivMsg1 = this.filterDivMsg1;
-        this.geoCodelistSelector = s.filter_items.item_1;
+        //this.geoCodelistSelector = s.filter_items.item_4_1;
 
     };
 
@@ -470,7 +471,35 @@ define([
 
     IndicatorProcesses1.prototype.updateVariables = function (obj) {
 
+        console.log(obj)
         this.filter = obj.filter;
+        this.filter_host_config = obj.filter_host_config;
+        console.log(this.filter_host_config)
+        console.log(this.filter_host_config.geoSelector)
+        if((this.filter_host_config!=null)&&(typeof this.filter_host_config!= 'undefined')&&
+            (this.filter_host_config.geoSelector!=null)&&(typeof this.filter_host_config.geoSelector!= 'undefined')&&
+            (this.filter_host_config.geoSelector.default!=null)&&(typeof this.filter_host_config.geoSelector.default!= 'undefined')){
+            this.geoCodelistSelector = this.filter_host_config.geoSelector.default;
+            switch(this.geoCodelistSelector){
+                case s.filter_items.item_1:
+                    s.vd_tab_active.geo_item = s.filter_items.tabItem_1;
+                    break;
+                case s.filter_items.item_4_1:
+                case s.filter_items.item_4_2:
+                case s.filter_items.item_4_3:
+                case s.filter_items.item_4_4:
+                    s.vd_tab_active.geo_item = s.filter_items.tabItem_4;
+                    break;
+                case s.filter_items.item_7_1:
+                case s.filter_items.item_7_2:
+                    s.vd_tab_active.geo_item = s.filter_items.tabItem_7;
+                    break;
+            }
+        }
+        else{
+            s.vd_tab_active.geo_item = s.filter_items.tabItem_4;
+            this.geoCodelistSelector = s.filter_items.item_4_1;
+        }
     }
 
     IndicatorProcesses1.prototype._element_configuration_update = function (dashboardConfig, element, values, itemCount) {
@@ -515,6 +544,7 @@ define([
             else{
                 dashboardConfig.items[itemCount].postProcess[0].parameters.list = false;
             }
+            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
             dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
@@ -550,6 +580,7 @@ define([
             else{
                 dashboardConfig.items[itemCount].postProcess[0].parameters.list = false;
             }
+            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
             dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
@@ -585,6 +616,7 @@ define([
             else{
                 dashboardConfig.items[itemCount].postProcess[0].parameters.list = false;
             }
+            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
             dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];

@@ -138,6 +138,15 @@ define([
             tabItem_7 : "dd_filter_item_tab_7_1"
         },
 
+        table_columns : {
+            domain : 'domain',
+            wiews_region : 'wiews_region',
+            indicator : 'indicator',
+            indicator_label : 'indicator_label',
+            iteration : 'iteration',
+            value : 'value'
+        },
+
         dashboard_items : {
             item_1 : "dd_dashboard_item_1",
             item_2 : "dd_dashboard_item_2",
@@ -163,9 +172,9 @@ define([
 
     IndicatorProcesses1.prototype._initVariables = function () {
 
-        s.dd_tab_active.geo_item = s.filter_items.tabItem_1;
+        //s.dd_tab_active.geo_item = s.filter_items.tabItem_4;
         s.filterDivMsg1 = this.filterDivMsg1;
-        this.geoCodelistSelector = s.filter_items.item_1;
+        //this.geoCodelistSelector = s.filter_items.item_4_1;
 
     };
 
@@ -206,7 +215,7 @@ define([
                     {
                         valid = true;
                     }
-                    else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && (newValues[key].length>0))
+                    else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_10)))
                     {
                         valid = true;
                     }
@@ -242,6 +251,8 @@ define([
     }
 
     IndicatorProcesses1.prototype._geoItemSelectionValidation = function (values) {
+        console.log(s.dd_tab_active.geo_item)
+        console.log(values)
         s.filterDivMsg1_text = '';
         var newValues = '', codelist = '', listType = '';
         var toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_3, s.filter_items.item_4_1, s.filter_items.item_4_2, s.filter_items.item_4_3, s.filter_items.item_4_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7_1, s.filter_items.item_7_2];
@@ -368,51 +379,42 @@ define([
         return values;
     }
 
-    //In this way this action is indipendent by the number of items in the configuration
-    //Test it removing some items in the configuration
-    IndicatorProcesses1.prototype.onClickButton = function (dashboardConfig, values, params) {
+    IndicatorProcesses1.prototype.onClickButton1 = function (values, dashboardConfig, params) {
 
-        var table = this._tableCreation();
+        $('[data-field = "1"]').attr('data-field', s.table_columns.domain);
+        $('[data-field = "'+s.table_columns.domain+'"]').text(dashboardConfig.columntableName[0]);
+        $('[data-field = "2"]').attr('data-field', s.table_columns.wiews_region);
+        $('[data-field = "'+s.table_columns.wiews_region+'"]').text(dashboardConfig.columntableName[1]);
+        $('[data-field = "3"]').attr('data-field', s.table_columns.indicator);
+        $('[data-field = "'+s.table_columns.indicator+'"]').text(dashboardConfig.columntableName[2]);
+        $('[data-field = "4"]').attr('data-field', s.table_columns.indicator_label);
+        $('[data-field = "'+s.table_columns.indicator_label+'"]').text(dashboardConfig.columntableName[3]);
+        $('[data-field = "5"]').attr('data-field', s.table_columns.iteration);
+        $('[data-field = "'+s.table_columns.iteration+'"]').text(dashboardConfig.columntableName[4]);
+        $('[data-field = "6"]').attr('data-field', s.table_columns.value);
+        $('[data-field = "'+s.table_columns.value+'"]').text(dashboardConfig.columntableName[5]);
 
-        return table;
-        // var newDashboardConfig =null;
+        var tableColumns = [s.table_columns.domain, s.table_columns.wiews_region, s.table_columns.indicator, s.table_columns.indicator_label, s.table_columns.iteration, s.table_columns.value];
 
-        // params.indicatorDashboardSection.show();
+        var newDashboardConfig =null;
+        var newValues = this._filterSelectionValidation(values, params);
+        console.log(newValues)
+        if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
+        {
+            var self = this;
+            newDashboardConfig ={};
+            newDashboardConfig.tableColumns = tableColumns;
+            $.extend(true, newDashboardConfig, dashboardConfig);
 
+            if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
+                newDashboardConfig = self._element_configuration_update(newDashboardConfig, newValues, params);
+            }
+        }
 
-        // var newValues = this._filterSelectionValidation(values, params);
-        // if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
-        // {
-        //     var self = this;
-        //     newDashboardConfig ={};
-        //     $.extend(true, newDashboardConfig, dashboardConfig);
-        //
-        //     if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
-        //         var itemsArray = dashboardConfig.items;
-        //         var itemCount = 1;
-        //         itemsArray.forEach(function (item) {
-        //
-        //             if ((item != null) && (typeof item != 'undefined')) {
-        //                 newDashboardConfig = self._element_configuration_update(newDashboardConfig, item.id, newValues, itemCount-1);
-        //             }
-        //             itemCount++;
-        //         });
-        //     }
-        // }
+        return newDashboardConfig;
 
-        //return newDashboardConfig;
     };
 
-    IndicatorProcesses1.prototype._tableCreation = function (dashboardConfig, values, params) {
-
-        var table = '';
-        table = '<div class="row"><div class="col-xs-12"><table data-toggle="table"><thead><tr><th>Name</th><th>Stars</th><th>Forks</th><th>Description</th></tr></thead>';
-        table = table + '<tbody><tr id="tr-id-1" class="tr-class-1"><td id="td-id-1" class="td-class-1"><a href="https://github.com/wenzhixin/bootstrap-table">bootstrap-table</a></td><td>526</td><td>122</td><td>An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3)</td></tr>';
-        table = table + '<tr id="tr-id-1" class="tr-class-1"><td id="td-id-1" class="td-class-1"><a href="https://github.com/wenzhixin/bootstrap-table">bootstrap-table</a></td><td>526</td><td>122</td><td>An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3)</td></tr>';
-        table = table + '<tr id="tr-id-1" class="tr-class-1"><td id="td-id-1" class="td-class-1"><a href="https://github.com/wenzhixin/bootstrap-table">bootstrap-table</a></td><td>526</td><td>122</td><td>An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3)</td></tr>';
-        table = table + '</tbody></table></div></div>';
-        return table;
-    }
 
         IndicatorProcesses1.prototype.bindEventListener = function () {
         var self = this;
@@ -447,6 +449,43 @@ define([
                 }
             }
         });
+    }
+
+    IndicatorProcesses1.prototype.tableDataCreation = function (param, columnsMap, data) {
+        var tableData = [];
+        var tableColumns = param.tableColumns;
+        for(var iData = 0; iData<data.length; iData++)
+        {
+            var row = [];
+            for(var iTableColumns = 0; iTableColumns<tableColumns.length; iTableColumns++)
+            {
+                var tableCol = tableColumns[iTableColumns];
+                switch (tableCol) {
+                    case s.table_columns.domain :
+                        row[s.table_columns.domain] = data[iData][columnsMap[tableCol+'_text']]
+                        break;
+                    case s.table_columns.wiews_region :
+                        row[s.table_columns.wiews_region] = data[iData][columnsMap[tableCol+'_text']]
+                        break;
+                    case s.table_columns.indicator :
+                        row[s.table_columns.indicator] = data[iData][columnsMap[tableCol+'_text']]
+                        break;
+                    case s.table_columns.indicator_label :
+                        row[s.table_columns.indicator_label] = data[iData][columnsMap[tableCol+'_value']]
+                        break;
+                    case s.table_columns.iteration :
+                        row[s.table_columns.iteration] = data[iData][columnsMap[tableCol+'_text']]
+                        break;
+                    case s.table_columns.value :
+                        row[s.table_columns.value] = data[iData][columnsMap[tableCol+'_value']]
+                        break;
+                }
+            }
+
+            tableData.push(row);
+        }
+        console.log(tableData)
+        return tableData;
     }
 
     IndicatorProcesses1.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
@@ -492,161 +531,64 @@ define([
     IndicatorProcesses1.prototype.updateVariables = function (obj) {
 
         this.filter = obj.filter;
+        this.filter_host_config = obj.filter_host_config;
+        console.log(this.filter_host_config)
+        console.log(this.filter_host_config.geoSelector)
+        if((this.filter_host_config!=null)&&(typeof this.filter_host_config!= 'undefined')&&
+            (this.filter_host_config.geoSelector!=null)&&(typeof this.filter_host_config.geoSelector!= 'undefined')&&
+            (this.filter_host_config.geoSelector.default!=null)&&(typeof this.filter_host_config.geoSelector.default!= 'undefined')){
+            this.geoCodelistSelector = this.filter_host_config.geoSelector.default;
+            console.log(this.geoCodelistSelector)
+            console.log(s.filter_items.item_1, s.filter_items.item_4_1)
+            switch(this.geoCodelistSelector){
+                case s.filter_items.item_1:
+                    s.dd_tab_active.geo_item = s.filter_items.tabItem_1;
+                    break;
+                case s.filter_items.item_4_1:
+                case s.filter_items.item_4_2:
+                case s.filter_items.item_4_3:
+                case s.filter_items.item_4_4:
+                    s.dd_tab_active.geo_item = s.filter_items.tabItem_4;
+                    break;
+                case s.filter_items.item_7_1:
+                case s.filter_items.item_7_2:
+                    s.dd_tab_active.geo_item = s.filter_items.tabItem_7;
+                    break;
+            }
+        }
+        else{
+            s.dd_tab_active.geo_item = s.filter_items.tabItem_4;
+            this.geoCodelistSelector = s.filter_items.item_4_1;
+        }
+
+        console.log(s.dd_tab_active.geo_item)
     }
 
-    IndicatorProcesses1.prototype._element_configuration_update = function (dashboardConfig, element, values, itemCount) {
+    IndicatorProcesses1.prototype._element_configuration_update = function (dashboardConfig, values, params) {
 
-        switch(element){
-            case s.dashboard_items.item_1:
-                return this._element1_configuration_update(dashboardConfig, values, itemCount);
-                break;
-            case s.dashboard_items.item_2:
-                return this._element2_configuration_update(dashboardConfig, values, itemCount);
-                break;
-            case s.dashboard_items.item_3:
-                return this._element3_configuration_update(dashboardConfig, values, itemCount);
-                break;
-            case s.dashboard_items.item_4:
-                return this._element4_configuration_update(dashboardConfig, values, itemCount);
-                break;
+        console.log(dashboardConfig)
+
+        var codelist = values[s.geo_property].codelist;
+        dashboardConfig.process[0].parameters.filter = {};
+        dashboardConfig.process[0].parameters.filter[codelist] = s.geo_filter[codelist];
+        dashboardConfig.process[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.process[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
+        console.log(dashboardConfig.process[0].parameters.filter)
+        var codes = '';
+        if((values[s.filter_items.item_10]!=null)&&(typeof values[s.filter_items.item_10]!='undefined')&&(values[s.filter_items.item_10].length>0)){
+            codes= [ "ind", "nfp", "nfpa", "stk" ];
         }
-    };
-
-    IndicatorProcesses1.prototype._element1_configuration_update = function (dashboardConfig, values, itemCount) {
-
-        //Map
-        var newDashboardConfig = '';
-        if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
-            //newDashboardConfig = dashboardConfig.items[0].postProcess
-            var codelist = values[s.geo_property].codelist;
-            var listType = values[s.geo_property].listType;
-
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
-            if($.inArray(s.choices_code.total, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = false;
-            }
-            if($.inArray(s.choices_code.list, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = false;
-            }
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["genus"].codes[0].codes = values[s.filter_items.item_8];
-            newDashboardConfig = dashboardConfig;
+        else{
+            codes= [ "ind", "nfp", "nfpa" ];
         }
+        dashboardConfig.process[1].parameters.rows["element"].codes[0].codes = codes;
 
-        return newDashboardConfig;
-    };
+        var indicator_label = "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_"+params.lang+" || ')' else element_"+params.lang+" end"
+        dashboardConfig.process[3].parameters.values["indicator_label"] = indicator_label;
 
-    IndicatorProcesses1.prototype._element2_configuration_update = function (dashboardConfig, values, itemCount) {
+        console.log(dashboardConfig)
 
-        //First Chart
-        var newDashboardConfig = '';
-
-        if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
-            //newDashboardConfig = dashboardConfig.items[0].postProcess
-            var codelist = values[s.geo_property].codelist;
-            var listType = values[s.geo_property].listType;
-
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
-            if($.inArray(s.choices_code.total, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = false;
-            }
-            if($.inArray(s.choices_code.list, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = false;
-            }
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["genus"].codes[0].codes = values[s.filter_items.item_8];
-            newDashboardConfig = dashboardConfig;
-        }
-
-        return newDashboardConfig;
-    };
-
-    IndicatorProcesses1.prototype._element3_configuration_update = function (dashboardConfig, values, itemCount) {
-
-        //Second Chart
-        var newDashboardConfig = '';
-
-        if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
-            //newDashboardConfig = dashboardConfig.items[0].postProcess
-            var codelist = values[s.geo_property].codelist;
-            var listType = values[s.geo_property].listType;
-
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
-            if($.inArray(s.choices_code.total, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = false;
-            }
-            if($.inArray(s.choices_code.list, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = false;
-            }
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-            newDashboardConfig = dashboardConfig;
-        }
-
-        return newDashboardConfig;
-    };
-
-    IndicatorProcesses1.prototype._element4_configuration_update = function (dashboardConfig, values, itemCount) {
-
-        //Third Chart
-        var newDashboardConfig = '';
-
-        if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
-            //newDashboardConfig = dashboardConfig.items[0].postProcess
-            var codelist = values[s.geo_property].codelist;
-            var listType = values[s.geo_property].listType;
-
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
-            if($.inArray(s.choices_code.total, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = false;
-            }
-            if($.inArray(s.choices_code.list, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = false;
-            }
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-            newDashboardConfig = dashboardConfig;
-        }
-
-        return newDashboardConfig;
+        return dashboardConfig;
     };
 
     /**

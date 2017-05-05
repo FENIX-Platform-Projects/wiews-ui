@@ -126,13 +126,14 @@ define([
         //Setting the titles of the tab
         indicatorCommon.indicatorFilterTemplateUpdate(filterConfig);
 
+        var filterHostConfig = indicatorCommon.indicatorFilterHostConfigInit(filterConfig);
         filterConfig = indicatorCommon.indicatorFilterConfigInit(filterConfig);
 
         this._renderFilter(filterConfig);
 
         this._renderDashboard(dashboardConf);
 
-        this._loadProgressBar(dashboardConf);
+        this._loadProgressBar(dashboardConf, filterHostConfig);
     }
 
     // Events
@@ -145,7 +146,8 @@ define([
         }
     };
 
-    VisualizeData.prototype._loadProgressBar = function (dashboardConf) {
+    VisualizeData.prototype._loadProgressBar = function (dashboardConf, filterHostConfig) {
+
         this.progressBar.reset();
         this.progressBar.show();
 
@@ -153,7 +155,7 @@ define([
 
         this.dashboard.on(s.events.dashboardComponent.READY, function () {
             self.progressBar.finish();
-            self._renderIndicator(dashboardConf);
+            self._renderIndicator(dashboardConf, filterHostConfig);
         });
 
         this.dashboard.on(s.events.dashboardComponent.ITEM_READY, function (item) {
@@ -181,8 +183,6 @@ define([
 
     VisualizeData.prototype._renderFilter = function (filterConfig) {
 
-        console.log(filterConfig)
-        console.log(this.cache)
         this.filter = new Filter({
             el: s.filter.filter_container,
             selectors: filterConfig,
@@ -215,11 +215,12 @@ define([
         return s.indicator_config_path + this.indicatorProperties.indicator_id+'.js';
     };
 
-    VisualizeData.prototype._renderIndicator = function (dashboardConfig) {
+    VisualizeData.prototype._renderIndicator = function (dashboardConfig, filterHostConfig) {
         // Calling the indicator actions file
 
         indicatorCommon.render({
             filter : this.filter,
+            filter_host_config : filterHostConfig,
             dashboard_config : dashboardConfig,
             dashboard : this.dashboard,
             models : this.models
