@@ -431,7 +431,7 @@ define([
 
     IndicatorCommon.prototype._DD_onClick_button1 = function (param) {
 
-        $('[data-table = "dd-dashboard-table"]').hide();
+        $('[data-dashboardContainer = "dd-dashboard-container"]').hide();
         var values = this.filter.getValues();
         var newDashboardConfig = this.indicatorProcesses.onClickButton1(values, this.dashboard_config, param);
 
@@ -513,7 +513,7 @@ define([
        });
 
         $('[data-table = "dd-dashboard-table"]').on('post-body.bs.table', function (event, data) {
-            $('[data-table = "dd-dashboard-table"]').show();
+            $('[data-dashboardContainer = "dd-dashboard-container"]').show();
         });
         $('[data-table = "dd-dashboard-table"]').bootstrapTable('load', {data: table});
 

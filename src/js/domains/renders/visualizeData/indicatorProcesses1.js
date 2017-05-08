@@ -161,10 +161,7 @@ define([
     IndicatorProcesses1.prototype._initVariables = function () {
 
         //Setting Default Tab and Item
-        //s.vd_tab_active.geo_item = s.filter_items.tabItem_4;
         s.filterDivMsg1 = this.filterDivMsg1;
-        //this.geoCodelistSelector = s.filter_items.item_4_1;
-
     };
 
     IndicatorProcesses1.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
@@ -390,7 +387,6 @@ define([
                     }
                 }
             }
-
         }
         else{
            return false;
@@ -491,7 +487,6 @@ define([
         var newDashboardConfig = '';
 
         if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
-            //newDashboardConfig = dashboardConfig.items[0].postProcess
             var codelist = values[s.geo_property].codelist;
             var listType = values[s.geo_property].listType;
 

@@ -28,9 +28,9 @@ define(function () {
     "1_filter-vd_filter_item_6_choicesTitle1" : "Total",
     "1_filter-vd_filter_item_6_choicesTitle2" : "List",
 
-    "1_dd_filter_button_1_msg" : "The selection is not valid. Please, select at least an item for each selector.",
+    "1_dd_filter_button_1_msg" : "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
     "1_dd_filter_button_1_list_msg" : "The selection is not valid. Please, select list or total in the geographical selector.",
-    "1_dd_filter_button_2_msg" : "The selection is not valid. Please, select at least an item for each selector.",
+    "1_dd_filter_button_2_msg" : "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
     "1_dd_filter_button_2_list_msg" : "The selection is not valid. Please, select list or total in the geographical selector.",
     "1_filter-dd_filter_item_1_title" : "COUNTRIES",
     "1_filter-dd_filter_item_4_1_title" : "REGIONS",

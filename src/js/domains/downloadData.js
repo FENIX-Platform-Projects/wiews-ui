@@ -120,10 +120,6 @@ define([
         filterConfig = indicatorCommon.indicatorFilterConfigInit(filterConfig);
 
         this._renderFilter(filterConfig);
-
-        //this._renderDashboard(dashboardConf);
-
-        //this._loadProgressBar(dashboardConf);
     }
 
     // Events
@@ -135,23 +131,6 @@ define([
             this.dashboard.dispose();
         }
     };
-
-    // DownloadData.prototype._loadProgressBar = function (dashboardConf) {
-    //
-    //     var self = this;
-    //
-    //     this.dashboard.on(s.events.dashboardComponent.READY, function () {
-    //         self._renderIndicator(dashboardConf);
-    //     });
-    //
-    //     this.dashboard.on(s.events.dashboardComponent.ITEM_READY, function (item) {
-    //         if((typeof item != 'undefined')&&(item != null)&&(typeof item.model != 'undefined')&&(item.model != null)&&(typeof item.model.metadata != 'undefined')&&(item.model.metadata != null)&&(typeof item.model.data != 'undefined')&&(item.model.data != null)){
-    //             var itemId = item.id;
-    //             self.models[itemId] = {metadata : item.model.metadata, data : item.model.data};
-    //         }
-    //
-    //     });
-    // };
 
     DownloadData.prototype._getElemConfig = function (elem) {
 
@@ -175,7 +154,6 @@ define([
             environment: this.environment,
             cache : this.cache,
 
-            //groups: filterConfig,
             common: {
                 template: {
                     hideSwitch: true,
@@ -184,19 +162,10 @@ define([
             }
         });
 
-        this.filter.on(s.events.filterComponent.READY, _.bind(self._renderIndicator, self)
-                // self._renderIndicator();
-                );
+        this.filter.on(s.events.filterComponent.READY, _.bind(self._renderIndicator, self));
 
         $("#dd_filter_item_tab_12").attr('disabled','disabled');
     }
-
-    // DownloadData.prototype._renderDashboard = function (dashboardConfig) {
-    //     // Build new dashboard
-    //     this.dashboard = new Dashboard(
-    //         dashboardConfig
-    //     );
-    // };
 
     DownloadData.prototype._getIndicatorConfig = function () {
         return require(this._getIndicatorConfigPath());
@@ -209,18 +178,12 @@ define([
 
     DownloadData.prototype._renderIndicator = function (dashboardConfig) {
         // Calling the indicator actions file
-        console.log(this)
 
         indicatorCommon.render({
             filter : this.filter,
             filter_host_config : this.filterHostConfig,
             dashboard_config : this.dashboardConfig,
-            //dashboard : this.dashboard,
-            //models : this.models
         });
-
-        //indicatorCommon.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))
-
     };
 
     DownloadData.prototype._dashboardRecreate = function (param) {
