@@ -18,6 +18,7 @@ define([
     var defaultOptions = {};
     var s =
     {
+        geo_property : 'GEO',
         choices_code : {
             total : 'total',
             list : 'list',
@@ -64,7 +65,7 @@ define([
     }
 
     /*Geographic Selector Functions*/
-    IndicatorCommonUtils.prototype._getCodelist = function (listValues, type, regionItem, specialGroupItem) {
+    IndicatorCommonUtils.prototype.geoSelector_getCodelist = function (listValues, type, regionItem, specialGroupItem) {
 
         var codelist= '';
         var code = listValues[Object.keys(listValues)[0]];
@@ -100,7 +101,7 @@ define([
         return codelist;
     }
 
-    IndicatorCommonUtils.prototype._getListType = function (radioValue, type, checkboxRegionItem, checkboxSpecialGroupItem) {
+    IndicatorCommonUtils.prototype.geoSelector_getListType = function (radioValue, type, checkboxRegionItem, checkboxSpecialGroupItem) {
 
         var listType= [];
         var code = radioValue[Object.keys(radioValue)[0]];
@@ -120,7 +121,7 @@ define([
 
     }
 
-    IndicatorCommonUtils.prototype._valuesUpdate = function (values, newValues, toDelete, codelist, listType) {
+    IndicatorCommonUtils.prototype.geoSelector_valuesUpdate = function (values, newValues, toDelete, codelist, listType) {
 
         toDelete.forEach(function (item) {
             delete values[item];

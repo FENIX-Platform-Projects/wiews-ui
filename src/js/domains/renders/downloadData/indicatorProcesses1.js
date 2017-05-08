@@ -269,10 +269,13 @@ define([
 
     IndicatorProcesses1.prototype._geoItemSelectionValidation = function (values) {
 
+        console.log(values)
         s.filterDivMsg1_text = '';
         var newValues = '', codelist = '', listType = '';
         var regionFilterItem = s.filter_items.item_2;
         var specialGroupFilterItem = s.filter_items.item_5;
+        var checkboxRegionItem = s.filter_items.item_3;
+        var checkboxSpecialGroupItem = s.filter_items.item_6;
         var toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_3, s.filter_items.item_4_1, s.filter_items.item_4_2, s.filter_items.item_4_3, s.filter_items.item_4_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7_1, s.filter_items.item_7_2];
         if((s.dd_tab_active.geo_item!=null)&&(typeof s.dd_tab_active.geo_item != 'undefined')){
             switch (s.dd_tab_active.geo_item){
@@ -283,35 +286,38 @@ define([
                         listType = [];
                         listType.push(s.choices_code.total);
                         listType.push(s.choices_code.list)
-                        newValues = this._valuesUpdate(values.values, newValues, toDelete, codelist, listType);
+                        newValues = this.icUtils.geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
                     }
                     break;
                 case s.filter_items.tabItem_4:
                     newValues = values.values[this.geoCodelistSelector];
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
-                        codelist = this._getCodelist(values.values[s.filter_items.item_2], s.filter_items.item_2);
-                        //codelist = this.icUtils.getCodelist(values.values[s.filter_items.item_2], s.filter_items.item_2, regionFilterItem, specialGroupFilterItem)
-                        listType = this._getListType(values.values[s.filter_items.item_3], s.filter_items.item_3);
+                        //codelist = this._getCodelist(values.values[s.filter_items.item_2], s.filter_items.item_2);
+                        codelist = this.icUtils.geoSelector_getCodelist(values.values[s.filter_items.item_2], s.filter_items.item_2, regionFilterItem, specialGroupFilterItem)
+                        //listType = this._getListType(values.values[s.filter_items.item_3], s.filter_items.item_3);
+                        listType = this.icUtils.geoSelector_getListType(values.values[s.filter_items.item_3], s.filter_items.item_3, checkboxRegionItem, checkboxSpecialGroupItem);
                         if(listType.length<=0){
                             newValues = '';
                             s.filterDivMsg1_text = s.error_type.list;
                         }
                         else{
-                            newValues = this._valuesUpdate(values.values, newValues, toDelete, codelist, listType);
+                            newValues = this.icUtils.geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
                         }
                     }
                     break;
                 case s.filter_items.tabItem_7:
                     newValues = values.values[this.geoCodelistSelector];
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
-                        codelist = this._getCodelist(values.values[s.filter_items.item_5], s.filter_items.item_5);
-                        listType = this._getListType(values.values[s.filter_items.item_6], s.filter_items.item_6);
+                        //codelist = this._getCodelist(values.values[s.filter_items.item_5], s.filter_items.item_5);
+                        codelist = this.icUtils.geoSelector_getCodelist(values.values[s.filter_items.item_5], s.filter_items.item_5, regionFilterItem, specialGroupFilterItem)
+                        //listType = this._getListType(values.values[s.filter_items.item_6], s.filter_items.item_6);
+                        listType = this.icUtils.geoSelector_getListType(values.values[s.filter_items.item_3], s.filter_items.item_3, checkboxRegionItem, checkboxSpecialGroupItem);
                         if(listType.length<=0){
                             newValues = '';
                             s.filterDivMsg1_text = s.error_type.list;
                         }
                         else{
-                            newValues = this._valuesUpdate(values.values, newValues, toDelete, codelist, listType);
+                            newValues = this.icUtils.geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
                         }
                     }
                     break;
@@ -322,72 +328,72 @@ define([
     }
 
 
-    IndicatorProcesses1.prototype._getCodelist = function (listValues, type) {
-
-        var codelist= '';
-        var code = listValues[Object.keys(listValues)[0]];
-        switch (type){
-            case s.filter_items.item_2:
-                switch (code){
-                    case "1":
-                        codelist = s.choices_code.fao;
-                        break;
-                    case "2":
-                        codelist = s.choices_code.m49;
-                        break;
-                    case "3":
-                        codelist = s.choices_code.sdg;
-                        break;
-                    case "4":
-                        codelist = s.choices_code.mdg;
-                        break;
-                }
-                break;
-            case s.filter_items.item_5:
-                switch (code){
-                    case "1":
-                        codelist = s.choices_code.cgrfa;
-                        break;
-                    case "2":
-                        codelist = s.choices_code.itpgrfa;
-                        break;
-                }
-                break;
-        }
-
-        return codelist;
-    }
-
-    IndicatorProcesses1.prototype._getListType = function (radioValue, type) {
-
-        var listType= [];
-        var code = radioValue[Object.keys(radioValue)[0]];
-        switch (type){
-            case s.filter_items.item_3:
-            case s.filter_items.item_6:
-                switch (code){
-                    case "1":
-                        listType.push(s.choices_code.total);
-                    case "2":
-                        listType.push(s.choices_code.list);
-                }
-                break;
-        }
-
-        return listType;
-
-    }
-
-    IndicatorProcesses1.prototype._valuesUpdate = function (values, newValues, toDelete, codelist, listType) {
-
-        toDelete.forEach(function (item) {
-            delete values[item];
-        });
-
-        values[s.geo_property] = {codelist : codelist, listType: listType, values : newValues};
-
-        return values;
-    }
+    // IndicatorProcesses1.prototype._getCodelist = function (listValues, type) {
+    //
+    //     var codelist= '';
+    //     var code = listValues[Object.keys(listValues)[0]];
+    //     switch (type){
+    //         case s.filter_items.item_2:
+    //             switch (code){
+    //                 case "1":
+    //                     codelist = s.choices_code.fao;
+    //                     break;
+    //                 case "2":
+    //                     codelist = s.choices_code.m49;
+    //                     break;
+    //                 case "3":
+    //                     codelist = s.choices_code.sdg;
+    //                     break;
+    //                 case "4":
+    //                     codelist = s.choices_code.mdg;
+    //                     break;
+    //             }
+    //             break;
+    //         case s.filter_items.item_5:
+    //             switch (code){
+    //                 case "1":
+    //                     codelist = s.choices_code.cgrfa;
+    //                     break;
+    //                 case "2":
+    //                     codelist = s.choices_code.itpgrfa;
+    //                     break;
+    //             }
+    //             break;
+    //     }
+    //
+    //     return codelist;
+    // }
+    //
+    // IndicatorProcesses1.prototype._getListType = function (radioValue, type) {
+    //
+    //     var listType= [];
+    //     var code = radioValue[Object.keys(radioValue)[0]];
+    //     switch (type){
+    //         case s.filter_items.item_3:
+    //         case s.filter_items.item_6:
+    //             switch (code){
+    //                 case "1":
+    //                     listType.push(s.choices_code.total);
+    //                 case "2":
+    //                     listType.push(s.choices_code.list);
+    //             }
+    //             break;
+    //     }
+    //
+    //     return listType;
+    //
+    // }
+    //
+    // IndicatorProcesses1.prototype._valuesUpdate = function (values, newValues, toDelete, codelist, listType) {
+    //
+    //     toDelete.forEach(function (item) {
+    //         delete values[item];
+    //     });
+    //
+    //     values[s.geo_property] = {codelist : codelist, listType: listType, values : newValues};
+    //
+    //     return values;
+    // }
 
     IndicatorProcesses1.prototype.onClickButton1 = function (values, dashboardConfig, params) {
 
