@@ -6,8 +6,9 @@ define([
     "../../../../config/errors",
     "../../../../config/events",
     "../../../../config/domains/config",
+    "../IndicatorCommonUtils",
     "../../../../nls/labels"
-], function ($, log, _, C, ERR, EVT, DM, labels) {
+], function ($, log, _, C, ERR, EVT, DM, ICUtils, labels) {
 
     'use strict';
 
@@ -164,6 +165,8 @@ define([
 
         $.extend(true, this, defaultOptions, o);
 
+        this.icUtils = new ICUtils();
+
         this._renderTemplate(s.filter_items.item_4, 1, 4);
         this._renderTemplate(s.filter_items.item_7, 1, 2);
 
@@ -183,6 +186,11 @@ define([
     IndicatorProcesses1.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
         this._renderGeoSelection(item_to_show_prefix, item_to_show, codelistMaxIndex);
+       // this.icUtils.renderGeoSelection(item_to_show_prefix, item_to_show, codelistMaxIndex, this.el)
+
+        // _.bind(this.icUtils.renderGeoSelection(item_to_show_prefix, item_to_show, codelistMaxIndex, this.el), this);
+        //_.bind(this.icUtils.renderGeoSelection, this, item_to_show_prefix, item_to_show, codelistMaxIndex);
+
     }
 
     IndicatorProcesses1.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
@@ -260,8 +268,11 @@ define([
     }
 
     IndicatorProcesses1.prototype._geoItemSelectionValidation = function (values) {
+
         s.filterDivMsg1_text = '';
         var newValues = '', codelist = '', listType = '';
+        var regionFilterItem = s.filter_items.item_2;
+        var specialGroupFilterItem = s.filter_items.item_5;
         var toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_3, s.filter_items.item_4_1, s.filter_items.item_4_2, s.filter_items.item_4_3, s.filter_items.item_4_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7_1, s.filter_items.item_7_2];
         if((s.dd_tab_active.geo_item!=null)&&(typeof s.dd_tab_active.geo_item != 'undefined')){
             switch (s.dd_tab_active.geo_item){
@@ -279,6 +290,7 @@ define([
                     newValues = values.values[this.geoCodelistSelector];
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
                         codelist = this._getCodelist(values.values[s.filter_items.item_2], s.filter_items.item_2);
+                        //codelist = this.icUtils.getCodelist(values.values[s.filter_items.item_2], s.filter_items.item_2, regionFilterItem, specialGroupFilterItem)
                         listType = this._getListType(values.values[s.filter_items.item_3], s.filter_items.item_3);
                         if(listType.length<=0){
                             newValues = '';
@@ -308,6 +320,7 @@ define([
 
         return newValues;
     }
+
 
     IndicatorProcesses1.prototype._getCodelist = function (listValues, type) {
 
@@ -365,16 +378,6 @@ define([
 
     }
 
-    IndicatorProcesses1.prototype._selectionValidation = function (listValues, radioValues) {
-        var values = {};
-
-        if((listValues!=null)&&(typeof listValues!="undefined")&&(listValues.length>0)){
-
-            values = listValues;
-        }
-        return values;
-    }
-
     IndicatorProcesses1.prototype._valuesUpdate = function (values, newValues, toDelete, codelist, listType) {
 
         toDelete.forEach(function (item) {
@@ -400,13 +403,6 @@ define([
         $('[data-field = "'+s.table_columns.iteration+'"]').text(dashboardConfig.columntableName[4]);
         $('[data-field = "6"]').attr('data-field', s.table_columns.value);
         $('[data-field = "'+s.table_columns.value+'"]').text(dashboardConfig.columntableName[5]);
-
-        // function noneFormatter(value) {
-        //     console.log('VVVVVVVVVVVVVVVVVVVVVVVVV')
-        //     console.log(value)
-        //     return 'NNN' + value + 'NNN';};
-        //
-        //$('[data-field = "'+s.table_columns.value+'"]').attr('data-formatter', commaFormatter);
 
 
         var tableColumns = [s.table_columns.domain, s.table_columns.wiews_region, s.table_columns.indicator, s.table_columns.indicator_label, s.table_columns.iteration, s.table_columns.value];
@@ -486,7 +482,11 @@ define([
 
     IndicatorProcesses1.prototype.tableDataCreation = function (param, columnsMap, data, filterValues) {
 
-        //this.valuesFormatter(filterValues);
+        var separatorValue = '';
+        if((filterValues.values!= null)&&(typeof filterValues.values!= 'undefined')&&(filterValues.values[s.filter_items.item_11]!= null)&&(typeof filterValues.values[s.filter_items.item_11]!= 'undefined'))
+            separatorValue = filterValues.values[s.filter_items.item_11][0];
+        else
+            separatorValue = '1';
         var tableData = [];
         var tableColumns = param.tableColumns;
         for(var iData = 0; iData<data.length; iData++)
@@ -512,7 +512,7 @@ define([
                         row[s.table_columns.iteration] = data[iData][columnsMap[tableCol+'_text']]
                         break;
                     case s.table_columns.value :
-                        row[s.table_columns.value] = data[iData][columnsMap[tableCol+'_value']]
+                        row[s.table_columns.value] = this.icUtils.valuesFormatter(separatorValue, data[iData][columnsMap[tableCol+'_value']])
                         break;
                 }
             }
@@ -521,33 +521,6 @@ define([
         }
         return tableData;
     }
-
-    // IndicatorProcesses1.prototype.valuesFormatter = function (filterValues) {
-    //
-    //     var separator = filterValues.values[s.filter_items.item_11][0];
-    //     console.log(separator)
-    //     var formatter = '';
-    //
-    //     switch (separator){
-    //         case '1':
-    //             formatter = function noneFormatter(value) {
-    //                 console.log('VVVVVVVVVVVVVVVVVVVVVVVVV')
-    //                 console.log(value)
-    //                 return 'NNN' + value + 'NNN';};
-    //             break;
-    //         case '2':
-    //             formatter = function noneFormatter(value) {
-    //                 return 'CCC' + value + 'CCC';};
-    //             break;
-    //         case '3':
-    //             formatter = function noneFormatter(value) {
-    //                 return 'PPP' + value + 'PPP';};
-    //             break;
-    //     }
-    //
-    //   // $('[data-field = "'+s.table_columns.value+'"]').attr('data-formatter', formatter);
-    //
-    // }
 
     IndicatorProcesses1.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
         var filterDivMsg1 = hostParam.filterDivMsg_1;

@@ -287,13 +287,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     }
                                 }
                             }
-                        },
-                        {
-                            "name": "order",
-                            "parameters": {
-                                "country" : "ASC",
-                                "id" : "ASC"
-                            }
                         }]
                 }
             },

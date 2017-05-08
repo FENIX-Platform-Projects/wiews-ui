@@ -431,6 +431,7 @@ define([
 
     IndicatorCommon.prototype._DD_onClick_button1 = function (param) {
 
+        $('[data-table = "dd-dashboard-table"]').hide();
         var values = this.filter.getValues();
         var newDashboardConfig = this.indicatorProcesses.onClickButton1(values, this.dashboard_config, param);
 
@@ -500,6 +501,8 @@ define([
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
         param.indicatorDashboardSection.show();
 
+        $('[data-table = "dd-dashboard-table"]').bootstrapTable('destroy');
+
         $('[data-table = "dd-dashboard-table"]').bootstrapTable({
             //data : table,
             pagination: true,
@@ -509,8 +512,13 @@ define([
             sortable: true
        });
 
+        $('[data-table = "dd-dashboard-table"]').on('post-body.bs.table', function (event, data) {
+            $('[data-table = "dd-dashboard-table"]').show();
+        });
         $('[data-table = "dd-dashboard-table"]').bootstrapTable('load', {data: table});
-        //$('[data-table = "dd-dashboard-table"]').refresh({data : table})
+
+        //Scroll to the table
+        $('html, body').animate({scrollTop: $('[data-table = "dd-dashboard-table"]').offset().top}, 400,'linear');
     }
 
     IndicatorCommon.prototype.onClick_button2 = function (param) {

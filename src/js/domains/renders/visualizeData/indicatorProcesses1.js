@@ -345,16 +345,6 @@ define([
 
     }
 
-    IndicatorProcesses1.prototype._selectionValidation = function (listValues, radioValues) {
-        var values = {};
-
-        if((listValues!=null)&&(typeof listValues!="undefined")&&(listValues.length>0)){
-
-            values = listValues;
-        }
-        return values;
-    }
-
     IndicatorProcesses1.prototype._valuesUpdate = function (values, newValues, toDelete, codelist, listType) {
 
         toDelete.forEach(function (item) {

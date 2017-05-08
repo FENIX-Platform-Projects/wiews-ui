@@ -93,10 +93,6 @@ define([
 
     DownloadData.prototype.render = function () {
 
-        // if(this.dashboard){
-        //     this._disposeDashboard();
-        // }
-
         var dashboardConf = this._getElemConfig(s.dashboard.dashboard_config_item),
             filterConfig = this._getElemConfig(s.filter.filter_config_item);
 
@@ -104,7 +100,6 @@ define([
 
         this.dashboardConfig = dashboardConf;
 
-        console.log(this.indicatorProperties)
         indicatorCommon = new ICommon({
             el : this.el,
             indicatorProperties : this.indicatorProperties,
