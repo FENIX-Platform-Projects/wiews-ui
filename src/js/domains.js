@@ -71,15 +71,19 @@ define([
 
     Domains.prototype._initVariables = function () {
 
+        var fromQS = (this._getParameterByName('code') != null);
+
         this.$el = $(s.EL);
 
         this.lang = Clang;
         this.environment = C.ENVIRONMENT;
         this.cache = C.cache;
 
-        this.selected_indicator = selected;
+        this.selected_indicator = ((fromQS) ? {code: this._getParameterByName('code')} : selected);
+
         this.selected_indicator_category = CATEG[this.selected_indicator.code].category;
         this.indicatorProperties = CATEG[this.selected_indicator.code];
+        
         this.$tabs = this.$el.find(s.TABS_A);
 
         s.visualizeDataTab_created = false;
@@ -150,6 +154,11 @@ define([
         }
 
         this.currentTab = tab;
+    };
+
+    Domains.prototype._getParameterByName = function (name) {
+            var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+            return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
     };
 
     Domains.prototype._importThirdPartyCss = function () {
