@@ -81,9 +81,10 @@ define([
 
         this.selected_indicator = ((fromQS) ? {code: this._getParameterByName('code')} : selected);
 
+        if ((CATEG[this.selected_indicator.code]) == undefined) alert("Code " + this.selected_indicator.code + " doesn't have a proper configuration. Please check.");
+
         this.selected_indicator_category = CATEG[this.selected_indicator.code].category;
         this.indicatorProperties = CATEG[this.selected_indicator.code];
-        
         this.$tabs = this.$el.find(s.TABS_A);
 
         s.visualizeDataTab_created = false;
