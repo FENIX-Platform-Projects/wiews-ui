@@ -112,12 +112,10 @@ define([
             lang: this.lang,
             environment: this.environment,
             cache : this.cache,
-            //indicator: this.selected_indicator_category,
             indicatorProperties: this.indicatorProperties
         });
 
         this.downloadDataTab.render();
-        //this.visualizeDataTab.render();
     };
 
     // Events
@@ -141,20 +139,6 @@ define([
             this.visualizeDataTab.render();
             s.visualizeDataTab_created = true;
         }
-        //this._showTab(tab);
-    };
-
-    Domains.prototype._showTab = function (tab) {
-        switch (tab) {
-            case s.DOWNLOAD_DATA_TAB:
-                this.downloadDataTab.show();
-                break;
-            case s.VISUALIZE_DATA_TAB:
-                this.visualizeDataTab.show();
-                break;
-        }
-
-        this.currentTab = tab;
     };
 
     Domains.prototype._getParameterByName = function (name) {
