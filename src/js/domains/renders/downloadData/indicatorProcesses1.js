@@ -263,56 +263,31 @@ define([
     IndicatorProcesses1.prototype._geoItemSelectionValidation = function (values) {
 
         s.filterDivMsg1_text = '';
-        var newValues = '', codelist = '', listType = '';
-        var regionFilterItem = s.filter_items.item_2;
-        var specialGroupFilterItem = s.filter_items.item_5;
-        var checkboxRegionItem = s.filter_items.item_3;
-        var checkboxSpecialGroupItem = s.filter_items.item_6;
-        var toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_3, s.filter_items.item_4_1, s.filter_items.item_4_2, s.filter_items.item_4_3, s.filter_items.item_4_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7_1, s.filter_items.item_7_2];
-        if((s.dd_tab_active.geo_item!=null)&&(typeof s.dd_tab_active.geo_item != 'undefined')){
-            switch (s.dd_tab_active.geo_item){
-                case s.filter_items.tabItem_1:
-                    newValues = values.values[s.filter_items.item_1];
-                    if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
-                        codelist = s.choices_code.iso3;
-                        listType = [];
-                        listType.push(s.choices_code.total);
-                        listType.push(s.choices_code.list)
-                        newValues = this.icUtils.geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
-                    }
-                    break;
-                case s.filter_items.tabItem_4:
-                    newValues = values.values[this.geoCodelistSelector];
-                    if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
-                        codelist = this.icUtils.geoSelector_getCodelist(values.values[s.filter_items.item_2], s.filter_items.item_2, regionFilterItem, specialGroupFilterItem)
-                        listType = this.icUtils.geoSelector_getListType(values.values[s.filter_items.item_3], s.filter_items.item_3, checkboxRegionItem, checkboxSpecialGroupItem);
-                        if(listType.length<=0){
-                            newValues = '';
-                            s.filterDivMsg1_text = s.error_type.list;
-                        }
-                        else{
-                            newValues = this.icUtils.geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
-                        }
-                    }
-                    break;
-                case s.filter_items.tabItem_7:
-                    newValues = values.values[this.geoCodelistSelector];
-                    if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
-                        codelist = this.icUtils.geoSelector_getCodelist(values.values[s.filter_items.item_5], s.filter_items.item_5, regionFilterItem, specialGroupFilterItem)
-                        listType = this.icUtils.geoSelector_getListType(values.values[s.filter_items.item_3], s.filter_items.item_3, checkboxRegionItem, checkboxSpecialGroupItem);
-                        if(listType.length<=0){
-                            newValues = '';
-                            s.filterDivMsg1_text = s.error_type.list;
-                        }
-                        else{
-                            newValues = this.icUtils.geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
-                        }
-                    }
-                    break;
-            }
-        }
+        var paramsForGeoValidation = {};
+        paramsForGeoValidation.regionFilterItem = s.filter_items.item_2;
+        paramsForGeoValidation.specialGroupFilterItem = s.filter_items.item_5;
+        paramsForGeoValidation.checkboxRegionItem = s.filter_items.item_3;
+        paramsForGeoValidation.checkboxSpecialGroupItem = s.filter_items.item_6;
+        paramsForGeoValidation.toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_3, s.filter_items.item_4_1, s.filter_items.item_4_2, s.filter_items.item_4_3, s.filter_items.item_4_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7_1, s.filter_items.item_7_2];
+        paramsForGeoValidation.tab_active_geo_item = s.dd_tab_active.geo_item;
+        paramsForGeoValidation.filter_items_tabItem_first = s.filter_items.tabItem_1;
+        paramsForGeoValidation.filter_items_tabItem_second = s.filter_items.tabItem_4;
+        paramsForGeoValidation.filter_items_tabItem_third = s.filter_items.tabItem_7;
+        paramsForGeoValidation.filter_items_codelistItem_tabItem_second = s.filter_items.item_2;
+        paramsForGeoValidation.filter_items_listTypetItem_tabItem_second = s.filter_items.item_3;
+        paramsForGeoValidation.filter_items_codelistItem_tabItem_third = s.filter_items.item_5;
+        paramsForGeoValidation.filter_items_listTypetItem_tabItem_third = s.filter_items.item_6;
+        paramsForGeoValidation.geoCodelistSelector = this.geoCodelistSelector;
+        paramsForGeoValidation.values = values;
 
-        return newValues;
+        var newValues = this.icUtils.geoItemSelectionValidation(paramsForGeoValidation);
+
+        if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.listType!=null)&&(typeof newValues.listType!="undefined")&&(newValues.listType.length<=0)){
+            s.filterDivMsg1_text = s.error_type.list;
+        }
+        console.log(newValues)
+
+        return newValues.values;
     }
 
     IndicatorProcesses1.prototype.onClickButton1 = function (values, dashboardConfig, params) {

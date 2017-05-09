@@ -540,6 +540,11 @@ define([
             input: {
                 config: {}
             },
+            options : {
+                params : {
+                   // maxSize : 2000000
+                },
+            },
             output: {
                 config: {
                     lang: this.lang.toUpperCase()

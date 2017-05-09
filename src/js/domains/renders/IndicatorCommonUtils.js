@@ -29,7 +29,8 @@ define([
             mdg : 'mdg',
             cgrfa : 'cgrfa',
             itpgrfa : 'itpgrfa'
-        }
+        },
+        filterDivMsg1_text : ''
     }
 
     function IndicatorCommonUtils(o) {
@@ -65,7 +66,63 @@ define([
     }
 
     /*Geographic Selector Functions*/
-    IndicatorCommonUtils.prototype.geoSelector_getCodelist = function (listValues, type, regionItem, specialGroupItem) {
+
+    IndicatorCommonUtils.prototype.geoItemSelectionValidation = function (paramsForGeoValidation) {
+
+        var newValues = '', codelist = '', listType = '', values = paramsForGeoValidation.values;
+        var regionFilterItem = paramsForGeoValidation.regionFilterItem, specialGroupFilterItem = paramsForGeoValidation.specialGroupFilterItem;
+        var checkboxRegionItem = paramsForGeoValidation.checkboxRegionItem, checkboxSpecialGroupItem = paramsForGeoValidation.checkboxSpecialGroupItem;
+        var toDelete = paramsForGeoValidation.toDelete;
+        if((paramsForGeoValidation.tab_active_geo_item!=null)&&(typeof paramsForGeoValidation.tab_active_geo_item != 'undefined')){
+            switch (paramsForGeoValidation.tab_active_geo_item){
+                case paramsForGeoValidation.filter_items_tabItem_first:
+                    newValues = values.values[s.filter_items.item_1];
+                    if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
+                        codelist = s.choices_code.iso3;
+                        listType = [];
+                        listType.push(s.choices_code.total);
+                        listType.push(s.choices_code.list)
+                        newValues = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
+                    }
+                    break;
+                case paramsForGeoValidation.filter_items_tabItem_second:
+                    newValues = values.values[paramsForGeoValidation.geoCodelistSelector];
+                    if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
+                        codelist = this._geoSelector_getCodelist(values.values[paramsForGeoValidation.filter_items_codelistItem_tabItem_second], paramsForGeoValidation.filter_items_codelistItem_tabItem_second, regionFilterItem, specialGroupFilterItem)
+                        listType = this._geoSelector_getListType(values.values[paramsForGeoValidation.filter_items_listTypetItem_tabItem_second], paramsForGeoValidation.filter_items_listTypetItem_tabItem_second, checkboxRegionItem, checkboxSpecialGroupItem);
+                        if(listType.length<=0){
+                            newValues = '';
+                        }
+                        else{
+                            newValues = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
+                        }
+                    }
+                    break;
+                case paramsForGeoValidation.filter_items_tabItem_third:
+                    newValues = values.values[paramsForGeoValidation.geoCodelistSelector];
+                    if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
+                        codelist = this._geoSelector_getCodelist(values.values[paramsForGeoValidation.filter_items_codelistItem_tabItem_third], paramsForGeoValidation.filter_items_codelistItem_tabItem_third, regionFilterItem, specialGroupFilterItem)
+                        listType = this._geoSelector_getListType(values.values[paramsForGeoValidation.filter_items_listTypetItem_tabItem_third], paramsForGeoValidation.filter_items_listTypetItem_tabItem_third, checkboxRegionItem, checkboxSpecialGroupItem);
+                        if(listType.length<=0){
+                            newValues = '';
+                        }
+                        else{
+                            newValues = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
+                        }
+                    }
+                    break;
+            }
+
+        }
+
+        var updatedValues = {};
+        updatedValues.values = newValues;
+        updatedValues.listType = listType;
+
+        return updatedValues;
+    }
+
+    IndicatorCommonUtils.prototype._geoSelector_getCodelist = function (listValues, type, regionItem, specialGroupItem) {
 
         var codelist= '';
         var code = listValues[Object.keys(listValues)[0]];
@@ -101,7 +158,7 @@ define([
         return codelist;
     }
 
-    IndicatorCommonUtils.prototype.geoSelector_getListType = function (radioValue, type, checkboxRegionItem, checkboxSpecialGroupItem) {
+    IndicatorCommonUtils.prototype._geoSelector_getListType = function (radioValue, type, checkboxRegionItem, checkboxSpecialGroupItem) {
 
         var listType= [];
         var code = radioValue[Object.keys(radioValue)[0]];
@@ -121,7 +178,7 @@ define([
 
     }
 
-    IndicatorCommonUtils.prototype.geoSelector_valuesUpdate = function (values, newValues, toDelete, codelist, listType) {
+    IndicatorCommonUtils.prototype._geoSelector_valuesUpdate = function (values, newValues, toDelete, codelist, listType) {
 
         toDelete.forEach(function (item) {
             delete values[item];
