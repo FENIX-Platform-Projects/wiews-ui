@@ -116,7 +116,7 @@ define([
         return './'+ this.mainTabName + s.indicator_processes_renders_path + this.indicatorProperties.processType;
     };
 
-
+    //To Update the template based on the configuration file
     IndicatorCommon.prototype.indicatorSectionInit = function (dashboardConfig) {
         var indicatorSection = '';
         if(this.mainTabName == s.mainTabNames.visualizeData){
@@ -233,6 +233,8 @@ define([
         }
     }
 
+    //HostConfig is the configuration of the filter used in the Wiews application
+    //and ignored by the Fenix Filter
     IndicatorCommon.prototype.indicatorFilterHostConfigInit = function (filterConfig) {
 
         var newFilterHostConfig = {};
@@ -245,6 +247,7 @@ define([
         return newFilterHostConfig;
     }
 
+    //Creation of the configuration for the Filter Fenix Component
     IndicatorCommon.prototype.indicatorFilterConfigInit = function (filterConfig) {
 
         var newFilterConfig = {};
@@ -348,6 +351,7 @@ define([
         this.indicatorProcesses.bindEventListener();
     };
 
+    //Visualization Tab listener
     IndicatorCommon.prototype._VD_bindEventListeners = function () {
 
         var self = this;
@@ -387,6 +391,7 @@ define([
         }
     };
 
+    //Download Tab listener
     IndicatorCommon.prototype._DD_bindEventListeners = function () {
 
         var self = this;
@@ -418,6 +423,7 @@ define([
         }
     };
 
+    //Visualization  Tab Button 1
     IndicatorCommon.prototype._VD_onClick_button1 = function (param) {
         var values = this.filter.getValues();
         var newDashboardConfig = this.indicatorProcesses.onClickButton(this.dashboard_config, values, param);
@@ -429,6 +435,7 @@ define([
         }
     }
 
+    //Download  Tab Button 1
     IndicatorCommon.prototype._DD_onClick_button1 = function (param) {
 
         $('[data-dashboardContainer = "dd-dashboard-container"]').hide();
@@ -441,6 +448,7 @@ define([
         }
     }
 
+    //Download  Tab Button 2
     IndicatorCommon.prototype._DD_onClick_button2 = function (param) {
 
         var values = this.filter.getValues();
@@ -452,6 +460,7 @@ define([
     }
 
 
+    //Creation of data for the Bootstrap Table of the Download Tab
     IndicatorCommon.prototype._DD_getTableData = function (param, newDashboardConfig, filterValues) {
         var self = this;
 
@@ -475,6 +484,7 @@ define([
         )
     }
 
+    //Mapping between the Dsd Columns and the columns of the tables defined in the configuration
     IndicatorCommon.prototype._columnMapCreation = function (param, dsdColumns) {
 
         var lang = param.lang.toUpperCase();
@@ -497,6 +507,7 @@ define([
         return columnsMap;
     }
 
+    //Render of the bootstrap table
     IndicatorCommon.prototype._tableRender = function (table, param) {
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
         param.indicatorDashboardSection.show();
@@ -521,17 +532,19 @@ define([
         $('html, body').animate({scrollTop: $('[data-table = "dd-dashboard-table"]').offset().top}, 400,'linear');
     }
 
-    IndicatorCommon.prototype.onClick_button2 = function (param) {
-        var values = this.filter.getValues();
-        var newDashboardConfig = this.indicatorProcesses.onClickButton(this.dashboard_config, values, param);
-    }
+    // IndicatorCommon.prototype.onClick_button2 = function (param) {
+    //     var values = this.filter.getValues();
+    //     var newDashboardConfig = this.indicatorProcesses.onClickButton(this.dashboard_config, values, param);
+    // }
 
+    //Filter Selection Action
     IndicatorCommon.prototype.onSelectFilter = function (hostParam, filterResponse) {
 
         var commonParam = {bridge : this.bridge};
         var res = this.indicatorProcesses.onSelectFilter(hostParam, filterResponse, commonParam);
     }
 
+    //Export in the elements of the dashboard of the Visualize Tab
     IndicatorCommon.prototype.downloadData = function (model, uid) {
 
         model.metadata.uid = uid;
@@ -539,11 +552,6 @@ define([
             resource: model,
             input: {
                 config: {}
-            },
-            options : {
-                params : {
-                   // maxSize : 2000000
-                },
             },
             output: {
                 config: {

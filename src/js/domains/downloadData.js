@@ -67,6 +67,7 @@ define([
 
     };
 
+    //Based on the indicator configuration properties the templates are rendered
     DownloadData.prototype._attach = function () {
 
         $(this.el).html(filterTemplate(labels[this.lang]));
@@ -114,6 +115,8 @@ define([
         //Setting the titles of the tab
         indicatorCommon.indicatorFilterTemplateUpdate(filterConfig);
 
+        //filterHostConfig is the configuration of the filter used in the Wiews application
+        //and ignored by the Fenix Filter
         var filterHostConfig = indicatorCommon.indicatorFilterHostConfigInit(filterConfig);
         this.filterHostConfig = filterHostConfig;
 
@@ -144,10 +147,10 @@ define([
         return config;
     }
 
+    //The filter is created just once by the configuration
     DownloadData.prototype._renderFilter = function (filterConfig) {
 
         var self = this;
-        console.log(filterConfig)
         this.filter = new Filter({
             el: s.filter.filter_container,
             selectors: filterConfig,
@@ -164,6 +167,7 @@ define([
 
         this.filter.on(s.events.filterComponent.READY, _.bind(self._renderIndicator, self));
 
+        //OUTPUT FORMATTING OPTIONS DISABLED
         $("#dd_filter_item_tab_12").attr('disabled','disabled');
     }
 
@@ -176,6 +180,7 @@ define([
         return s.indicator_config_path + this.indicatorProperties.indicator_id+'.js';
     };
 
+    //The istance for the specific indicator is created when the FILTER has been rendered
     DownloadData.prototype._renderIndicator = function (dashboardConfig) {
         // Calling the indicator actions file
 

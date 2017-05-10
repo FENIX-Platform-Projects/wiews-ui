@@ -96,6 +96,7 @@ define([
         this.$el.find('[data-role="domain-title"]').html(labels[Clang][this.selected_indicator.code])
     };
 
+    //Initialization of the Download Data and Visualize Data Tab
     Domains.prototype._initTabs = function () {
 
         this.downloadDataTab = new DownloadData({
@@ -131,6 +132,7 @@ define([
         }
     };
 
+    //The tabs are created only once
     Domains.prototype._onTabClick = function (evt) {
 
         var tab = $(evt.target).data("tab");
@@ -141,6 +143,8 @@ define([
         }
     };
 
+    //Getting the code of the indicator from the url(Typo3)
+    //By default the code is 20
     Domains.prototype._getParameterByName = function (name) {
             var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
             return match && decodeURIComponent(match[1].replace(/\+/g, ' '));

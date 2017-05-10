@@ -39,6 +39,7 @@ define([
         return this;
     }
 
+    //Values Formatter for the Values Column in the table shown in the Download Data Tab
     IndicatorCommonUtils.prototype.valuesFormatter = function (option,value) {
 
         // value.toLocaleString('en-US')/('de-DE')
@@ -67,6 +68,7 @@ define([
 
     /*Geographic Selector Functions*/
 
+    //Validation of the selector
     IndicatorCommonUtils.prototype.geoItemSelectionValidation = function (paramsForGeoValidation) {
 
         var newValues = '', codelist = '', listType = '', values = paramsForGeoValidation.values;
@@ -122,6 +124,7 @@ define([
         return updatedValues;
     }
 
+    //Geographic Codelist
     IndicatorCommonUtils.prototype._geoSelector_getCodelist = function (listValues, type, regionItem, specialGroupItem) {
 
         var codelist= '';
@@ -158,6 +161,7 @@ define([
         return codelist;
     }
 
+    //List Type Item
     IndicatorCommonUtils.prototype._geoSelector_getListType = function (radioValue, type, checkboxRegionItem, checkboxSpecialGroupItem) {
 
         var listType= [];
@@ -178,6 +182,7 @@ define([
 
     }
 
+    //To Update the selection done in the geo selector
     IndicatorCommonUtils.prototype._geoSelector_valuesUpdate = function (values, newValues, toDelete, codelist, listType) {
 
         toDelete.forEach(function (item) {

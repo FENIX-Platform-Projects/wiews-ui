@@ -68,8 +68,10 @@ define([
 
     VisualizeData.prototype._validateConfig = function () {
 
+        //TODO
     };
 
+    //Based on the indicator configuration properties the templates are rendered
     VisualizeData.prototype._attach = function () {
 
         $(this.el).html(filterTemplate(labels[this.lang]));
@@ -126,6 +128,8 @@ define([
         //Setting the titles of the tab
         indicatorCommon.indicatorFilterTemplateUpdate(filterConfig);
 
+        //filterHostConfig is the configuration of the filter used in the Wiews application
+        //and ignored by the Fenix Filter
         var filterHostConfig = indicatorCommon.indicatorFilterHostConfigInit(filterConfig);
         filterConfig = indicatorCommon.indicatorFilterConfigInit(filterConfig);
 
@@ -181,6 +185,7 @@ define([
         return config;
     }
 
+    //The filter is created just once by the configuration
     VisualizeData.prototype._renderFilter = function (filterConfig) {
 
         this.filter = new Filter({
@@ -189,7 +194,6 @@ define([
             environment: this.environment,
             cache : this.cache,
 
-            //groups: filterConfig,
             common: {
                 template: {
                     hideSwitch: true,
@@ -199,6 +203,7 @@ define([
         });
     }
 
+    //The Dashoboard is created first time by configuration and everytime Show button is pressed
     VisualizeData.prototype._renderDashboard = function (dashboardConfig) {
         // Build new dashboard
         this.dashboard = new Dashboard(
@@ -215,6 +220,7 @@ define([
         return s.indicator_config_path + this.indicatorProperties.indicator_id+'.js';
     };
 
+    //The istance for the specific indicator is created when the DASHBOARD has been rendered
     VisualizeData.prototype._renderIndicator = function (dashboardConfig, filterHostConfig) {
         // Calling the indicator actions file
 
@@ -226,6 +232,7 @@ define([
             models : this.models
         });
 
+        //New Dashboard config is ready
         indicatorCommon.on(s.events.dashboard.DASHBOARD_CONFIG, _.bind(this._dashboardRecreate, this))
 
     };
