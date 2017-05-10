@@ -14,7 +14,7 @@ define(function () {
         "1_filter-vd_filter_item_4_4" : ["826"],
         "1_filter-vd_filter_item_5" : ["1"],
         "1_filter-vd_filter_item_6" : ["1", "2"],
-        "1_filter-vd_filter_item_7_1" : ["3"],
+        "1_filter-vd_filter_item_7_1" : ["007"],
         "1_filter-vd_filter_item_7_2" : ["36"],
         "1_filter-vd_filter_item_8" : ["abarema"],
         "1_filter-vd_filter_item_9" : ["1"]
