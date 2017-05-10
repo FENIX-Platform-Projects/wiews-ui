@@ -537,10 +537,8 @@ define([
         dashboardConfig.tableProcess[0].parameters.filter = {};
         dashboardConfig.tableProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.tableProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.tableProcess[1].parameters.rows["indicator"].codes[0].codes = values[s.filter_items.item_8];
         dashboardConfig.tableProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-
-        var indicator_label = "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_"+params.lang+" || ')' else element_"+params.lang+" end"
-        dashboardConfig.tableProcess[3].parameters.values["indicator_label"] = indicator_label;
 
         return dashboardConfig;
     };
@@ -551,10 +549,8 @@ define([
         dashboardConfig.downloadProcessTableData[0].parameters.filter = {};
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.downloadProcessTableData[1].parameters.rows["indicator"].codes[0].codes = values[s.filter_items.item_8];
         dashboardConfig.downloadProcessTableData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-
-        var indicator_label = "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_"+params.lang+" || ')' else element_"+params.lang+" end"
-        dashboardConfig.downloadProcessTableData[3].parameters.values["indicator_label"] = indicator_label;
 
         return dashboardConfig;
     };

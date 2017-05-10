@@ -172,7 +172,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                         "codes": [
                                             {
                                                 "uid": "wiews_iteration",
-                                                "codes": DOWNLOAD_DV["1_filter-vd_filter_item_9"]
+                                                "codes": DOWNLOAD_DV["1_filter-dd_filter_item_9"]
                                             }
                                         ]
                                     },
@@ -274,7 +274,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                         "codes": [
                                             {
                                                 "uid": "wiews_iteration",
-                                                "codes": DOWNLOAD_DV["1_filter-vd_filter_item_9"]
+                                                "codes": DOWNLOAD_DV["1_filter-dd_filter_item_9"]
                                             }
                                         ]
                                     },
@@ -360,7 +360,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                         "codes": [
                                             {
                                                 "uid": "wiews_iteration",
-                                                "codes": DOWNLOAD_DV["1_filter-vd_filter_item_9"]
+                                                "codes": DOWNLOAD_DV["1_filter-dd_filter_item_9"]
                                             }
                                         ]
                                     },

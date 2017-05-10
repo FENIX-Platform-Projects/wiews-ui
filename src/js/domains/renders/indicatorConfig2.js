@@ -136,7 +136,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                         "codes": [
                                             {
                                                 "uid": "ISO3",
-                                                "codes": DOWNLOAD_DV["1_filter-dd_filter_item_1"]
+                                                "codes": DOWNLOAD_DV["2_filter-dd_filter_item_1"]
                                             }
                                         ]
                                     }
@@ -145,7 +145,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         },
 
                         {
-                            "sid": [ { "uid": "indicator20" }, { "uid": "area_selection" } ],
+                            "sid": [ { "uid": "indicator2" }, { "uid": "area_selection" } ],
                             "name": "filter",
                             "parameters": {
                                 "columns": [
@@ -153,27 +153,25 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     "rank",
                                     "wiews_region",
                                     "indicator",
+                                    "element",
                                     "iteration",
                                     "value",
-                                    "um",
-                                    "element",
-                                    "biologicalAccessionId",
-                                    "stakeholder"
+                                    "um"
                                 ],
                                 "rows": {
+                                    "indicator": {
+                                        "codes": [
+                                            {
+                                                "uid": "wiews_output_indicators",
+                                                "codes": DOWNLOAD_DV["2_filter-dd_filter_item_8"]
+                                            }
+                                        ]
+                                    },
                                     "iteration": {
                                         "codes": [
                                             {
                                                 "uid": "wiews_iteration",
-                                                "codes": DOWNLOAD_DV["1_filter-vd_filter_item_9"]
-                                            }
-                                        ]
-                                    },
-                                    "element": {
-                                        "codes": [
-                                            {
-                                                "uid": "wiews_elements",
-                                                "codes": [ "ind", "nfp", "nfpa", "stk" ]
+                                                "codes": DOWNLOAD_DV["2_filter-dd_filter_item_9"]
                                             }
                                         ]
                                     },
@@ -183,41 +181,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
                         },
-
-                        {
-                            "name":"addcolumn",
-                            "index" : -2,
-                            "parameters":{
-                                "column":{
-                                    "dataType":"text",
-                                    "id":"indicator_label",
-                                    "title":{
-                                        "EN":"Indicator"
-                                    }
-                                },
-                                "value": ""
-                            }
-                        },
-
-                        {
-                            "name" : "select",
-                            "parameters" : {
-                                "values" : {
-                                    "iteration" : null,
-                                    "domain" : null,
-                                    "element" : null,
-                                    "biologicalAccessionId" : null,
-                                    "rank" : null,
-                                    "wiews_region" : null,
-                                    "stakeholder" : null,
-                                    "value" : null,
-                                    "um" : null,
-                                    "indicator" : null,
-                                    "indicator_label" : "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_en || ')' else element_en end"
-                                }
-                            }
-                        },
-
                         {
                             "name": "order",
                             "parameters": {
@@ -225,6 +188,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 "wiews_region" : "ASC"
                             }
                         }
+
                     ],
                     downloadProcessTableData: [
                         {
@@ -238,7 +202,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                         "codes": [
                                             {
                                                 "uid": "ISO3",
-                                                "codes": DOWNLOAD_DV["1_filter-dd_filter_item_1"]
+                                                "codes": DOWNLOAD_DV["2_filter-dd_filter_item_1"]
                                             }
                                         ]
                                     }
@@ -247,7 +211,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         },
 
                         {
-                            "sid": [ { "uid": "indicator20" }, { "uid": "area_selection" } ],
+                            "sid": [ { "uid": "indicator2" }, { "uid": "area_selection" } ],
                             "name": "filter",
                             "parameters": {
                                 "columns": [
@@ -256,26 +220,24 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     "wiews_region",
                                     "indicator",
                                     "element",
-                                    "biologicalAccessionId",
                                     "iteration",
-                                    "stakeholder",
                                     "value",
                                     "um"
                                 ],
                                 "rows": {
+                                    "indicator": {
+                                        "codes": [
+                                            {
+                                                "uid": "wiews_output_indicators",
+                                                "codes": DOWNLOAD_DV["2_filter-dd_filter_item_8"]
+                                            }
+                                        ]
+                                    },
                                     "iteration": {
                                         "codes": [
                                             {
                                                 "uid": "wiews_iteration",
-                                                "codes": DOWNLOAD_DV["1_filter-vd_filter_item_9"]
-                                            }
-                                        ]
-                                    },
-                                    "element": {
-                                        "codes": [
-                                            {
-                                                "uid": "wiews_elements",
-                                                "codes": [ "ind", "nfp", "nfpa", "stk" ]
+                                                "codes": DOWNLOAD_DV["2_filter-dd_filter_item_9"]
                                             }
                                         ]
                                     },
@@ -285,38 +247,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
                         },
-
-                        {
-                            "name":"addcolumn",
-                            "index" : -2,
-                            "parameters":{
-                                "column":{
-                                    "dataType":"text",
-                                    "id":"indicator_label",
-                                    "title":{
-                                        "EN":"Indicator"
-                                    }
-                                },
-                                "value": ""
-                            }
-                        },
-
-                        {
-                            "name" : "select",
-                            "parameters" : {
-                                "values" : {
-                                    "iteration" : null,
-                                    "domain" : null,
-                                    "biologicalAccessionId" : null,
-                                    "rank" : null,
-                                    "wiews_region" : null,
-                                    "value" : null,
-                                    "um" : null,
-                                    "indicator_label" : "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_en || ')' else element_en end"
-                                }
-                            }
-                        },
-
                         {
                             "name": "order",
                             "parameters": {
@@ -324,36 +254,38 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 "wiews_region" : "ASC"
                             }
                         }
+
                     ],
                     downloadProcessRawData : [
                         {
-                        "name": "wiews_area_filter",
-                        "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
-                        "rid" : { "uid" : "area_selection" },
-                        "result" : false,
-                        "parameters": {
-                            "filter" : {
-                                "iso3": {
-                                    "codes": [
-                                        {
-                                            "uid": "ISO3",
-                                            "codes": DOWNLOAD_DV["1_filter-dd_filter_item_1"]
-                                        }
-                                    ]
+                            "name": "wiews_area_filter",
+                            "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                            "rid" : { "uid" : "area_selection" },
+                            "result" : false,
+                            "parameters": {
+                                "filter" : {
+                                    "iso3": {
+                                        "codes": [
+                                            {
+                                                "uid": "ISO3",
+                                                "codes": DOWNLOAD_DV["2_filter-dd_filter_item_1"]
+                                            }
+                                        ]
+                                    }
                                 }
                             }
-                        }
-                    },
+                        },
+
                         {
                             "name": "filter",
-                            "sid": [ { "uid": "raw_indicator20" }, { "uid": "area_selection" } ],
+                            "sid": [ { "uid": "raw_indicator2" }, { "uid": "area_selection" } ],
                             "parameters": {
                                 "rows": {
                                     "iteration": {
                                         "codes": [
                                             {
                                                 "uid": "wiews_iteration",
-                                                "codes": DOWNLOAD_DV["1_filter-vd_filter_item_9"]
+                                                "codes": DOWNLOAD_DV["2_filter-dd_filter_item_9"]
                                             }
                                         ]
                                     },
@@ -362,7 +294,15 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     }
                                 }
                             }
-                        }]
+                        },
+                        {
+                            "name": "order",
+                            "parameters": {
+                                "country" : "ASC",
+                                "species" : "ASC"
+                            }
+                        }
+                    ]
 
                 }
             },
