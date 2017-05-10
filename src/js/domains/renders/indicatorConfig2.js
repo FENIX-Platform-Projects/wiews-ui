@@ -93,7 +93,8 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             type: 'tree',
                             default: DOWNLOAD_DV["2_filter-dd_filter_item_8"],
                             title: labels[Clang]['2_filter-dd_filter_item_8_title'],
-                            source: [{value: "20", label: labels[Clang]['2_filter-dd_filter_item_8_source1']}]
+                            clUid: "wiews_output_indicators",
+                            clCodes : ["2_1","2_2"]
                         },
                         {
                             id: 'dd_filter_item_9',
@@ -107,15 +108,15 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             id: 'dd_filter_item_10',
                             type: 'radio',
                             default: DOWNLOAD_DV["2_filter-dd_filter_item_10"],
-                            title: labels[Clang]['2_filter-dd_filter_item_11_title'],
-                            choicesTitle: [labels[Clang]["2_filter-dd_filter_item_11_choicesTitle1"], labels[Clang]["2_filter-dd_filter_item_11_choicesTitle2"], labels[Clang]["2_filter-dd_filter_item_11_choicesTitle3"]]
+                            title: labels[Clang]['2_filter-dd_filter_item_10_title'],
+                            choicesTitle: [labels[Clang]["2_filter-dd_filter_item_10_choicesTitle1"], labels[Clang]["2_filter-dd_filter_item_10_choicesTitle2"], labels[Clang]["2_filter-dd_filter_item_10_choicesTitle3"]]
                         },
                         {
                             id: 'dd_filter_item_11',
                             type: 'checkbox',
                             default: DOWNLOAD_DV["2_filter-dd_filter_item_11"],
-                            title: labels[Clang]['2_filter-dd_filter_item_12_title'],
-                            choicesTitle: [labels[Clang]["2_filter-dd_filter_item_12_choicesTitle1"], labels[Clang]["2_filter-dd_filter_item_12_choicesTitle2"],labels[Clang]["2_filter-dd_filter_item_12_choicesTitle3"], labels[Clang]["2_filter-dd_filter_item_12_choicesTitle4"]]
+                            title: labels[Clang]['2_filter-dd_filter_item_11_title'],
+                            choicesTitle: [labels[Clang]["2_filter-dd_filter_item_11_choicesTitle1"], labels[Clang]["2_filter-dd_filter_item_11_choicesTitle2"],labels[Clang]["2_filter-dd_filter_item_11_choicesTitle3"], labels[Clang]["2_filter-dd_filter_item_11_choicesTitle4"]]
                         }
                         ]
                 },
@@ -377,80 +378,80 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             id: 'vd_filter_item_1',
                             type: 'tree',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_1"],
-                            title: labels[Clang]['1_filter-vd_filter_item_1_title'],
+                            title: labels[Clang]['2_filter-vd_filter_item_1_title'],
                             clUid: "ISO3"
                         },
                         {
                             id: 'vd_filter_item_2',
                             type: 'radio',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_2"],
-                            choicesTitle: [labels[Clang]["1_filter-vd_filter_item_2_choicesTitle1"], labels[Clang]["1_filter-vd_filter_item_2_choicesTitle2"], labels[Clang]["1_filter-vd_filter_item_2_choicesTitle3"], labels[Clang]["1_filter-vd_filter_item_2_choicesTitle4"]]
+                            choicesTitle: [labels[Clang]["2_filter-vd_filter_item_2_choicesTitle1"], labels[Clang]["2_filter-vd_filter_item_2_choicesTitle2"], labels[Clang]["2_filter-vd_filter_item_2_choicesTitle3"], labels[Clang]["2_filter-vd_filter_item_2_choicesTitle4"]]
                         },
                         {
                             id: 'vd_filter_item_3',
                             type: 'checkbox',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_3"],
-                            choicesTitle: [labels[Clang]["1_filter-vd_filter_item_3_choicesTitle1"], labels[Clang]["1_filter-vd_filter_item_3_choicesTitle2"]]
+                            choicesTitle: [labels[Clang]["2_filter-vd_filter_item_3_choicesTitle1"], labels[Clang]["2_filter-vd_filter_item_3_choicesTitle2"]]
                         },
                         {
                             id: 'vd_filter_item_4_1',
                             type: 'tree',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_4_1"],
-                            title: labels[Clang]['1_filter-vd_filter_item_4_1_title'],
+                            title: labels[Clang]['2_filter-vd_filter_item_4_1_title'],
                             clUid: "wiews_fao_region"
                         },
                         {
                             id: 'vd_filter_item_4_2',
                             type: 'tree',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_4_2"],
-                            title: labels[Clang]['1_filter-vd_filter_item_4_1_title'],
+                            title: labels[Clang]['2_filter-vd_filter_item_4_1_title'],
                             clUid: "wiews_m49_regions"
                         },
                         {
                             id: 'vd_filter_item_4_3',
                             type: 'tree',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_4_3"],
-                            title: labels[Clang]['1_filter-vd_filter_item_4_1_title'],
+                            title: labels[Clang]['2_filter-vd_filter_item_4_1_title'],
                             clUid: "sdg_region"
                         },
                         {
                             id: 'vd_filter_item_4_4',
                             type: 'tree',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_4_4"],
-                            title: labels[Clang]['1_filter-vd_filter_item_4_1_title'],
+                            title: labels[Clang]['2_filter-vd_filter_item_4_1_title'],
                             clUid: "mdg_region"
                         },
                         {
                             id: 'vd_filter_item_5',
                             type: 'radio',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_5"],
-                            choicesTitle: [labels[Clang]["1_filter-vd_filter_item_5_choicesTitle1"], labels[Clang]["1_filter-vd_filter_item_5_choicesTitle2"]]
+                            choicesTitle: [labels[Clang]["2_filter-vd_filter_item_5_choicesTitle1"], labels[Clang]["2_filter-vd_filter_item_5_choicesTitle2"]]
                         },
                         {
                             id: 'vd_filter_item_6',
                             type: 'checkbox',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_6"],
-                            choicesTitle: [labels[Clang]["1_filter-vd_filter_item_6_choicesTitle1"], labels[Clang]["1_filter-vd_filter_item_6_choicesTitle2"]]
+                            choicesTitle: [labels[Clang]["2_filter-vd_filter_item_6_choicesTitle1"], labels[Clang]["2_filter-vd_filter_item_6_choicesTitle2"]]
                         },
                         {
                             id: 'vd_filter_item_7_1',
                             type: 'tree',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_7_1"],
-                            title: labels[Clang]['1_filter-vd_filter_item_7_title'],
+                            title: labels[Clang]['2_filter-vd_filter_item_7_title'],
                             clUid: "wiews_cgrfa"
                         },
                         {
                             id: 'vd_filter_item_7_2',
                             type: 'tree',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_7_2"],
-                            title: labels[Clang]['1_filter-vd_filter_item_7_title'],
+                            title: labels[Clang]['2_filter-vd_filter_item_7_title'],
                             clUid: "wiews_itpgrfa"
                         },
                         {
                             id: 'vd_filter_item_8',
                             type: 'tree',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_8"],
-                            title: labels[Clang]['1_filter-vd_filter_item_8_title'],
+                            title: labels[Clang]['2_filter-vd_filter_item_8_title'],
                             clUid: "wiews_iteration",
                             max: 1
                         }]

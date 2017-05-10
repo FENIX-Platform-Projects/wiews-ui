@@ -93,7 +93,8 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             type: 'tree',
                             default: DOWNLOAD_DV["1_filter-dd_filter_item_8"],
                             title: labels[Clang]['1_filter-dd_filter_item_8_title'],
-                            source: [{value: "20", label: labels[Clang]['1_filter-dd_filter_item_8_source1']}]
+                            clUid: "wiews_output_indicators",
+                            clCodes : ["20"]
                         },
                         {
                             id: 'dd_filter_item_9',
