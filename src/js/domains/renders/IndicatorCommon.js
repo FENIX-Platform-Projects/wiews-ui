@@ -255,7 +255,7 @@ define([
 
         if((filterConfig!=null)&&(typeof filterConfig != 'undefined')){
             var itemsArray = filterConfig.items;
-            var itemCount = 1, selectorConfig, id, type, defaultValue, title, choicesTitle, codelist, maxItems, source, max;
+            var itemCount = 1, selectorConfig, id, type, defaultValue, title, choicesTitle, codelist, codes, maxItems, source, max;
 
             itemsArray.forEach(function (item) {
 
@@ -265,6 +265,7 @@ define([
                 title = item.title;
                 choicesTitle = item.choicesTitle;
                 codelist = item.clUid;
+                codes = item.clCodes;
                 maxItems = item.maxItems;
                 max = item.max;
                 source = item.source;
@@ -311,12 +312,17 @@ define([
 
                         //Setting codelist for the selector
                         if((codelist!=null)&&(typeof codelist!= 'undefined')){
+                            selectorConfig.cl = {
+                                uid: codelist,
+                                codes: codes
+                            };
+                            /*
                             if((selectorConfig.cl!=null)&&(typeof selectorConfig.cl!= 'undefined')){
                                 selectorConfig.cl.uid = codelist;
+                            } else{
+
                             }
-                            else{
-                                selectorConfig.cl = {uid: codelist};
-                            }
+                            */
                         }
 
                         //Max number of element to select(only for dropdown)

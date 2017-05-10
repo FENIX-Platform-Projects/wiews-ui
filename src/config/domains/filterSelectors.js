@@ -11,7 +11,8 @@ define(
                     sort : true
                 },
                 cl: {
-                    uid: ""
+                    uid: "",
+                    codes: ""
                 },
                 template: {
                     title: ''

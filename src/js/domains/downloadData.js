@@ -79,7 +79,6 @@ define([
         $(this.el).html(indicatorFilterSection);
         $(indicatorFilterSection).append(showDashboardSection);
         $(indicatorFilterSection).append(indicatorDashboardSection);
-        debugger
 
         indicatorDashboardSection.hide();
     };
