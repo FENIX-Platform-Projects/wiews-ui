@@ -162,7 +162,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     "iteration",
                                     "value",
                                     "um",
-                                    "country",
                                     "element",
                                     "biologicalAccessionId",
                                     "stakeholder"
@@ -215,7 +214,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     "element" : null,
                                     "biologicalAccessionId" : null,
                                     "rank" : null,
-                                    "country" : null,
                                     "wiews_region" : null,
                                     "stakeholder" : null,
                                     "value" : null,
@@ -234,7 +232,106 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             }
                         }
                     ],
-                    downloadProcess : [
+                    downloadProcessTableData: [
+                        {
+                            "name": "wiews_area_filter",
+                            "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                            "rid" : { "uid" : "area_selection" },
+                            "result" : false,
+                            "parameters": {
+                                "filter" : {
+                                    "iso3": {
+                                        "codes": [
+                                            {
+                                                "uid": "ISO3",
+                                                "codes": DOWNLOAD_DV["1_filter-dd_filter_item_1"]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+
+                        {
+                            "sid": [ { "uid": "indicator20" }, { "uid": "area_selection" } ],
+                            "name": "filter",
+                            "parameters": {
+                                "columns": [
+                                    "domain",
+                                    "rank",
+                                    "wiews_region",
+                                    "indicator",
+                                    "element",
+                                    "biologicalAccessionId",
+                                    "iteration",
+                                    "stakeholder",
+                                    "value",
+                                    "um"
+                                ],
+                                "rows": {
+                                    "iteration": {
+                                        "codes": [
+                                            {
+                                                "uid": "wiews_iteration",
+                                                "codes": DOWNLOAD_DV["1_filter-vd_filter_item_9"]
+                                            }
+                                        ]
+                                    },
+                                    "element": {
+                                        "codes": [
+                                            {
+                                                "uid": "wiews_elements",
+                                                "codes": [ "ind", "nfp", "nfpa", "stk" ]
+                                            }
+                                        ]
+                                    },
+                                    "wiews_region" : {
+                                        "variable" : "required_countries"
+                                    }
+                                }
+                            }
+                        },
+
+                        {
+                            "name":"addcolumn",
+                            "index" : -2,
+                            "parameters":{
+                                "column":{
+                                    "dataType":"text",
+                                    "id":"indicator_label",
+                                    "title":{
+                                        "EN":"Indicator"
+                                    }
+                                },
+                                "value": ""
+                            }
+                        },
+
+                        {
+                            "name" : "select",
+                            "parameters" : {
+                                "values" : {
+                                    "iteration" : null,
+                                    "domain" : null,
+                                    "biologicalAccessionId" : null,
+                                    "rank" : null,
+                                    "wiews_region" : null,
+                                    "value" : null,
+                                    "um" : null,
+                                    "indicator_label" : "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_en || ')' else element_en end"
+                                }
+                            }
+                        },
+
+                        {
+                            "name": "order",
+                            "parameters": {
+                                "rank" : "ASC",
+                                "wiews_region" : "ASC"
+                            }
+                        }
+                    ],
+                    downloadProcessRawData : [
                         {
                         "name": "wiews_area_filter",
                         "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
@@ -242,27 +339,11 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         "result" : false,
                         "parameters": {
                             "filter" : {
-                                "m49": {
-                                    "codes": [
-                                        {
-                                            "uid": "wiews_m49_regions",
-                                            "codes": [ "WITC","150" ]
-                                        }
-                                    ]
-                                },
-                                "fao": {
-                                    "codes": [
-                                        {
-                                            "uid": "wiews_fao_region",
-                                            "codes": [ "5400" ]
-                                        }
-                                    ]
-                                },
                                 "iso3": {
                                     "codes": [
                                         {
                                             "uid": "ISO3",
-                                            "codes": [ "SSD","EGY" ]
+                                            "codes": DOWNLOAD_DV["1_filter-dd_filter_item_1"]
                                         }
                                     ]
                                 }
@@ -278,7 +359,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                         "codes": [
                                             {
                                                 "uid": "wiews_iteration",
-                                                "codes": [ "1" ]
+                                                "codes": DOWNLOAD_DV["1_filter-vd_filter_item_9"]
                                             }
                                         ]
                                     },
@@ -288,6 +369,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
                         }]
+
                 }
             },
             visualizeData: {

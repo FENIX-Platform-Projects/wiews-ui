@@ -30,7 +30,8 @@ define([
             vd_buttonMsg_1 : "vd_filter_button_1_msg",
             dd_button_1 : "dd_filter_button_1",
             dd_buttonMsg_1 : "dd_filter_button_1_msg",
-            dd_button_2 : "dd_filter_button_2"
+            dd_button_2 : "dd_filter_button_2",
+            dd_button_3 : "dd_filter_button_3"
         },
 
         dashboard_button : {
@@ -418,6 +419,12 @@ define([
             filter_button_2.on(s.event.BUTTON_CLICK, _.bind(self._DD_onClick_button2, this, {lang: this.lang, indicatorDashboardSection: indicatorDashboardSection}));
         }
 
+        var filter_button_3 = this.el.find('[data-button = "'+s.filter_button.dd_button_3+'"]');
+        var filter_div_msg_3 = this.el.find('[data-buttonMsg = "'+s.filter_button.dd_buttonMsg_1+'"]');
+        if((filter_button_3!=null)&&(typeof filter_button_3!='undefined')&&(filter_div_msg_3!=null)&&(typeof filter_div_msg_3!='undefined')){
+            filter_button_3.on(s.event.BUTTON_CLICK, _.bind(self._DD_onClick_button3, this, {lang: this.lang, indicatorDashboardSection: indicatorDashboardSection}));
+        }
+
         if((this.filter!=null)&&(typeof this.filter!= 'undefined')){
             this.filter.on('select', _.bind(self.onSelectFilter, self, {filterDivMsg_1: filter_div_msg_1}));
         }
@@ -455,10 +462,20 @@ define([
         var newDashboardConfig = this.indicatorProcesses.onClickButton2(values, this.dashboard_config, param);
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
         {
-            this._downloadTableData(newDashboardConfig);
+            this._downloadTableData(newDashboardConfig.downloadProcessTableData);
         }
     }
 
+    //Download  Tab Button 3
+    IndicatorCommon.prototype._DD_onClick_button3 = function (param) {
+
+        var values = this.filter.getValues();
+        var newDashboardConfig = this.indicatorProcesses.onClickButton3(values, this.dashboard_config, param);
+        if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
+        {
+            this._downloadTableData(newDashboardConfig.downloadProcessTableData);
+        }
+    }
 
     //Creation of data for the Bootstrap Table of the Download Tab
     IndicatorCommon.prototype._DD_getTableData = function (param, newDashboardConfig, filterValues) {
@@ -567,7 +584,7 @@ define([
     };
 
 
-    IndicatorCommon.prototype._downloadTableData = function (newDashboardConfig) {
+    IndicatorCommon.prototype._downloadTableData = function (newDashboardConfigProcess) {
 
         var flow_model = {
             "outConfig": {
@@ -575,10 +592,11 @@ define([
             },
             options : {
                 params : {
-                    maxSize : 2000000
+                    maxSize : 2000000,
+                    language: this.lang.toUpperCase()
                 },
             },
-            "flow":newDashboardConfig.downloadProcess
+            "flow": newDashboardConfigProcess
         }
 
         this.report.export({

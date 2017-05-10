@@ -106,7 +106,9 @@ define([
             button_1 : "1_dd_filter_button_1_msg",
             button_1_list : "1_dd_filter_button_1_list_msg",
             button_2 : "1_dd_filter_button_2_msg",
-            button_2_list : "1_dd_filter_button_2_list_msg"
+            button_2_list : "1_dd_filter_button_2_list_msg",
+            button_3 : "1_dd_filter_button_3_msg",
+            button_3_list : "1_dd_filter_button_3_list_msg"
         },
 
         error_type : {
@@ -217,6 +219,17 @@ define([
                     {
                         valid = true;
                     }
+                    else if(button_type==3)
+                    {
+                        if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_8)||(key==s.filter_items.item_10)))
+                        {
+                            valid = true;
+                        }
+                        else{
+                            valid = false;
+                            break;
+                        }
+                    }
                     else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_10)))
                     {
                         valid = true;
@@ -244,6 +257,14 @@ define([
                 }
                 else{
                     textMsg = labels[params.lang][s.buttonMsg.button_2];
+                }
+            }
+            else if(button_type == "3"){
+                if(s.filterDivMsg1_text == s.error_type.list){
+                    textMsg = labels[params.lang][s.buttonMsg.button_3_list];
+                }
+                else{
+                    textMsg = labels[params.lang][s.buttonMsg.button_3];
                 }
             }
             s.filterDivMsg1.html(textMsg)
@@ -337,7 +358,26 @@ define([
             $.extend(true, newDashboardConfig, dashboardConfig);
 
             if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
-                newDashboardConfig = self._download_element_configuration_update(newDashboardConfig, newValues, params);
+                newDashboardConfig = self._download_element_table_element_configuration_update(newDashboardConfig, newValues, params);
+            }
+        }
+
+        return newDashboardConfig;
+
+    };
+
+    IndicatorProcesses1.prototype.onClickButton3 = function (values, dashboardConfig, params) {
+
+        var newDashboardConfig =null;
+        var newValues = this._filterSelectionValidation(values, params, "3");
+        if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
+        {
+            var self = this;
+            newDashboardConfig ={};
+            $.extend(true, newDashboardConfig, dashboardConfig);
+
+            if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
+                newDashboardConfig = self._download_element_raw_data_configuration_update(newDashboardConfig, newValues, params);
             }
         }
 
@@ -514,13 +554,35 @@ define([
         return dashboardConfig;
     };
 
-    IndicatorProcesses1.prototype._download_element_configuration_update = function (dashboardConfig, values, params) {
+    IndicatorProcesses1.prototype._download_element_table_element_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
-        dashboardConfig.downloadProcess[0].parameters.filter = {};
-        dashboardConfig.downloadProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
-        dashboardConfig.downloadProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-        dashboardConfig.downloadProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
+        dashboardConfig.downloadProcessTableData[0].parameters.filter = {};
+        dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist] = s.geo_filter[codelist];
+        dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.downloadProcessTableData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
+        var codes = '';
+        if((values[s.filter_items.item_10]!=null)&&(typeof values[s.filter_items.item_10]!='undefined')&&(values[s.filter_items.item_10].length>0)){
+            codes= [ "ind", "nfp", "nfpa", "stk" ];
+        }
+        else{
+            codes= [ "ind", "nfp", "nfpa" ];
+        }
+        dashboardConfig.downloadProcessTableData[1].parameters.rows["element"].codes[0].codes = codes;
+
+        var indicator_label = "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_"+params.lang+" || ')' else element_"+params.lang+" end"
+        dashboardConfig.downloadProcessTableData[3].parameters.values["indicator_label"] = indicator_label;
+
+        return dashboardConfig;
+    };
+
+    IndicatorProcesses1.prototype._download_element_raw_data_configuration_update = function (dashboardConfig, values, params) {
+
+        var codelist = values[s.geo_property].codelist;
+        dashboardConfig.downloadProcessRawData[0].parameters.filter = {};
+        dashboardConfig.downloadProcessRawData[0].parameters.filter[codelist] = s.geo_filter[codelist];
+        dashboardConfig.downloadProcessRawData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.downloadProcessRawData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
 
         return dashboardConfig;
     };
