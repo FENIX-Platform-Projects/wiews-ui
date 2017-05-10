@@ -76,9 +76,11 @@ define([
         $(this.el).append(dashboardTemplate(labels[this.lang]));
         var indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dd_dashboard_category+'"]');
         var showDashboardSection = this.el.find('[data-section = "'+s.showDashboardSection+'"]');
-        $(this.el).append(indicatorFilterSection);
+        $(this.el).html(indicatorFilterSection);
         $(indicatorFilterSection).append(showDashboardSection);
         $(indicatorFilterSection).append(indicatorDashboardSection);
+        debugger
+
         indicatorDashboardSection.hide();
     };
 
