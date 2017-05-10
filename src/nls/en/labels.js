@@ -59,7 +59,9 @@ define(function () {
     "1_filter-dd_filter_item_12_choicesTitle4" : "Null Values",
     "filter-vd_filter_button_1_title" : "Show",
     "filter-dd_filter_button_1_title" : "Show Data",
-    "filter-dd_filter_button_2_title" : "Download Data",
+    "filter-dd_filter_button_title" : "Download Data",
+    "filter-dd_filter_button_2_title" : "Raw Data",
+    "filter-dd_filter_button_3_title" : "Table Data",
 
     "1_filter-dd_filter_item_8_source1" : "Number of accessions conserved ex situ under medium or long-term conditions",
     "1_filter-dd_filter_item_10_source1" : "Stakeholders",

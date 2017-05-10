@@ -42,7 +42,7 @@ module.exports = sections.map(function (section) {
         module: {
             loaders: [
                 isProduction(
-                    {test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "csss-loader")},
+                    {test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader")},
                     {test: /\.css$/, loader: "style-loader!css-loader"}
                 ),
                 {test: /\.hbs$/, loader: "handlebars-loader"},

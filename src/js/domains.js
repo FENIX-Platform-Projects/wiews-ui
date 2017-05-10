@@ -155,13 +155,13 @@ define([
         //SANDBOXED BOOTSTRAP
         require("../css/sandboxed-bootstrap.css");
         //Bootstrap
-        //require('bootstrap/dist/css/bootstrap.css');
+        //require('../../node_modules/bootstrap/dist/css/bootstrap.css');
         //dropdown selector
         require("../../node_modules/selectize/dist/css/selectize.bootstrap3.css");
 
 
         //material icons
-        require("../../node_modules/material-design-icons/iconfont/material-icons.css");
+       // require("../../node_modules/material-design-icons/iconfont/material-icons.css");
 
         require("../../node_modules/leaflet/dist/leaflet.css");
 
