@@ -453,7 +453,25 @@
 
   .fixed-table-pagination .btn-default {background: #657b8a !important;}
 
+  /* ---------------------------------- */
+
+  .dropdown-menu {top: -67px; left: 8%; box-shadow: none; border: none; border-radius: none; background: none; font-size:0.95em;}
+  .dropdown-menu button {display: block; background: #5cb85c; border: none; color: #ffffff; font-family: inherit; font-size: 1em; margin-bottom: 1px; padding: 6px; width: 104px;}
+  .dropdown-menu button:hover {box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15); opacity: 0.9;}
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
 
 .slider_container{
   position: relative;
