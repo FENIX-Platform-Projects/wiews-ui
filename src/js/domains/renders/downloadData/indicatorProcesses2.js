@@ -137,7 +137,6 @@ define([
             item_9 : "dd_filter_item_9",
             item_10 : "dd_filter_item_10",
             item_11 : "dd_filter_item_11",
-            item_12 : "dd_filter_item_12",
             tabItem_1 : "dd_filter_item_tab_1",
             tabItem_4 : "dd_filter_item_tab_4_1",
             tabItem_7 : "dd_filter_item_tab_7_1"
@@ -221,7 +220,7 @@ define([
                     }
                     else if(button_type==3)
                     {
-                        if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_8)||(key==s.filter_items.item_10)))
+                        if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_8)))
                         {
                             valid = true;
                         }
@@ -230,7 +229,7 @@ define([
                             break;
                         }
                     }
-                    else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_10)))
+                    else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)))
                     {
                         valid = true;
                     }
@@ -424,8 +423,8 @@ define([
     IndicatorProcesses1.prototype.tableDataCreation = function (param, columnsMap, data, filterValues) {
 
         var separatorValue = '';
-        if((filterValues.values!= null)&&(typeof filterValues.values!= 'undefined')&&(filterValues.values[s.filter_items.item_11]!= null)&&(typeof filterValues.values[s.filter_items.item_11]!= 'undefined'))
-            separatorValue = filterValues.values[s.filter_items.item_11][0];
+        if((filterValues.values!= null)&&(typeof filterValues.values!= 'undefined')&&(filterValues.values[s.filter_items.item_10]!= null)&&(typeof filterValues.values[s.filter_items.item_10]!= 'undefined'))
+            separatorValue = filterValues.values[s.filter_items.item_10][0];
         else
             separatorValue = '1';
         var tableData = [];
@@ -539,14 +538,6 @@ define([
         dashboardConfig.tableProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.tableProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
         dashboardConfig.tableProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-        var codes = '';
-        if((values[s.filter_items.item_10]!=null)&&(typeof values[s.filter_items.item_10]!='undefined')&&(values[s.filter_items.item_10].length>0)){
-            codes= [ "ind", "nfp", "nfpa", "stk" ];
-        }
-        else{
-            codes= [ "ind", "nfp", "nfpa" ];
-        }
-        dashboardConfig.tableProcess[1].parameters.rows["element"].codes[0].codes = codes;
 
         var indicator_label = "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_"+params.lang+" || ')' else element_"+params.lang+" end"
         dashboardConfig.tableProcess[3].parameters.values["indicator_label"] = indicator_label;
@@ -561,14 +552,6 @@ define([
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
         dashboardConfig.downloadProcessTableData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-        var codes = '';
-        if((values[s.filter_items.item_10]!=null)&&(typeof values[s.filter_items.item_10]!='undefined')&&(values[s.filter_items.item_10].length>0)){
-            codes= [ "ind", "nfp", "nfpa", "stk" ];
-        }
-        else{
-            codes= [ "ind", "nfp", "nfpa" ];
-        }
-        dashboardConfig.downloadProcessTableData[1].parameters.rows["element"].codes[0].codes = codes;
 
         var indicator_label = "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_"+params.lang+" || ')' else element_"+params.lang+" end"
         dashboardConfig.downloadProcessTableData[3].parameters.values["indicator_label"] = indicator_label;
