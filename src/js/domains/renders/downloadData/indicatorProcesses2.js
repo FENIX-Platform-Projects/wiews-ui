@@ -305,7 +305,6 @@ define([
         if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.listType!=null)&&(typeof newValues.listType!="undefined")&&(newValues.listType.length<=0)){
             s.filterDivMsg1_text = s.error_type.list;
         }
-        console.log(newValues)
 
         return newValues.values;
     }
@@ -341,8 +340,6 @@ define([
                 newDashboardConfig = self._table_element_configuration_update(newDashboardConfig, newValues, params);
             }
         }
-        console.log('New teble')
-        console.log(newDashboardConfig)
 
         return newDashboardConfig;
 
@@ -362,8 +359,6 @@ define([
                 newDashboardConfig = self._download_element_table_element_configuration_update(newDashboardConfig, newValues, params);
             }
         }
-        console.log('New download table')
-        console.log(newDashboardConfig)
 
         return newDashboardConfig;
 
@@ -383,9 +378,6 @@ define([
                 newDashboardConfig = self._download_element_raw_data_configuration_update(newDashboardConfig, newValues, params);
             }
         }
-
-        console.log('New download raw')
-        console.log(newDashboardConfig)
 
         return newDashboardConfig;
 

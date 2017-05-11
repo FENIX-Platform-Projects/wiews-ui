@@ -99,7 +99,9 @@ define([
                     1 : 'wiews_cgrfa',
                     2 : 'wiews_itpgrfa'
                 }
-            }
+            },
+            ind_a : 'ind_a',
+            ind_t : 'ind_t'
         },
 
         buttonMsg : {
@@ -130,6 +132,7 @@ define([
             item_7_1 : "vd_filter_item_7_1",
             item_7_2 : "vd_filter_item_7_2",
             item_8 : "vd_filter_item_8",
+            item_9 : "vd_filter_item_9",
             tabItem_1 : "vd_filter_item_tab_1",
             tabItem_4 : "vd_filter_item_tab_4_1",
             tabItem_7 : "vd_filter_item_tab_7_1"
@@ -173,7 +176,6 @@ define([
 
     IndicatorProcesses1.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
-        console.log(item_to_show_prefix, item_to_show, codelistMaxIndex)
         var index = 1;
         for(index = 1; index<= codelistMaxIndex; index++) {
             var indicatorFilterSection = this.el.find('[data-selector = "'+item_to_show_prefix+'_'+index+'"]');
@@ -234,7 +236,6 @@ define([
             console.log("true")
         }
 
-        console.log(newValues)
         return newValues;
     }
 
@@ -263,7 +264,6 @@ define([
         if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.listType!=null)&&(typeof newValues.listType!="undefined")&&(newValues.listType.length<=0)){
             s.filterDivMsg1_text = s.error_type.list;
         }
-        console.log(newValues)
 
         return newValues.values;
     }
@@ -373,11 +373,8 @@ define([
 
     IndicatorProcesses1.prototype.updateVariables = function (obj) {
 
-        console.log(obj)
         this.filter = obj.filter;
         this.filter_host_config = obj.filter_host_config;
-        console.log(this.filter_host_config)
-        console.log(this.filter_host_config.geoSelector)
         if((this.filter_host_config!=null)&&(typeof this.filter_host_config!= 'undefined')&&
             (this.filter_host_config.geoSelector!=null)&&(typeof this.filter_host_config.geoSelector!= 'undefined')&&
             (this.filter_host_config.geoSelector.default!=null)&&(typeof this.filter_host_config.geoSelector.default!= 'undefined')){
@@ -449,7 +446,17 @@ define([
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_8];
+            dashboardConfig.items[itemCount].postProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_8];
+
+            var element = [];
+            if(values[s.filter_items.item_9][0]=='1')
+            {
+                element[0] = s.choices_code.ind_a;
+            }
+            else{
+                element[0] = s.choices_code.ind_t;
+            }
+            dashboardConfig.items[itemCount].postProcess[1].parameters.rows["element"].codes[0].codes = element;
             newDashboardConfig = dashboardConfig;
         }
 
@@ -458,43 +465,8 @@ define([
 
     IndicatorProcesses1.prototype._element2_configuration_update = function (dashboardConfig, values, itemCount) {
 
-        //First Chart
+        //Map
         var newDashboardConfig = '';
-
-        if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
-            var codelist = values[s.geo_property].codelist;
-            var listType = values[s.geo_property].listType;
-
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
-            if($.inArray(s.choices_code.total, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = false;
-            }
-            if($.inArray(s.choices_code.list, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = false;
-            }
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_8];
-            newDashboardConfig = dashboardConfig;
-        }
-
-        return newDashboardConfig;
-    };
-
-    IndicatorProcesses1.prototype._element3_configuration_update = function (dashboardConfig, values, itemCount) {
-
-        //Second Chart
-        var newDashboardConfig = '';
-
         if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
             //newDashboardConfig = dashboardConfig.items[0].postProcess
             var codelist = values[s.geo_property].codelist;
@@ -518,7 +490,43 @@ define([
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_8];
+            dashboardConfig.items[itemCount].postProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_8];
+
+            var element = [];
+            if(values[s.filter_items.item_9][0]=='1')
+            {
+                element[0] = s.choices_code.ind_a;
+            }
+            else{
+                element[0] = s.choices_code.ind_t;
+            }
+            dashboardConfig.items[itemCount].postProcess[1].parameters.rows["element"].codes[0].codes = element;
+            newDashboardConfig = dashboardConfig;
+        }
+
+        return newDashboardConfig;
+
+    };
+
+    IndicatorProcesses1.prototype._element3_configuration_update = function (dashboardConfig, values, itemCount) {
+
+        //First Chart
+        var newDashboardConfig = '';
+        if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
+            //newDashboardConfig = dashboardConfig.items[0].postProcess
+
+            dashboardConfig.items[itemCount].postProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_8];
+
+            var element = [];
+            if(values[s.filter_items.item_9][0]=='1')
+            {
+                element[0] = s.choices_code.ind_a;
+            }
+            else{
+                element[0] = s.choices_code.ind_t;
+            }
+            dashboardConfig.items[itemCount].postProcess[1].parameters.rows["element"].codes[0].codes = element;
+            dashboardConfig.items[itemCount].postProcess[5].parameters.rows["element"].codes[0].codes = element;
             newDashboardConfig = dashboardConfig;
         }
 
@@ -527,32 +535,24 @@ define([
 
     IndicatorProcesses1.prototype._element4_configuration_update = function (dashboardConfig, values, itemCount) {
 
-        //Third Chart
+        //Second Chart
         var newDashboardConfig = '';
-
         if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
             //newDashboardConfig = dashboardConfig.items[0].postProcess
-            var codelist = values[s.geo_property].codelist;
-            var listType = values[s.geo_property].listType;
 
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
-            if($.inArray(s.choices_code.total, listType )!=-1)
+            dashboardConfig.items[itemCount].postProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_8];
+
+            var element = [];
+            if(values[s.filter_items.item_9][0]=='1')
             {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = true;
+                element[0] = s.choices_code.ind_a;
             }
             else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = false;
+                element[0] = s.choices_code.ind_t;
             }
-            if($.inArray(s.choices_code.list, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = false;
-            }
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_8];
+            dashboardConfig.items[itemCount].postProcess[1].parameters.rows["element"].codes[0].codes = element;
+            dashboardConfig.items[itemCount].postProcess[3].parameters.rows["element"].codes[0].codes = element;
+            dashboardConfig.items[itemCount].postProcess[3].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_8];
             newDashboardConfig = dashboardConfig;
         }
 

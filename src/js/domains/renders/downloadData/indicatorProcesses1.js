@@ -306,7 +306,6 @@ define([
         if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.listType!=null)&&(typeof newValues.listType!="undefined")&&(newValues.listType.length<=0)){
             s.filterDivMsg1_text = s.error_type.list;
         }
-        console.log(newValues)
 
         return newValues.values;
     }

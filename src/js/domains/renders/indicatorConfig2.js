@@ -515,7 +515,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_elements",
-                                                        "codes": [ "ind_a" ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_9_code"]
                                                     }
                                                 ]
                                             }
@@ -639,7 +639,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_elements",
-                                                        "codes": [ "ind_a" ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_9_code"]
                                                     }
                                                 ]
                                             }
@@ -795,9 +795,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_elements",
-                                                        "codes": [
-                                                            "ind_a"
-                                                        ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_9_code"]
                                                     }
                                                 ]
                                             }
@@ -895,9 +893,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_elements",
-                                                        "codes": [
-                                                            "ind_a"
-                                                        ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_9_code"]
                                                     }
                                                 ]
                                             }
@@ -1111,7 +1107,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_elements",
-                                                        "codes": [ "ind_t" ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_9_code"]
                                                     }
                                                 ]
                                             }
@@ -1122,8 +1118,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     }
 
                                 },
-
-
                                 {
                                     "name": "wiews_area_filter",
                                     "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
@@ -1184,7 +1178,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_elements",
-                                                        "codes": [ "ind_t" ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_9_code"]
                                                     }
                                                 ]
                                             }
