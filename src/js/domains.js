@@ -16,8 +16,8 @@ define([
     var Clang = C.lang.toLowerCase();
 
     //This code has to be passed by Typo3
-    var selected = {code: "20"};
-   //  var selected = {code: "2"};
+   // var selected = {code: "20"};
+     var selected = {code: "2"};
 
     var s = {
         EL: "#domains",

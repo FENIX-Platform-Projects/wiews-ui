@@ -188,6 +188,11 @@ define([
 
     }
 
+    IndicatorProcesses1.prototype.disable_element = function () {
+
+        $('[data-selector = "'+s.filter_items.item_12+'"]').attr('disabled','disabled');
+    }
+
     IndicatorProcesses1.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
         var index = 1;

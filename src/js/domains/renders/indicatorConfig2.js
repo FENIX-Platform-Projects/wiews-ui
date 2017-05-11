@@ -1,5 +1,5 @@
-define(["highcharts", "../../../config/config", "../../../config/domains/visualizeDataDefaultValues", "../../../config/domains/downloadDataDefaultValues", "../../../nls/labels"],
-    function (Highcharts, C, VISUALIZE_DV, DOWNLOAD_DV, labels) {
+define(["jquery","highcharts", "../../../config/config", "../../../config/domains/visualizeDataDefaultValues", "../../../config/domains/downloadDataDefaultValues", "../../../nls/labels"],
+    function ($, Highcharts, C, VISUALIZE_DV, DOWNLOAD_DV, labels) {
 
         "use strict";
 
@@ -674,13 +674,31 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             config: {
                                 type: "column",
                                 x: ["wiews_region"], //x axis
-                                //series: ["data"], // series
                                 series: ["indicator_type"],
                                 y: ["value"],//Y dimension
                                 aggregationFn: {"value": "sum"},
                                 //useDimensionLabelsIfExist: true,// || default raw else fenixtool
 
                                 config: {
+                                    chart: {
+                                        marginTop: 50,
+                                        events: {
+                                            load: function(event) {
+                                                var _that = this;
+
+                                               $.each(_that.series, function (i, serie) {
+
+                                                   console.log(serie)
+                                                   if(serie.name == "Varieties"){
+                                                       serie.update({
+                                                           yAxis:1, // reset the order of series ... Total ODA first,
+                                                           type:'line'
+                                                       })
+                                                   }
+                                                });
+                                            }
+                                        }
+                                    },
                                     tooltip: {
                                         shared: true
                                     },
@@ -692,11 +710,11 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     },
                                     yAxis: [{ // Primary yAxis
                                         title: {
-                                            text: 'Number of Varieties'
+                                            text: labels[Clang]['2_vd_dashboard_item_3_series_yAxis_1_title']
                                         }
                                     }, { // Secondary yAxis
                                         title: {
-                                            text: 'Number of Species'
+                                            text: labels[Clang]['2_vd_dashboard_item_3_series_yAxis_2_title']
                                         },
                                         opposite: true
                                     }],
@@ -1001,13 +1019,31 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             config: {
                                 type: "column",
                                 x: ["wiews_region_"+ClangUp], //x axis
-                                //series: ["data"], // series
-                                series: ["indicator_type"],
+                                series: ["indicator_type"],// series
                                 y: ["value"],//Y dimension
                                 aggregationFn: {"value": "sum"},
                                 //useDimensionLabelsIfExist: true,// || default raw else fenixtool
 
                                 config: {
+                                    chart: {
+                                        marginTop: 50,
+                                        events: {
+                                            load: function(event) {
+                                                var _that = this;
+
+                                                $.each(_that.series, function (i, serie) {
+
+                                                    console.log(serie)
+                                                    if(serie.name == "Varieties"){
+                                                        serie.update({
+                                                            yAxis:1, // reset the order of series ... Total ODA first,
+                                                            type:'line'
+                                                        })
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    },
                                     tooltip: {
                                         shared: true
                                     },
@@ -1019,11 +1055,11 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     },
                                     yAxis: [{ // Primary yAxis
                                         title: {
-                                            text: 'Number of Varieties'
+                                            text: labels[Clang]['2_vd_dashboard_item_4_series_yAxis_1_title']
                                         }
                                     }, { // Secondary yAxis
                                         title: {
-                                            text: 'Number of Species'
+                                            text: labels[Clang]['2_vd_dashboard_item_4_series_yAxis_2_title']
                                         },
                                         opposite: true
                                     }],

@@ -149,7 +149,7 @@ define([
         filterDivMsg1_text : ''
     }
 
-    function IndicatorProcesses1(o) {
+    function IndicatorProcesses2(o) {
 
         $.extend(true, this, defaultOptions, o);
 
@@ -163,18 +163,18 @@ define([
         return this;
     }
 
-    IndicatorProcesses1.prototype._initVariables = function () {
+    IndicatorProcesses2.prototype._initVariables = function () {
 
         //Setting Default Tab and Item
         s.filterDivMsg1 = this.filterDivMsg1;
     };
 
-    IndicatorProcesses1.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
+    IndicatorProcesses2.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
         this._renderGeoSelection(item_to_show_prefix, item_to_show, codelistMaxIndex);
     }
 
-    IndicatorProcesses1.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
+    IndicatorProcesses2.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
         var index = 1;
         for(index = 1; index<= codelistMaxIndex; index++) {
@@ -189,7 +189,7 @@ define([
         }
     }
 
-    IndicatorProcesses1.prototype._filterSelectionValidation = function (values, params) {
+    IndicatorProcesses2.prototype._filterSelectionValidation = function (values, params) {
 
         var valid = false, newValues = '', textMsg = '';
 
@@ -239,7 +239,7 @@ define([
         return newValues;
     }
 
-    IndicatorProcesses1.prototype._geoItemSelectionValidation = function (values) {
+    IndicatorProcesses2.prototype._geoItemSelectionValidation = function (values) {
 
         s.filterDivMsg1_text = '';
         var paramsForGeoValidation = {};
@@ -271,7 +271,7 @@ define([
 
     //In this way this action is indipendent by the number of items in the configuration
     //Test it removing some items in the configuration
-    IndicatorProcesses1.prototype.onClickButton = function (dashboardConfig, values, params) {
+    IndicatorProcesses2.prototype.onClickButton = function (dashboardConfig, values, params) {
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params);
@@ -297,7 +297,7 @@ define([
         return newDashboardConfig;
     };
 
-    IndicatorProcesses1.prototype.bindEventListener = function () {
+    IndicatorProcesses2.prototype.bindEventListener = function () {
         var self = this;
         var anchor;
         $( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function( evt ) {
@@ -332,7 +332,7 @@ define([
         });
     }
 
-    IndicatorProcesses1.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
+    IndicatorProcesses2.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
         var filterDivMsg1 = hostParam.filterDivMsg_1;
         if((filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined'))
         {
@@ -371,7 +371,7 @@ define([
         return true;
     }
 
-    IndicatorProcesses1.prototype.updateVariables = function (obj) {
+    IndicatorProcesses2.prototype.updateVariables = function (obj) {
 
         this.filter = obj.filter;
         this.filter_host_config = obj.filter_host_config;
@@ -401,7 +401,7 @@ define([
         }
     }
 
-    IndicatorProcesses1.prototype._element_configuration_update = function (dashboardConfig, element, values, itemCount) {
+    IndicatorProcesses2.prototype._element_configuration_update = function (dashboardConfig, element, values, itemCount) {
 
         switch(element){
             case s.dashboard_items.item_1:
@@ -419,7 +419,7 @@ define([
         }
     };
 
-    IndicatorProcesses1.prototype._element1_configuration_update = function (dashboardConfig, values, itemCount) {
+    IndicatorProcesses2.prototype._element1_configuration_update = function (dashboardConfig, values, itemCount) {
 
         //Map
         var newDashboardConfig = '';
@@ -463,7 +463,7 @@ define([
         return newDashboardConfig;
     };
 
-    IndicatorProcesses1.prototype._element2_configuration_update = function (dashboardConfig, values, itemCount) {
+    IndicatorProcesses2.prototype._element2_configuration_update = function (dashboardConfig, values, itemCount) {
 
         //Map
         var newDashboardConfig = '';
@@ -508,7 +508,7 @@ define([
 
     };
 
-    IndicatorProcesses1.prototype._element3_configuration_update = function (dashboardConfig, values, itemCount) {
+    IndicatorProcesses2.prototype._element3_configuration_update = function (dashboardConfig, values, itemCount) {
 
         //First Chart
         var newDashboardConfig = '';
@@ -533,7 +533,7 @@ define([
         return newDashboardConfig;
     };
 
-    IndicatorProcesses1.prototype._element4_configuration_update = function (dashboardConfig, values, itemCount) {
+    IndicatorProcesses2.prototype._element4_configuration_update = function (dashboardConfig, values, itemCount) {
 
         //Second Chart
         var newDashboardConfig = '';
@@ -563,7 +563,7 @@ define([
      * pub/sub
      * @return {Object} component instance
      */
-    IndicatorProcesses1.prototype.on = function (channel, fn, context) {
+    IndicatorProcesses2.prototype.on = function (channel, fn, context) {
         var _context = context || this;
         if (!this.channels[channel]) {
             this.channels[channel] = [];
@@ -572,7 +572,7 @@ define([
         return this;
     };
 
-    IndicatorProcesses1.prototype._trigger = function (channel) {
+    IndicatorProcesses2.prototype._trigger = function (channel) {
 
         if (!this.channels[channel]) {
             return false;
@@ -586,6 +586,6 @@ define([
         return this;
     };
 
-    return IndicatorProcesses1;
+    return IndicatorProcesses2;
 
 });

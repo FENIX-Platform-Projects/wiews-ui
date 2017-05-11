@@ -162,7 +162,7 @@ define([
         filterDivMsg1_text : ''
     }
 
-    function IndicatorProcesses1(o) {
+    function IndicatorProcesses2(o) {
 
         $.extend(true, this, defaultOptions, o);
 
@@ -176,18 +176,23 @@ define([
         return this;
     }
 
-    IndicatorProcesses1.prototype._initVariables = function () {
+    IndicatorProcesses2.prototype._initVariables = function () {
 
         s.filterDivMsg1 = this.filterDivMsg1;
     };
 
-    IndicatorProcesses1.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
+    IndicatorProcesses2.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
         this._renderGeoSelection(item_to_show_prefix, item_to_show, codelistMaxIndex);
 
     }
 
-    IndicatorProcesses1.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
+    IndicatorProcesses2.prototype.disable_element = function () {
+
+        $('[data-selector = "'+s.filter_items.item_11+'"]').attr('disabled','disabled');
+    };
+
+    IndicatorProcesses2.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
         var index = 1;
         for(index = 1; index<= codelistMaxIndex; index++) {
@@ -202,7 +207,7 @@ define([
         }
     }
 
-    IndicatorProcesses1.prototype._filterSelectionValidation = function (values, params, button_type) {
+    IndicatorProcesses2.prototype._filterSelectionValidation = function (values, params, button_type) {
 
         var valid = false, newValues = '', textMsg = '';
 
@@ -280,7 +285,7 @@ define([
         return newValues;
     }
 
-    IndicatorProcesses1.prototype._geoItemSelectionValidation = function (values) {
+    IndicatorProcesses2.prototype._geoItemSelectionValidation = function (values) {
 
         s.filterDivMsg1_text = '';
         var paramsForGeoValidation = {};
@@ -309,7 +314,7 @@ define([
         return newValues.values;
     }
 
-    IndicatorProcesses1.prototype.onClickButton1 = function (values, dashboardConfig, params) {
+    IndicatorProcesses2.prototype.onClickButton1 = function (values, dashboardConfig, params) {
 
         $('[data-field = "1"]').attr('data-field', s.table_columns.domain);
         $('[data-field = "'+s.table_columns.domain+'"]').text(dashboardConfig.columntableName[0]);
@@ -345,7 +350,7 @@ define([
 
     };
 
-    IndicatorProcesses1.prototype.onClickButton2 = function (values, dashboardConfig, params) {
+    IndicatorProcesses2.prototype.onClickButton2 = function (values, dashboardConfig, params) {
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params, "2");
@@ -364,7 +369,7 @@ define([
 
     };
 
-    IndicatorProcesses1.prototype.onClickButton3 = function (values, dashboardConfig, params) {
+    IndicatorProcesses2.prototype.onClickButton3 = function (values, dashboardConfig, params) {
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params, "3");
@@ -384,7 +389,7 @@ define([
     };
 
 
-        IndicatorProcesses1.prototype.bindEventListener = function () {
+        IndicatorProcesses2.prototype.bindEventListener = function () {
         var self = this;
         var anchor;
         $( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function( evt ) {
@@ -419,7 +424,7 @@ define([
         });
     }
 
-    IndicatorProcesses1.prototype.tableDataCreation = function (param, columnsMap, data, filterValues) {
+    IndicatorProcesses2.prototype.tableDataCreation = function (param, columnsMap, data, filterValues) {
 
         var separatorValue = '';
         if((filterValues.values!= null)&&(typeof filterValues.values!= 'undefined')&&(filterValues.values[s.filter_items.item_10]!= null)&&(typeof filterValues.values[s.filter_items.item_10]!= 'undefined'))
@@ -461,7 +466,7 @@ define([
         return tableData;
     }
 
-    IndicatorProcesses1.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
+    IndicatorProcesses2.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
         var filterDivMsg1 = hostParam.filterDivMsg_1;
         if((filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined'))
         {
@@ -500,7 +505,7 @@ define([
         return true;
     }
 
-    IndicatorProcesses1.prototype.updateVariables = function (obj) {
+    IndicatorProcesses2.prototype.updateVariables = function (obj) {
 
         this.filter = obj.filter;
         this.filter_host_config = obj.filter_host_config;
@@ -530,7 +535,7 @@ define([
         }
     }
 
-    IndicatorProcesses1.prototype._table_element_configuration_update = function (dashboardConfig, values, params) {
+    IndicatorProcesses2.prototype._table_element_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
         dashboardConfig.tableProcess[0].parameters.filter = {};
@@ -542,7 +547,7 @@ define([
         return dashboardConfig;
     };
 
-    IndicatorProcesses1.prototype._download_element_table_element_configuration_update = function (dashboardConfig, values, params) {
+    IndicatorProcesses2.prototype._download_element_table_element_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
         dashboardConfig.downloadProcessTableData[0].parameters.filter = {};
@@ -554,7 +559,7 @@ define([
         return dashboardConfig;
     };
 
-    IndicatorProcesses1.prototype._download_element_raw_data_configuration_update = function (dashboardConfig, values, params) {
+    IndicatorProcesses2.prototype._download_element_raw_data_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
         dashboardConfig.downloadProcessRawData[0].parameters.filter = {};
@@ -569,7 +574,7 @@ define([
      * pub/sub
      * @return {Object} component instance
      */
-    IndicatorProcesses1.prototype.on = function (channel, fn, context) {
+    IndicatorProcesses2.prototype.on = function (channel, fn, context) {
         var _context = context || this;
         if (!this.channels[channel]) {
             this.channels[channel] = [];
@@ -578,7 +583,7 @@ define([
         return this;
     };
 
-    IndicatorProcesses1.prototype._trigger = function (channel) {
+    IndicatorProcesses2.prototype._trigger = function (channel) {
 
         if (!this.channels[channel]) {
             return false;
@@ -592,6 +597,6 @@ define([
         return this;
     };
 
-    return IndicatorProcesses1;
+    return IndicatorProcesses2;
 
 });

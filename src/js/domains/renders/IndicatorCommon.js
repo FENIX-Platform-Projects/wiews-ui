@@ -611,6 +611,11 @@ define([
         });
     };
 
+    IndicatorCommon.prototype.disable_element = function () {
+
+        this.indicatorProcesses.disable_element();
+    };
+
     /**
      * pub/sub
      * @return {Object} component instance

@@ -168,8 +168,9 @@ define([
 
         this.filter.on(s.events.filterComponent.READY, _.bind(self._renderIndicator, self));
 
-        //OUTPUT FORMATTING OPTIONS DISABLED
-        $("#dd_filter_item_tab_12").attr('disabled','disabled');
+        indicatorCommon.disable_element();
+        // //OUTPUT FORMATTING OPTIONS DISABLED
+
     }
 
     DownloadData.prototype._getIndicatorConfig = function () {
