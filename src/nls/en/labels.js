@@ -150,6 +150,13 @@ define(function () {
         "2_vd_dashboard_item_3_uid": "Indicator2",
         "2_vd_dashboard_item_4_uid": "Indicator2",
 
+        "2_dd_table_title_col_1": "Domain",
+        "2_dd_table_title_col_2": "Country",
+        "2_dd_table_title_col_3": "Element",
+        "2_dd_table_title_col_4": "Indicator and Rating",
+        "2_dd_table_title_col_5": "Period",
+        "2_dd_table_title_col_6": "Value",
+
 
         // Indicator 3
         "3_vd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for each selector.",
