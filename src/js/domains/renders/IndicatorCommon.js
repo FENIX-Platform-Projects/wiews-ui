@@ -145,6 +145,7 @@ define([
                         //Container title
                         if((itemContainerConfig.title!= null)&&(typeof itemContainerConfig.title!= 'undefined')){
                             if((itemContainerConfig.title.text!= null)&&(typeof itemContainerConfig.title.text!= 'undefined')){
+                                console.log('[data-itemContainerTitle = "vd_dashboard_item_container_title_'+itemCount+'"]')
                                 elem = indicatorSection.find('[data-itemContainerTitle = "vd_dashboard_item_container_title_'+itemCount+'"]');
                                 if((elem!= null)&&(typeof elem!= 'undefined')){
                                     elem.html(itemContainerConfig.title.text);

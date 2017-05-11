@@ -95,6 +95,7 @@ define(function () {
         "2_filter-vd_filter_item_4_1_title": "REGIONS",
         "2_filter-vd_filter_item_7_title": "SPECIAL GROUPS",
         "2_filter-vd_filter_item_8_title": "PERIODS",
+        "2_filter-vd_filter_item_9_title": "FORMULA",
         "2_filter-vd_filter_item_2_choicesTitle1": "FAO",
         "2_filter-vd_filter_item_2_choicesTitle2": "M49",
         "2_filter-vd_filter_item_2_choicesTitle3": "SDG",
@@ -105,6 +106,8 @@ define(function () {
         "2_filter-vd_filter_item_5_choicesTitle2": "ITPGRFA",
         "2_filter-vd_filter_item_6_choicesTitle1": "Total",
         "2_filter-vd_filter_item_6_choicesTitle2": "List",
+        "2_filter-vd_filter_item_9_choicesTitle1": "Total",
+        "2_filter-vd_filter_item_9_choicesTitle1": "Average",
 
         "2_dd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
         "2_dd_filter_button_1_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",

@@ -158,11 +158,13 @@ define([
         var self = this, increment = 0, percent = Math.round(100 / dashboardConf.items.length);
 
         this.dashboard.on(s.events.dashboardComponent.READY, function () {
+            console.log("DASHBOARD READY")
             self.progressBar.finish();
             self._renderIndicator(dashboardConf, filterHostConfig);
         });
 
         this.dashboard.on(s.events.dashboardComponent.ITEM_READY, function (item) {
+            console.log("ITEM READY")
             if((typeof item != 'undefined')&&(item != null)&&(typeof item.model != 'undefined')&&(item.model != null)&&(typeof item.model.metadata != 'undefined')&&(item.model.metadata != null)&&(typeof item.model.data != 'undefined')&&(item.model.data != null)){
                 var itemId = item.id;
                 self.models[itemId] = {metadata : item.model.metadata, data : item.model.data};
@@ -206,6 +208,7 @@ define([
     //The Dashoboard is created first time by configuration and everytime Show button is pressed
     VisualizeData.prototype._renderDashboard = function (dashboardConfig) {
         // Build new dashboard
+        console.log(dashboardConfig)
         this.dashboard = new Dashboard(
             dashboardConfig
         );

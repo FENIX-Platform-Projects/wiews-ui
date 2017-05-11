@@ -394,154 +394,269 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             title: labels[Clang]['2_filter-vd_filter_item_8_title'],
                             clUid: "wiews_iteration",
                             max: 1
-                        }]
+                        },
+                        {
+                            id: 'vd_filter_item_9',
+                            type: 'radio',
+                            default: VISUALIZE_DV["2_filter-vd_filter_item_9"],
+                            title: labels[Clang]['2_filter-vd_filter_item_9_title'],
+                            choicesTitle: [labels[Clang]["2_filter-vd_filter_item_9_choicesTitle1"], labels[Clang]["2_filter-vd_filter_item_9_choicesTitle2"]]
+                        },]
                 },
                 dashboard: {
 
                     uid: "VisualizaDataDashboard",
                     items: [
-                        // {
-                        //     //Average annual growth rate 010103
-                        //     id: "vd_dashboard_item_1", //ref [data-item=':id'] // 010103  Average annual growth rate
-                        //     type: "map", //chart || map || olap,
-                        //     hostConfig: {
-                        //         itemContainer: {
-                        //             class: 'fs-map panel panel-default fs-map hoverable',
-                        //             height : '400px',
-                        //             title: {
-                        //                 text: labels[Clang]['2_vd_dashboard_item_1_title']
-                        //             },
-                        //             buttons: {
-                        //                 export: {
-                        //                     show: true //Default= true
-                        //                 }
-                        //             },
-                        //             footer: {
-                        //                 text: labels[Clang]['2_vd_dashboard_item_1_footer']
-                        //             }
-                        //         }
-                        //     },
-                        //     //This is used for the export button action
-                        //     uid: labels[Clang]['2_vd_dashboard_item_1_uid'],
-                        //     config: {
-                        //         geoSubject: 'Gaul0',
-                        //         colorRamp: 'Blues',  //GnBu, Greens,
-                        //         //colorRamp values: http://fenixrepo.fao.org/cdn/fenix/fenix-ui-map-datasets/colorramp.png
-                        //
-                        //         legendtitle: 'WIEWS',
-                        //         fenix_ui_map: {
-                        //             guiController: {
-                        //                 overlay: false,
-                        //                 baselayer: false,
-                        //                 wmsLoader: false
-                        //             },
-                        //             plugins: {
-                        //                 fullscreen: false,
-                        //                 disclaimerfao: false
-                        //             },
-                        //             baselayers: {
-                        //                 "cartodb": {
-                        //                     title_en: "Baselayer",
-                        //                     url: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-                        //                     subdomains: 'abcd',
-                        //                     maxZoom: 19
-                        //                 }
-                        //             },
-                        //
-                        //             labels: true,
-                        //             boundaries: true
-                        //         }
-                        //     },
-                        //     postProcess: [
-                        //         {
-                        //             "name": "wiews_area_filter",
-                        //             "sid": [{"uid": "wiews_region_mapping"}, {"uid": "wiews_region_countries"}],
-                        //             "rid": {"uid": "area_selection"},
-                        //             "result": false,
-                        //             "parameters": {
-                        //                 "total": false,
-                        //                 "filter": {
-                        //                     "iso3": {
-                        //                         "codes": [
-                        //                             {
-                        //                                 "uid": "ISO3",
-                        //                                 "codes": VISUALIZE_DV["2_filter-vd_filter_item_1"]
-                        //                             }
-                        //                         ]
-                        //                     }
-                        //                 }
-                        //             }
-                        //         },
-                        //
-                        //         {
-                        //             "sid": [{"uid": "indicator20"}, {"uid": "area_selection"}],
-                        //             "name": "select",
-                        //             "parameters": {
-                        //                 "query": "where wiews_region in <<required_countries>>",
-                        //                 "values": {
-                        //                     "genus": null,
-                        //                     "iteration": null,
-                        //                     "domain": null,
-                        //                     "element": null,
-                        //                     "biologicalAccessionId": null,
-                        //                     "country": null,
-                        //                     "stakeholder": null,
-                        //                     "value": null,
-                        //                     "um": null
-                        //                 }
-                        //             }
-                        //         },
-                        //
-                        //         {
-                        //             "name": "filter",
-                        //             "parameters": {
-                        //                 "columns": [
-                        //                     "country",
-                        //                     "value",
-                        //                     "um"
-                        //                 ],
-                        //                 "rows": {
-                        //                     "iteration": {
-                        //                         "codes": [
-                        //                             {
-                        //                                 "uid": "wiews_iteration",
-                        //                                 "codes": VISUALIZE_DV["2_filter-vd_filter_item_9"]
-                        //                             }
-                        //                         ]
-                        //                     },
-                        //                     "genus": {
-                        //                         "codes": [
-                        //                             {
-                        //                                 "uid": "wiews_genus",
-                        //                                 "codes": VISUALIZE_DV["2_filter-vd_filter_item_8"]
-                        //                             }
-                        //                         ]
-                        //                     }
-                        //
-                        //                 }
-                        //             }
-                        //         },
-                        //
-                        //         {
-                        //             "name": "group",
-                        //             "parameters": {
-                        //                 "by": [
-                        //                     "country"
-                        //                 ],
-                        //                 "aggregations": [
-                        //                     {
-                        //                         "columns": ["value"],
-                        //                         "rule": "SUM"
-                        //                     },
-                        //                     {
-                        //                         "columns": ["um"],
-                        //                         "rule": "max"
-                        //                     }
-                        //                 ]
-                        //             }
-                        //         }
-                        //     ]
-                        // },
+                        {
+                            //Average annual growth rate 010103
+                            id: "vd_dashboard_item_1", //ref [data-item=':id'] // 010103  Average annual growth rate
+                            type: "map", //chart || map || olap,
+                            hostConfig: {
+                                itemContainer: {
+                                    class: 'fs-map panel panel-default fs-map hoverable',
+                                    height : '400px',
+                                    title: {
+                                        text: labels[Clang]['2_vd_dashboard_item_1_title']
+                                    },
+                                    buttons: {
+                                        export: {
+                                            show: true //Default= true
+                                        }
+                                    },
+                                    footer: {
+                                        text: labels[Clang]['2_vd_dashboard_item_1_footer']
+                                    }
+                                }
+                            },
+                            //This is used for the export button action
+                            uid: labels[Clang]['2_vd_dashboard_item_1_uid'],
+                            config: {
+                                geoSubject: 'Gaul0',
+                                colorRamp: 'Blues',  //GnBu, Greens,
+                                //colorRamp values: http://fenixrepo.fao.org/cdn/fenix/fenix-ui-map-datasets/colorramp.png
+
+                                legendtitle: 'WIEWS',
+                                fenix_ui_map: {
+                                    guiController: {
+                                        overlay: false,
+                                        baselayer: false,
+                                        wmsLoader: false
+                                    },
+                                    plugins: {
+                                        fullscreen: false,
+                                        disclaimerfao: false
+                                    },
+                                    baselayers: {
+                                        "cartodb": {
+                                            title_en: "Baselayer",
+                                            url: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+                                            subdomains: 'abcd',
+                                            maxZoom: 19
+                                        }
+                                    },
+
+                                    labels: true,
+                                    boundaries: true
+                                }
+                            },
+                            postProcess: [
+                                {
+                                    "name": "wiews_area_filter",
+                                    "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                                    "rid" : { "uid" : "area_selection" },
+                                    "result" : false,
+                                    "parameters": {
+                                        "total" : false,
+                                        "list":  true,
+                                        "filter" : {
+                                            "iso3": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_fao_region",
+                                                        "codes": [ "ALB" ]
+                                                    }
+                                                ]
+                                            }
+
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "filter",
+                                    "sid": [ { "uid": "indicator2" }, { "uid": "area_selection" } ],
+                                    "parameters": {
+                                        "columns": [
+                                            "element",
+                                            "indicator",
+                                            "country",
+                                            "value",
+                                            "um"
+                                        ],
+                                        "rows": {
+                                            "indicator": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_output_indicators",
+                                                        "codes": [ "2_1" ]
+                                                    }
+                                                ]
+                                            },
+                                            "iteration": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_iteration",
+                                                        "codes": [ "1" ]
+                                                    }
+                                                ]
+                                            },
+                                            "wiews_region" : {
+                                                "variable" : "required_countries"
+                                            },
+                                            "element": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_elements",
+                                                        "codes": [ "ind_a" ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+
+                                },
+                                {
+                                    "name": "order",
+                                    "parameters": {
+                                        "country" : "ASC"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            //Average annual growth rate 010103
+                            id: "vd_dashboard_item_2", //ref [data-item=':id'] // 010103  Average annual growth rate
+                            type: "map", //chart || map || olap,
+                            hostConfig: {
+                                itemContainer: {
+                                    class: 'fs-map panel panel-default fs-map hoverable',
+                                    height : '400px',
+                                    title: {
+                                        text: labels[Clang]['2_vd_dashboard_item_2_title']
+                                    },
+                                    buttons: {
+                                        export: {
+                                            show: true //Default= true
+                                        }
+                                    },
+                                    footer: {
+                                        text: labels[Clang]['2_vd_dashboard_item_2_footer']
+                                    }
+                                }
+                            },
+                            //This is used for the export button action
+                            uid: labels[Clang]['2_vd_dashboard_item_2_uid'],
+                            config: {
+                                geoSubject: 'Gaul0',
+                                colorRamp: 'Blues',  //GnBu, Greens,
+                                //colorRamp values: http://fenixrepo.fao.org/cdn/fenix/fenix-ui-map-datasets/colorramp.png
+
+                                legendtitle: 'WIEWS',
+                                fenix_ui_map: {
+                                    guiController: {
+                                        overlay: false,
+                                        baselayer: false,
+                                        wmsLoader: false
+                                    },
+                                    plugins: {
+                                        fullscreen: false,
+                                        disclaimerfao: false
+                                    },
+                                    baselayers: {
+                                        "cartodb": {
+                                            title_en: "Baselayer",
+                                            url: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+                                            subdomains: 'abcd',
+                                            maxZoom: 19
+                                        }
+                                    },
+
+                                    labels: true,
+                                    boundaries: true
+                                }
+                            },
+                            postProcess: [
+                                {
+                                    "name": "wiews_area_filter",
+                                    "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                                    "rid" : { "uid" : "area_selection" },
+                                    "result" : false,
+                                    "parameters": {
+                                        "total" : false,
+                                        "list":  true,
+                                        "filter" : {
+                                            "iso3": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_fao_region",
+                                                        "codes": [ "ALB" ]
+                                                    }
+                                                ]
+                                            }
+
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "filter",
+                                    "sid": [ { "uid": "indicator2" }, { "uid": "area_selection" } ],
+                                    "parameters": {
+                                        "columns": [
+                                            "element",
+                                            "indicator",
+                                            "country",
+                                            "value",
+                                            "um"
+                                        ],
+                                        "rows": {
+                                            "indicator": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_output_indicators",
+                                                        "codes": [ "2_2" ]
+                                                    }
+                                                ]
+                                            },
+                                            "iteration": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_iteration",
+                                                        "codes": [ "1" ]
+                                                    }
+                                                ]
+                                            },
+                                            "wiews_region" : {
+                                                "variable" : "required_countries"
+                                            },
+                                            "element": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_elements",
+                                                        "codes": [ "ind_a" ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+
+                                },
+                                {
+                                    "name": "order",
+                                    "parameters": {
+                                        "country" : "ASC"
+                                    }
+                                }
+                            ]
+                        },
                         // {
                         //     id: 'vd_dashboard_item_2', // TOP RECIPIENTS Vs OTHER RECIPIENTS
                         //     type: 'chart',
@@ -567,7 +682,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         //         useDimensionLabelsIfExist: false,// || default raw else fenixtool
                         //
                         //         config: {
-                        //             //colors: ['#5DA58D'],
+                        //             colors: ['#5DA58D'],
                         //             legend: {
                         //                 title: {
                         //                     text: null
@@ -758,18 +873,33 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 type: "column",
                                 x: ["wiews_region"], //x axis
                                 //series: ["data"], // series
+                                series: ["indicator_type"],
                                 y: ["value"],//Y dimension
-                                //aggregationFn: {"value": "sum"},
+                                aggregationFn: {"value": "sum"},
                                 //useDimensionLabelsIfExist: true,// || default raw else fenixtool
 
                                 config: {
-                                    colors: ['#336699'],
-                                    legend: {
-                                        enabled: false
-                                        // title: {
-                                        //     text: null
-                                        // }
+                                    tooltip: {
+                                        shared: true
                                     },
+                                    legend: {
+                                        align: 'center',
+                                        verticalAlign: 'bottom',
+                                        x: 0,
+                                        y: 0
+                                    },
+                                    yAxis: [{ // Primary yAxis
+                                        title: {
+                                            text: 'Number of Varieties'
+                                        }
+                                    }, { // Secondary yAxis
+                                        title: {
+                                            text: 'Number of Species'
+                                        },
+                                        opposite: true
+                                    }],
+                                   // series:  [{name: 'Species', type: 'column', yAxis: 1}, {name: 'Varieties', type: 'column'}],
+                                    colors: ['#336699', "#ff0000"],
                                     plotOptions: {
                                         column: {
                                             events: {
@@ -1057,157 +1187,261 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     }
                                 }
                             ]
+                        },
+                        {
+                            id: 'vd_dashboard_item_4', // TOP DONORS
+                            type: 'chart',
+                            hostConfig: {
+                                itemContainer: {
+                                    class: 'fs-chart panel panel-default hoverable',
+                                    title: {
+                                        text: labels[Clang]['2_vd_dashboard_item_4_title']
+                                    },
+                                    footer: {
+                                        show: false
+                                    }
+                                }
+                            },
+                            //This is used for the export button action
+                            uid: labels[Clang]['2_vd_dashboard_item_4_uid'],
+                            config: {
+                                type: "column",
+                                x: ["wiews_region_"+ClangUp], //x axis
+                                //series: ["data"], // series
+                                series: ["indicator_type"],
+                                y: ["value"],//Y dimension
+                                aggregationFn: {"value": "sum"},
+                                //useDimensionLabelsIfExist: true,// || default raw else fenixtool
+
+                                config: {
+                                    tooltip: {
+                                        shared: true
+                                    },
+                                    legend: {
+                                        align: 'center',
+                                        verticalAlign: 'bottom',
+                                        x: 0,
+                                        y: 0
+                                    },
+                                    yAxis: [{ // Primary yAxis
+                                        title: {
+                                            text: 'Number of Varieties'
+                                        }
+                                    }, { // Secondary yAxis
+                                        title: {
+                                            text: 'Number of Species'
+                                        },
+                                        opposite: true
+                                    }],
+                                    // series:  [{name: 'Species', type: 'column', yAxis: 1}, {name: 'Varieties', type: 'column'}],
+                                    colors: ['#336699', "#ff0000"],
+                                    plotOptions: {
+                                        column: {
+                                            events: {
+                                                legendItemClick: function () {
+                                                    return false;
+                                                }
+                                            }
+                                        },
+                                        allowPointSelect: false
+                                    },
+                                    exporting: {
+                                        enabled: true
+                                    }
+
+                                }
+
+                            },
+                            postProcess :[
+                                {
+                                    "name": "wiews_area_filter",
+                                    "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                                    "rid" : { "uid" : "area_selection" },
+                                    "result" : false,
+                                    "parameters": {
+                                        "total" : true,
+                                        "list":  false,
+                                        "filter" : {
+                                            "fao": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_fao_region",
+                                                        "codes": [
+                                                            "5100",
+                                                            "5200",
+                                                            "5300",
+                                                            "5400"]
+                                                    }
+                                                ]
+                                            }
+
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "filter",
+                                    "sid": [ { "uid": "indicator2" }, { "uid": "area_selection" } ],
+                                    "parameters": {
+                                        "columns": [
+                                            "element",
+                                            "indicator",
+                                            "wiews_region",
+                                            "value",
+                                            "um"
+                                        ],
+                                        "rows": {
+                                            "indicator": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_output_indicators",
+                                                        "codes": [ "2_1" ]
+                                                    }
+                                                ]
+                                            },
+                                            "iteration": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_iteration",
+                                                        "codes": [ "1" ]
+                                                    }
+                                                ]
+                                            },
+                                            "wiews_region" : {
+                                                "variable" : "required_countries"
+                                            },
+                                            "element": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_elements",
+                                                        "codes": [ "ind_t" ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "rid": {
+                                        "uid": "top_10_varieties"
+                                    }
+
+                                },
+
+
+                                {
+                                    "name": "wiews_area_filter",
+                                    "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                                    "rid" : { "uid" : "area_selection_varieties" },
+                                    "result" : false,
+                                    "parameters": {
+                                        "total" : true,
+                                        "list":  false,
+                                        "filter" : {
+                                            "fao": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_fao_region",
+                                                        "codes": [
+                                                            "5100",
+                                                            "5200",
+                                                            "5300",
+                                                            "5400"]
+                                                    }
+                                                ]
+                                            }
+
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "filter",
+                                    "sid": [ { "uid": "indicator2" }, { "uid": "area_selection_varieties" } ],
+                                    "parameters": {
+                                        "columns": [
+                                            "element",
+                                            "indicator",
+                                            "wiews_region",
+                                            "value",
+                                            "um"
+                                        ],
+                                        "rows": {
+                                            "indicator": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_output_indicators",
+                                                        "codes": [ "2_2" ]
+                                                    }
+                                                ]
+                                            },
+                                            "iteration": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_iteration",
+                                                        "codes": [ "1" ]
+                                                    }
+                                                ]
+                                            },
+                                            "wiews_region" : {
+                                                "variable" : "required_countries"
+                                            },
+                                            "element": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_elements",
+                                                        "codes": [ "ind_t" ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "rid": {
+                                        "uid": "top_10_species"
+                                    }
+
+                                },
+                                {
+                                    "name": "union",
+                                    "sid": [
+                                        {
+                                            "uid": "top_10_species"
+                                        },
+                                        {
+                                            "uid": "top_10_varieties"
+                                        }
+
+                                    ],
+                                    "parameters": {},
+                                    "rid" :{"uid":"union_species_var"}
+                                },
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [
+                                        {
+                                            "uid": "union_species_var"
+                                        }
+                                    ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "text",
+                                            "id": "indicator_type",
+                                            "title": {
+                                                "EN": "Indicator"
+                                            },
+                                            "subject": null
+                                        },
+                                        "value": {
+                                            "keys": [
+                                                "indicator = '2_2'", "indicator = '2_1'"
+                                            ],
+                                            "values": [
+                                                "Varieties","Species"
+                                            ]
+                                        }
+                                    },
+                                    "rid": {
+                                        "uid": "final_with_values"
+                                    }
+                                }
+                            ]
                         }
-                        // {
-                        //     id: 'vd_dashboard_item_4', // TOP DONORS
-                        //     type: 'chart',
-                        //     hostConfig: {
-                        //         itemContainer: {
-                        //             class: 'fs-chart panel panel-default hoverable',
-                        //             title: {
-                        //                 text: labels[Clang]['2_vd_dashboard_item_4_title']
-                        //             },
-                        //             footer: {
-                        //                 show: false
-                        //             }
-                        //         }
-                        //     },
-                        //     //This is used for the export button action
-                        //     uid: labels[Clang]['2_vd_dashboard_item_4_uid'],
-                        //     config: {
-                        //         type: "column",
-                        //         x: ["stakeholder"], //x axis
-                        //         //series: ["data"], // series
-                        //         y: ["value"],//Y dimension
-                        //         aggregationFn: {"value": "sum"},
-                        //         useDimensionLabelsIfExist: true,// || default raw else fenixtool
-                        //
-                        //         config: {
-                        //             colors: ['#336699'],
-                        //             legend: {
-                        //                 enabled: false
-                        //                 // title: {
-                        //                 //     text: null
-                        //                 // }
-                        //             },
-                        //             plotOptions: {
-                        //                 column: {
-                        //                     events: {
-                        //                         legendItemClick: function () {
-                        //                             return false;
-                        //                         }
-                        //                     }
-                        //                 },
-                        //                 allowPointSelect: false
-                        //             },
-                        //             exporting: {
-                        //                 enabled: true
-                        //             }
-                        //
-                        //         }
-                        //
-                        //     },
-                        //     postProcess: [
-                        //         {
-                        //             "name": "wiews_area_filter",
-                        //             "sid": [{"uid": "wiews_region_mapping"}, {"uid": "wiews_region_countries"}],
-                        //             "rid": {"uid": "area_selection"},
-                        //             "result": false,
-                        //             "parameters": {
-                        //                 "filter": {
-                        //                     "iso3": {
-                        //                         "codes": [
-                        //                             {
-                        //                                 "uid": "ISO3",
-                        //                                 "codes": VISUALIZE_DV["2_filter-vd_filter_item_1"]
-                        //                             }
-                        //                         ]
-                        //                     }
-                        //                 }
-                        //             }
-                        //         },
-                        //
-                        //         {
-                        //             "sid": [{"uid": "indicator20"}, {"uid": "area_selection"}],
-                        //             "name": "select",
-                        //             "parameters": {
-                        //                 "query": "where wiews_region in <<required_countries>>",
-                        //                 "values": {
-                        //                     "genus": null,
-                        //                     "iteration": null,
-                        //                     "domain": null,
-                        //                     "element": null,
-                        //                     "biologicalAccessionId": null,
-                        //                     "country": null,
-                        //                     "stakeholder": null,
-                        //                     "value": null,
-                        //                     "um": null
-                        //                 }
-                        //             }
-                        //         },
-                        //
-                        //         {
-                        //             "name": "filter",
-                        //             "parameters": {
-                        //                 "columns": [
-                        //                     "stakeholder",
-                        //                     "value",
-                        //                     "um"
-                        //                 ],
-                        //                 "rows": {
-                        //                     "iteration": {
-                        //                         "codes": [
-                        //                             {
-                        //                                 "uid": "wiews_iteration",
-                        //                                 "codes": VISUALIZE_DV["2_filter-vd_filter_item_9"]
-                        //                             }
-                        //                         ]
-                        //                     },
-                        //                     "element": {
-                        //                         "codes": [
-                        //                             {
-                        //                                 "uid": "wiews_elements",
-                        //                                 "codes": ["stk"]
-                        //                             }
-                        //                         ]
-                        //                     }
-                        //                 }
-                        //             }
-                        //         },
-                        //
-                        //         {
-                        //             "name": "group",
-                        //             "parameters": {
-                        //                 "by": [
-                        //                     "stakeholder"
-                        //                 ],
-                        //                 "aggregations": [
-                        //                     {
-                        //                         "columns": ["value"],
-                        //                         "rule": "SUM"
-                        //                     },
-                        //                     {
-                        //                         "columns": ["um"],
-                        //                         "rule": "max"
-                        //                     }
-                        //                 ]
-                        //             }
-                        //         },
-                        //         {
-                        //             "name": "order",
-                        //             "parameters": {
-                        //                 "value": "DESC"
-                        //             }
-                        //         },
-                        //         {
-                        //             "name": "page",
-                        //             "parameters": {
-                        //                 "perPage": 10,
-                        //                 "page": 1
-                        //             }
-                        //         }
-                        //     ]
-                        // }
                     ]
                 }
             }
