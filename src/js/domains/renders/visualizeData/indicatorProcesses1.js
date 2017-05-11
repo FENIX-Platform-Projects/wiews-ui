@@ -174,7 +174,6 @@ define([
 
     IndicatorProcesses1.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
-        console.log(item_to_show_prefix, item_to_show, codelistMaxIndex)
         var index = 1;
         for(index = 1; index<= codelistMaxIndex; index++) {
             var indicatorFilterSection = this.el.find('[data-selector = "'+item_to_show_prefix+'_'+index+'"]');
@@ -235,7 +234,6 @@ define([
             console.log("true")
         }
 
-        console.log(newValues)
         return newValues;
     }
 
@@ -264,7 +262,6 @@ define([
         if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.listType!=null)&&(typeof newValues.listType!="undefined")&&(newValues.listType.length<=0)){
             s.filterDivMsg1_text = s.error_type.list;
         }
-        console.log(newValues)
 
         return newValues.values;
     }
@@ -374,11 +371,8 @@ define([
 
     IndicatorProcesses1.prototype.updateVariables = function (obj) {
 
-        console.log(obj)
         this.filter = obj.filter;
         this.filter_host_config = obj.filter_host_config;
-        console.log(this.filter_host_config)
-        console.log(this.filter_host_config.geoSelector)
         if((this.filter_host_config!=null)&&(typeof this.filter_host_config!= 'undefined')&&
             (this.filter_host_config.geoSelector!=null)&&(typeof this.filter_host_config.geoSelector!= 'undefined')&&
             (this.filter_host_config.geoSelector.default!=null)&&(typeof this.filter_host_config.geoSelector.default!= 'undefined')){
