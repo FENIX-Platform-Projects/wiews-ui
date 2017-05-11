@@ -539,7 +539,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_fao_region",
-                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_1"]
+                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_4_1"]
                                                     }
                                                 ]
                                             },
@@ -728,14 +728,14 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     "result": false,
                                     "parameters": {
                                         "filter": {
-                                            "iso3": {
+                                            "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "ISO3",
-                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_1"]
+                                                        "uid": "wiews_fao_region",
+                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_4_1"]
                                                     }
                                                 ]
-                                            }
+                                            },
                                         }
                                     }
                                 },
@@ -870,11 +870,11 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     "parameters": {
                                         "total": false,
                                         "filter": {
-                                            "iso3": {
+                                            "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "ISO3",
-                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_1"]
+                                                        "uid": "wiews_fao_region",
+                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_4_1"]
                                                     }
                                                 ]
                                             }
@@ -1011,11 +1011,11 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     "result": false,
                                     "parameters": {
                                         "filter": {
-                                            "iso3": {
+                                            "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "ISO3",
-                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_1"]
+                                                        "uid": "wiews_fao_region",
+                                                        "codes": VISUALIZE_DV["1_filter-vd_filter_item_4_1"]
                                                     }
                                                 ]
                                             }

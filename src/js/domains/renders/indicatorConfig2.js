@@ -469,15 +469,14 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                         "total" : false,
                                         "list":  true,
                                         "filter" : {
-                                            "iso3": {
+                                            "fao": {
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_fao_region",
-                                                        "codes": [ "ALB" ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_4_1"]
                                                     }
                                                 ]
                                             }
-
                                         }
                                     }
                                 },
@@ -505,7 +504,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": [ "1" ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_8"]
                                                     }
                                                 ]
                                             },
@@ -594,15 +593,14 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                         "total" : false,
                                         "list":  true,
                                         "filter" : {
-                                            "iso3": {
+                                            "fao": {
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_fao_region",
-                                                        "codes": [ "ALB" ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_4_1"]
                                                     }
                                                 ]
                                             }
-
                                         }
                                     }
                                 },
@@ -630,7 +628,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": [ "1" ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_8"]
                                                     }
                                                 ]
                                             },
@@ -657,202 +655,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             ]
                         },
-                        // {
-                        //     id: 'vd_dashboard_item_2', // TOP RECIPIENTS Vs OTHER RECIPIENTS
-                        //     type: 'chart',
-                        //     hostConfig: {
-                        //         itemContainer: {
-                        //             class: 'fs-chart panel panel-default hoverable',
-                        //             title: {
-                        //                 text: labels[Clang]['2_vd_dashboard_item_2_title']
-                        //             },
-                        //             footer: {
-                        //                 show: false
-                        //             }
-                        //         }
-                        //     },
-                        //     //This is used for the export button action
-                        //     uid: labels[Clang]['2_vd_dashboard_item_2_uid'],
-                        //     config: {
-                        //         type: "pieold",
-                        //         x: ["biologicalAccessionId_" + ClangUp], //x axis and series
-                        //         series: ["unitname"], // series
-                        //         y: ["value"],//Y dimension
-                        //         aggregationFn: {"value": "sum"},
-                        //         useDimensionLabelsIfExist: false,// || default raw else fenixtool
-                        //
-                        //         config: {
-                        //             colors: ['#5DA58D'],
-                        //             legend: {
-                        //                 title: {
-                        //                     text: null
-                        //                 }
-                        //             },
-                        //             plotOptions: {
-                        //                 pie: {
-                        //                     showInLegend: true
-                        //                 },
-                        //                 series: {
-                        //                     point: {
-                        //                         events: {
-                        //                             legendItemClick: function () {
-                        //                                 return false; // <== returning false will cancel the default action
-                        //                             }
-                        //                         }
-                        //                     }
-                        //                 }
-                        //             },
-                        //             chart: {
-                        //                 events: {
-                        //                     load: function (event) {
-                        //                         if (this.options.chart.forExport) {
-                        //                             $.each(this.series, function (i, serie) {
-                        //                                 serie.update({
-                        //                                     dataLabels: {
-                        //                                         enabled: false
-                        //                                     }
-                        //                                 }, false);
-                        //                             });
-                        //                             this.redraw();
-                        //                         }
-                        //                     }
-                        //                 }
-                        //             },
-                        //             tooltip: {
-                        //                 style: {width: '200px', whiteSpace: 'normal'},
-                        //                 formatter: function () {
-                        //                     var val = this.y;
-                        //                     // if (val.toFixed(0) < 1) {
-                        //                     //     val = (val * 1000).toFixed(2) + ' K'
-                        //                     // } else {
-                        //                     //     val = val.toFixed(2) + ' USD Mil'
-                        //                     // }
-                        //
-                        //                     // return '<b>' + this.percentage.toFixed(2) + '% (' + val + ')</b>';
-                        //                     return '<b>' + val + '</b>';
-                        //                 }
-                        //             },
-                        //             exporting: {
-                        //                 enabled: true
-                        //                 // buttons: {
-                        //                 //     toggleDataLabelsButton: {
-                        //                 //         enabled: false
-                        //                 //     }
-                        //                 // },
-                        //                 // chartOptions: {
-                        //                 //     legend: {
-                        //                 //         title: '',
-                        //                 //         enabled: true,
-                        //                 //         align: 'center',
-                        //                 //         layout: 'vertical',
-                        //                 //         useHTML: true,
-                        //                 //         labelFormatter: function () {
-                        //                 //             var val = this.y;
-                        //                 //             if (val.toFixed(0) < 1) {
-                        //                 //                 val = (val * 1000).toFixed(2) + ' K'
-                        //                 //             } else {
-                        //                 //                 val = val.toFixed(2) + ' USD Mil'
-                        //                 //             }
-                        //                 //
-                        //                 //             return '<div style="width:200px"><span style="float:left;  font-size:9px">' + this.name.trim() + ': ' + this.percentage.toFixed(2) + '% (' + val + ')</span></div>';
-                        //                 //         }
-                        //                 //     }
-                        //                 // }
-                        //             }
-                        //         }
-                        //     },
-                        //     postProcess: [
-                        //         {
-                        //             "name": "wiews_area_filter",
-                        //             "sid": [{"uid": "wiews_region_mapping"}, {"uid": "wiews_region_countries"}],
-                        //             "rid": {"uid": "area_selection"},
-                        //             "result": false,
-                        //             "parameters": {
-                        //                 "filter": {
-                        //                     "iso3": {
-                        //                         "codes": [
-                        //                             {
-                        //                                 "uid": "ISO3",
-                        //                                 "codes": VISUALIZE_DV["2_filter-vd_filter_item_1"]
-                        //                             }
-                        //                         ]
-                        //                     }
-                        //                 }
-                        //             }
-                        //         },
-                        //
-                        //         {
-                        //             "sid": [{"uid": "indicator20"}, {"uid": "area_selection"}],
-                        //             "name": "select",
-                        //             "parameters": {
-                        //                 "query": "where wiews_region in <<required_countries>>",
-                        //                 "values": {
-                        //                     "genus": null,
-                        //                     "iteration": null,
-                        //                     "domain": null,
-                        //                     "element": null,
-                        //                     "biologicalAccessionId": null,
-                        //                     "country": null,
-                        //                     "stakeholder": null,
-                        //                     "value": null,
-                        //                     "um": null
-                        //                 }
-                        //             }
-                        //         },
-                        //
-                        //         {
-                        //             "name": "filter",
-                        //             "parameters": {
-                        //                 "columns": [
-                        //                     "biologicalAccessionId",
-                        //                     "value"
-                        //                 ],
-                        //                 "rows": {
-                        //                     "iteration": {
-                        //                         "codes": [
-                        //                             {
-                        //                                 "uid": "wiews_iteration",
-                        //                                 "codes": VISUALIZE_DV["2_filter-vd_filter_item_9"]
-                        //                             }
-                        //                         ]
-                        //                     },
-                        //                     "genus": {
-                        //                         "codes": [
-                        //                             {
-                        //                                 "uid": "wiews_genus",
-                        //                                 "codes": VISUALIZE_DV["2_filter-vd_filter_item_8"]
-                        //                             }
-                        //                         ]
-                        //                     }
-                        //
-                        //                 }
-                        //             }
-                        //         },
-                        //
-                        //         {
-                        //             "name": "select",
-                        //             "parameters": {
-                        //                 "query": "WHERE biologicalAccessionId is not NULL and biologicalAccessionId<>'na'",
-                        //                 "queryParameters": []
-                        //             }
-                        //         },
-                        //
-                        //         {
-                        //             "name": "group",
-                        //             "parameters": {
-                        //                 "by": [
-                        //                     "biologicalAccessionId"
-                        //                 ],
-                        //                 "aggregations": [
-                        //                     {
-                        //                         "columns": ["value"],
-                        //                         "rule": "SUM"
-                        //                     }
-                        //                 ]
-                        //             }
-                        //         }
-                        //     ]
-                        // },
                         {
                             id: 'vd_dashboard_item_3', // TOP DONORS
                             type: 'chart',
@@ -982,9 +784,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": [
-                                                            "1"
-                                                        ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_8"]
                                                     }
                                                 ]
                                             },
@@ -1084,9 +884,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": [
-                                                            "1"
-                                                        ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_8"]
                                                     }
                                                 ]
                                             },
@@ -1302,7 +1100,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": [ "1" ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_8"]
                                                     }
                                                 ]
                                             },
@@ -1375,7 +1173,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": [ "1" ]
+                                                        "codes": VISUALIZE_DV["2_filter-vd_filter_item_8"]
                                                     }
                                                 ]
                                             },
