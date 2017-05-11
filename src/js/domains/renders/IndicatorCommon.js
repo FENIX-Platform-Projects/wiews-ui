@@ -479,7 +479,7 @@ define([
         var newDashboardConfig = this.indicatorProcesses.onClickButton3(values, this.dashboard_config, param);
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
         {
-            this._downloadTableData(newDashboardConfig.downloadProcessTableData);
+            this._downloadTableData(newDashboardConfig.downloadProcessRawData);
         }
     }
 

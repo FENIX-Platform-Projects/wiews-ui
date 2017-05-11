@@ -146,7 +146,7 @@ define([
             domain : 'domain',
             wiews_region : 'wiews_region',
             indicator : 'indicator',
-            indicator_label : 'indicator_label',
+            element : 'element',
             iteration : 'iteration',
             value : 'value'
         },
@@ -318,15 +318,15 @@ define([
         $('[data-field = "'+s.table_columns.wiews_region+'"]').text(dashboardConfig.columntableName[1]);
         $('[data-field = "3"]').attr('data-field', s.table_columns.indicator);
         $('[data-field = "'+s.table_columns.indicator+'"]').text(dashboardConfig.columntableName[2]);
-        $('[data-field = "4"]').attr('data-field', s.table_columns.indicator_label);
-        $('[data-field = "'+s.table_columns.indicator_label+'"]').text(dashboardConfig.columntableName[3]);
+        $('[data-field = "4"]').attr('data-field', s.table_columns.element);
+        $('[data-field = "'+s.table_columns.element+'"]').text(dashboardConfig.columntableName[3]);
         $('[data-field = "5"]').attr('data-field', s.table_columns.iteration);
         $('[data-field = "'+s.table_columns.iteration+'"]').text(dashboardConfig.columntableName[4]);
         $('[data-field = "6"]').attr('data-field', s.table_columns.value);
         $('[data-field = "'+s.table_columns.value+'"]').text(dashboardConfig.columntableName[5]);
 
 
-        var tableColumns = [s.table_columns.domain, s.table_columns.wiews_region, s.table_columns.indicator, s.table_columns.indicator_label, s.table_columns.iteration, s.table_columns.value];
+        var tableColumns = [s.table_columns.domain, s.table_columns.wiews_region, s.table_columns.indicator, s.table_columns.element, s.table_columns.iteration, s.table_columns.value];
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params, "1");
@@ -341,6 +341,8 @@ define([
                 newDashboardConfig = self._table_element_configuration_update(newDashboardConfig, newValues, params);
             }
         }
+        console.log('New teble')
+        console.log(newDashboardConfig)
 
         return newDashboardConfig;
 
@@ -360,6 +362,8 @@ define([
                 newDashboardConfig = self._download_element_table_element_configuration_update(newDashboardConfig, newValues, params);
             }
         }
+        console.log('New download table')
+        console.log(newDashboardConfig)
 
         return newDashboardConfig;
 
@@ -379,6 +383,9 @@ define([
                 newDashboardConfig = self._download_element_raw_data_configuration_update(newDashboardConfig, newValues, params);
             }
         }
+
+        console.log('New download raw')
+        console.log(newDashboardConfig)
 
         return newDashboardConfig;
 
@@ -445,8 +452,8 @@ define([
                     case s.table_columns.indicator :
                         row[s.table_columns.indicator] = data[iData][columnsMap[tableCol+'_text']]
                         break;
-                    case s.table_columns.indicator_label :
-                        row[s.table_columns.indicator_label] = data[iData][columnsMap[tableCol+'_value']]
+                    case s.table_columns.element :
+                        row[s.table_columns.element] = data[iData][columnsMap[tableCol+'_text']]
                         break;
                     case s.table_columns.iteration :
                         row[s.table_columns.iteration] = data[iData][columnsMap[tableCol+'_text']]
