@@ -53,14 +53,14 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             type: 'tree',
                             default: DOWNLOAD_DV["7_filter-dd_filter_item_4_3"],
                             title: labels[Clang]['7_filter-dd_filter_item_4_1_title'],
-                            clUid: "sdg_region"
+                            clUid: "wiews_sdg_region_only"
                         },
                         {
                             id: 'dd_filter_item_4_4',
                             type: 'tree',
                             default: DOWNLOAD_DV["7_filter-dd_filter_item_4_4"],
                             title: labels[Clang]['7_filter-dd_filter_item_4_1_title'],
-                            clUid: "mdg_region"
+                            clUid: "wiews_mdg_region_only"
                         },
                         {
                             id: 'dd_filter_item_5',

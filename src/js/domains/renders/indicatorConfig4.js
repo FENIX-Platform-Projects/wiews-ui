@@ -53,14 +53,14 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             type: 'tree',
                             default: DOWNLOAD_DV["4_filter-dd_filter_item_4_3"],
                             title: labels[Clang]['4_filter-dd_filter_item_4_1_title'],
-                            clUid: "sdg_region"
+                            clUid: "wiews_sdg_region_only"
                         },
                         {
                             id: 'dd_filter_item_4_4',
                             type: 'tree',
                             default: DOWNLOAD_DV["4_filter-dd_filter_item_4_4"],
                             title: labels[Clang]['4_filter-dd_filter_item_4_1_title'],
-                            clUid: "mdg_region"
+                            clUid: "wiews_mdg_region_only"
                         },
                         {
                             id: 'dd_filter_item_5',
@@ -352,14 +352,14 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             type: 'tree',
                             default: VISUALIZE_DV["4_filter-vd_filter_item_4_3"],
                             title: labels[Clang]['4_filter-vd_filter_item_4_1_title'],
-                            clUid: "sdg_region"
+                            clUid: "wiews_sdg_region_only"
                         },
                         {
                             id: 'vd_filter_item_4_4',
                             type: 'tree',
                             default: VISUALIZE_DV["4_filter-vd_filter_item_4_4"],
                             title: labels[Clang]['4_filter-vd_filter_item_4_1_title'],
-                            clUid: "mdg_region"
+                            clUid: "wiews_mdg_region_only"
                         },
                         {
                             id: 'vd_filter_item_5',

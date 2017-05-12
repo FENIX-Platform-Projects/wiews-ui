@@ -47,7 +47,7 @@ define([
             "sdg": {
                 "codes": [
                     {
-                        "uid": "sdg_region",
+                        "uid": "wiews_sdg_region_only",
                         "codes": ''
                     }
                 ]
@@ -55,7 +55,7 @@ define([
             "mdg": {
                 "codes": [
                     {
-                        "uid": "mdg_region",
+                        "uid": "wiews_mdg_region_only",
                         "codes": ''
                     }
                 ]
@@ -92,8 +92,8 @@ define([
                 regions : {
                     1 : 'wiews_fao_region_only',
                     2 : 'wiews_m49_region_only',
-                    3 : 'sdg_region',
-                    4 : 'mdg_region'
+                    3 : 'wiews_sdg_region_only',
+                    4 : 'wiews_mdg_region_only'
                 },
                 specialGroups : {
                     1 : 'wiews_cgrfa_region_only',
