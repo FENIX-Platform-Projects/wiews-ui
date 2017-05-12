@@ -288,7 +288,7 @@ define(["highcharts",
 
                     uid: "VisualizaDataDashboard",
                     items: [
-
+                        // Maps
                         {
                             //Average annual growth rate 010103
                             id: "vd_dashboard_item_1", //ref [data-item=':id'] // 010103  Average annual growth rate
@@ -409,7 +409,7 @@ define(["highcharts",
                                         }
                                     },
                                     footer: {
-                                        text: labels[Clang]['3_vd_dashboard_item_2_footer']
+                                        text: labels[Clang]['3_vd_dashboard_item_1_footer']
                                     }
                                 }
                             },
@@ -495,6 +495,7 @@ define(["highcharts",
                                 }
                             ]
                         },
+                        // Charts
                         {
                             id: 'vd_dashboard_item_3',
                             type: 'chart',
@@ -512,13 +513,13 @@ define(["highcharts",
                             //This is used for the export button action
                             uid: labels[Clang]['3_vd_dashboard_item_3_uid'],
                             config: {
+
                                 type: "column",
-                                x: ["wiews_region_"+ClangUp], //x axis
-                                //series: ["data"], // series
-                                series: ["species"],
-                                y: ["threatened_species"],//Y dimension
-                                aggregationFn: {"threatened_species": "sum"},
-                                //useDimensionLabelsIfExist: true,// || default raw else fenixtool
+                                x: ["wiews_region"], //x axis
+                                //series: ["value"], // series
+                                y: ["value"],//Y dimension
+                                aggregationFn: {"value": "sum"},
+                                useDimensionLabelsIfExist: true,// || default raw else fenixtool
                                 config: {
                                     tooltip: {
                                         shared: true
@@ -562,6 +563,7 @@ define(["highcharts",
                                         "total" : true,
                                         "list":  "false",
                                         "filter" : {
+
                                             "fao": {
                                                 "codes": [
                                                     {
@@ -573,14 +575,30 @@ define(["highcharts",
                                         }
                                     }
                                 },
+
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "number",
+                                            "id": "value",
+                                            "title": { "EN": "Value" },
+                                            "subject": "value"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "@@direct species - threatened_species" ]
+                                        }
+                                    }
+                                },
+
                                 {
                                     "name": "filter",
-                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
                                     "parameters": {
                                         "columns": [
                                             "wiews_region",
-                                            "species",
-                                            "threatened_species"
+                                            "value"
                                         ],
                                         "rows": {
                                             "indicator": {
@@ -595,7 +613,7 @@ define(["highcharts",
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": [ "1" ]
+                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_9"]
                                                     }
                                                 ]
                                             },
@@ -612,22 +630,8 @@ define(["highcharts",
                                             }
                                         }
                                     }
-                                },
-
-                                {
-                                    "name": "select",
-                                    "rid":{"uid":"data_by_region"},
-                                    "parameters": {
-                                        "values": {
-                                            "wiews_region" : null,
-                                            "species": "species - threatened_species",
-                                            "threatened_species" : null
-                                        }
-                                    }
                                 }
                             ]
-
-
                         },
                         {
                             id: 'vd_dashboard_item_4',
@@ -646,13 +650,13 @@ define(["highcharts",
                             //This is used for the export button action
                             uid: labels[Clang]['3_vd_dashboard_item_4_uid'],
                             config: {
+
                                 type: "column",
-                                x: ["wiews_region_"+ClangUp], //x axis
-                                //series: ["data"], // series
-                                series: ["species"],
-                                y: ["threatened_species"],//Y dimension
-                                aggregationFn: {"threatened_species": "sum"},
-                                //useDimensionLabelsIfExist: true,// || default raw else fenixtool
+                                x: ["wiews_region"], //x axis
+                                //series: ["value"], // series
+                                y: ["value"],//Y dimension
+                                aggregationFn: {"value": "sum"},
+                                useDimensionLabelsIfExist: true,// || default raw else fenixtool
                                 config: {
                                     tooltip: {
                                         shared: true
@@ -665,7 +669,7 @@ define(["highcharts",
                                     },
                                     yAxis: [{
                                         title: {
-                                            text: 'Number of Species'
+                                            text: 'Number of Varieties'
                                         }
                                     }],
                                     colors: ['#336699', "#ff0000"],
@@ -696,6 +700,7 @@ define(["highcharts",
                                         "total" : true,
                                         "list":  "false",
                                         "filter" : {
+
                                             "fao": {
                                                 "codes": [
                                                     {
@@ -707,21 +712,37 @@ define(["highcharts",
                                         }
                                     }
                                 },
+
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "number",
+                                            "id": "value",
+                                            "title": { "EN": "Value" },
+                                            "subject": "value"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "@@direct species - threatened_species" ]
+                                        }
+                                    }
+                                },
+
                                 {
                                     "name": "filter",
-                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
                                     "parameters": {
                                         "columns": [
                                             "wiews_region",
-                                            "species",
-                                            "threatened_species"
+                                            "value"
                                         ],
                                         "rows": {
                                             "indicator": {
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_output_indicators",
-                                                        "codes": [ "3_1" ]
+                                                        "codes": [ "3_2" ]
                                                     }
                                                 ]
                                             },
@@ -746,23 +767,12 @@ define(["highcharts",
                                             }
                                         }
                                     }
-                                },
-
-                                {
-                                    "name": "select",
-                                    "rid":{"uid":"data_by_region"},
-                                    "parameters": {
-                                        "values": {
-                                            "wiews_region" : null,
-                                            "species": "species - threatened_species",
-                                            "threatened_species" : null
-                                        }
-                                    }
                                 }
                             ]
 
-
                         },
+
+
                         {
                             id: 'vd_dashboard_item_5',
                             type: 'chart',
@@ -781,12 +791,11 @@ define(["highcharts",
                             uid: labels[Clang]['3_vd_dashboard_item_5_uid'],
                             config: {
                                 type: "column",
-                                x: ["wiews_region_"+ClangUp], //x axis
-                                //series: ["data"], // series
-                                series: ["species"],
-                                y: ["threatened_species"],//Y dimension
-                                aggregationFn: {"threatened_species": "sum"},
-                                //useDimensionLabelsIfExist: true,// || default raw else fenixtool
+                                x: ["wiews_region"], //x axis
+                                //series: ["value"], // series
+                                y: ["value"],//Y dimension
+                                aggregationFn: {"value": "sum"},
+                                useDimensionLabelsIfExist: true,// || default raw else fenixtool
                                 config: {
                                     tooltip: {
                                         shared: true
@@ -830,25 +839,42 @@ define(["highcharts",
                                         "total" : true,
                                         "list":  "false",
                                         "filter" : {
+
                                             "fao": {
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_fao_region",
-                                                        "codes": [ "5100","5200","5300","5400" ]
+                                                        "codes": [ "5000" ]
                                                     }
                                                 ]
                                             }
                                         }
                                     }
                                 },
+
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "number",
+                                            "id": "value",
+                                            "title": { "EN": "Value" },
+                                            "subject": "value"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "@@direct species - threatened_species" ]
+                                        }
+                                    }
+                                },
+
                                 {
                                     "name": "filter",
-                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
                                     "parameters": {
                                         "columns": [
                                             "wiews_region",
-                                            "species",
-                                            "threatened_species"
+                                            "value"
                                         ],
                                         "rows": {
                                             "indicator": {
@@ -863,7 +889,7 @@ define(["highcharts",
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": [ "1" ]
+                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_9"]
                                                     }
                                                 ]
                                             },
@@ -880,20 +906,10 @@ define(["highcharts",
                                             }
                                         }
                                     }
-                                },
-
-                                {
-                                    "name": "select",
-                                    "rid":{"uid":"data_by_region"},
-                                    "parameters": {
-                                        "values": {
-                                            "wiews_region" : null,
-                                            "species": "species - threatened_species",
-                                            "threatened_species" : null
-                                        }
-                                    }
                                 }
                             ]
+
+
 
 
                         },
@@ -915,12 +931,11 @@ define(["highcharts",
                             uid: labels[Clang]['3_vd_dashboard_item_6_uid'],
                             config: {
                                 type: "column",
-                                x: ["wiews_region_"+ClangUp], //x axis
-                                //series: ["data"], // series
-                                series: ["species"],
-                                y: ["threatened_species"],//Y dimension
-                                aggregationFn: {"threatened_species": "sum"},
-                                //useDimensionLabelsIfExist: true,// || default raw else fenixtool
+                                x: ["wiews_region"], //x axis
+                                //series: ["value"], // series
+                                y: ["value"],//Y dimension
+                                aggregationFn: {"value": "sum"},
+                                useDimensionLabelsIfExist: true,// || default raw else fenixtool
                                 config: {
                                     tooltip: {
                                         shared: true
@@ -933,7 +948,7 @@ define(["highcharts",
                                     },
                                     yAxis: [{
                                         title: {
-                                            text: 'Number of Species'
+                                            text: 'Number of Varieties'
                                         }
                                     }],
                                     colors: ['#336699', "#ff0000"],
@@ -964,32 +979,49 @@ define(["highcharts",
                                         "total" : true,
                                         "list":  "false",
                                         "filter" : {
+
                                             "fao": {
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_fao_region",
-                                                        "codes": [ "5100","5200","5300","5400" ]
+                                                        "codes": [ "5000" ]
                                                     }
                                                 ]
                                             }
                                         }
                                     }
                                 },
+
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "number",
+                                            "id": "value",
+                                            "title": { "EN": "Value" },
+                                            "subject": "value"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "@@direct species - threatened_species" ]
+                                        }
+                                    }
+                                },
+
                                 {
                                     "name": "filter",
-                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
                                     "parameters": {
                                         "columns": [
                                             "wiews_region",
-                                            "species",
-                                            "threatened_species"
+                                            "value"
                                         ],
                                         "rows": {
                                             "indicator": {
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_output_indicators",
-                                                        "codes": [ "3_1" ]
+                                                        "codes": [ "3_2" ]
                                                     }
                                                 ]
                                             },
@@ -997,7 +1029,7 @@ define(["highcharts",
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": [ "1" ]
+                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_9"]
                                                     }
                                                 ]
                                             },
@@ -1014,23 +1046,14 @@ define(["highcharts",
                                             }
                                         }
                                     }
-                                },
-
-                                {
-                                    "name": "select",
-                                    "rid":{"uid":"data_by_region"},
-                                    "parameters": {
-                                        "values": {
-                                            "wiews_region" : null,
-                                            "species": "species - threatened_species",
-                                            "threatened_species" : null
-                                        }
-                                    }
                                 }
                             ]
 
 
+
+
                         },
+
                     ]
                 }
             }

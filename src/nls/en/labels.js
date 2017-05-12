@@ -13,6 +13,7 @@ define(function () {
         "3": "Indicator 3: Percentage of PGRFA surveyed/inventoried",
         "15": "Indicator 15: Number of targeted collecting missions in the country",
         "22": "Indicator 22: Percentage of ex situ accessions in need of regeneration for which a budget for regeneration does not exist",
+        "14": "Indicator 14: Number of crops conserved in the national genebank(s) that require targeted collecting",
 
         "loading_in_progress": "Loading in progress",
         "completed": "Completed",
@@ -312,10 +313,6 @@ define(function () {
         "4_dd_table_title_col_5": "Period",
         "4_dd_table_title_col_6": "Value",
 
-        "filter-dd_filter_button_1_title": "Show Data",
-        "filter-dd_filter_button_title": "Download Data",
-        "filter-dd_filter_button_2_title": "Table Data",
-        "filter-dd_filter_button_3_title": "Raw Data",
 
         // Indicator 15
 
@@ -405,7 +402,51 @@ define(function () {
         "7_dd_table_title_col_3": "Element",
         "7_dd_table_title_col_4": "Indicator and Rating",
         "7_dd_table_title_col_5": "Period",
-        "7_dd_table_title_col_6": "Value"
+        "7_dd_table_title_col_6": "Value",
+
+        // Indicator 14
+        "6_dd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
+        "6_dd_filter_button_1_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+        "6_dd_filter_button_2_msg": "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
+        "6_dd_filter_button_2_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+
+        "6_dd_filter_button_3_msg": "The selection is not valid. Please, select at least an item for the geographical selector and at least an item for the period selector.",
+        "6_dd_filter_button_3_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+
+        "6_filter-dd_filter_item_1_title": "COUNTRIES",
+        "6_filter-dd_filter_item_4_1_title": "REGIONS",
+        "6_filter-dd_filter_item_7_title": "SPECIAL GROUPS",
+        "6_filter-dd_filter_item_8_title": "ELEMENTS",
+        "6_filter-dd_filter_item_9_title": "PERIODS",
+        "6_filter-dd_filter_item_10_title": "STAKEHOLDERS",
+        "6_filter-dd_filter_item_2_choicesTitle1": "FAO",
+        "6_filter-dd_filter_item_2_choicesTitle2": "M49",
+        "6_filter-dd_filter_item_2_choicesTitle3": "SDG",
+        "6_filter-dd_filter_item_2_choicesTitle4": "MDG",
+        "6_filter-dd_filter_item_3_choicesTitle1": "Total",
+        "6_filter-dd_filter_item_3_choicesTitle2": "List",
+        "6_filter-dd_filter_item_5_choicesTitle1": "CGRFA",
+        "6_filter-dd_filter_item_5_choicesTitle2": "ITPGRFA",
+        "6_filter-dd_filter_item_6_choicesTitle1": "Total",
+        "6_filter-dd_filter_item_6_choicesTitle2": "List",
+        "6_filter-dd_filter_item_11_title": "Thousand Separator in 'Show Data'",
+        "6_filter-dd_filter_item_12_title": "Output Formatting Options",
+        "6_filter-dd_filter_item_11_choicesTitle1": "None",
+        "6_filter-dd_filter_item_11_choicesTitle2": "Comma",
+        "6_filter-dd_filter_item_11_choicesTitle3": "Period",
+        "6_filter-dd_filter_item_12_choicesTitle1": "Flags",
+        "6_filter-dd_filter_item_12_choicesTitle2": "Codes",
+        "6_filter-dd_filter_item_12_choicesTitle3": "Units",
+        "6_filter-dd_filter_item_12_choicesTitle4": "Null Values",
+
+        "6_filter-dd_filter_item_10_source1": "Stakeholders",
+
+        "6_dd_table_title_col_1": "Domain",
+        "6_dd_table_title_col_2": "Country",
+        "6_dd_table_title_col_3": "Element",
+        "6_dd_table_title_col_4": "Indicator and Rating",
+        "6_dd_table_title_col_5": "Period",
+        "6_dd_table_title_col_6": "Value"
 
     }
 });
