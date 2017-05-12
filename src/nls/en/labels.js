@@ -12,6 +12,7 @@ define(function () {
         "10": "Indicator 10: Percentage of national in situ conservation sites with management plans addressing crop wild relatives and wild food plants",
         "3": "Indicator 3: Percentage of PGRFA surveyed/inventoried",
         "15": "Indicator 15: Number of targeted collecting missions in the country",
+        "22": "Indicator 22: Percentage of ex situ accessions in need of regeneration for which a budget for regeneration does not exist",
 
         "loading_in_progress": "Loading in progress",
         "completed": "Completed",
@@ -95,7 +96,7 @@ define(function () {
         "1_dd_table_title_col_5": "Period",
         "1_dd_table_title_col_6": "Value",
 
-
+        // Indicator 2
         "2_vd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for each selector.",
         "2_vd_filter_button_1_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
         "2_filter-vd_filter_item_1_title": "COUNTRIES",
@@ -359,7 +360,52 @@ define(function () {
         "5_dd_table_title_col_3": "Element",
         "5_dd_table_title_col_4": "Indicator and Rating",
         "5_dd_table_title_col_5": "Period",
-        "5_dd_table_title_col_6": "Value"
+        "5_dd_table_title_col_6": "Value",
+
+        // Indicator 22
+
+        "7_dd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
+        "7_dd_filter_button_1_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+        "7_dd_filter_button_2_msg": "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
+        "7_dd_filter_button_2_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+
+        "7_dd_filter_button_3_msg": "The selection is not valid. Please, select at least an item for the geographical selector and at least an item for the period selector.",
+        "7_dd_filter_button_3_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+
+        "7_filter-dd_filter_item_1_title": "COUNTRIES",
+        "7_filter-dd_filter_item_4_1_title": "REGIONS",
+        "7_filter-dd_filter_item_7_title": "SPECIAL GROUPS",
+        "7_filter-dd_filter_item_8_title": "ELEMENTS",
+        "7_filter-dd_filter_item_9_title": "PERIODS",
+        "7_filter-dd_filter_item_10_title": "STAKEHOLDERS",
+        "7_filter-dd_filter_item_2_choicesTitle1": "FAO",
+        "7_filter-dd_filter_item_2_choicesTitle2": "M49",
+        "7_filter-dd_filter_item_2_choicesTitle3": "SDG",
+        "7_filter-dd_filter_item_2_choicesTitle4": "MDG",
+        "7_filter-dd_filter_item_3_choicesTitle1": "Total",
+        "7_filter-dd_filter_item_3_choicesTitle2": "List",
+        "7_filter-dd_filter_item_5_choicesTitle1": "CGRFA",
+        "7_filter-dd_filter_item_5_choicesTitle2": "ITPGRFA",
+        "7_filter-dd_filter_item_6_choicesTitle1": "Total",
+        "7_filter-dd_filter_item_6_choicesTitle2": "List",
+        "7_filter-dd_filter_item_11_title": "Thousand Separator in 'Show Data'",
+        "7_filter-dd_filter_item_12_title": "Output Formatting Options",
+        "7_filter-dd_filter_item_11_choicesTitle1": "None",
+        "7_filter-dd_filter_item_11_choicesTitle2": "Comma",
+        "7_filter-dd_filter_item_11_choicesTitle3": "Period",
+        "7_filter-dd_filter_item_12_choicesTitle1": "Flags",
+        "7_filter-dd_filter_item_12_choicesTitle2": "Codes",
+        "7_filter-dd_filter_item_12_choicesTitle3": "Units",
+        "7_filter-dd_filter_item_12_choicesTitle4": "Null Values",
+
+        "7_filter-dd_filter_item_10_source1": "Stakeholders",
+
+        "7_dd_table_title_col_1": "Domain",
+        "7_dd_table_title_col_2": "Country",
+        "7_dd_table_title_col_3": "Element",
+        "7_dd_table_title_col_4": "Indicator and Rating",
+        "7_dd_table_title_col_5": "Period",
+        "7_dd_table_title_col_6": "Value"
 
     }
 });
