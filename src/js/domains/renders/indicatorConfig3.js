@@ -629,17 +629,14 @@ define(["highcharts",
 
 
                         },
-
-
-                        /*
                         {
-                            id: 'vd_dashboard_item_4', // TOP DONORS
+                            id: 'vd_dashboard_item_4',
                             type: 'chart',
                             hostConfig: {
                                 itemContainer: {
                                     class: 'fs-chart panel panel-default hoverable',
                                     title: {
-                                        text: labels[Clang]['1_vd_dashboard_item_4_title']
+                                        text: labels[Clang]['3_vd_dashboard_item_4_title']
                                     },
                                     footer: {
                                         show: false
@@ -647,23 +644,31 @@ define(["highcharts",
                                 }
                             },
                             //This is used for the export button action
-                            uid: labels[Clang]['1_vd_dashboard_item_4_uid'],
+                            uid: labels[Clang]['3_vd_dashboard_item_4_uid'],
                             config: {
                                 type: "column",
-                                x: ["stakeholder"], //x axis
+                                x: ["wiews_region_"+ClangUp], //x axis
                                 //series: ["data"], // series
-                                y: ["value"],//Y dimension
-                                aggregationFn: {"value": "sum"},
-                                useDimensionLabelsIfExist: true,// || default raw else fenixtool
-
+                                series: ["species"],
+                                y: ["threatened_species"],//Y dimension
+                                aggregationFn: {"threatened_species": "sum"},
+                                //useDimensionLabelsIfExist: true,// || default raw else fenixtool
                                 config: {
-                                    colors: ['#336699'],
-                                    legend: {
-                                        enabled: false
-                                        // title: {
-                                        //     text: null
-                                        // }
+                                    tooltip: {
+                                        shared: true
                                     },
+                                    legend: {
+                                        align: 'center',
+                                        verticalAlign: 'bottom',
+                                        x: 0,
+                                        y: 0
+                                    },
+                                    yAxis: [{
+                                        title: {
+                                            text: 'Number of Species'
+                                        }
+                                    }],
+                                    colors: ['#336699', "#ff0000"],
                                     plotOptions: {
                                         column: {
                                             events: {
@@ -684,64 +689,58 @@ define(["highcharts",
                             postProcess: [
                                 {
                                     "name": "wiews_area_filter",
-                                    "sid": [{"uid": "wiews_region_mapping"}, {"uid": "wiews_region_countries"}],
-                                    "rid": {"uid": "area_selection"},
-                                    "result": false,
+                                    "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                                    "rid" : { "uid" : "area_selection" },
+                                    "result" : false,
                                     "parameters": {
-                                        "filter": {
-                                            "iso3": {
+                                        "total" : true,
+                                        "list":  "false",
+                                        "filter" : {
+                                            "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "ISO3",
-                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_1"]
+                                                        "uid": "wiews_fao_region",
+                                                        "codes": [ "5100","5200","5300","5400" ]
                                                     }
                                                 ]
                                             }
                                         }
                                     }
                                 },
-
-                                {
-                                    "sid": [{"uid": "indicator20"}, {"uid": "area_selection"}],
-                                    "name": "select",
-                                    "parameters": {
-                                        "query": "where wiews_region in <<required_countries>>",
-                                        "values": {
-                                            "genus": null,
-                                            "iteration": null,
-                                            "domain": null,
-                                            "element": null,
-                                            "biologicalAccessionId": null,
-                                            "country": null,
-                                            "stakeholder": null,
-                                            "value": null,
-                                            "um": null
-                                        }
-                                    }
-                                },
-
                                 {
                                     "name": "filter",
+                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
                                     "parameters": {
                                         "columns": [
-                                            "stakeholder",
-                                            "value",
-                                            "um"
+                                            "wiews_region",
+                                            "species",
+                                            "threatened_species"
                                         ],
                                         "rows": {
+                                            "indicator": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_output_indicators",
+                                                        "codes": [ "3_1" ]
+                                                    }
+                                                ]
+                                            },
                                             "iteration": {
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_9"]
+                                                        "codes": [ "1" ]
                                                     }
                                                 ]
+                                            },
+                                            "wiews_region" : {
+                                                "variable" : "required_countries"
                                             },
                                             "element": {
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_elements",
-                                                        "codes": ["stk"]
+                                                        "codes": [ "ind" ]
                                                     }
                                                 ]
                                             }
@@ -750,39 +749,288 @@ define(["highcharts",
                                 },
 
                                 {
-                                    "name": "group",
+                                    "name": "select",
+                                    "rid":{"uid":"data_by_region"},
                                     "parameters": {
-                                        "by": [
-                                            "stakeholder"
-                                        ],
-                                        "aggregations": [
-                                            {
-                                                "columns": ["value"],
-                                                "rule": "SUM"
-                                            },
-                                            {
-                                                "columns": ["um"],
-                                                "rule": "max"
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "name": "order",
-                                    "parameters": {
-                                        "value": "DESC"
-                                    }
-                                },
-                                {
-                                    "name": "page",
-                                    "parameters": {
-                                        "perPage": 10,
-                                        "page": 1
+                                        "values": {
+                                            "wiews_region" : null,
+                                            "species": "species - threatened_species",
+                                            "threatened_species" : null
+                                        }
                                     }
                                 }
                             ]
-                        }
-                        */
+
+
+                        },
+                        {
+                            id: 'vd_dashboard_item_5',
+                            type: 'chart',
+                            hostConfig: {
+                                itemContainer: {
+                                    class: 'fs-chart panel panel-default hoverable',
+                                    title: {
+                                        text: labels[Clang]['3_vd_dashboard_item_5_title']
+                                    },
+                                    footer: {
+                                        show: false
+                                    }
+                                }
+                            },
+                            //This is used for the export button action
+                            uid: labels[Clang]['3_vd_dashboard_item_5_uid'],
+                            config: {
+                                type: "column",
+                                x: ["wiews_region_"+ClangUp], //x axis
+                                //series: ["data"], // series
+                                series: ["species"],
+                                y: ["threatened_species"],//Y dimension
+                                aggregationFn: {"threatened_species": "sum"},
+                                //useDimensionLabelsIfExist: true,// || default raw else fenixtool
+                                config: {
+                                    tooltip: {
+                                        shared: true
+                                    },
+                                    legend: {
+                                        align: 'center',
+                                        verticalAlign: 'bottom',
+                                        x: 0,
+                                        y: 0
+                                    },
+                                    yAxis: [{
+                                        title: {
+                                            text: 'Number of Species'
+                                        }
+                                    }],
+                                    colors: ['#336699', "#ff0000"],
+                                    plotOptions: {
+                                        column: {
+                                            events: {
+                                                legendItemClick: function () {
+                                                    return false;
+                                                }
+                                            }
+                                        },
+                                        allowPointSelect: false
+                                    },
+                                    exporting: {
+                                        enabled: true
+                                    }
+
+                                }
+
+                            },
+                            postProcess: [
+                                {
+                                    "name": "wiews_area_filter",
+                                    "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                                    "rid" : { "uid" : "area_selection" },
+                                    "result" : false,
+                                    "parameters": {
+                                        "total" : true,
+                                        "list":  "false",
+                                        "filter" : {
+                                            "fao": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_fao_region",
+                                                        "codes": [ "5100","5200","5300","5400" ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "filter",
+                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
+                                    "parameters": {
+                                        "columns": [
+                                            "wiews_region",
+                                            "species",
+                                            "threatened_species"
+                                        ],
+                                        "rows": {
+                                            "indicator": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_output_indicators",
+                                                        "codes": [ "3_1" ]
+                                                    }
+                                                ]
+                                            },
+                                            "iteration": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_iteration",
+                                                        "codes": [ "1" ]
+                                                    }
+                                                ]
+                                            },
+                                            "wiews_region" : {
+                                                "variable" : "required_countries"
+                                            },
+                                            "element": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_elements",
+                                                        "codes": [ "ind" ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "select",
+                                    "rid":{"uid":"data_by_region"},
+                                    "parameters": {
+                                        "values": {
+                                            "wiews_region" : null,
+                                            "species": "species - threatened_species",
+                                            "threatened_species" : null
+                                        }
+                                    }
+                                }
+                            ]
+
+
+                        },
+                        {
+                            id: 'vd_dashboard_item_6',
+                            type: 'chart',
+                            hostConfig: {
+                                itemContainer: {
+                                    class: 'fs-chart panel panel-default hoverable',
+                                    title: {
+                                        text: labels[Clang]['3_vd_dashboard_item_6_title']
+                                    },
+                                    footer: {
+                                        show: false
+                                    }
+                                }
+                            },
+                            //This is used for the export button action
+                            uid: labels[Clang]['3_vd_dashboard_item_6_uid'],
+                            config: {
+                                type: "column",
+                                x: ["wiews_region_"+ClangUp], //x axis
+                                //series: ["data"], // series
+                                series: ["species"],
+                                y: ["threatened_species"],//Y dimension
+                                aggregationFn: {"threatened_species": "sum"},
+                                //useDimensionLabelsIfExist: true,// || default raw else fenixtool
+                                config: {
+                                    tooltip: {
+                                        shared: true
+                                    },
+                                    legend: {
+                                        align: 'center',
+                                        verticalAlign: 'bottom',
+                                        x: 0,
+                                        y: 0
+                                    },
+                                    yAxis: [{
+                                        title: {
+                                            text: 'Number of Species'
+                                        }
+                                    }],
+                                    colors: ['#336699', "#ff0000"],
+                                    plotOptions: {
+                                        column: {
+                                            events: {
+                                                legendItemClick: function () {
+                                                    return false;
+                                                }
+                                            }
+                                        },
+                                        allowPointSelect: false
+                                    },
+                                    exporting: {
+                                        enabled: true
+                                    }
+
+                                }
+
+                            },
+                            postProcess: [
+                                {
+                                    "name": "wiews_area_filter",
+                                    "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                                    "rid" : { "uid" : "area_selection" },
+                                    "result" : false,
+                                    "parameters": {
+                                        "total" : true,
+                                        "list":  "false",
+                                        "filter" : {
+                                            "fao": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_fao_region",
+                                                        "codes": [ "5100","5200","5300","5400" ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "filter",
+                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
+                                    "parameters": {
+                                        "columns": [
+                                            "wiews_region",
+                                            "species",
+                                            "threatened_species"
+                                        ],
+                                        "rows": {
+                                            "indicator": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_output_indicators",
+                                                        "codes": [ "3_1" ]
+                                                    }
+                                                ]
+                                            },
+                                            "iteration": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_iteration",
+                                                        "codes": [ "1" ]
+                                                    }
+                                                ]
+                                            },
+                                            "wiews_region" : {
+                                                "variable" : "required_countries"
+                                            },
+                                            "element": {
+                                                "codes": [
+                                                    {
+                                                        "uid": "wiews_elements",
+                                                        "codes": [ "ind" ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "select",
+                                    "rid":{"uid":"data_by_region"},
+                                    "parameters": {
+                                        "values": {
+                                            "wiews_region" : null,
+                                            "species": "species - threatened_species",
+                                            "threatened_species" : null
+                                        }
+                                    }
+                                }
+                            ]
+
+
+                        },
                     ]
                 }
             }

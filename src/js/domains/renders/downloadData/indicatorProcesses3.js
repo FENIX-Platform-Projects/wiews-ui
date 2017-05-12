@@ -463,7 +463,6 @@ define([
     }
 
     IndicatorProcesses3.prototype.disable_element = function () {
-
         $('[data-selector = "'+s.filter_items.item_12+'"]').attr('disabled','disabled');
     }
 
