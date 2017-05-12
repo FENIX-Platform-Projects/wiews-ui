@@ -86,7 +86,7 @@ define(function () {
         "5_filter-dd_filter_item_6" : ["1", "2"],
         "5_filter-dd_filter_item_7_1" : ["007"],
         "5_filter-dd_filter_item_7_2" : ["36"],
-        "5_filter-dd_filter_item_8" : ["20"],
+        "5_filter-dd_filter_item_8" : ["15"],
         "5_filter-dd_filter_item_9" : ["1"],
         "5_filter-dd_filter_item_10" : ["stk"],
         "5_filter-dd_filter_item_11" : ["1"],

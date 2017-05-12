@@ -45,7 +45,8 @@ define(function () {
             vd_filter_category : "1",
             dd_dashboard_category : "1",
             vd_dashboard_category : "1",
-            processType : "5"
+            processType : "5",
+            noVisualize : true
         },
 
     }

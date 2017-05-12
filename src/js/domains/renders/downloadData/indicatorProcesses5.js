@@ -546,15 +546,12 @@ define([
         dashboardConfig.tableProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
         var codes = '';
         if((values[s.filter_items.item_10]!=null)&&(typeof values[s.filter_items.item_10]!='undefined')&&(values[s.filter_items.item_10].length>0)){
-            codes= [ "ind", "nfp", "nfpa", "stk" ];
+            codes= [ "ind_t", "ind_a", "nfp", "nfpa", "stk_t", "stk_a" ];
         }
         else{
-            codes= [ "ind", "nfp", "nfpa" ];
+            codes= [ "ind_t", "ind_a", "nfp", "nfpa" ];
         }
         dashboardConfig.tableProcess[1].parameters.rows["element"].codes[0].codes = codes;
-
-        var indicator_label = "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_"+params.lang+" || ')' else element_"+params.lang+" end"
-        dashboardConfig.tableProcess[3].parameters.values["indicator_label"] = indicator_label;
 
         return dashboardConfig;
     };
@@ -568,15 +565,12 @@ define([
         dashboardConfig.downloadProcessTableData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
         var codes = '';
         if((values[s.filter_items.item_10]!=null)&&(typeof values[s.filter_items.item_10]!='undefined')&&(values[s.filter_items.item_10].length>0)){
-            codes= [ "ind", "nfp", "nfpa", "stk" ];
+            codes= [ "ind_t", "ind_a", "nfp", "nfpa", "stk_t", "stk_a" ];
         }
         else{
-            codes= [ "ind", "nfp", "nfpa" ];
+            codes= [ "ind_t", "ind_a", "nfp", "nfpa" ];
         }
         dashboardConfig.downloadProcessTableData[1].parameters.rows["element"].codes[0].codes = codes;
-
-        var indicator_label = "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_"+params.lang+" || ')' else element_"+params.lang+" end"
-        dashboardConfig.downloadProcessTableData[3].parameters.values["indicator_label"] = indicator_label;
 
         return dashboardConfig;
     };

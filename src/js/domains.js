@@ -16,11 +16,13 @@ define([
     var Clang = C.lang.toLowerCase();
 
     //This code has to be passed by Typo3
-    //var selected = {code: "20"};
+   // var selected = {code: "20"};
    //  var selected = {code: "2"};
-    var selected = {code: "10"};
+   //  var selected = {code: "10"};
+    var selected = {code: "15"};
 
     var s = {
+        noVisualize : false,
         EL: "#domains",
         DOWNLOAD_DATA_TAB_EL: "#downloadDataTab",
         VISUALIZE_DATA_TAB_EL: "#visualizeDataTab",
@@ -33,7 +35,9 @@ define([
             dashboard :{
                 READY : 'dashboard.ready'
             }
-        }
+        },
+
+        indicator_no_visualize : []
     };
 
     function Domains() {
@@ -87,6 +91,12 @@ define([
 
         this.selected_indicator_category = CATEG[this.selected_indicator.code].category;
         this.indicatorProperties = CATEG[this.selected_indicator.code];
+
+        if(this.indicatorProperties.noVisualize){
+            $('[data-tab="'+s.VISUALIZE_DATA_TAB+'"]').removeAttr('data-toggle');
+            s.noVisualize = true;
+        }
+
         this.$tabs = this.$el.find(s.TABS_A);
 
         s.visualizeDataTab_created = false;
@@ -110,13 +120,15 @@ define([
               conversion: CATEG[this.selected_indicator.code].downloadConversion
         });
 
-        this.visualizeDataTab = new VisualizeData({
-            el: this.$el.find(s.VISUALIZE_DATA_TAB_EL),
-            lang: this.lang,
-            environment: this.environment,
-            cache : this.cache,
-            indicatorProperties: this.indicatorProperties
-        });
+        if(!s.noVisualize){
+            this.visualizeDataTab = new VisualizeData({
+                el: this.$el.find(s.VISUALIZE_DATA_TAB_EL),
+                lang: this.lang,
+                environment: this.environment,
+                cache : this.cache,
+                indicatorProperties: this.indicatorProperties
+            });
+        }
 
         this.downloadDataTab.render();
     };
@@ -124,7 +136,9 @@ define([
     // Events
     Domains.prototype._bindEventListeners = function () {
 
-        this.$tabs.on("click", _.bind(this._onTabClick, this))
+        if(!s.noVisualize) {
+            this.$tabs.on("click", _.bind(this._onTabClick, this))
+        }
     };
 
     Domains.prototype._onDashboardReady = function (tab) {
