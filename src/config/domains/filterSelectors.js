@@ -10,10 +10,6 @@ define(
                     hideSummary : false,
                     sort : true
                 },
-                cl: {
-                    uid: "",
-                    codes: ""
-                },
                 template: {
                     title: ''
                 }
