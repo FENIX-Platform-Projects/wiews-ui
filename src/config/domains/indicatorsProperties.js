@@ -49,5 +49,14 @@ define(function () {
             noVisualize : true
         },
 
+        "22": {
+            indicator_id : "7",
+            dd_filter_category : "1",
+            vd_filter_category : "1",
+            dd_dashboard_category : "1",
+            vd_dashboard_category : "1",
+            processType : "7"
+        }
+
     }
 });

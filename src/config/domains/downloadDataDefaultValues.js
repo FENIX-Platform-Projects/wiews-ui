@@ -39,7 +39,7 @@ define(function () {
         "2_filter-dd_filter_item_10" : ["1"],
         "2_filter-dd_filter_item_11" : ["1", "2", "3"],
 
-        // Indicator 3
+        ///3= indicator id
         "3_filter-dd_filter_item_1" :  ["ABW","AFG","AGO","AIA"],
         "3_filter-dd_filter_item_2" : ["1"],
         "3_filter-dd_filter_item_3" : ["1", "2"],
@@ -91,6 +91,24 @@ define(function () {
         "5_filter-dd_filter_item_10" : ["stk"],
         "5_filter-dd_filter_item_11" : ["1"],
         "5_filter-dd_filter_item_12" : ["1", "2", "3"],
+
+        //22= indicator id
+        "7_filter-dd_filter_item_1" :  ["ABW","AFG","AGO","AIA"],
+        "7_filter-dd_filter_item_2" : ["1"],
+        "7_filter-dd_filter_item_3" : ["1", "2"],
+        "7_filter-dd_filter_item_4_1" : ["5000"],
+        "7_filter-dd_filter_item_4_2" : ["21"],
+        "7_filter-dd_filter_item_4_3" : ["744"],
+        "7_filter-dd_filter_item_4_4" : ["826"],
+        "7_filter-dd_filter_item_5" : ["1"],
+        "7_filter-dd_filter_item_6" : ["1", "2"],
+        "7_filter-dd_filter_item_7_1" : ["007"],
+        "7_filter-dd_filter_item_7_2" : ["36"],
+        "7_filter-dd_filter_item_8" : ["22"],
+        "7_filter-dd_filter_item_9" : ["1"],
+        "7_filter-dd_filter_item_10" : ["stk"],
+        "7_filter-dd_filter_item_11" : ["1"],
+        "7_filter-dd_filter_item_12" : ["1", "2", "3"]
 
     };
 });
