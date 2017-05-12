@@ -46,7 +46,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             type: 'tree',
                             default: DOWNLOAD_DV["6_filter-dd_filter_item_4_2"],
                             title: labels[Clang]['6_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_m49_regions"
+                            clUid: "wiews_m49_region_only"
                         },
                         {
                             id: 'dd_filter_item_4_3',
@@ -142,7 +142,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     "iso3": {
                                         "codes": [
                                             {
-                                                "uid": "wiews_m49_regions",
+                                                "uid": "wiews_m49_region_only",
                                                 "codes": DOWNLOAD_DV["6_filter-dd_filter_item_1"]
                                             }
                                         ]
@@ -235,7 +235,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                         "iso3": {
                                             "codes": [
                                                 {
-                                                    "uid": "wiews_m49_regions",
+                                                    "uid": "wiews_m49_region_only",
                                                     "codes": DOWNLOAD_DV["6_filter-dd_filter_item_1"]
                                                 }
                                             ]
@@ -409,7 +409,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             type: 'tree',
                             default: VISUALIZE_DV["6_filter-vd_filter_item_4_2"],
                             title: labels[Clang]['6_filter-vd_filter_item_4_1_title'],
-                            clUid: "wiews_m49_regions"
+                            clUid: "wiews_m49_region_only"
                         },
                         {
                             id: 'vd_filter_item_4_3',

@@ -39,7 +39,7 @@ define([
             "m49": {
                 "codes": [
                     {
-                        "uid": "wiews_m49_regions",
+                        "uid": "wiews_m49_region_only",
                         "codes": ''
                     }
                 ]
@@ -91,7 +91,7 @@ define([
             position : {
                 regions : {
                     1 : 'wiews_fao_region_only',
-                    2 : 'wiews_m49_regions',
+                    2 : 'wiews_m49_region_only',
                     3 : 'sdg_region',
                     4 : 'mdg_region'
                 },

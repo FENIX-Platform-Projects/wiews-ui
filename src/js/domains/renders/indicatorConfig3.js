@@ -50,7 +50,7 @@ define(["highcharts",
                             type: 'tree',
                             default: DOWNLOAD_DV["3_filter-dd_filter_item_4_2"],
                             title: labels[Clang]['3_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_m49_regions"
+                            clUid: "wiews_m49_region_only"
                         },
                         {
                             id: 'dd_filter_item_4_3',
@@ -218,7 +218,7 @@ define(["highcharts",
                                     "m49": {
                                         "codes": [
                                             {
-                                                "uid": "wiews_m49_regions",
+                                                "uid": "wiews_m49_region_only",
                                                 "codes": [ "WITC","1" ]
                                             }
                                         ]

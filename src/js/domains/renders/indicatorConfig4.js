@@ -46,7 +46,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             type: 'tree',
                             default: DOWNLOAD_DV["4_filter-dd_filter_item_4_2"],
                             title: labels[Clang]['4_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_m49_regions"
+                            clUid: "wiews_m49_region_only"
                         },
                         {
                             id: 'dd_filter_item_4_3',
@@ -345,7 +345,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             type: 'tree',
                             default: VISUALIZE_DV["4_filter-vd_filter_item_4_2"],
                             title: labels[Clang]['4_filter-vd_filter_item_4_1_title'],
-                            clUid: "wiews_m49_regions"
+                            clUid: "wiews_m49_region_only"
                         },
                         {
                             id: 'vd_filter_item_4_3',
