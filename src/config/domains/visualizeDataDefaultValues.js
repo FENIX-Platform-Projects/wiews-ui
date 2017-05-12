@@ -47,7 +47,7 @@ define(function () {
         "3_filter-vd_filter_item_6" : ["1", "2"],
         "3_filter-vd_filter_item_7_1" : ["3"],
         "3_filter-vd_filter_item_7_2" : ["36"],
-        "3_filter-vd_filter_item_8" : ["abarema"],
+        "3_filter-vd_filter_item_8" : ["abarema", "aa","abbevillea", "abeliophyllum", "abelia"],
         "3_filter-vd_filter_item_9" : ["1"]
 
     };

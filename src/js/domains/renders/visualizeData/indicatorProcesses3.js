@@ -169,7 +169,7 @@ define([
 
     IndicatorProcesses3.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
-        this._renderGeoSelection(item_to_show_prefix, item_to_show, codelistMaxIndex);
+        //this._renderGeoSelection(item_to_show_prefix, item_to_show, codelistMaxIndex);
     }
 
     IndicatorProcesses3.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
@@ -196,6 +196,8 @@ define([
 
             //The geo element has been checked and updated
             newValues = this._geoItemSelectionValidation(values);
+
+            console.log(newValues);
 
             if((newValues!= null) && (typeof newValues!= 'undefined'))
             {
@@ -374,11 +376,8 @@ define([
 
     IndicatorProcesses3.prototype.updateVariables = function (obj) {
 
-        console.log(obj)
         this.filter = obj.filter;
         this.filter_host_config = obj.filter_host_config;
-        console.log(this.filter_host_config)
-        console.log(this.filter_host_config.geoSelector)
         if((this.filter_host_config!=null)&&(typeof this.filter_host_config!= 'undefined')&&
             (this.filter_host_config.geoSelector!=null)&&(typeof this.filter_host_config.geoSelector!= 'undefined')&&
             (this.filter_host_config.geoSelector.default!=null)&&(typeof this.filter_host_config.geoSelector.default!= 'undefined')){

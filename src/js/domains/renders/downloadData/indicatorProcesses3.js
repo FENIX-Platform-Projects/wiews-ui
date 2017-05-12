@@ -145,9 +145,9 @@ define([
             domain : 'domain',
             wiews_region : 'wiews_region',
             indicator : 'indicator',
-            indicator_label : 'indicator_label',
+            element : 'element',
             iteration : 'iteration',
-            value : 'value'
+            threatened_percentage : 'threatened_percentage'
         },
 
         dashboard_items : {
@@ -298,15 +298,15 @@ define([
         $('[data-field = "'+s.table_columns.wiews_region+'"]').text(dashboardConfig.columntableName[1]);
         $('[data-field = "3"]').attr('data-field', s.table_columns.indicator);
         $('[data-field = "'+s.table_columns.indicator+'"]').text(dashboardConfig.columntableName[2]);
-        $('[data-field = "4"]').attr('data-field', s.table_columns.indicator_label);
-        $('[data-field = "'+s.table_columns.indicator_label+'"]').text(dashboardConfig.columntableName[3]);
+        $('[data-field = "4"]').attr('data-field', s.table_columns.element);
+        $('[data-field = "'+s.table_columns.element+'"]').text(dashboardConfig.columntableName[3]);
         $('[data-field = "5"]').attr('data-field', s.table_columns.iteration);
         $('[data-field = "'+s.table_columns.iteration+'"]').text(dashboardConfig.columntableName[4]);
-        $('[data-field = "6"]').attr('data-field', s.table_columns.value);
-        $('[data-field = "'+s.table_columns.value+'"]').text(dashboardConfig.columntableName[5]);
+        $('[data-field = "6"]').attr('data-field', s.table_columns.threatened_percentage);
+        $('[data-field = "'+s.table_columns.threatened_percentage+'"]').text(dashboardConfig.columntableName[5]);
 
 
-        var tableColumns = [s.table_columns.domain, s.table_columns.wiews_region, s.table_columns.indicator, s.table_columns.indicator_label, s.table_columns.iteration, s.table_columns.value];
+        var tableColumns = [s.table_columns.domain, s.table_columns.wiews_region, s.table_columns.indicator, s.table_columns.element, s.table_columns.iteration, s.table_columns.threatened_percentage];
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params, "1");
@@ -406,14 +406,14 @@ define([
                     case s.table_columns.indicator :
                         row[s.table_columns.indicator] = data[iData][columnsMap[tableCol+'_text']]
                         break;
-                    case s.table_columns.indicator_label :
-                        row[s.table_columns.indicator_label] = data[iData][columnsMap[tableCol+'_value']]
+                    case s.table_columns.element :
+                        row[s.table_columns.element] = data[iData][columnsMap[tableCol+'_value']]
                         break;
                     case s.table_columns.iteration :
                         row[s.table_columns.iteration] = data[iData][columnsMap[tableCol+'_text']]
                         break;
-                    case s.table_columns.value :
-                        row[s.table_columns.value] = this.icUtils.valuesFormatter(separatorValue, data[iData][columnsMap[tableCol+'_value']])
+                    case s.table_columns.threatened_percentage :
+                        row[s.table_columns.threatened_percentage] = data[iData][columnsMap[tableCol+'_value']]
                         break;
                 }
             }
@@ -462,6 +462,11 @@ define([
         return true;
     }
 
+    IndicatorProcesses3.prototype.disable_element = function () {
+
+        $('[data-selector = "'+s.filter_items.item_12+'"]').attr('disabled','disabled');
+    }
+
     IndicatorProcesses3.prototype.updateVariables = function (obj) {
 
         this.filter = obj.filter;
@@ -499,17 +504,6 @@ define([
         dashboardConfig.tableProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.tableProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
         dashboardConfig.tableProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-        var codes = '';
-        if((values[s.filter_items.item_10]!=null)&&(typeof values[s.filter_items.item_10]!='undefined')&&(values[s.filter_items.item_10].length>0)){
-            codes= [ "ind", "nfp", "nfpa", "stk" ];
-        }
-        else{
-            codes= [ "ind", "nfp", "nfpa" ];
-        }
-        dashboardConfig.tableProcess[1].parameters.rows["element"].codes[0].codes = codes;
-
-        var indicator_label = "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_"+params.lang+" || ')' else element_"+params.lang+" end"
-        dashboardConfig.tableProcess[3].parameters.values["indicator_label"] = indicator_label;
 
         return dashboardConfig;
     };

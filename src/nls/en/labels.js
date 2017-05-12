@@ -9,6 +9,7 @@ define(function () {
         "visualize_data": "VISUALIZE DATA",
         "20": "Indicator 20: Number of accessions conserved ex situ under medium or long-term conditions",
         "2": "Indicator 2: Number of PGRFA surveyed/inventoried",
+        "3": "Indicator 3: Percentage of PGRFA surveyed/inventoried",
 
         "loading_in_progress": "Loading in progress",
         "completed": "Completed",
@@ -18,6 +19,7 @@ define(function () {
         "filter-dd_filter_button_2_title": "Table Data",
         "filter-dd_filter_button_3_title": "Raw Data",
 
+        // Indicator 20
         "1_vd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for each selector.",
         "1_vd_filter_button_1_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
         "1_filter-vd_filter_item_1_title": "COUNTRIES",
@@ -40,8 +42,10 @@ define(function () {
         "1_dd_filter_button_1_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
         "1_dd_filter_button_2_msg": "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
         "1_dd_filter_button_2_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+
         "1_dd_filter_button_3_msg": "The selection is not valid. Please, select at least an item for the geographical selector and at least an item for the period selector.",
         "1_dd_filter_button_3_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+
         "1_filter-dd_filter_item_1_title": "COUNTRIES",
         "1_filter-dd_filter_item_4_1_title": "REGIONS",
         "1_filter-dd_filter_item_7_title": "SPECIAL GROUPS",
@@ -73,14 +77,18 @@ define(function () {
         "1_vd_dashboard_item_1_title": "Map title to be placed here",
         "1_vd_dashboard_item_1_footer": "The designations employed and the presentation of material in the maps do not imply the expression of any opinion whatsoever on the part of FAO concerning the legal or constitutional status of any country, territory or sea area, or concerning the delimitation of frontiers. South Sudan declared its independence on July 9, 2011. Due to data availability, the assessment presented in the map for Sudan and South Sudan reflects the situation up to 2011 for the former Sudan.",
 
+
         "1_vd_dashboard_item_2_title": "Chart title to be placed here",
         "1_vd_dashboard_item_3_title": "Accessions by country",
         "1_vd_dashboard_item_4_title": "Accessions by stakeholder",
+
 
         "1_vd_dashboard_item_1_uid": "Indicator20",
         "1_vd_dashboard_item_2_uid": "Indicator20",
         "1_vd_dashboard_item_3_uid": "Indicator20",
         "1_vd_dashboard_item_4_uid": "Indicator20",
+
+
 
         "1_dd_table_title_col_1": "Domain",
         "1_dd_table_title_col_2": "Country",
@@ -88,6 +96,7 @@ define(function () {
         "1_dd_table_title_col_4": "Indicator and Rating",
         "1_dd_table_title_col_5": "Period",
         "1_dd_table_title_col_6": "Value",
+
 
         "2_vd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for each selector.",
         "2_vd_filter_button_1_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
@@ -106,7 +115,6 @@ define(function () {
         "2_filter-vd_filter_item_5_choicesTitle2": "ITPGRFA",
         "2_filter-vd_filter_item_6_choicesTitle1": "Total",
         "2_filter-vd_filter_item_6_choicesTitle2": "List",
-        "2_filter-vd_filter_item_9_choicesTitle1": "Total",
         "2_filter-vd_filter_item_9_choicesTitle1": "Average",
 
         "2_dd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
@@ -166,6 +174,7 @@ define(function () {
         "2_dd_table_title_col_6": "Value",
 
 
+
         // Indicator 3
         "3_vd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for each selector.",
         "3_vd_filter_button_1_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
@@ -216,11 +225,11 @@ define(function () {
         "3_filter-dd_filter_item_8_source1": "Percentage of species threatened out of those surveyed/inventoried",
         "3_filter-dd_filter_item_8_source2": "Percentage of varieties threatened out of those surveyed/inventoried",
         "3_filter-dd_filter_item_10_source1": "Stakeholders",
-        "3_vd_dashboard_item_1_title": "Map title to be placed here",
+        "3_vd_dashboard_item_1_title": "Indicator 3 : Map title to be placed here",
         "3_vd_dashboard_item_1_footer": "The designations employed and the presentation of material in the maps do not imply the expression of any opinion whatsoever on the part of FAO concerning the legal or constitutional status of any country, territory or sea area, or concerning the delimitation of frontiers. South Sudan declared its independence on July 9, 2011. Due to data availability, the assessment presented in the map for Sudan and South Sudan reflects the situation up to 2011 for the former Sudan.",
-        "3_vd_dashboard_item_2_title": "Chart title to be placed here",
-        "3_vd_dashboard_item_3_title": "Accessions by country",
-        "3_vd_dashboard_item_4_title": "Accessions by stakeholder",
+        "3_vd_dashboard_item_2_title": "Indicator 3 : Chart title to be placed here",
+        "3_vd_dashboard_item_3_title": "Indicator 3 : Chart title to be placed here",
+        "3_vd_dashboard_item_4_title": "Indicator 3 : Chart title to be placed here",
         "3_vd_dashboard_item_1_uid": "Indicator3",
         "3_vd_dashboard_item_2_uid": "Indicator3",
         "3_vd_dashboard_item_3_uid": "Indicator3",
@@ -230,7 +239,9 @@ define(function () {
         "3_dd_table_title_col_3": "Element",
         "3_dd_table_title_col_4": "Indicator and Rating",
         "3_dd_table_title_col_5": "Period",
-        "3_dd_table_title_col_6": "Value"
+        "3_dd_table_title_col_6": "Percentage"
+
+
 
     }
 });
