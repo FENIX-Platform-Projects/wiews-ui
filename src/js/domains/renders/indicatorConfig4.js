@@ -79,14 +79,14 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             type: 'tree',
                             default: DOWNLOAD_DV["4_filter-dd_filter_item_7_1"],
                             title: labels[Clang]['4_filter-dd_filter_item_7_title'],
-                            clUid: "wiews_cgrfa"
+                            clUid: "wiews_cgrfa_region_only"
                         },
                         {
                             id: 'dd_filter_item_7_2',
                             type: 'tree',
                             default: DOWNLOAD_DV["4_filter-dd_filter_item_7_2"],
                             title: labels[Clang]['4_filter-dd_filter_item_7_title'],
-                            clUid: "wiews_itpgrfa"
+                            clUid: "wiews_itpgrfa_region_only"
                         },
                         {
                             id: 'dd_filter_item_8',
@@ -378,14 +378,14 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             type: 'tree',
                             default: VISUALIZE_DV["4_filter-vd_filter_item_7_1"],
                             title: labels[Clang]['4_filter-vd_filter_item_7_title'],
-                            clUid: "wiews_cgrfa"
+                            clUid: "wiews_cgrfa_region_only"
                         },
                         {
                             id: 'vd_filter_item_7_2',
                             type: 'tree',
                             default: VISUALIZE_DV["4_filter-vd_filter_item_7_2"],
                             title: labels[Clang]['4_filter-vd_filter_item_7_title'],
-                            clUid: "wiews_itpgrfa"
+                            clUid: "wiews_itpgrfa_region_only"
                         },
                         {
                             id: 'vd_filter_item_8',

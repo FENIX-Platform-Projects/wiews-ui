@@ -79,14 +79,14 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             type: 'tree',
                             default: DOWNLOAD_DV["5_filter-dd_filter_item_7_1"],
                             title: labels[Clang]['5_filter-dd_filter_item_7_title'],
-                            clUid: "wiews_cgrfa"
+                            clUid: "wiews_cgrfa_region_only"
                         },
                         {
                             id: 'dd_filter_item_7_2',
                             type: 'tree',
                             default: DOWNLOAD_DV["5_filter-dd_filter_item_7_2"],
                             title: labels[Clang]['5_filter-dd_filter_item_7_title'],
-                            clUid: "wiews_itpgrfa"
+                            clUid: "wiews_itpgrfa_region_only"
                         },
                         {
                             id: 'dd_filter_item_8',

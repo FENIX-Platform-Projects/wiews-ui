@@ -63,7 +63,7 @@ define([
             "cgrfa": {
                 "codes": [
                     {
-                        "uid": "wiews_cgrfa",
+                        "uid": "wiews_cgrfa_region_only",
                         "codes": ''
                     }
                 ]
@@ -71,7 +71,7 @@ define([
             "itpgrfa": {
                 "codes": [
                     {
-                        "uid": "wiews_itpgrfa",
+                        "uid": "wiews_itpgrfa_region_only",
                         "codes": ''
                     }
                 ]
@@ -96,8 +96,8 @@ define([
                     4 : 'mdg_region'
                 },
                 specialGroups : {
-                    1 : 'wiews_cgrfa',
-                    2 : 'wiews_itpgrfa'
+                    1 : 'wiews_cgrfa_region_only',
+                    2 : 'wiews_itpgrfa_region_only'
                 }
             }
         },
