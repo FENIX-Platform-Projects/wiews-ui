@@ -69,7 +69,7 @@ define(function () {
         "4_filter-dd_filter_item_6" : ["1", "2"],
         "4_filter-dd_filter_item_7_1" : ["007"],
         "4_filter-dd_filter_item_7_2" : ["36"],
-        "4_filter-dd_filter_item_8" : ["2_1", "2_2"],
+        "4_filter-dd_filter_item_8" : ["10"],
         "4_filter-dd_filter_item_9" : ["1"],
         "4_filter-dd_filter_item_10" : ["1"],
         "4_filter-dd_filter_item_11" : ["1", "2", "3"],

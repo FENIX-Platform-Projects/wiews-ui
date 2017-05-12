@@ -103,12 +103,12 @@ define([
         },
 
         buttonMsg : {
-            button_1 : "2_dd_filter_button_1_msg",
-            button_1_list : "2_dd_filter_button_1_list_msg",
-            button_2 : "2_dd_filter_button_2_msg",
-            button_2_list : "2_dd_filter_button_2_list_msg",
-            button_3 : "2_dd_filter_button_3_msg",
-            button_3_list : "2_dd_filter_button_3_list_msg"
+            button_1 : "4_dd_filter_button_1_msg",
+            button_1_list : "4_dd_filter_button_1_list_msg",
+            button_2 : "4_dd_filter_button_2_msg",
+            button_2_list : "4_dd_filter_button_2_list_msg",
+            button_3 : "4_dd_filter_button_3_msg",
+            button_3_list : "4_dd_filter_button_3_list_msg"
         },
 
         error_type : {
