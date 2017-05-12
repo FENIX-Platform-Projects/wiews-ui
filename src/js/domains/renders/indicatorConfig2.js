@@ -39,7 +39,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             type: 'tree',
                             default: DOWNLOAD_DV["2_filter-dd_filter_item_4_1"],
                             title: labels[Clang]['2_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_fao_region"
+                            clUid: "wiews_fao_region_only"
                         },
                         {
                             id: 'dd_filter_item_4_2',
@@ -338,7 +338,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             type: 'tree',
                             default: VISUALIZE_DV["2_filter-vd_filter_item_4_1"],
                             title: labels[Clang]['2_filter-vd_filter_item_4_1_title'],
-                            clUid: "wiews_fao_region"
+                            clUid: "wiews_fao_region_only"
                         },
                         {
                             id: 'vd_filter_item_4_2',
@@ -472,7 +472,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                             "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "wiews_fao_region",
+                                                        "uid": "wiews_fao_region_only",
                                                         "codes": VISUALIZE_DV["2_filter-vd_filter_item_4_1"]
                                                     }
                                                 ]
@@ -596,7 +596,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                             "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "wiews_fao_region",
+                                                        "uid": "wiews_fao_region_only",
                                                         "codes": VISUALIZE_DV["2_filter-vd_filter_item_4_1"]
                                                     }
                                                 ]
@@ -757,7 +757,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                             "m49": {
                                                 "codes": [
                                                     {
-                                                        "uid": "wiews_fao_region",
+                                                        "uid": "wiews_fao_region_only",
                                                         "codes": [
                                                             "5000"
                                                         ]
@@ -855,7 +855,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                             "m49": {
                                                 "codes": [
                                                     {
-                                                        "uid": "wiews_fao_region",
+                                                        "uid": "wiews_fao_region_only",
                                                         "codes": [
                                                             "5000"
                                                         ]
@@ -1092,7 +1092,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                             "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "wiews_fao_region",
+                                                        "uid": "wiews_fao_region_only",
                                                         "codes": [
                                                             "5100",
                                                             "5200",
@@ -1163,7 +1163,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                             "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "wiews_fao_region",
+                                                        "uid": "wiews_fao_region_only",
                                                         "codes": [
                                                             "5100",
                                                             "5200",

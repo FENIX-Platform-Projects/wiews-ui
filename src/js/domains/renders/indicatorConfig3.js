@@ -43,7 +43,7 @@ define(["highcharts",
                             type: 'tree',
                             default: DOWNLOAD_DV["3_filter-dd_filter_item_4_1"],
                             title: labels[Clang]['3_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_fao_region"
+                            clUid: "wiews_fao_region_only"
                         },
                         {
                             id: 'dd_filter_item_4_2',
@@ -567,7 +567,7 @@ define(["highcharts",
                                             "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "wiews_fao_region",
+                                                        "uid": "wiews_fao_region_only",
                                                         "codes": [ "5100","5200","5300","5400" ]
                                                     }
                                                 ]
@@ -704,7 +704,7 @@ define(["highcharts",
                                             "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "wiews_fao_region",
+                                                        "uid": "wiews_fao_region_only",
                                                         "codes": [ "5100","5200","5300","5400" ]
                                                     }
                                                 ]
@@ -843,7 +843,7 @@ define(["highcharts",
                                             "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "wiews_fao_region",
+                                                        "uid": "wiews_fao_region_only",
                                                         "codes": [ "5000" ]
                                                     }
                                                 ]
@@ -983,7 +983,7 @@ define(["highcharts",
                                             "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "wiews_fao_region",
+                                                        "uid": "wiews_fao_region_only",
                                                         "codes": [ "5000" ]
                                                     }
                                                 ]

@@ -31,7 +31,7 @@ define([
             "fao": {
                 "codes": [
                     {
-                        "uid": "wiews_fao_region",
+                        "uid": "wiews_fao_region_only",
                         "codes": ''
                     }
                 ]
@@ -90,7 +90,7 @@ define([
             itpgrfa : 'itpgrfa',
             position : {
                 regions : {
-                    1 : 'wiews_fao_region',
+                    1 : 'wiews_fao_region_only',
                     2 : 'wiews_m49_regions',
                     3 : 'sdg_region',
                     4 : 'mdg_region'

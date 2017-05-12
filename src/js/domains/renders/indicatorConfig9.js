@@ -39,7 +39,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             type: 'tree',
                             default: DOWNLOAD_DV["9_filter-dd_filter_item_4_1"],
                             title: labels[Clang]['9_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_fao_region"
+                            clUid: "wiews_fao_region_only"
                         },
                         {
                             id: 'dd_filter_item_4_2',

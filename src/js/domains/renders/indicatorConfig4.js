@@ -39,7 +39,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             type: 'tree',
                             default: DOWNLOAD_DV["4_filter-dd_filter_item_4_1"],
                             title: labels[Clang]['4_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_fao_region"
+                            clUid: "wiews_fao_region_only"
                         },
                         {
                             id: 'dd_filter_item_4_2',
@@ -338,7 +338,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             type: 'tree',
                             default: VISUALIZE_DV["4_filter-vd_filter_item_4_1"],
                             title: labels[Clang]['4_filter-vd_filter_item_4_1_title'],
-                            clUid: "wiews_fao_region"
+                            clUid: "wiews_fao_region_only"
                         },
                         {
                             id: 'vd_filter_item_4_2',
@@ -471,7 +471,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                                 "fao": {
                                                     "codes": [
                                                         {
-                                                            "uid": "wiews_fao_region",
+                                                            "uid": "wiews_fao_region_only",
                                                             "codes": VISUALIZE_DV["4_filter-vd_filter_item_4_1"]
                                                         }
                                                     ]
@@ -649,7 +649,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                             "fao": {
                                                 "codes": [
                                                     {
-                                                        "uid": "wiews_fao_region",
+                                                        "uid": "wiews_fao_region_only",
                                                         "codes": VISUALIZE_DV["4_filter-vd_filter_item_4_1"]
                                                     }
                                                 ]
