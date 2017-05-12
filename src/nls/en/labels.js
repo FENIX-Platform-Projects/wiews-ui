@@ -448,5 +448,50 @@ define(function () {
         "6_dd_table_title_col_5": "Period",
         "6_dd_table_title_col_6": "Value"
 
+        // Indicator 24
+
+        "8_dd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
+        "8_dd_filter_button_1_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+        "8_dd_filter_button_2_msg": "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
+        "8_dd_filter_button_2_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+
+        "8_dd_filter_button_3_msg": "The selection is not valid. Please, select at least an item for the geographical selector and at least an item for the period selector.",
+        "8_dd_filter_button_3_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+
+        "8_filter-dd_filter_item_1_title": "COUNTRIES",
+        "8_filter-dd_filter_item_4_1_title": "REGIONS",
+        "8_filter-dd_filter_item_7_title": "SPECIAL GROUPS",
+        "8_filter-dd_filter_item_8_title": "ELEMENTS",
+        "8_filter-dd_filter_item_9_title": "PERIODS",
+        "8_filter-dd_filter_item_10_title": "STAKEHOLDERS",
+        "8_filter-dd_filter_item_2_choicesTitle1": "FAO",
+        "8_filter-dd_filter_item_2_choicesTitle2": "M49",
+        "8_filter-dd_filter_item_2_choicesTitle3": "SDG",
+        "8_filter-dd_filter_item_2_choicesTitle4": "MDG",
+        "8_filter-dd_filter_item_3_choicesTitle1": "Total",
+        "8_filter-dd_filter_item_3_choicesTitle2": "List",
+        "8_filter-dd_filter_item_5_choicesTitle1": "CGRFA",
+        "8_filter-dd_filter_item_5_choicesTitle2": "ITPGRFA",
+        "8_filter-dd_filter_item_6_choicesTitle1": "Total",
+        "8_filter-dd_filter_item_6_choicesTitle2": "List",
+        "8_filter-dd_filter_item_11_title": "Thousand Separator in 'Show Data'",
+        "8_filter-dd_filter_item_12_title": "Output Formatting Options",
+        "8_filter-dd_filter_item_11_choicesTitle1": "None",
+        "8_filter-dd_filter_item_11_choicesTitle2": "Comma",
+        "8_filter-dd_filter_item_11_choicesTitle3": "Period",
+        "8_filter-dd_filter_item_12_choicesTitle1": "Flags",
+        "8_filter-dd_filter_item_12_choicesTitle2": "Codes",
+        "8_filter-dd_filter_item_12_choicesTitle3": "Units",
+        "8_filter-dd_filter_item_12_choicesTitle4": "Null Values",
+
+        "8_filter-dd_filter_item_10_source1": "Stakeholders",
+
+        "8_dd_table_title_col_1": "Domain",
+        "8_dd_table_title_col_2": "Country",
+        "8_dd_table_title_col_3": "Element",
+        "8_dd_table_title_col_4": "Indicator and Rating",
+        "8_dd_table_title_col_5": "Period",
+        "8_dd_table_title_col_6": "Value"
+
     }
 });
