@@ -145,7 +145,7 @@ define(function () {
         "8_filter-dd_filter_item_9" : ["1"],
         "8_filter-dd_filter_item_10" : ["stk"],
         "8_filter-dd_filter_item_11" : ["1"],
-        "8_filter-dd_filter_item_12" : ["1", "2", "3"]
+        "8_filter-dd_filter_item_12" : ["1", "2", "3"],
 
 
         //28= indicator id
