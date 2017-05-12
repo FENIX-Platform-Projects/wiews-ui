@@ -77,6 +77,16 @@ define(function () {
             vd_dashboard_category : "1",
             processType : "8",
             noVisualize : true
+        },
+
+        "28": {
+            indicator_id: "9",
+            dd_filter_category : "1",
+            vd_filter_category : "1",
+            dd_dashboard_category : "1",
+            vd_dashboard_category : "1",
+            processType : "9",
+            noVisualize : true
         }
 
     }
