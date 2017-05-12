@@ -687,8 +687,6 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                                 var _that = this;
 
                                                $.each(_that.series, function (i, serie) {
-
-                                                   console.log(serie)
                                                    if(serie.name == "Varieties"){
                                                        serie.update({
                                                            yAxis:1, // reset the order of series ... Total ODA first,
@@ -1033,7 +1031,6 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
 
                                                 $.each(_that.series, function (i, serie) {
 
-                                                    console.log(serie)
                                                     if(serie.name == "Varieties"){
                                                         serie.update({
                                                             yAxis:1, // reset the order of series ... Total ODA first,

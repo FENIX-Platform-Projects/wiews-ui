@@ -11,6 +11,7 @@ define(function () {
         "2": "Indicator 2: Number of PGRFA surveyed/inventoried",
         "10": "Indicator 10: Percentage of national in situ conservation sites with management plans addressing crop wild relatives and wild food plants",
         "3": "Indicator 3: Percentage of PGRFA surveyed/inventoried",
+        "15": "Indicator 15: Number of targeted collecting missions in the country",
 
         "loading_in_progress": "Loading in progress",
         "completed": "Completed",
@@ -82,13 +83,10 @@ define(function () {
         "1_vd_dashboard_item_3_title": "Accessions by country",
         "1_vd_dashboard_item_4_title": "Accessions by stakeholder",
 
-
         "1_vd_dashboard_item_1_uid": "Indicator20",
         "1_vd_dashboard_item_2_uid": "Indicator20",
         "1_vd_dashboard_item_3_uid": "Indicator20",
         "1_vd_dashboard_item_4_uid": "Indicator20",
-
-
 
         "1_dd_table_title_col_1": "Domain",
         "1_dd_table_title_col_2": "Country",
@@ -246,8 +244,6 @@ define(function () {
         "3_dd_table_title_col_6": "Percentage",
 
 
-
-
         "4_vd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for each selector.",
         "4_vd_filter_button_1_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
         "4_filter-vd_filter_item_1_title": "COUNTRIES",
@@ -301,8 +297,7 @@ define(function () {
         "4_vd_dashboard_item_1_title": "Map title to be placed here",
         "4_vd_dashboard_item_1_footer": "The designations employed and the presentation of material in the maps do not imply the expression of any opinion whatsoever on the part of FAO concerning the legal or constitutional status of any country, territory or sea area, or concerning the delimitation of frontiers. South Sudan declared its independence on July 9, 2011. Due to data availability, the assessment presented in the map for Sudan and South Sudan reflects the situation up to 2011 for the former Sudan.",
 
-        "4_vd_dashboard_item_2_title": "Map title to be placed here",
-        "4_vd_dashboard_item_3_title": "Chart title to be placed here",
+        "4_vd_dashboard_item_2_title": "Chart title to be placed here",
 
         "4_vd_dashboard_item_1_uid": "Indicator10",
         "4_vd_dashboard_item_2_uid": "Indicator10",
@@ -314,7 +309,57 @@ define(function () {
         "4_dd_table_title_col_3": "Element",
         "4_dd_table_title_col_4": "Indicator and Rating",
         "4_dd_table_title_col_5": "Period",
-        "4_dd_table_title_col_6": "Value"
+        "4_dd_table_title_col_6": "Value",
+
+        "filter-dd_filter_button_1_title": "Show Data",
+        "filter-dd_filter_button_title": "Download Data",
+        "filter-dd_filter_button_2_title": "Table Data",
+        "filter-dd_filter_button_3_title": "Raw Data",
+
+        // Indicator 15
+
+        "5_dd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
+        "5_dd_filter_button_1_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+        "5_dd_filter_button_2_msg": "The selection is not valid. Please, select at least an item for the geographical selector, at least an item for the elements selector and at least an item for the period selector.",
+        "5_dd_filter_button_2_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+
+        "5_dd_filter_button_3_msg": "The selection is not valid. Please, select at least an item for the geographical selector and at least an item for the period selector.",
+        "5_dd_filter_button_3_list_msg": "The selection is not valid. Please, select list or total in the geographical selector.",
+
+        "5_filter-dd_filter_item_1_title": "COUNTRIES",
+        "5_filter-dd_filter_item_4_1_title": "REGIONS",
+        "5_filter-dd_filter_item_7_title": "SPECIAL GROUPS",
+        "5_filter-dd_filter_item_8_title": "ELEMENTS",
+        "5_filter-dd_filter_item_9_title": "PERIODS",
+        "5_filter-dd_filter_item_10_title": "STAKEHOLDERS",
+        "5_filter-dd_filter_item_2_choicesTitle1": "FAO",
+        "5_filter-dd_filter_item_2_choicesTitle2": "M49",
+        "5_filter-dd_filter_item_2_choicesTitle3": "SDG",
+        "5_filter-dd_filter_item_2_choicesTitle4": "MDG",
+        "5_filter-dd_filter_item_3_choicesTitle1": "Total",
+        "5_filter-dd_filter_item_3_choicesTitle2": "List",
+        "5_filter-dd_filter_item_5_choicesTitle1": "CGRFA",
+        "5_filter-dd_filter_item_5_choicesTitle2": "ITPGRFA",
+        "5_filter-dd_filter_item_6_choicesTitle1": "Total",
+        "5_filter-dd_filter_item_6_choicesTitle2": "List",
+        "5_filter-dd_filter_item_11_title": "Thousand Separator in 'Show Data'",
+        "5_filter-dd_filter_item_12_title": "Output Formatting Options",
+        "5_filter-dd_filter_item_11_choicesTitle1": "None",
+        "5_filter-dd_filter_item_11_choicesTitle2": "Comma",
+        "5_filter-dd_filter_item_11_choicesTitle3": "Period",
+        "5_filter-dd_filter_item_12_choicesTitle1": "Flags",
+        "5_filter-dd_filter_item_12_choicesTitle2": "Codes",
+        "5_filter-dd_filter_item_12_choicesTitle3": "Units",
+        "5_filter-dd_filter_item_12_choicesTitle4": "Null Values",
+
+        "5_filter-dd_filter_item_10_source1": "Stakeholders",
+
+        "5_dd_table_title_col_1": "Domain",
+        "5_dd_table_title_col_2": "Country",
+        "5_dd_table_title_col_3": "Element",
+        "5_dd_table_title_col_4": "Indicator and Rating",
+        "5_dd_table_title_col_5": "Period",
+        "5_dd_table_title_col_6": "Value"
 
     }
 });

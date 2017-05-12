@@ -579,8 +579,11 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             uid: labels[Clang]['4_vd_dashboard_item_2_uid'],
                             config: {
                                 type: "pieold",
-                                x: ["biologicalAccessionId_" + ClangUp], //x axis and series
-                                series: ["unitname"], // series
+                                // x: ["um_" + ClangUp], //x axis and series
+                                //series: ["item"], // series
+                                x: ["item"], //x axis and series
+                                series: ["unitname"],
+                                //series: ["um_" + ClangUp], // series
                                 y: ["value"],//Y dimension
                                 aggregationFn: {"value": "sum"},
                                 useDimensionLabelsIfExist: false,// || default raw else fenixtool
@@ -657,7 +660,6 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                 {
                                     "name": "filter",
                                     "sid": [ { "uid": "indicator10" }, { "uid": "area_selection" } ],
-                                    "rid" : {"uid" : "indicator_data"},
                                     "parameters": {
                                         "columns": [
                                             "managed_sites",
@@ -696,81 +698,189 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                 },
 
                                 {
-                                    "name" : "select",
-                                    "sid": [ { "uid": "indicator_data" } ],
-                                    "parameters" : {
-                                        "values" : {
-                                            "managed_sites" : null
-                                        }
-                                    }
-                                },
-                                {
+
                                     "name": "addcolumn",
+
+                                    "rid" : {"uid" : "indicator_data"},
+
+                                    "parameters": {
+
+                                        "column": {
+
+                                            "dataType": "number",
+
+                                            "id": "value",
+
+                                            "title": { "EN": "Item" },
+
+                                            "subject": "value"
+
+                                        },
+
+                                        "value": {
+
+                                            "keys": [ "1=1" ],
+
+                                            "values": [ "0" ]
+
+                                        }
+
+                                    }
+
+                                },
+
+
+
+                                {
+
+                                    "name" : "select",
+
+                                    "parameters" : {
+
+                                        "values" : {
+
+                                            "value" : "managed_sites"
+
+                                        }
+
+                                    }
+
+                                },
+
+                                {
+
+                                    "name": "addcolumn",
+
                                     "rid" : {"uid" : "managed_sites"},
+
                                     "parameters": {
+
                                         "column": {
+
                                             "dataType": "text",
+
                                             "id": "item",
+
                                             "title": { "EN": "Item" },
+
                                             "subject": "item",
+
                                             "key" : true
+
                                         },
+
                                         "value": {
+
                                             "keys": [ "1=1" ],
+
                                             "values": [ "Managed sites" ]
+
                                         }
+
                                     }
+
                                 },
 
+
+
                                 {
+
                                     "name" : "select",
+
                                     "sid": [ { "uid": "indicator_data" } ],
+
                                     "parameters" : {
+
                                         "values" : {
-                                            "managed_sites" : "(total_sites-managed_sites)"
+
+                                            "value" : "(total_sites-managed_sites)"
+
                                         }
+
                                     }
-                                },
-                                {
-                                    "name": "addcolumn",
-                                    "rid" : {"uid" : "total_sites"},
-                                    "parameters": {
-                                        "column": {
-                                            "dataType": "text",
-                                            "id": "item",
-                                            "title": { "EN": "Item" },
-                                            "subject": "item",
-                                            "key" : true
-                                        },
-                                        "value": {
-                                            "keys": [ "1=1" ],
-                                            "values": [ "Other sites" ]
-                                        }
-                                    }
+
                                 },
 
                                 {
-                                    "name" : "union",
-                                    "sid": [ { "uid": "managed_sites" }, { "uid": "total_sites" } ],
-                                    "parameters" : {
-                                        "logic" : "extend"
-                                    }
-                                },
-                                {
+
                                     "name": "addcolumn",
+
+                                    "rid" : {"uid" : "total_sites"},
+
                                     "parameters": {
+
                                         "column": {
-                                            "id" : "um",
-                                            "title" : { "EN" : "Measurement unit"},
-                                            "dataType" : "code",
-                                            "domain" : { "codes" : [ { "idCodeList" : "wiews_um" } ] },
-                                            "subject":"um"
+
+                                            "dataType": "text",
+
+                                            "id": "item",
+
+                                            "title": { "EN": "Item" },
+
+                                            "subject": "item",
+
+                                            "key" : true
+
                                         },
+
                                         "value": {
+
                                             "keys": [ "1=1" ],
-                                            "values": [ "num" ]
+
+                                            "values": [ "Other sites" ]
+
                                         }
+
                                     }
+
+                                },
+
+
+
+                                {
+
+                                    "name" : "union",
+
+                                    "sid": [ { "uid": "managed_sites" }, { "uid": "total_sites" } ],
+
+                                    "parameters" : {
+
+                                        "logic" : "extend"
+
+                                    }
+
+                                },
+
+                                {
+
+                                    "name": "addcolumn",
+
+                                    "parameters": {
+
+                                        "column": {
+
+                                            "id" : "um",
+
+                                            "title" : { "EN" : "Measurement unit"},
+
+                                            "dataType" : "code",
+
+                                            "domain" : { "codes" : [ { "idCodeList" : "wiews_um" } ] },
+
+                                            "subject":"um"
+
+                                        },
+
+                                        "value": {
+
+                                            "keys": [ "1=1" ],
+
+                                            "values": [ "num" ]
+
+                                        }
+
+                                    }
+
                                 }
                             ]
                         }

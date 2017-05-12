@@ -250,6 +250,7 @@ define([
         paramsForGeoValidation.filter_items_tabItem_first = s.filter_items.tabItem_1;
         paramsForGeoValidation.filter_items_tabItem_second = s.filter_items.tabItem_4;
         paramsForGeoValidation.filter_items_tabItem_third = s.filter_items.tabItem_7;
+        paramsForGeoValidation.filter_items_item_first = s.filter_items.item_1;
         paramsForGeoValidation.filter_items_codelistItem_tabItem_second = s.filter_items.item_2;
         paramsForGeoValidation.filter_items_listTypetItem_tabItem_second = s.filter_items.item_3;
         paramsForGeoValidation.filter_items_codelistItem_tabItem_third = s.filter_items.item_5;
@@ -259,7 +260,7 @@ define([
 
         var newValues = this.icUtils.geoItemSelectionValidation(paramsForGeoValidation);
 
-        if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.listType!=null)&&(typeof newValues.listType!="undefined")&&(newValues.listType.length<=0)){
+        if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.listTypeError)){
             s.filterDivMsg1_text = s.error_type.list;
         }
 

@@ -174,7 +174,6 @@ define([
 
     IndicatorProcesses3.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
-        console.log(item_to_show_prefix, item_to_show, codelistMaxIndex)
         var index = 1;
         for(index = 1; index<= codelistMaxIndex; index++) {
             var indicatorFilterSection = this.el.find('[data-selector = "'+item_to_show_prefix+'_'+index+'"]');
@@ -196,8 +195,6 @@ define([
 
             //The geo element has been checked and updated
             newValues = this._geoItemSelectionValidation(values);
-
-            console.log(newValues);
 
             if((newValues!= null) && (typeof newValues!= 'undefined'))
             {
@@ -237,7 +234,6 @@ define([
             console.log("true")
         }
 
-        console.log(newValues)
         return newValues;
     }
 
@@ -263,10 +259,9 @@ define([
 
         var newValues = this.icUtils.geoItemSelectionValidation(paramsForGeoValidation);
 
-        if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.listType!=null)&&(typeof newValues.listType!="undefined")&&(newValues.listType.length<=0)){
+        if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.listTypeError)){
             s.filterDivMsg1_text = s.error_type.list;
         }
-        console.log(newValues)
 
         return newValues.values;
     }

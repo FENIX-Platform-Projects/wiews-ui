@@ -72,13 +72,14 @@ define([
     IndicatorCommonUtils.prototype.geoItemSelectionValidation = function (paramsForGeoValidation) {
 
         var newValues = '', codelist = '', listType = '', values = paramsForGeoValidation.values;
+        var listTypeError = false;
         var regionFilterItem = paramsForGeoValidation.regionFilterItem, specialGroupFilterItem = paramsForGeoValidation.specialGroupFilterItem;
         var checkboxRegionItem = paramsForGeoValidation.checkboxRegionItem, checkboxSpecialGroupItem = paramsForGeoValidation.checkboxSpecialGroupItem;
         var toDelete = paramsForGeoValidation.toDelete;
         if((paramsForGeoValidation.tab_active_geo_item!=null)&&(typeof paramsForGeoValidation.tab_active_geo_item != 'undefined')){
             switch (paramsForGeoValidation.tab_active_geo_item){
                 case paramsForGeoValidation.filter_items_tabItem_first:
-                    newValues = values.values[s.filter_items.item_1];
+                    newValues = values.values[paramsForGeoValidation.filter_items_item_first];
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
                         codelist = s.choices_code.iso3;
                         listType = [];
@@ -94,6 +95,7 @@ define([
                         listType = this._geoSelector_getListType(values.values[paramsForGeoValidation.filter_items_listTypetItem_tabItem_second], paramsForGeoValidation.filter_items_listTypetItem_tabItem_second, checkboxRegionItem, checkboxSpecialGroupItem);
                         if(listType.length<=0){
                             newValues = '';
+                            listTypeError = true;
                         }
                         else{
                             newValues = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
@@ -107,6 +109,7 @@ define([
                         listType = this._geoSelector_getListType(values.values[paramsForGeoValidation.filter_items_listTypetItem_tabItem_third], paramsForGeoValidation.filter_items_listTypetItem_tabItem_third, checkboxRegionItem, checkboxSpecialGroupItem);
                         if(listType.length<=0){
                             newValues = '';
+                            listTypeError = true;
                         }
                         else{
                             newValues = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
@@ -120,6 +123,7 @@ define([
         var updatedValues = {};
         updatedValues.values = newValues;
         updatedValues.listType = listType;
+        updatedValues.listTypeError = listTypeError;
 
         return updatedValues;
     }
