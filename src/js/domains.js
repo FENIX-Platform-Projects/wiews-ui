@@ -16,12 +16,12 @@ define([
     var Clang = C.lang.toLowerCase();
 
     //This code has to be passed by Typo3
-   // var selected = {code: "20"};
+    var selected = {code: "20"};
    //  var selected = {code: "2"};
    //  var selected = {code: "10"};
     //var selected = {code: "15"};
     // var selected = {code: "22"};
-    var selected = {code: "24"};
+   // var selected = {code: "24"};
 
     var s = {
         noVisualize : false,
