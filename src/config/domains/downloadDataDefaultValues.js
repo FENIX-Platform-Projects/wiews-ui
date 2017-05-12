@@ -166,7 +166,23 @@ define(function () {
         "9_filter-dd_filter_item_11" : ["1"],
         "9_filter-dd_filter_item_12" : ["1", "2", "3"],
 
-
+        //28= indicator id
+        "10_filter-dd_filter_item_1" :  ["ABW","AFG","AGO","AIA"],
+        "10_filter-dd_filter_item_2" : ["1"],
+        "10_filter-dd_filter_item_3" : ["1", "2"],
+        "10_filter-dd_filter_item_4_1" : ["5000"],
+        "10_filter-dd_filter_item_4_2" : ["21"],
+        "10_filter-dd_filter_item_4_3" : ["744"],
+        "10_filter-dd_filter_item_4_4" : ["826"],
+        "10_filter-dd_filter_item_5" : ["1"],
+        "10_filter-dd_filter_item_6" : ["1", "2"],
+        "10_filter-dd_filter_item_7_1" : ["007"],
+        "10_filter-dd_filter_item_7_2" : ["36"],
+        "10_filter-dd_filter_item_8" : ["16"],
+        "10_filter-dd_filter_item_9" : ["1"],
+        "10_filter-dd_filter_item_10" : ["stk"],
+        "10_filter-dd_filter_item_11" : ["1"],
+        "10_filter-dd_filter_item_12" : ["1", "2", "3"],
 
     };
 });
