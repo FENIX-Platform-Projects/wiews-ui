@@ -278,8 +278,8 @@ define(["highcharts",
                     items: [{
                             id: 'vd_filter_item_8',
                             type: 'tree',
-                            default: VISUALIZE_DV["3_filter-vd_filter_item_9"],
-                            title: labels[Clang]['3_filter-vd_filter_item_9_title'],
+                            default: VISUALIZE_DV["3_filter-vd_filter_item_8"],
+                            title: labels[Clang]['3_filter-vd_filter_item_8_title'],
                             clUid: "wiews_iteration",
                             max: 1
                         }]
@@ -289,6 +289,7 @@ define(["highcharts",
                     uid: "VisualizaDataDashboard",
                     items: [
                         // Maps
+
                         {
                             //Average annual growth rate 010103
                             id: "vd_dashboard_item_1", //ref [data-item=':id'] // 010103  Average annual growth rate
@@ -367,7 +368,7 @@ define(["highcharts",
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_9"]
+                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_8"]
                                                     }
                                                 ]
                                             },
@@ -470,7 +471,7 @@ define(["highcharts",
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_9"]
+                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_8"]
                                                     }
                                                 ]
                                             },
@@ -495,6 +496,7 @@ define(["highcharts",
                                 }
                             ]
                         },
+
                         // Charts
                         {
                             id: 'vd_dashboard_item_3',
@@ -513,13 +515,12 @@ define(["highcharts",
                             //This is used for the export button action
                             uid: labels[Clang]['3_vd_dashboard_item_3_uid'],
                             config: {
-
                                 type: "column",
-                                x: ["wiews_region"], //x axis
-                                //series: ["value"], // series
+                                x: ["wiews_region_"+ClangUp], //x axis
+                                series: ["indicator_type"],// series
                                 y: ["value"],//Y dimension
                                 aggregationFn: {"value": "sum"},
-                                useDimensionLabelsIfExist: true,// || default raw else fenixtool
+                                //useDimensionLabelsIfExist: true,// || default raw else fenixtool
                                 config: {
                                     tooltip: {
                                         shared: true
@@ -576,29 +577,16 @@ define(["highcharts",
                                     }
                                 },
 
-                                {
-                                    "name": "addcolumn",
-                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
-                                    "parameters": {
-                                        "column": {
-                                            "dataType": "number",
-                                            "id": "value",
-                                            "title": { "EN": "Value" },
-                                            "subject": "value"
-                                        },
-                                        "value": {
-                                            "keys": [ "1=1" ],
-                                            "values": [ "@@direct species - threatened_species" ]
-                                        }
-                                    }
-                                },
 
                                 {
                                     "name": "filter",
+                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
+                                    "rid" : {"uid": "indicator_data"},
                                     "parameters": {
                                         "columns": [
                                             "wiews_region",
-                                            "value"
+                                            "threatened_species",
+                                            "species"
                                         ],
                                         "rows": {
                                             "indicator": {
@@ -613,7 +601,7 @@ define(["highcharts",
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_9"]
+                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_8"]
                                                     }
                                                 ]
                                             },
@@ -630,7 +618,113 @@ define(["highcharts",
                                             }
                                         }
                                     }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [ { "uid": "indicator_data" } ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "text",
+                                            "id": "item",
+                                            "title": { "EN": "Item" },
+                                            "subject": "item",
+                                            "key" : true
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "Threatened" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "rid" : { "uid" : "threatened_data" },
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "number",
+                                            "id": "value",
+                                            "title": { "EN": "Value" },
+                                            "subject": "value"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "@@direct threatened_species" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [ { "uid": "indicator_data" } ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "text",
+                                            "id": "item",
+                                            "title": { "EN": "Item" },
+                                            "subject": "item",
+                                            "key" : true
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "Not threatened" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "rid" : { "uid" : "non_threatened_data" },
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "number",
+                                            "id": "value",
+                                            "title": { "EN": "Value" },
+                                            "subject": "value"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "@@direct species - threatened_species" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "union",
+                                    "sid": [ { "uid": "threatened_data" }, { "uid": "non_threatened_data" } ],
+                                    "parameters": {}
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "parameters": {
+                                        "column": {
+                                            "id" : "um",
+                                            "title" : { "EN" : "Measurement unit"},
+                                            "dataType" : "code",
+                                            "domain" : { "codes" : [ { "idCodeList" : "wiews_um" } ] },
+                                            "subject":"um"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "num" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "filter",
+                                    "parameters": {
+                                        "columns": [
+                                            "wiews_region",
+                                            "item",
+                                            "value",
+                                            "um"
+                                        ]
+                                    }
                                 }
+
                             ]
                         },
                         {
@@ -650,13 +744,12 @@ define(["highcharts",
                             //This is used for the export button action
                             uid: labels[Clang]['3_vd_dashboard_item_4_uid'],
                             config: {
-
                                 type: "column",
-                                x: ["wiews_region"], //x axis
-                                //series: ["value"], // series
+                                x: ["wiews_region_"+ClangUp], //x axis
+                                series: ["indicator_type"],// series
                                 y: ["value"],//Y dimension
                                 aggregationFn: {"value": "sum"},
-                                useDimensionLabelsIfExist: true,// || default raw else fenixtool
+                                //useDimensionLabelsIfExist: true,// || default raw else fenixtool
                                 config: {
                                     tooltip: {
                                         shared: true
@@ -690,7 +783,7 @@ define(["highcharts",
                                 }
 
                             },
-                            postProcess: [
+                            postProcess:[
                                 {
                                     "name": "wiews_area_filter",
                                     "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
@@ -713,29 +806,16 @@ define(["highcharts",
                                     }
                                 },
 
-                                {
-                                    "name": "addcolumn",
-                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
-                                    "parameters": {
-                                        "column": {
-                                            "dataType": "number",
-                                            "id": "value",
-                                            "title": { "EN": "Value" },
-                                            "subject": "value"
-                                        },
-                                        "value": {
-                                            "keys": [ "1=1" ],
-                                            "values": [ "@@direct species - threatened_species" ]
-                                        }
-                                    }
-                                },
 
                                 {
                                     "name": "filter",
+                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
+                                    "rid" : {"uid": "indicator_data"},
                                     "parameters": {
                                         "columns": [
                                             "wiews_region",
-                                            "value"
+                                            "threatened_species",
+                                            "species"
                                         ],
                                         "rows": {
                                             "indicator": {
@@ -767,12 +847,116 @@ define(["highcharts",
                                             }
                                         }
                                     }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [ { "uid": "indicator_data" } ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "text",
+                                            "id": "item",
+                                            "title": { "EN": "Item" },
+                                            "subject": "item",
+                                            "key" : true
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "Threatened" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "rid" : { "uid" : "threatened_data" },
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "number",
+                                            "id": "value",
+                                            "title": { "EN": "Value" },
+                                            "subject": "value"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "@@direct threatened_species" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [ { "uid": "indicator_data" } ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "text",
+                                            "id": "item",
+                                            "title": { "EN": "Item" },
+                                            "subject": "item",
+                                            "key" : true
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "Not threatened" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "rid" : { "uid" : "non_threatened_data" },
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "number",
+                                            "id": "value",
+                                            "title": { "EN": "Value" },
+                                            "subject": "value"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "@@direct species - threatened_species" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "union",
+                                    "sid": [ { "uid": "threatened_data" }, { "uid": "non_threatened_data" } ],
+                                    "parameters": {}
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "parameters": {
+                                        "column": {
+                                            "id" : "um",
+                                            "title" : { "EN" : "Measurement unit"},
+                                            "dataType" : "code",
+                                            "domain" : { "codes" : [ { "idCodeList" : "wiews_um" } ] },
+                                            "subject":"um"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "num" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "filter",
+                                    "parameters": {
+                                        "columns": [
+                                            "wiews_region",
+                                            "item",
+                                            "value",
+                                            "um"
+                                        ]
+                                    }
                                 }
+
                             ]
 
                         },
-
-
                         {
                             id: 'vd_dashboard_item_5',
                             type: 'chart',
@@ -790,12 +974,13 @@ define(["highcharts",
                             //This is used for the export button action
                             uid: labels[Clang]['3_vd_dashboard_item_5_uid'],
                             config: {
-                                type: "column",
-                                x: ["wiews_region"], //x axis
-                                //series: ["value"], // series
+                                type: "pieold",
+                                x: ["item"], //x axis and series
+                                series: ["um"], // series
                                 y: ["value"],//Y dimension
                                 aggregationFn: {"value": "sum"},
-                                useDimensionLabelsIfExist: true,// || default raw else fenixtool
+                                useDimensionLabelsIfExist: false,// || default raw else fenixtool
+
                                 config: {
                                     tooltip: {
                                         shared: true
@@ -853,28 +1038,13 @@ define(["highcharts",
                                 },
 
                                 {
-                                    "name": "addcolumn",
-                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
-                                    "parameters": {
-                                        "column": {
-                                            "dataType": "number",
-                                            "id": "value",
-                                            "title": { "EN": "Value" },
-                                            "subject": "value"
-                                        },
-                                        "value": {
-                                            "keys": [ "1=1" ],
-                                            "values": [ "@@direct species - threatened_species" ]
-                                        }
-                                    }
-                                },
-
-                                {
                                     "name": "filter",
+                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
+                                    "rid" : {"uid": "indicator_data"},
                                     "parameters": {
                                         "columns": [
-                                            "wiews_region",
-                                            "value"
+                                            "species",
+                                            "threatened_species"
                                         ],
                                         "rows": {
                                             "indicator": {
@@ -889,7 +1059,7 @@ define(["highcharts",
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_9"]
+                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_8"]
                                                     }
                                                 ]
                                             },
@@ -906,13 +1076,120 @@ define(["highcharts",
                                             }
                                         }
                                     }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [ { "uid": "indicator_data" } ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "text",
+                                            "id": "item",
+                                            "title": { "EN": "Item" },
+                                            "subject": "item",
+                                            "key" : true
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "Threatened" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "rid" : { "uid" : "threatened_data" },
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "number",
+                                            "id": "value",
+                                            "title": { "EN": "Value" },
+                                            "subject": "value"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "@@direct threatened_species" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [ { "uid": "indicator_data" } ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "text",
+                                            "id": "item",
+                                            "title": { "EN": "Item" },
+                                            "subject": "item",
+                                            "key" : true
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "Not threatened" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "rid" : { "uid" : "non_threatened_data" },
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "number",
+                                            "id": "value",
+                                            "title": { "EN": "Value" },
+                                            "subject": "value"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "@@direct species - threatened_species" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "union",
+                                    "sid": [ { "uid": "threatened_data" }, { "uid": "non_threatened_data" } ],
+                                    "parameters": {}
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "parameters": {
+                                        "column": {
+                                            "id" : "um",
+                                            "title" : { "EN" : "Measurement unit"},
+                                            "dataType" : "code",
+                                            "domain" : { "codes" : [ { "idCodeList" : "wiews_um" } ] },
+                                            "subject":"um"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "num" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "filter",
+                                    "parameters": {
+                                        "columns": [
+                                            "item",
+                                            "value",
+                                            "um"
+                                        ]
+                                    }
                                 }
+
                             ]
 
 
 
 
+
                         },
+
                         {
                             id: 'vd_dashboard_item_6',
                             type: 'chart',
@@ -930,12 +1207,12 @@ define(["highcharts",
                             //This is used for the export button action
                             uid: labels[Clang]['3_vd_dashboard_item_6_uid'],
                             config: {
-                                type: "column",
-                                x: ["wiews_region"], //x axis
-                                //series: ["value"], // series
+                                type: "pieold",
+                                x: ["item"], //x axis and series
+                                series: ["um"], // series
                                 y: ["value"],//Y dimension
                                 aggregationFn: {"value": "sum"},
-                                useDimensionLabelsIfExist: true,// || default raw else fenixtool
+                                useDimensionLabelsIfExist: false,// || default raw else fenixtool
                                 config: {
                                     tooltip: {
                                         shared: true
@@ -993,28 +1270,13 @@ define(["highcharts",
                                 },
 
                                 {
-                                    "name": "addcolumn",
-                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
-                                    "parameters": {
-                                        "column": {
-                                            "dataType": "number",
-                                            "id": "value",
-                                            "title": { "EN": "Value" },
-                                            "subject": "value"
-                                        },
-                                        "value": {
-                                            "keys": [ "1=1" ],
-                                            "values": [ "@@direct species - threatened_species" ]
-                                        }
-                                    }
-                                },
-
-                                {
                                     "name": "filter",
+                                    "sid": [ { "uid": "indicator3" }, { "uid": "area_selection" } ],
+                                    "rid" : {"uid": "indicator_data"},
                                     "parameters": {
                                         "columns": [
-                                            "wiews_region",
-                                            "value"
+                                            "species",
+                                            "threatened_species"
                                         ],
                                         "rows": {
                                             "indicator": {
@@ -1029,7 +1291,7 @@ define(["highcharts",
                                                 "codes": [
                                                     {
                                                         "uid": "wiews_iteration",
-                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_9"]
+                                                        "codes": VISUALIZE_DV["3_filter-vd_filter_item_8"]
                                                     }
                                                 ]
                                             },
@@ -1046,13 +1308,119 @@ define(["highcharts",
                                             }
                                         }
                                     }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [ { "uid": "indicator_data" } ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "text",
+                                            "id": "item",
+                                            "title": { "EN": "Item" },
+                                            "subject": "item",
+                                            "key" : true
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "Threatened" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "rid" : { "uid" : "threatened_data" },
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "number",
+                                            "id": "value",
+                                            "title": { "EN": "Value" },
+                                            "subject": "value"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "@@direct threatened_species" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "sid": [ { "uid": "indicator_data" } ],
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "text",
+                                            "id": "item",
+                                            "title": { "EN": "Item" },
+                                            "subject": "item",
+                                            "key" : true
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "Not threatened" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "rid" : { "uid" : "non_threatened_data" },
+                                    "parameters": {
+                                        "column": {
+                                            "dataType": "number",
+                                            "id": "value",
+                                            "title": { "EN": "Value" },
+                                            "subject": "value"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "@@direct species - threatened_species" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "union",
+                                    "sid": [ { "uid": "threatened_data" }, { "uid": "non_threatened_data" } ],
+                                    "parameters": {}
+                                },
+
+                                {
+                                    "name": "addcolumn",
+                                    "parameters": {
+                                        "column": {
+                                            "id" : "um",
+                                            "title" : { "EN" : "Measurement unit"},
+                                            "dataType" : "code",
+                                            "domain" : { "codes" : [ { "idCodeList" : "wiews_um" } ] },
+                                            "subject":"um"
+                                        },
+                                        "value": {
+                                            "keys": [ "1=1" ],
+                                            "values": [ "num" ]
+                                        }
+                                    }
+                                },
+
+                                {
+                                    "name": "filter",
+                                    "parameters": {
+                                        "columns": [
+                                            "item",
+                                            "value",
+                                            "um"
+                                        ]
+                                    }
                                 }
+
                             ]
 
 
 
 
-                        },
+
+                        }
 
                     ]
                 }

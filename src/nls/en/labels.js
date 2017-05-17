@@ -185,8 +185,7 @@ define(function () {
         "3_filter-vd_filter_item_1_title": "COUNTRIES",
         "3_filter-vd_filter_item_4_1_title": "REGIONS",
         "3_filter-vd_filter_item_7_title": "SPECIAL GROUPS",
-        "3_filter-vd_filter_item_8_title": "GENUS",
-        "3_filter-vd_filter_item_9_title": "PERIODS",
+        "3_filter-vd_filter_item_8_title": "PERIODS",
         "3_filter-vd_filter_item_2_choicesTitle1": "FAO",
         "3_filter-vd_filter_item_2_choicesTitle2": "M49",
         "3_filter-vd_filter_item_2_choicesTitle3": "SDG",
@@ -585,8 +584,9 @@ define(function () {
         "10_dd_table_title_col_3": "Element",
         "10_dd_table_title_col_4": "Indicator and Rating",
         "10_dd_table_title_col_5": "Period",
-        "10_dd_table_title_col_6": "Value"
+        "10_dd_table_title_col_6": "Value",
 
+        "10_filter-vd_filter_item_8_title": "PERIODS"
 
 
     }

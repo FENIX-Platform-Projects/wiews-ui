@@ -92,11 +92,10 @@ define(function () {
         "16": {
             indicator_id: "10",
             dd_filter_category : "1",
-            vd_filter_category : "1",
+            vd_filter_category : "3",
             dd_dashboard_category : "1",
             vd_dashboard_category : "1",
-            processType : "10",
-            noVisualize : true
+            processType : "10"
         }
 
     }
