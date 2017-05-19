@@ -391,6 +391,10 @@
 
   /* ################ VISUALIZE DATA ########################## */
 
+  /* - disable visualize data button - */
+  #domainsTab li.disable-temp a {color:#cccccc !important;}
+  #domainsTab li.disable-temp a:hover {background:#ffffff !important; cursor: default !important; border: none !important;}
+
   .selectize-dropdown {
     z-index: 99999;
   }
