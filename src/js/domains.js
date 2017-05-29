@@ -10,7 +10,7 @@ define([
     "./domains/visualizeData",
     "../nls/labels",
     "bootstrap"
-], function ($, log, _, C, PAGC, CATEG, template, DownloadData, VisualizeData, labels) {
+], function ($, log, _, C, PAGC, CATEG, template, DownloadData, VisualizeData, labels, bootstrap) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();

@@ -344,6 +344,25 @@ define([
 
     };
 
+    IndicatorProcesses3.prototype.onClickButton3 = function (values, dashboardConfig, params) {
+
+        var newDashboardConfig =null;
+        var newValues = this._filterSelectionValidation(values, params, "3");
+        if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
+        {
+            var self = this;
+            newDashboardConfig ={};
+            $.extend(true, newDashboardConfig, dashboardConfig);
+
+            if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
+                newDashboardConfig = self._download_element_raw_data_configuration_update(newDashboardConfig, newValues, params);
+            }
+        }
+
+        return newDashboardConfig;
+
+    };
+
 
         IndicatorProcesses3.prototype.bindEventListener = function () {
         var self = this;
