@@ -16,12 +16,13 @@ define([
     var Clang = C.lang.toLowerCase();
 
     //This code has to be passed by Typo3
-    var selected = {code: "20"};
+     var selected = {code: "20"};
    //  var selected = {code: "2"};
    //  var selected = {code: "10"};
     //var selected = {code: "15"};
     // var selected = {code: "22"};
    // var selected = {code: "24"};
+    //var selected = {code: "3"};
 
     var s = {
         noVisualize : false,
@@ -106,8 +107,16 @@ define([
 
     Domains.prototype._elementSetting = function () {
 
+        // Set Domain
+        this.$el.find('[data-role="domain"]').html(labels[Clang]['domain_'+this.selected_indicator.code])
+        // Set Activity1
+        this.$el.find('[data-role="activity1"]').html(labels[Clang]['activity1_'+this.selected_indicator.code])
+        // Set Activity2
+        this.$el.find('[data-role="activity2"]').html(labels[Clang]['activity2_'+this.selected_indicator.code])
         // Set Title
-        this.$el.find('[data-role="domain-title"]').html(labels[Clang][this.selected_indicator.code])
+        this.$el.find('[data-role="title"]').html(labels[Clang]['title_'+this.selected_indicator.code])
+        // Set Indicator
+        this.$el.find('[data-role="indicator"]').html(labels[Clang]['indicator_'+this.selected_indicator.code])
     };
 
     //Initialization of the Download Data and Visualize Data Tab
