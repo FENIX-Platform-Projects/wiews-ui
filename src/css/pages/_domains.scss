@@ -8,10 +8,17 @@
 
   /* body {font-size: 1.5em!important;} */
 
-  h6.truncate {
-    font-size: 15px;
-    height: 26px;
-  }
+  h6.truncate {font-size: 15px; height: 26px;}
+
+  .indicator-detail {font-style:italic;}
+
+  .indicator-detail .activity1,
+  .indicator-detail .title {float: left; font-weight: bold; margin-right: 5px;}
+
+  .indicator-detail .title,
+  .indicator-detail .indicator {font-style:normal; font-size: 16px; margin-top: 5px; margin-bottom: 12px; white-space: normal;}
+
+
 
   .nav-tabs {
     border-bottom: 1px solid #ddd;
@@ -227,6 +234,8 @@
   #domainsTab.nav-tabs {border-bottom: none;}
   .tab-content .nav-tabs > li > a {font-size: 1.5em;}
   */
+
+
 
   .fx-tree-buttons {
     margin-top: 15px;
