@@ -10,19 +10,19 @@
 
   h6.truncate {font-size: 15px; height: 26px;}
 
-  .indicator-detail {font-style:italic; color:#222222;}
+  .indicator-detail {font-style:italic; color:#222222; font-size: 0.95em;}
 
   .indicator-detail .activity1,
   .indicator-detail .title {float: left; font-weight: bold; margin-right: 9px;}
 
   .indicator-detail .title,
-  .indicator-detail .indicator {font-style:normal; font-size: 18px; margin-top: 2px; margin-bottom: 12px; white-space: normal;}
+  .indicator-detail .indicator {font-style:normal; font-size: 15px; margin-top: 2px; margin-bottom: 12px; white-space: normal;}
 
   .indicator-detail .activity2 {white-space: normal;}
 
-  .indicator-detail .domain {font-weight: 600; margin-bottom: 2px;}
-  .indicator-detail .title {max-width:40%; line-height: 1.3em;}
-  .indicator-detail .indicator {line-height: 1.3em;}
+  .indicator-detail .domain {font-weight: 600; margin-bottom: 0px;}
+  .indicator-detail .title {max-width: 40%; line-height: 1.3em;}
+  .indicator-detail .indicator {line-height: 1.3em; max-width:65%;}
 
   .nav-tabs {
     border-bottom: 1px solid #ddd;
