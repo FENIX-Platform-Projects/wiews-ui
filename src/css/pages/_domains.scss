@@ -284,7 +284,7 @@
   }
 
   .btn-group-justified > .btn-group .btn {
-    width: 100%;
+    width: 90%;
     background: #ffffff;
     color: #000;
   }
@@ -292,8 +292,8 @@
     /* max-width: 60%; */
   }
   .btn-group > .btn-group:first-child:not(:last-child) > .btn:last-child, .btn-group > .btn-group:first-child:not(:last-child) > .dropdown-toggle { /* width: 30%; min-width: 105px;*/
-    /* max-width: 60%;
-    float: right;  */
+    /* max-width: 60%; */
+    float: right;
   }
 
   i.left {
