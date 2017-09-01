@@ -366,8 +366,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             }
                         ]
                     }
-
-
                 }
             },
             visualizeData: {

@@ -207,7 +207,7 @@ define(["highcharts",
                             }
                         }
                     ],
-                    downloadProcess : [
+                    downloadProcessTableData : [
                         {
                             "name": "wiews_area_filter",
                             "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
@@ -268,6 +268,53 @@ define(["highcharts",
                             "parameters": {
                                 "rank" : "ASC",
                                 "wiews_region" : "ASC"
+                            }
+                        }
+                    ],
+                    downloadProcessRawData : [
+                        {
+                            "name": "wiews_area_filter",
+                            "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                            "rid" : { "uid" : "area_selection" },
+                            "result" : false,
+                            "parameters": {
+                                "filter" : {
+                                    "iso3": {
+                                        "codes": [
+                                            {
+                                                "uid": "ISO3",
+                                                "codes": DOWNLOAD_DV["3_filter-dd_filter_item_1"]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+
+                        {
+                            "name": "filter",
+                            "sid": [ { "uid": "raw_indicator3" }, { "uid": "area_selection" } ],
+                            "parameters": {
+                                "rows": {
+                                    "iteration": {
+                                        "codes": [
+                                            {
+                                                "uid": "wiews_iteration",
+                                                "codes": DOWNLOAD_DV["3_filter-dd_filter_item_9"]
+                                            }
+                                        ]
+                                    },
+                                    "country" : {
+                                        "variable" : "required_countries"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "order",
+                            "parameters": {
+                                "country" : "ASC",
+                                "species" : "ASC"
                             }
                         }
                     ]

@@ -336,7 +336,7 @@ define([
             $.extend(true, newDashboardConfig, dashboardConfig);
 
             if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
-                newDashboardConfig = self._download_element_configuration_update(newDashboardConfig, newValues, params);
+                newDashboardConfig = self._download_element_table_element_configuration_update(newDashboardConfig, newValues, params);
             }
         }
 
@@ -364,7 +364,7 @@ define([
     };
 
 
-        IndicatorProcesses3.prototype.bindEventListener = function () {
+    IndicatorProcesses3.prototype.bindEventListener = function () {
         var self = this;
         var anchor;
         $( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function( evt ) {
@@ -528,10 +528,32 @@ define([
     IndicatorProcesses3.prototype._download_element_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
-        dashboardConfig.downloadProcess[0].parameters.filter = {};
-        dashboardConfig.downloadProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
-        dashboardConfig.downloadProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-        dashboardConfig.downloadProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
+        dashboardConfig.downloadProcessTableData[0].parameters.filter = {};
+        dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist] = s.geo_filter[codelist];
+        dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.downloadProcessTableData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
+
+        return dashboardConfig;
+    };
+
+    IndicatorProcesses3.prototype._download_element_table_element_configuration_update = function (dashboardConfig, values, params) {
+
+        var codelist = values[s.geo_property].codelist;
+        dashboardConfig.downloadProcessTableData[0].parameters.filter = {};
+        dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist] = s.geo_filter[codelist];
+        dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.downloadProcessTableData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
+
+        return dashboardConfig;
+    };
+
+    IndicatorProcesses3.prototype._download_element_raw_data_configuration_update = function (dashboardConfig, values, params) {
+
+        var codelist = values[s.geo_property].codelist;
+        dashboardConfig.downloadProcessRawData[0].parameters.filter = {};
+        dashboardConfig.downloadProcessRawData[0].parameters.filter[codelist] = s.geo_filter[codelist];
+        dashboardConfig.downloadProcessRawData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.downloadProcessRawData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
 
         return dashboardConfig;
     };
