@@ -220,153 +220,133 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         }
 
                     ],
-                    downloadProcessTableData: {
-                        "outConfig" : {
-                            "plugin" : "outputCSV"
-                        },
-                        "flow" : [
-                            {
-                                "name": "wiews_area_filter",
-                                "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
-                                "rid" : { "uid" : "area_selection" },
-                                "result" : false,
-                                "parameters": {
-                                    "filter" : {
-                                        "m49": {
-                                            "codes": [
-                                                {
-                                                    "uid": "wiews_m49_regions",
-                                                    "codes": DOWNLOAD_DV["10_filter-dd_filter_item_1"]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            },
-
-                            {
-                                "sid": [ { "uid": "indicator16" }, { "uid": "area_selection" } ],
-                                "name": "filter",
-                                "parameters": {
-                                    "columns": [
-                                        "domain",
-                                        "wiews_region",
-                                        "stakeholder",
-                                        "indicator",
-                                        "element",
-                                        "iteration",
-                                        "value",
-                                        "um",
-                                        "rank"
-                                    ],
-                                    "rows": {
-                                        "iteration": {
-                                            "codes": [
-                                                {
-                                                    "uid": "wiews_iteration",
-                                                    "codes": DOWNLOAD_DV["10_filter-dd_filter_item_9"]
-                                                }
-                                            ]
-                                        },
-                                        "wiews_region" : {
-                                            "variable" : "required_countries"
-                                        },
-                                        "element": {
-                                            "codes": [
-                                                {
-                                                    "uid": "wiews_elements",
-                                                    "codes": [ "ind_t", "ind_a", "nfp", "nfpa", "stk_t", "stk_a" ]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            },
-
-                            {
-                                "name":"addcolumn",
-                                "parameters":{
-                                    "column":{
-                                        "dataType":"text",
-                                        "id":"indicator_label",
-                                        "title":{
-                                            "EN":"Indicator"
-                                        }
-                                    },
-                                    "value": {
-                                        "keys": [
-                                            "element = 'stk_t' or element = 'stk_a'", "element <> 'stk_t' and element <> 'stk_a'"
-                                        ],
-                                        "values": [
-                                            "@@direct element_en || ' (' || stakeholder || ' / ' || stakeholder_en || ')'","@@direct element_en"
+                    downloadProcessTableData : [
+                        {
+                            "name": "wiews_area_filter",
+                            "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                            "rid" : { "uid" : "area_selection" },
+                            "result" : false,
+                            "parameters": {
+                                "filter" : {
+                                    "m49": {
+                                        "codes": [
+                                            {
+                                                "uid": "wiews_m49_regions",
+                                                "codes": DOWNLOAD_DV["10_filter-dd_filter_item_1"]
+                                            }
                                         ]
                                     }
                                 }
-                            },
-
-                            {
-                                "name": "order",
-                                "parameters": {
-                                    "rank" : "ASC",
-                                    "wiews_region" : "ASC"
-                                }
                             }
-
-                        ]
-                    },
-                    downloadProcessRawData :  {
-                        "outConfig": {
-                            "plugin": "outputCSV"
                         },
-                        "flow": [
-                            {
-                                "name": "wiews_area_filter",
-                                "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
-                                "rid" : { "uid" : "area_selection" },
-                                "result" : false,
-                                "parameters": {
-                                    "total" : false,
-                                    "filter" : {
-                                        "m49": {
-                                            "codes": [
-                                                {
-                                                    "uid": "wiews_m49_regions",
-                                                    "codes": DOWNLOAD_DV["10_filter-dd_filter_item_1"]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            },
 
-                            {
-                                "name": "filter",
-                                "sid": [ { "uid": "raw_indicator16" }, { "uid": "area_selection" } ],
-                                "parameters": {
-                                    "rows": {
-                                        "iteration": {
-                                            "codes": [
-                                                {
-                                                    "uid": "wiews_iteration",
-                                                    "codes": DOWNLOAD_DV["10_filter-dd_filter_item_9"]
-                                                }
-                                            ]
-                                        },
-                                        "country_iso3" : {
-                                            "variable" : "required_countries"
-                                        }
+                        {
+                            "sid": [ { "uid": "indicator16" }, { "uid": "area_selection" } ],
+                            "name": "filter",
+                            "parameters": {
+                                "columns": [
+                                    "domain",
+                                    "wiews_region",
+                                    "stakeholder",
+                                    "indicator",
+                                    "element",
+                                    "iteration",
+                                    "value",
+                                    "um",
+                                    "rank"
+                                ],
+                                "rows": {
+                                    "iteration": {
+                                        "codes": [
+                                            {
+                                                "uid": "wiews_iteration",
+                                                "codes": DOWNLOAD_DV["10_filter-dd_filter_item_9"]
+                                            }
+                                        ]
+                                    },
+                                    "wiews_region" : {
+                                        "variable" : "required_countries"
+                                    },
+                                    "element": {
+                                        "codes": [
+                                            {
+                                                "uid": "wiews_elements",
+                                                "codes": [ "ind_t", "ind_a", "nfp", "nfpa", "stk_t", "stk_a" ]
+                                            }
+                                        ]
                                     }
-                                }
-                            },
-                            {
-                                "name": "order",
-                                "parameters": {
-                                    "country_iso3" : "ASC",
-                                    "datasource" : "ASC"
                                 }
                             }
-                        ]
-                    }
+                        },
+
+                        {
+                            "name":"addcolumn",
+                            "parameters":{
+                                "column":{
+                                    "dataType":"text",
+                                    "id":"indicator_label",
+                                    "title":{
+                                        "EN":"Indicator"
+                                    }
+                                },
+                                "value": {
+                                    "keys": [
+                                        "element = 'stk_t' or element = 'stk_a'", "element <> 'stk_t' and element <> 'stk_a'"
+                                    ],
+                                    "values": [
+                                        "@@direct element_en || ' (' || stakeholder || ' / ' || stakeholder_en || ')'","@@direct element_en"
+                                    ]
+                                }
+                            }
+                        },
+
+                        {
+                            "name": "order",
+                            "parameters": {
+                                "rank" : "ASC",
+                                "wiews_region" : "ASC"
+                            }
+                        }
+
+                    ],
+                    downloadProcessRawData : [
+                        {
+                            "name": "wiews_area_filter",
+                            "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                            "rid" : { "uid" : "area_selection" },
+                            "result" : false,
+                            "parameters": {
+                                "filter" : {
+                                    "iso3": {
+                                        "codes": [
+                                            {
+                                                "uid": "ISO3",
+                                                "codes": DOWNLOAD_DV["10_filter-dd_filter_item_1"]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "filter",
+                            "sid": [ { "uid": "raw_indicator16" }, { "uid": "area_selection" } ],
+                            "parameters": {
+                                "rows": {
+                                    "iteration": {
+                                        "codes": [
+                                            {
+                                                "uid": "wiews_iteration",
+                                                "codes": DOWNLOAD_DV["10_filter-dd_filter_item_9"]
+                                            }
+                                        ]
+                                    },
+                                    "country" : {
+                                        "variable" : "required_countries"
+                                    }
+                                }
+                            }
+                        }]
 
                 }
             },

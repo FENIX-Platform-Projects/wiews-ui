@@ -220,11 +220,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         }
 
                     ],
-                    downloadProcessTableData: {
-                        "outConfig" : {
-                            "plugin" : "outputCSV"
-                        },
-                        "flow" : [
+                    downloadProcessTableData: [
                             {
                                 "name": "wiews_area_filter",
                                 "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
@@ -312,13 +308,8 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
 
-                        ]
-                    },
-                    downloadProcessRawData :  {
-                        "outConfig": {
-                            "plugin": "outputCSV"
-                        },
-                        "flow": [
+                        ],
+                    downloadProcessRawData :  [
                             {
                                 "name": "wiews_area_filter",
                                 "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
@@ -366,7 +357,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
                         ]
-                    }
 
 
                 }
