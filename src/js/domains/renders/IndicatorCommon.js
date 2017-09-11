@@ -121,10 +121,10 @@ define([
     IndicatorCommon.prototype.indicatorSectionInit = function (dashboardConfig) {
         var indicatorSection = '';
         if(this.mainTabName == s.mainTabNames.visualizeData){
-            indicatorSection = this.el.find('[data-section = "'+this.indicatorProperties.vd_dashboard_category+'"]');
+            indicatorSection = this.el.find('[data-dashboardsection = "'+this.indicatorProperties.vd_dashboard_category+'"]');
         }
         else {
-            indicatorSection = this.el.find('[data-section = "'+this.indicatorProperties.dd_dashboard_category+'"]');
+            indicatorSection = this.el.find('[data-dashboardsection = "'+this.indicatorProperties.dd_dashboard_category+'"]');
         }
 
         if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')&&(dashboardConfig.items!=null)&&(typeof dashboardConfig.items != 'undefined')){

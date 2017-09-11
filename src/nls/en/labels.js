@@ -119,11 +119,11 @@ define(function () {
         "1_filter-dd_filter_item_12_choicesTitle4": "Null Values",
 
         "1_filter-dd_filter_item_10_source1": "Stakeholders",
-        "1_vd_dashboard_item_1_title": "Map title to be placed here",
+        "1_vd_dashboard_item_1_title": "Number of accessions conserved ex situ under medium or long-term conditions",
         "1_vd_dashboard_item_1_footer": "The designations employed and the presentation of material in the maps do not imply the expression of any opinion whatsoever on the part of FAO concerning the legal or constitutional status of any country, territory or sea area, or concerning the delimitation of frontiers. South Sudan declared its independence on July 9, 2011. Due to data availability, the assessment presented in the map for Sudan and South Sudan reflects the situation up to 2011 for the former Sudan.",
 
 
-        "1_vd_dashboard_item_2_title": "Chart title to be placed here",
+        "1_vd_dashboard_item_2_title": "Biological status of the accessions",
         "1_vd_dashboard_item_3_title": "Accessions by country",
         "1_vd_dashboard_item_4_title": "Accessions by stakeholder",
 
@@ -191,12 +191,12 @@ define(function () {
         "2_filter-dd_filter_item_11_choicesTitle3": "Units",
         "2_filter-dd_filter_item_11_choicesTitle4": "Null Values",
 
-        "2_vd_dashboard_item_1_title": "Map title to be placed here",
+        "2_vd_dashboard_item_1_title": "Number of Varieties",
         "2_vd_dashboard_item_1_footer": "The designations employed and the presentation of material in the maps do not imply the expression of any opinion whatsoever on the part of FAO concerning the legal or constitutional status of any country, territory or sea area, or concerning the delimitation of frontiers. South Sudan declared its independence on July 9, 2011. Due to data availability, the assessment presented in the map for Sudan and South Sudan reflects the situation up to 2011 for the former Sudan.",
 
-        "2_vd_dashboard_item_2_title": "Map title to be placed here",
-        "2_vd_dashboard_item_3_title": "Chart title to be placed here",
-        "2_vd_dashboard_item_4_title": "Chart title to be placed here",
+        "2_vd_dashboard_item_2_title": "Number of Species",
+        "2_vd_dashboard_item_3_title": "Species/varieties surveyed/inventoried by country",
+        "2_vd_dashboard_item_4_title": "Species/varieties surveyed/inventoried by region",
 
         "2_vd_dashboard_item_3_series_yAxis_1_title": "Number of Varieties",
         "2_vd_dashboard_item_3_series_yAxis_2_title": "Number of Species",
@@ -266,9 +266,9 @@ define(function () {
         "3_filter-dd_filter_item_8_source1": "Percentage of species threatened out of those surveyed/inventoried",
         "3_filter-dd_filter_item_8_source2": "Percentage of varieties threatened out of those surveyed/inventoried",
         "3_filter-dd_filter_item_10_source1": "Stakeholders",
-        "3_vd_dashboard_item_1_title": "Indicator 3 : Map title to be placed here",
+        "3_vd_dashboard_item_1_title": "Percentage of species surveyed/inventoried",
         "3_vd_dashboard_item_1_footer": "The designations employed and the presentation of material in the maps do not imply the expression of any opinion whatsoever on the part of FAO concerning the legal or constitutional status of any country, territory or sea area, or concerning the delimitation of frontiers. South Sudan declared its independence on July 9, 2011. Due to data availability, the assessment presented in the map for Sudan and South Sudan reflects the situation up to 2011 for the former Sudan.",
-        "3_vd_dashboard_item_2_title": "Indicator 3 : Map title to be placed here",
+        "3_vd_dashboard_item_2_title": "Percentage of varieties surveyed/inventoried",
         "3_vd_dashboard_item_3_title": "Status of species surveyed/inventoried by region",
         "3_vd_dashboard_item_4_title": "Status of varieties surveyed/inventoried by region",
         "3_vd_dashboard_item_5_title": "Percentage of species surveyed/inventoried by status, global",
@@ -337,10 +337,10 @@ define(function () {
         "4_filter-dd_filter_item_11_choicesTitle3": "Units",
         "4_filter-dd_filter_item_11_choicesTitle4": "Null Values",
 
-        "4_vd_dashboard_item_1_title": "Map title to be placed here",
+        "4_vd_dashboard_item_1_title": "Percentage of national in situ conservation sites with management plans addressing crop wild relatives and wild food plants",
         "4_vd_dashboard_item_1_footer": "The designations employed and the presentation of material in the maps do not imply the expression of any opinion whatsoever on the part of FAO concerning the legal or constitutional status of any country, territory or sea area, or concerning the delimitation of frontiers. South Sudan declared its independence on July 9, 2011. Due to data availability, the assessment presented in the map for Sudan and South Sudan reflects the situation up to 2011 for the former Sudan.",
 
-        "4_vd_dashboard_item_2_title": "Chart title to be placed here",
+        "4_vd_dashboard_item_2_title": "In situ conservation sites managing crop wild relatives and wild food plants",
 
         "4_vd_dashboard_item_1_uid": "Indicator10",
         "4_vd_dashboard_item_2_uid": "Indicator10",
@@ -624,7 +624,14 @@ define(function () {
         "10_dd_table_title_col_5": "Period",
         "10_dd_table_title_col_6": "Value",
 
-        "10_filter-vd_filter_item_8_title": "PERIODS"
+        "10_filter-vd_filter_item_8_title": "PERIODS",
+
+        "10_vd_dashboard_item_1_title": "Total Number of Samples",
+        "10_vd_dashboard_item_1_footer": "The designations employed and the presentation of material in the maps do not imply the expression of any opinion whatsoever on the part of FAO concerning the legal or constitutional status of any country, territory or sea area, or concerning the delimitation of frontiers. South Sudan declared its independence on July 9, 2011. Due to data availability, the assessment presented in the map for Sudan and South Sudan reflects the situation up to 2011 for the former Sudan.",
+        "10_vd_dashboard_item_2_title": "Average Number of Samples",
+        "10_vd_dashboard_item_2_footer": "The designations employed and the presentation of material in the maps do not imply the expression of any opinion whatsoever on the part of FAO concerning the legal or constitutional status of any country, territory or sea area, or concerning the delimitation of frontiers. South Sudan declared its independence on July 9, 2011. Due to data availability, the assessment presented in the map for Sudan and South Sudan reflects the situation up to 2011 for the former Sudan.",
+        "10_vd_dashboard_item_3_title": "Collected samples by region",
+        "10_vd_dashboard_item_4_title": "Collected samples by country"
 
 
     }
