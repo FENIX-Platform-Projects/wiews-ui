@@ -9,7 +9,8 @@ define(function () {
             vd_filter_category : "1",
             dd_dashboard_category : "1",
             vd_dashboard_category : "1",
-            processType : "1"
+            processType : "1",
+            noVisualize : true
         },
 
         "2": {
@@ -18,7 +19,8 @@ define(function () {
             vd_filter_category: "1",
             dd_dashboard_category: "1",
             vd_dashboard_category: "2",
-            processType: "2"
+            processType: "2",
+            noVisualize : true
         },
 
         "3" : {
@@ -27,7 +29,8 @@ define(function () {
             vd_filter_category : "3",
             dd_dashboard_category : "1",
             vd_dashboard_category : "3",
-            processType : "3"
+            processType : "3",
+            noVisualize : true
         },
 
         "10": {
@@ -36,7 +39,8 @@ define(function () {
             vd_filter_category: "2",
             dd_dashboard_category: "1",
             vd_dashboard_category: "4",
-            processType: "4"
+            processType: "4",
+            noVisualize : true
         },
 
         "15": {
@@ -95,7 +99,8 @@ define(function () {
             vd_filter_category : "3",
             dd_dashboard_category : "1",
             vd_dashboard_category : "1",
-            processType : "10"
+            processType : "10",
+            noVisualize : true
         }
 
     }

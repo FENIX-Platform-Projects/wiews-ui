@@ -23,11 +23,11 @@ define(function () {
         "1_filter-dd_filter_item_12" : ["1", "2", "3"],
 
         //2= indicator id
-        "2_filter-dd_filter_item_1" :  ["ABW","AFG","AGO","AIA"],
+        "2_filter-dd_filter_item_1" :  [],
         "2_filter-dd_filter_item_2" : ["1"],
         "2_filter-dd_filter_item_3" : ["1", "2"],
-        "2_filter-dd_filter_item_4_1" : ["5000"],
-        "2_filter-dd_filter_item_4_2" : ["21"],
+        "2_filter-dd_filter_item_4_1" : [],
+        "2_filter-dd_filter_item_4_2" : [],
         "2_filter-dd_filter_item_4_3" : ["744"],
         "2_filter-dd_filter_item_4_4" : ["826"],
         "2_filter-dd_filter_item_5" : ["1"],

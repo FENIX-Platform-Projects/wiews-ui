@@ -45,10 +45,11 @@ define([
         // value.toLocaleString('en-US')/('de-DE')
         var separator = ",";
         var decimal = ".";
-        var formatted = String(value);
+        // var formatted = String(value);
+        var formatted = String(Math.round( value * 10 ) / 10);
         switch(option) {
             case '1':
-                return value;
+                return formatted;
                 break;
             case '2':
                 separator = ",";
@@ -71,12 +72,16 @@ define([
     //Validation of the selector
     IndicatorCommonUtils.prototype.geoItemSelectionValidation = function (paramsForGeoValidation) {
 
+        console.log('yeah, really?')
+
         var newValues = '', codelist = '', listType = '', values = paramsForGeoValidation.values;
         var listTypeError = false;
         var regionFilterItem = paramsForGeoValidation.regionFilterItem, specialGroupFilterItem = paramsForGeoValidation.specialGroupFilterItem;
         var checkboxRegionItem = paramsForGeoValidation.checkboxRegionItem, checkboxSpecialGroupItem = paramsForGeoValidation.checkboxSpecialGroupItem;
         var toDelete = paramsForGeoValidation.toDelete;
+
         if((paramsForGeoValidation.tab_active_geo_item!=null)&&(typeof paramsForGeoValidation.tab_active_geo_item != 'undefined')){
+            console.log(paramsForGeoValidation.tab_active_geo_item);
             switch (paramsForGeoValidation.tab_active_geo_item){
                 case paramsForGeoValidation.filter_items_tabItem_first:
                     newValues = values.values[paramsForGeoValidation.filter_items_item_first];
@@ -84,7 +89,7 @@ define([
                         codelist = s.choices_code.iso3;
                         listType = [];
                         listType.push(s.choices_code.total);
-                        listType.push(s.choices_code.list)
+                        listType.push(s.choices_code.list);
                         newValues = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
                     }
                     break;
@@ -124,6 +129,8 @@ define([
         updatedValues.values = newValues;
         updatedValues.listType = listType;
         updatedValues.listTypeError = listTypeError;
+
+        console.log('yep. really.', updatedValues);
 
         return updatedValues;
     }
