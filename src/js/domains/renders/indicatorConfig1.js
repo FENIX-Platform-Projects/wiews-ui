@@ -11,7 +11,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                 filter: {
                     hostConfig: {
                         geoSelector: {
-                            default: 'dd_filter_item_4_1'
+                            default: 'dd_filter_item_1'
                         }
                     },
                     items: [
@@ -128,7 +128,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         ]
                 },
                 dashboard: {
-
                     uid: "DownloadDataDashboard",
                     columntableName : [labels[Clang]['1_dd_table_title_col_1'], labels[Clang]['1_dd_table_title_col_2'], labels[Clang]['1_dd_table_title_col_3'], labels[Clang]['1_dd_table_title_col_4'], labels[Clang]['1_dd_table_title_col_5'], labels[Clang]['1_dd_table_title_col_6']],
                     tableProcess : [
@@ -150,7 +149,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
                         },
-
                         {
                             "sid": [ { "uid": "indicator20" }, { "uid": "area_selection" } ],
                             "name": "filter",
@@ -190,7 +188,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
                         },
-
                         {
                             "name":"addcolumn",
                             "index" : -2,
@@ -205,7 +202,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 "value": ""
                             }
                         },
-
                         {
                             "name" : "select",
                             "parameters" : {
@@ -224,12 +220,28 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
                         },
-
                         {
                             "name": "order",
                             "parameters": {
-                                "rank" : "ASC",
-                                "wiews_region" : "ASC"
+                                "iteration":"ASC",
+                                "rank":"ASC",
+                                "wiews_region":"ASC",
+                                "indicator":"ASC",
+                                "indicator_label":"ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters" : {
+                                "columns" : [
+                                    "iteration",
+                                    "domain",
+                                    "wiews_region",
+                                    "indicator",
+                                    "indicator_label",
+                                    "value",
+                                    "um"
+                                ]
                             }
                         }
                     ],
@@ -252,7 +264,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
                         },
-
                         {
                             "sid": [ { "uid": "indicator20" }, { "uid": "area_selection" } ],
                             "name": "filter",
@@ -262,12 +273,12 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     "rank",
                                     "wiews_region",
                                     "indicator",
+                                    "iteration",
+                                    "value",
+                                    "um",
                                     "element",
                                     "biologicalAccessionId",
-                                    "iteration",
-                                    "stakeholder",
-                                    "value",
-                                    "um"
+                                    "stakeholder"
                                 ],
                                 "rows": {
                                     "iteration": {
@@ -292,7 +303,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
                         },
-
                         {
                             "name":"addcolumn",
                             "index" : -2,
@@ -307,70 +317,124 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 "value": ""
                             }
                         },
-
                         {
                             "name" : "select",
                             "parameters" : {
                                 "values" : {
                                     "iteration" : null,
                                     "domain" : null,
+                                    "element" : null,
                                     "biologicalAccessionId" : null,
                                     "rank" : null,
                                     "wiews_region" : null,
+                                    "stakeholder" : null,
                                     "value" : null,
                                     "um" : null,
+                                    "indicator" : null,
                                     "indicator_label" : "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_en || ')' else element_en end"
                                 }
                             }
                         },
-
                         {
                             "name": "order",
                             "parameters": {
-                                "rank" : "ASC",
-                                "wiews_region" : "ASC"
+                                "iteration":"ASC",
+                                "rank":"ASC",
+                                "wiews_region":"ASC",
+                                "indicator":"ASC",
+                                "indicator_label":"ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters" : {
+                                "columns" : [
+                                    "iteration",
+                                    "domain",
+                                    "wiews_region",
+                                    "indicator",
+                                    "indicator_label",
+                                    "value",
+                                    "um"
+                                ]
                             }
                         }
                     ],
                     downloadProcessRawData : [
-                        {
-                        "name": "wiews_area_filter",
-                        "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
-                        "rid" : { "uid" : "area_selection" },
-                        "result" : false,
-                        "parameters": {
-                            "filter" : {
-                                "iso3": {
-                                    "codes": [
-                                        {
-                                            "uid": "ISO3",
-                                            "codes": DOWNLOAD_DV["1_filter-dd_filter_item_1"]
+                            {
+                                "name": "wiews_area_filter",
+                                "sid": [ { "uid": "wiews_region_mapping" },{ "uid": "wiews_region_countries" } ],
+                                "rid" : { "uid" : "area_selection" },
+                                "result" : false,
+                                "parameters": {
+                                    "filter" : {
+                                        "iso3": {
+                                            "codes": [
+                                                {
+                                                    "uid": "ISO3",
+                                                    "codes": DOWNLOAD_DV["1_filter-dd_filter_item_1"]
+                                                }
+                                            ]
                                         }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "filter",
+                                "sid": [ { "uid": "raw_indicator20" }, { "uid": "area_selection" } ],
+                                "parameters": {
+                                    "rows": {
+                                        "iteration": {
+                                            "codes": [
+                                                {
+                                                    "uid": "wiews_iteration",
+                                                    "codes": DOWNLOAD_DV["1_filter-dd_filter_item_9"]
+                                                }
+                                            ]
+                                        },
+                                        "country" : {
+                                            "variable" : "required_countries"
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name":"order",
+                                "parameters":{
+                                    "iteration":"ASC",
+                                    "country":"ASC",
+                                    "stakeholder":"ASC",
+                                    "taxon_freetext":"ASC",
+                                    "crop_freetext":"ASC"
+                                }
+                            },
+                            {
+                                "name": "columns",
+                                "parameters" : {
+                                    "columns" : [
+                                        "iteration",
+                                        "country",
+                                        "orgid",
+                                        "stakeholder",
+                                        "holdinginstitutecode",
+                                        "accessionno",
+                                        "taxonid",
+                                        "taxon_freetext",
+                                        "cropid",
+                                        "crop_freetext",
+                                        "acquisitiondate",
+                                        "origincountry",
+                                        "biologicalaccession",
+                                        "genebankid",
+                                        "genebank_freetext",
+                                        "latitude",
+                                        "longitude",
+                                        "germplasmastore",
+                                        "multilateralsystemstatus"
                                     ]
                                 }
                             }
-                        }
-                    },
-                        {
-                            "name": "filter",
-                            "sid": [ { "uid": "raw_indicator20" }, { "uid": "area_selection" } ],
-                            "parameters": {
-                                "rows": {
-                                    "iteration": {
-                                        "codes": [
-                                            {
-                                                "uid": "wiews_iteration",
-                                                "codes": DOWNLOAD_DV["1_filter-dd_filter_item_9"]
-                                            }
-                                        ]
-                                    },
-                                    "country" : {
-                                        "variable" : "required_countries"
-                                    }
-                                }
-                            }
-                        }]
-
+                        ]
                 }
             },
             visualizeData: {

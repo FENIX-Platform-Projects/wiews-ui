@@ -184,8 +184,11 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                         {
                             "name": "order",
                             "parameters": {
+                                "iteration" : "ASC",
                                 "rank" : "ASC",
-                                "wiews_region" : "ASC"
+                                "wiews_region" : "ASC",
+                                "indicator" : "ASC",
+                                "element" : "ASC"
                             }
                         }
 
@@ -250,8 +253,25 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                         {
                             "name": "order",
                             "parameters": {
+                                "iteration" : "ASC",
                                 "rank" : "ASC",
-                                "wiews_region" : "ASC"
+                                "wiews_region" : "ASC",
+                                "indicator" : "ASC",
+                                "element" : "ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters": {
+                                "columns": [
+                                    "domain",
+                                    "wiews_region",
+                                    "indicator",
+                                    "element",
+                                    "iteration",
+                                    "value",
+                                    "um"
+                                ]
                             }
                         }
 
@@ -298,8 +318,24 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                         {
                             "name": "order",
                             "parameters": {
+                                "iteration" : "ASC",
                                 "country" : "ASC",
                                 "species" : "ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters": {
+                                "columns": [
+                                    "iteration",
+                                    "country",
+                                    "org_id",
+                                    "organization_name",
+                                    "species",
+                                    "threatened_species",
+                                    "varieties",
+                                    "threathened_varieties"
+                                ]
                             }
                         }
                     ]

@@ -213,21 +213,20 @@ define([
             if((newValues!= null) && (typeof newValues!= 'undefined'))
             {
                 for(var key in newValues) {
-                    if(key== s.geo_property)
-                    {
+                    if(key== s.geo_property) {
                         valid = true;
                     }
-                    else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_10)))
-                    {
+                    else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_10))) {
                         valid = true;
-                    }
-                    else{
+                    }  else{
                         valid = false;
                         break;
                     }
                 }
             }
         }
+
+
 
         if(!valid){
             if(button_type == "1"){
@@ -246,7 +245,7 @@ define([
                     textMsg = labels[params.lang][s.buttonMsg.button_2];
                 }
             }
-            s.filterDivMsg1.html(textMsg)
+            s.filterDivMsg1.html(textMsg);
             s.filterDivMsg1.show();
         }
 
@@ -262,6 +261,8 @@ define([
 
     IndicatorProcesses3.prototype._geoItemSelectionValidation = function (values) {
 
+        console.log(values)
+
         s.filterDivMsg1_text = '';
         var paramsForGeoValidation = {};
         paramsForGeoValidation.regionFilterItem = s.filter_items.item_2;
@@ -273,6 +274,7 @@ define([
         paramsForGeoValidation.filter_items_tabItem_first = s.filter_items.tabItem_1;
         paramsForGeoValidation.filter_items_tabItem_second = s.filter_items.tabItem_4;
         paramsForGeoValidation.filter_items_tabItem_third = s.filter_items.tabItem_7;
+        paramsForGeoValidation.filter_items_item_first = s.filter_items.item_1;
         paramsForGeoValidation.filter_items_codelistItem_tabItem_second = s.filter_items.item_2;
         paramsForGeoValidation.filter_items_listTypetItem_tabItem_second = s.filter_items.item_3;
         paramsForGeoValidation.filter_items_codelistItem_tabItem_third = s.filter_items.item_5;
@@ -431,7 +433,7 @@ define([
                         row[s.table_columns.iteration] = data[iData][columnsMap[tableCol+'_text']]
                         break;
                     case s.table_columns.threatened_percentage :
-                        row[s.table_columns.threatened_percentage] = data[iData][columnsMap[tableCol+'_value']]
+                        row[s.table_columns.threatened_percentage] = this.icUtils.valuesFormatter(separatorValue, data[iData][columnsMap[tableCol+'_value']])
                         break;
                 }
             }

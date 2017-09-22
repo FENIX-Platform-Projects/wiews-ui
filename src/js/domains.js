@@ -97,6 +97,7 @@ define([
 
         if(this.indicatorProperties.noVisualize){
             $('[data-tab="'+s.VISUALIZE_DATA_TAB+'"]').removeAttr('data-toggle');
+            $('[data-tab="'+s.VISUALIZE_DATA_TAB+'"]').removeAttr('href');
             s.noVisualize = true;
         }
 

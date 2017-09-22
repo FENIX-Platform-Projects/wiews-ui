@@ -594,7 +594,7 @@ define([
 
         var flow_model = {
             "outConfig": {
-                "plugin": "outputCSV"
+                "plugin": "wiewsOutputCSV"
             },
             options : {
                 params : {

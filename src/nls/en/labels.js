@@ -97,7 +97,7 @@ define(function () {
         "1_filter-dd_filter_item_7_title": "SPECIAL GROUPS",
         "1_filter-dd_filter_item_8_title": "ELEMENTS",
         "1_filter-dd_filter_item_9_title": "PERIODS",
-        "1_filter-dd_filter_item_10_title": "STAKEHOLDERS",
+        "1_filter-dd_filter_item_10_title": "INCLUDE STAKEHOLDERS",
         "1_filter-dd_filter_item_2_choicesTitle1": "FAO",
         "1_filter-dd_filter_item_2_choicesTitle2": "M49",
         "1_filter-dd_filter_item_2_choicesTitle3": "SDG",
