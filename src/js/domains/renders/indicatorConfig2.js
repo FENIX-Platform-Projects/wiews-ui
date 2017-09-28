@@ -309,7 +309,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                             }
                                         ]
                                     },
-                                    "country" : {
+                                    "country_iso3" : {
                                         "variable" : "required_countries"
                                     }
                                 }
@@ -329,7 +329,6 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                 "columns": [
                                     "iteration",
                                     "country",
-                                    "org_id",
                                     "organization_name",
                                     "species",
                                     "threatened_species",

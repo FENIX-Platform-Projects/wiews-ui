@@ -46,7 +46,7 @@ define([
         var separator = ",";
         var decimal = ".";
         // var formatted = String(value);
-        var formatted = String(Math.round( value * 10 ) / 10);
+        var formatted = String(value.toFixed(2));
         switch(option) {
             case '1':
                 return formatted;

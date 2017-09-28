@@ -392,7 +392,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                                 }
                                             ]
                                         },
-                                        "country" : {
+                                        "country_iso3" : {
                                             "variable" : "required_countries"
                                         }
                                     }
@@ -414,7 +414,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                     "columns" : [
                                         "iteration",
                                         "country",
-                                        "orgid",
                                         "stakeholder",
                                         "holdinginstitutecode",
                                         "accessionno",

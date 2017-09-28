@@ -107,7 +107,7 @@ define(["highcharts",
                             title: labels[Clang]['3_filter-dd_filter_item_9_title'],
                             clUid: "wiews_iteration",
                             max: 1
-                        },
+                        }/*,
                         {
                             id: 'dd_filter_item_11',
                             type: 'radio',
@@ -121,7 +121,7 @@ define(["highcharts",
                             default: DOWNLOAD_DV["3_filter-dd_filter_item_12"],
                             title: labels[Clang]['3_filter-dd_filter_item_12_title'],
                             choicesTitle: [labels[Clang]["3_filter-dd_filter_item_12_choicesTitle1"], labels[Clang]["3_filter-dd_filter_item_12_choicesTitle2"],labels[Clang]["3_filter-dd_filter_item_12_choicesTitle3"], labels[Clang]["3_filter-dd_filter_item_12_choicesTitle4"]]
-                        }
+                        }*/
                         ]
                 },
                 dashboard: {
@@ -310,7 +310,7 @@ define(["highcharts",
                                             }
                                         ]
                                     },
-                                    "country" : {
+                                    "country_iso3" : {
                                         "variable" : "required_countries"
                                     }
                                 }
@@ -320,10 +320,22 @@ define(["highcharts",
                             "name": "order",
                             "parameters": {
                                 "iteration" : "ASC",
-                                "rank" : "ASC",
-                                "wiews_region" : "ASC",
-                                "indicator" : "ASC",
-                                "element" : "ASC"
+                                "country" : "ASC",
+                                "species" : "ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters": {
+                                "columns": [
+                                    "iteration",
+                                    "country",
+                                    "organization_name",
+                                    "species",
+                                    "threatened_species",
+                                    "varieties",
+                                    "threathened_varieties"
+                                ]
                             }
                         }
                     ]

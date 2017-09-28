@@ -63,6 +63,7 @@ define([
         var IndicatorProcessesRender = this._getIndicatorProcessesRender();
         var filter_btnMsg1Obj = '';
 
+
         if(this.mainTabName == s.mainTabNames.visualizeData){
             filter_btnMsg1Obj = this.el.find('[data-buttonMsg = "'+s.filter_button.vd_buttonMsg_1+'"]');
         }
@@ -75,6 +76,7 @@ define([
             o["filterDivMsg1"] = filter_btnMsg1Obj;
         }
 
+        this.filter_btnMsg1Obj = filter_btnMsg1Obj;
         this.indicatorProcesses = new IndicatorProcessesRender(o);
 
         this.$el = $(this.el);
@@ -87,7 +89,8 @@ define([
 
         this.report = new Report({
             environment: this.environment,
-            cache: this.cache
+            cache: this.cache,
+            silent: true
         });
 
         this.bridge = new Bridge({
@@ -474,7 +477,6 @@ define([
 
     //Download  Tab Button 3
     IndicatorCommon.prototype._DD_onClick_button3 = function (param) {
-
         var values = this.filter.getValues();
         var newDashboardConfig = this.indicatorProcesses.onClickButton3(values, this.dashboard_config, param);
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
@@ -592,6 +594,19 @@ define([
 
     IndicatorCommon.prototype._downloadTableData = function (newDashboardConfigProcess) {
 
+        var self = this;
+
+        this.report.on('export.start', function(){
+            // Download starting
+            self.filter_btnMsg1Obj.html('<div class="alert alert-info" role="alert"><center>'+labels[self.lang]['download_in_progress']+'</center></div>');
+            self.filter_btnMsg1Obj.show();
+        });
+
+        this.report.on('export.error', function() {
+            self.filter_btnMsg1Obj.html('<div class="alert alert-danger" role="alert"><center>'+labels[self.lang]['download_in_error']+'</center></div>');
+            self.filter_btnMsg1Obj.show();
+        });
+
         var flow_model = {
             "outConfig": {
                 "plugin": "wiewsOutputCSV"
@@ -603,11 +618,18 @@ define([
                 },
             },
             "flow": newDashboardConfigProcess
-        }
+        };
 
         this.report.export({
             format: "flow",
             config: flow_model
+        });
+
+        this.report.on('export.success', function(){
+            // Download successful
+            setTimeout(function(){
+                self.filter_btnMsg1Obj.hide();
+            }, 1000);
         });
     };
 

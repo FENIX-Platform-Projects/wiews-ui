@@ -64,6 +64,8 @@ define(function () {
         "filter-dd_filter_button_title": "Download Data",
         "filter-dd_filter_button_2_title": "Table Data",
         "filter-dd_filter_button_3_title": "Raw Data",
+        "download_in_progress": "Your download request has been sent. Please wait.",
+        "download_in_error": "Error occurred during resource export. Please contact support.",
 
         // Indicator 20
         "1_vd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for each selector.",

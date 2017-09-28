@@ -272,7 +272,7 @@ define([
                     textMsg = labels[params.lang][s.buttonMsg.button_3];
                 }
             }
-            s.filterDivMsg1.html(textMsg)
+            s.filterDivMsg1.html(textMsg);
             s.filterDivMsg1.show();
         }
 
@@ -339,7 +339,7 @@ define([
         if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
         {
             var self = this;
-            newDashboardConfig ={};
+            newDashboardConfig = {};
             newDashboardConfig.tableColumns = tableColumns;
             $.extend(true, newDashboardConfig, dashboardConfig);
 
@@ -375,10 +375,10 @@ define([
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params, "3");
-        if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
-        {
+        if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues))) {
+
             var self = this;
-            newDashboardConfig ={};
+            newDashboardConfig = {};
             $.extend(true, newDashboardConfig, dashboardConfig);
 
             if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){

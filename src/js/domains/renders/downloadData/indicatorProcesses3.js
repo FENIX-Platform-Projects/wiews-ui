@@ -135,7 +135,6 @@ define([
             item_9 : "dd_filter_item_9",
             item_10 : "dd_filter_item_10",
             item_11 : "dd_filter_item_11",
-            item_12 : "dd_filter_item_12",
             tabItem_1 : "dd_filter_item_tab_1",
             tabItem_4 : "dd_filter_item_tab_4_1",
             tabItem_7 : "dd_filter_item_tab_7_1"
@@ -427,12 +426,13 @@ define([
                         row[s.table_columns.indicator] = data[iData][columnsMap[tableCol+'_text']]
                         break;
                     case s.table_columns.element :
-                        row[s.table_columns.element] = data[iData][columnsMap[tableCol+'_value']]
+                        row[s.table_columns.element] = data[iData][columnsMap[tableCol+'_text']]
                         break;
                     case s.table_columns.iteration :
                         row[s.table_columns.iteration] = data[iData][columnsMap[tableCol+'_text']]
                         break;
                     case s.table_columns.threatened_percentage :
+                        //row[s.table_columns.threatened_percentage] = data[iData][columnsMap[tableCol+'_value']]
                         row[s.table_columns.threatened_percentage] = this.icUtils.valuesFormatter(separatorValue, data[iData][columnsMap[tableCol+'_value']])
                         break;
                 }
