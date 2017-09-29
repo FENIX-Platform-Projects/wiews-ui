@@ -11,7 +11,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                 filter: {
                     hostConfig: {
                         geoSelector: {
-                            default: 'dd_filter_item_4_1'
+                            default: 'dd_filter_item_1'
                         }
                     },
                     items: [
@@ -183,8 +183,25 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                         {
                             "name": "order",
                             "parameters": {
+                                "iteration" : "ASC",
                                 "rank" : "ASC",
-                                "wiews_region" : "ASC"
+                                "wiews_region" : "ASC",
+                                "indicator" : "ASC",
+                                "element" : "ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters": {
+                                "columns": [
+                                    "domain",
+                                    "iteration",
+                                    "wiews_region",
+                                    "indicator",
+                                    "element",
+                                    "value",
+                                    "um"
+                                ]
                             }
                         }
 
@@ -249,8 +266,25 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                         {
                             "name": "order",
                             "parameters": {
+                                "iteration" : "ASC",
                                 "rank" : "ASC",
-                                "wiews_region" : "ASC"
+                                "wiews_region" : "ASC",
+                                "indicator" : "ASC",
+                                "element" : "ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters": {
+                                "columns": [
+                                    "domain",
+                                    "iteration",
+                                    "wiews_region",
+                                    "indicator",
+                                    "element",
+                                    "value",
+                                    "um"
+                                ]
                             }
                         }
 
@@ -289,7 +323,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                             }
                                         ]
                                     },
-                                    "country" : {
+                                    "country_iso3" : {
                                         "variable" : "required_countries"
                                     }
                                 }
@@ -298,9 +332,22 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                         {
                             "name": "order",
                             "parameters": {
-                                "country" : "ASC",
-                                "datasource" : "ASC"
+                                "country_iso3" : "ASC",
+                                "organization_name" : "ASC"
                             }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters" : {
+                                "columns" : [
+                                    "iteration",
+                                    "country",
+                                    "organization_name",
+                                    "sites_total",
+                                    "sites_with_management"
+                                ]
+                            }
+
                         }
                     ]
 

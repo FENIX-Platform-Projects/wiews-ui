@@ -58,7 +58,7 @@ define(function () {
         "3_filter-dd_filter_item_12" : ["1", "2", "3"],
 
         //10= indicator id
-        "4_filter-dd_filter_item_1" :  ["ABW","AFG","AGO","AIA"],
+        "4_filter-dd_filter_item_1" :  [],
         "4_filter-dd_filter_item_2" : ["1"],
         "4_filter-dd_filter_item_3" : ["1", "2"],
         "4_filter-dd_filter_item_4_1" : ["5000"],
