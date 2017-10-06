@@ -11,7 +11,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                 filter: {
                     hostConfig: {
                         geoSelector: {
-                            default: 'dd_filter_item_4_1'
+                            default: 'dd_filter_item_1'
                         }
                     },
                     items: [
@@ -212,10 +212,27 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         },
 
                         {
-                            "name": "order",
-                            "parameters": {
-                                "rank" : "ASC",
-                                "wiews_region" : "ASC"
+                            "name":"order",
+                            "parameters":{
+                                "iteration":"ASC",
+                                "rank":"ASC",
+                                "wiews_region":"ASC",
+                                "indicator":"ASC",
+                                "indicator_label":"ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters" : {
+                                "columns" : [
+                                    "domain",
+                                    "wiews_region",
+                                    "indicator",
+                                    "indicator_label",
+                                    "iteration",
+                                    "value",
+                                    "um"
+                                ]
                             }
                         }
 
@@ -301,10 +318,27 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             },
 
                             {
-                                "name": "order",
-                                "parameters": {
-                                    "rank" : "ASC",
-                                    "wiews_region" : "ASC"
+                                "name":"order",
+                                "parameters":{
+                                    "iteration":"ASC",
+                                    "rank":"ASC",
+                                    "wiews_region":"ASC",
+                                    "indicator":"ASC",
+                                    "indicator_label":"ASC"
+                                }
+                            },
+                            {
+                                "name": "columns",
+                                "parameters" : {
+                                    "columns" : [
+                                        "domain",
+                                        "wiews_region",
+                                        "indicator",
+                                        "indicator_label",
+                                        "iteration",
+                                        "value",
+                                        "um"
+                                    ]
                                 }
                             }
 
@@ -350,15 +384,43 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             },
                             {
-                                "name": "order",
+                                "name":"order",
+                                "parameters":{
+                                    "iteration":"ASC",
+                                    "country":"ASC",
+                                    "organization_name":"ASC",
+                                    "crop_name":"ASC",
+                                    "crop_name_local":"ASC"
+                                }
+                            },
+                            {
+                                "name": "columns",
                                 "parameters": {
-                                    "country_iso3" : "ASC",
-                                    "datasource" : "ASC"
+                                    "columns": [
+                                        "iteration",
+                                        "country",
+                                        "organization_name",
+                                        "crop_id",
+                                        "crop_name",
+                                        "crop_name_local",
+                                        "accessions_by_genebank",
+                                        "accessions_by_research_centre",
+                                        "accessions_by_private_sector",
+                                        "accessions_by_farmer",
+                                        "accessions_by_other_national",
+                                        "accessions_by_stakeholder",
+                                        "accessions_by_unknown",
+                                        "samples_by_genebank",
+                                        "samples_by_research_centre",
+                                        "samples_by_private_sector",
+                                        "samples_by_farmer",
+                                        "samples_by_other_national",
+                                        "samples_by_stakeholder",
+                                        "samples_by_unknown"
+                                    ]
                                 }
                             }
                         ]
-
-
                 }
             }
         }

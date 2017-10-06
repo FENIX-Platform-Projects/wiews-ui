@@ -272,7 +272,7 @@ define([
                     textMsg = labels[params.lang][s.buttonMsg.button_3];
                 }
             }
-            s.filterDivMsg1.html(textMsg)
+            s.filterDivMsg1.html(this.icUtils.prepareWarning(textMsg));
             s.filterDivMsg1.show();
         }
 
@@ -559,10 +559,10 @@ define([
     IndicatorProcesses1.prototype._download_element_table_element_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
-        dashboardConfig.tableProcess[0].parameters.filter = {};
-        dashboardConfig.tableProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
-        dashboardConfig.tableProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-        dashboardConfig.tableProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
+        dashboardConfig.downloadProcessTableData[0].parameters.filter = {};
+        dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist] = s.geo_filter[codelist];
+        dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.downloadProcessTableData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
         var codes = '';
         if((values[s.filter_items.item_10]!=null)&&(typeof values[s.filter_items.item_10]!='undefined')&&(values[s.filter_items.item_10].length>0)){
             codes= [ "ind", "nfp", "nfpa", "stk" ];
@@ -570,7 +570,7 @@ define([
         else{
             codes= [ "ind", "nfp", "nfpa" ];
         }
-        dashboardConfig.tableProcess[1].parameters.rows["element"].codes[0].codes = codes;
+        dashboardConfig.downloadProcessTableData[1].parameters.rows["element"].codes[0].codes = codes;
 
         return dashboardConfig;
     };

@@ -189,7 +189,7 @@ define([
         indicatorCommon.render({
             filter : this.filter,
             filter_host_config : this.filterHostConfig,
-            dashboard_config : this.dashboardConfig,
+            dashboard_config : this.dashboardConfig
         });
     };
 

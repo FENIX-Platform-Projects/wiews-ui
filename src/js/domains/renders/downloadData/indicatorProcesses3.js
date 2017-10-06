@@ -244,7 +244,7 @@ define([
                     textMsg = labels[params.lang][s.buttonMsg.button_2];
                 }
             }
-            s.filterDivMsg1.html(textMsg);
+            s.filterDivMsg1.html(this.icUtils.prepareWarning(textMsg));
             s.filterDivMsg1.show();
         }
 

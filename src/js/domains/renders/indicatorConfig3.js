@@ -275,6 +275,20 @@ define(["highcharts",
                                 "indicator" : "ASC",
                                 "element" : "ASC"
                             }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters": {
+                                "columns": [
+                                    "domain",
+                                    "wiews_region",
+                                    "indicator",
+                                    "element",
+                                    "iteration",
+                                    "threatened_percentage",
+                                    "um"
+                                ]
+                            }
                         }
                     ],
                     downloadProcessRawData : [

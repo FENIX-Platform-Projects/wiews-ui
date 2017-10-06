@@ -546,7 +546,7 @@ define([
             pageList: [10, 25, 50, 100, 200],
             search: true,
             sortable: true
-       });
+        });
 
         $('[data-table = "dd-dashboard-table"]').on('post-body.bs.table', function (event, data) {
             $('[data-dashboardContainer = "dd-dashboard-container"]').show();
@@ -590,7 +590,6 @@ define([
             config: payload
         });
     };
-
 
     IndicatorCommon.prototype._downloadTableData = function (newDashboardConfigProcess) {
 

@@ -11,7 +11,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                 filter: {
                     hostConfig: {
                         geoSelector: {
-                            default: 'dd_filter_item_4_1'
+                            default: 'dd_filter_item_1'
                         }
                     },
                     items: [
@@ -128,7 +128,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         ]
                 },
                 dashboard: {
-
                     uid: "DownloadDataDashboard",
                     columntableName : [labels[Clang]['7_dd_table_title_col_1'], labels[Clang]['7_dd_table_title_col_2'], labels[Clang]['7_dd_table_title_col_3'], labels[Clang]['7_dd_table_title_col_4'], labels[Clang]['7_dd_table_title_col_5'], labels[Clang]['7_dd_table_title_col_6']],
                     tableProcess : [
@@ -150,7 +149,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
                         },
-
                         {
                             "sid": [ { "uid": "indicator22" }, { "uid": "area_selection" } ],
                             "name": "filter",
@@ -189,7 +187,6 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
                         },
-
                         {
                             "name":"addcolumn",
                             "parameters":{
@@ -210,16 +207,30 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                 }
                             }
                         },
-
                         {
-                            "name": "order",
-                            "parameters": {
-                                "rank" : "ASC",
-                                "wiews_region" : "ASC",
-                                "element" : "ASC"
+                            "name":"order",
+                            "parameters":{
+                                "iteration":"ASC",
+                                "rank":"ASC",
+                                "wiews_region":"ASC",
+                                "indicator":"ASC",
+                                "indicator_label":"ASC"
                             }
                         },
-
+                        {
+                            "name": "columns",
+                            "parameters" : {
+                                "columns" : [
+                                    "domain",
+                                    "wiews_region",
+                                    "indicator",
+                                    "indicator_label",
+                                    "iteration",
+                                    "value",
+                                    "um"
+                                ]
+                            }
+                        },
                         {
                             "name": "filter",
                             "parameters": {
@@ -316,18 +327,19 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         },
 
                         {
-                            "name": "order",
-                            "parameters": {
-                                "rank" : "ASC",
-                                "wiews_region" : "ASC",
-                                "element" : "ASC"
+                            "name":"order",
+                            "parameters":{
+                                "iteration":"ASC",
+                                "rank":"ASC",
+                                "wiews_region":"ASC",
+                                "indicator":"ASC",
+                                "indicator_label":"ASC"
                             }
                         },
-
                         {
-                            "name": "filter",
-                            "parameters": {
-                                "columns": [
+                            "name": "columns",
+                            "parameters" : {
+                                "columns" : [
                                     "domain",
                                     "wiews_region",
                                     "indicator",
@@ -372,14 +384,40 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                             }
                                         ]
                                     },
-                                    "country" : {
+                                    "country_iso3" : {
                                         "variable" : "required_countries"
                                     }
                                 }
                             }
+                        },
+                        {
+                            "name":"order",
+                            "parameters":{
+                                "iteration":"ASC",
+                                "country":"ASC",
+                                "organization_name":"ASC",
+                                "crop_name":"ASC",
+                                "crop_name_local":"ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters": {
+                                "columns": [
+                                    "iteration",
+                                    "country",
+                                    "organization_name",
+                                    "crop_id",
+                                    "crop_name",
+                                    "crop_name_local",
+                                    "accessions_num",
+                                    "accessions_regenerated",
+                                    "accessions_need_regeneration",
+                                    "accessions_out_of_budget"
+                                ]
+                            }
                         }
                     ]
-
                 }
             }
         }

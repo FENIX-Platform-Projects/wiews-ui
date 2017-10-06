@@ -11,7 +11,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                 filter: {
                     hostConfig: {
                         geoSelector: {
-                            default: 'dd_filter_item_4_1'
+                            default: 'dd_filter_item_1'
                         }
                     },
                     items: [
