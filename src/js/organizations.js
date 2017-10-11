@@ -93,9 +93,13 @@ define([
             showExport: true
         });
         $('#table').on('click-row.bs.table', function(row, $element, field){
-            alert('click');
-            console.log(row, $element, field);
+            $('[data-role=filters]').hide();
+            $('[data-role=results]').hide();
+            $('[data-role=details]').show();
+            //console.log(row, $element, field);
         });
+        $('[data-role=results]').hide();
+        $('[data-role=details]').hide();
     };
 
     Organizations.prototype._initVariables = function () {
@@ -110,10 +114,41 @@ define([
 
     // Events
     Organizations.prototype._bindEventListeners = function () {
+        var self = this;
+
+        $('#omnibox').on("keypress", function(e) {
+            if (e.keyCode == 13) { // Enter
+                $('[data-role=filters]').hide();
+                $('[data-role=results]').show();
+                $('[data-role=details]').hide();
+                return false; // prevent the button click from happening
+            }
+        });
+
+        $('#search').on('click', function(){
+            $('[data-role=filters]').hide();
+            $('[data-role=results]').show();
+            $('[data-role=details]').hide();
+        });
 
         $('#advanced').on('click', function(){
+           var str = $('#advanced-search').hasClass('advanced') ? labels[self.lang]['search_advanced'] : labels[self.lang]['search_basic'];
            $('#advanced-search').toggleClass('advanced');
+           $(this).html(str);
         });
+
+        $('#backtosearch').on('click', function(){
+            $('[data-role=filters]').show();
+            $('[data-role=results]').hide();
+            $('[data-role=details]').hide();
+        });
+
+        $('#backtoresults').on('click', function(){
+            $('[data-role=filters]').hide();
+            $('[data-role=results]').show();
+            $('[data-role=details]').hide();
+        });
+
 
     };
 

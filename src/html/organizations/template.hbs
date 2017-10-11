@@ -1,134 +1,251 @@
 <div data-page='organizations'>
-    <div class="row">
-        <!-- Filters -->
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="exampleInput1">Name of organization</label>
-                <input type="text" class="form-control" id="exampleInput1" placeholder="Name of organization">
-            </div>
+    <h1>Organizations</h1>
+    <hr>
+    <div data-role='filters'>
+        <div class="row">
+            <!-- Filters -->
+            <div class="col-md-12"><h2>Search</h2></div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="exampleInput2">Organization acronym</label>
-                <input type="text" class="form-control" id="exampleInput2" placeholder="Organization acronym">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="exampleInput3">WIEWS instcode</label>
-                <input type="text" class="form-control" id="exampleInput3" placeholder="WIEWS instcode">
-            </div>
-        </div>
-        <div class="col-md-6">
-                <div class="form-group">
-                    <label for="exampleInput4">City</label>
-                    <input type="text" class="form-control" id="exampleInput4" placeholder="City">
+        <div class="row spacer">
+            <!-- Filters -->
+            <div class="col-md-12">
+                <div class="form-inline">
+                    <input style="width: 715px" type="text" class="form-control" id="omnibox"
+                           placeholder="Type here your search by Name, Organization acronym, WIEWS instcode, City or Country">
+                    <button id="advanced" type="button" class="btn btn-default">Switch to Advanced Search</button>
                 </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="exampleInput5">Country</label>
-                <input type="text" class="form-control" id="exampleInput5" placeholder="Country">
-            </div></div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="exampleInput6">Organization role categories</label>
-                <input type="text" class="form-control" id="exampleInput6" placeholder="Organization role categories">
             </div>
         </div>
-    </div>
-    <div id="advanced-search" class="row advanced">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="exampleInput7">Country</label>
-                <select id="exampleInput7" class="form-control">
-                    <option></option>
-                    <option>Spain</option>
-                    <option>Italy</option>
-                    <option>Germany</option>
-                    <option>Panama</option>
-                </select>
+        <div id="advanced-search" class="advanced">
+            <hr>
+            <br/>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInput1">Name of organization</label>
+                        <input type="text" class="form-control" id="exampleInput1" placeholder="Name of organization">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInput2">Organization acronym</label>
+                        <input type="text" class="form-control" id="exampleInput2" placeholder="Organization acronym">
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="exampleInput8">Organizational Role/Category</label>
-                <input type="text" class="form-control" id="exampleInput8" placeholder="Organizational Role/Category">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInput3">WIEWS instcode</label>
+                        <input type="text" class="form-control" id="exampleInput3" placeholder="WIEWS instcode">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInput4">City</label>
+                        <input type="text" class="form-control" id="exampleInput4" placeholder="City">
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="exampleInput9">Include deleted organization/record ?</label>
-                <select id="exampleInput9" class="form-control">
-                    <option></option>
-                    <option>Yes</option>
-                    <option>No</option>
-                    <option>Only</option>
-                </select>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInput7">Country</label>
+                        <select id="exampleInput7" class="form-control">
+                            <option></option>
+                            <option>Spain</option>
+                            <option>Italy</option>
+                            <option>Germany</option>
+                            <option>Panama</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInput6">Organization role categories</label>
+                        <select id="exampleInput6" id="exampleInput6" class="form-control"
+                                placeholder="Organization role categories">
+                            <option></option>
+                            <option>Genebank (long term collections)</option>
+                            <option>Genebank (medium term collections)</option>
+                            <option>Genebank (short term collections)</option>
+                            <option>Botanical garden</option>
+                            <option>Breeder</option>
+                            <option>Network</option>
+                            <option>Community</option>
+                            <option>Educational</option>
+                            <option>Seed producer</option>
+                            <option>Seed supplier</option>
+                            <option>Farmer community</option>
+                            <option>Research</option>
+                            <option>Extensionist</option>
+                            <option>Laboratory</option>
+                            <option>Publisher</option>
+                            <option>Administration/Policy</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-9 col-md-offset-3">
-            <div class="pull-right">
-                <button id="search" type="button" class="btn btn-primary">Search</button>
-                <button id="advanced" type="button" class="btn btn-default">Switch to Advanced Search</button>
-            </div>
-        </div>
-    </div>
-    <div class="row spacer"><!-- Spacer --></div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
-            <!-- Result -->
-            <table id="table">
-                <thead>
-                <tr>
-                    <th data-sortable="true" data-field="name">Name of organization</th>
-                    <th data-sortable="true" data-field="acronym">Organization acronym</th>
-                    <th data-sortable="true" data-field="instcode">WIEWS instcode</th>
-                    <th data-sortable="true" data-field="parentorg">Parent organization</th>
-                    <th data-sortable="true" data-field="address">Address</th>
-                    <th data-sortable="true" data-field="city">City</th>
-                    <th data-sortable="true" data-field="country">Country</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-    <div class="row spacer"><!-- Spacer --></div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
-            <!-- Details -->
-            <div id="c376053" class="csc-default"><div class="tx-xinclude-pi1">
-                <div id="containerGPA">
-                    <div class="tableGPA">
-                        <div class="GPA-group">
-                            <div class="GPA-row"><div class="GPA-cell lbl">Name of organization</div><div class="GPA-cell txt">Centro Nacional de Recursos Fitogenéticos</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">Organization acronym</div><div class="GPA-cell txt">INIA-CRF</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">WIEWS instcode</div><div class="GPA-cell txt">ESP004</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">Parent organization</div><div class="GPA-cell txt"><a id="parentinfo" href="javascript:void(0);">Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria. Subdirección General de Investigación y Tecnología</a></div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">Address</div><div class="GPA-cell txt">Autovía de Aragón km 36. Apdo. 1045</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">ZIP code</div><div class="GPA-cell txt">28800</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">City</div><div class="GPA-cell txt">Alcalá de Henares. Madrid</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">Country</div><div class="GPA-cell txt">Spain</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">Telephone</div><div class="GPA-cell txt">+34-918819286</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">Fax</div><div class="GPA-cell txt">+34-918819287</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">Email address</div><div class="GPA-cell txt">rosa@inia.es</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">WWW address</div><div class="GPA-cell txt">http://www.inia.es</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">Organization authority status</div><div class="GPA-cell txt">Governmental</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">Organization role categories</div><div class="GPA-cell txt"><ul><li>Extensionist</li><li>Genebank (long term collections)</li><li>Research</li></ul></div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">Longitude (decimal degrees format)</div><div class="GPA-cell txt">-3.19</div></div>
-                            <div class="GPA-row"><div class="GPA-cell lbl">Latitude (decimal degrees format)</div><div class="GPA-cell txt">40.31</div></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInput9">Valid/invalidated organizations</label>
+                        <select id="exampleInput9" class="form-control">
+                            <option selected>Valid only</option>
+                            <option>Valid and invalidated</option>
+                            <option>Invalidated only</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="pull-right">
+                        <div style="margin-top: 24px">
+                            <button id="search" type="button" class="btn btn-primary">Search</button>
                         </div>
                     </div>
                 </div>
-                <div style="clear:both;"></div>
-
             </div>
+
+        </div>
+        <div class="row spacer"><!-- Spacer --></div>
+    </div>
+    <div data-role='results'>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Results</h2></br>
+            </div>
+            <div class="col-md-6">
+                <div class="pull-right">
+                    <button id="backtosearch" type="button" class="btn btn-default">Back to Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
+                <!-- Result -->
+                <table id="table">
+                    <thead>
+                    <tr>
+                        <th data-sortable="true" data-width="16%" data-field="name">Name of organization</th>
+                        <th data-sortable="true" data-width="7%" data-field="acronym">Acronym</th>
+                        <th data-sortable="true" data-width="7%" data-field="instcode">WIEWS instcode</th>
+                        <th data-sortable="true" data-width="21%" data-field="parentorg">Parent organization</th>
+                        <th data-sortable="true" data-width="21%" data-field="address">Address</th>
+                        <th data-sortable="true" data-width="14%" data-field="city">City</th>
+                        <th data-sortable="true" data-width="14%" data-field="country">Country</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="row spacer"><!-- Spacer --></div>
+    </div>
+    <div data-role='details'>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Details</h2></br>
+            </div>
+            <div class="col-md-6">
+                <div class="pull-right">
+                    <button id="backtoresults" type="button" class="btn btn-default">Back to Results</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
+                <!-- Details -->
+                <div id="c376053" class="csc-default">
+                    <div class="tx-xinclude-pi1">
+                        <div id="containerGPA">
+                            <div class="tableGPA">
+                                <div class="GPA-group">
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Name of organization</div>
+                                        <div class="GPA-cell txt">Centro Nacional de Recursos Fitogenéticos</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Organization acronym</div>
+                                        <div class="GPA-cell txt">INIA-CRF</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">WIEWS instcode</div>
+                                        <div class="GPA-cell txt">ESP004</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Parent organization</div>
+                                        <div class="GPA-cell txt"><a id="parentinfo" href="javascript:void(0);">Instituto
+                                            Nacional de Investigación y Tecnología Agraria y Alimentaria. Subdirección
+                                            General de Investigación y Tecnología</a></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Address</div>
+                                        <div class="GPA-cell txt">Autovía de Aragón km 36. Apdo. 1045</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">ZIP code</div>
+                                        <div class="GPA-cell txt">28800</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">City</div>
+                                        <div class="GPA-cell txt">Alcalá de Henares. Madrid</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Country</div>
+                                        <div class="GPA-cell txt">Spain</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Telephone</div>
+                                        <div class="GPA-cell txt">+34-918819286</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Fax</div>
+                                        <div class="GPA-cell txt">+34-918819287</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Email address</div>
+                                        <div class="GPA-cell txt">rosa@inia.es</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">WWW address</div>
+                                        <div class="GPA-cell txt">http://www.inia.es</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Organization authority status</div>
+                                        <div class="GPA-cell txt">Governmental</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Organization role categories</div>
+                                        <div class="GPA-cell txt">
+                                            <ul>
+                                                <li>Extensionist</li>
+                                                <li>Genebank (long term collections)</li>
+                                                <li>Research</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Longitude (decimal degrees format)</div>
+                                        <div class="GPA-cell txt">-3.19</div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Latitude (decimal degrees format)</div>
+                                        <div class="GPA-cell txt">40.31</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row spacer"><!-- Spacer --></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pull-right">
+                    <button id="next" type="button" class="btn btn-default glyphicon glyphicon-arrow-left"></button>
+                    <button id="prev" type="button" class="btn btn-default glyphicon glyphicon-arrow-right"></button>
+                </div>
             </div>
         </div>
     </div>

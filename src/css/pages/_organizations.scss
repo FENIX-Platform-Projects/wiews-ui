@@ -1,6 +1,9 @@
 /* Homepage */
 
 [data-page='organizations'] {
+
+  max-width: 920px;
+
   div#c353693 {margin-top:20px;}
   div.divider hr {border:0; height:1px; background-color:#DEDEDE;}
   #c366480 h4 {margin-top: 0px; font-size: 14px;}
@@ -156,8 +159,16 @@
   .tableGPA {display:table; width:100%; background-color:#E4EEF2;}
   .tableheader{display:table; width:100%; background-color:#FFF; margin-bottom: 10px; margin-top: 12px;}
   .tableGPA {display: table; width: 100%;}
-  .tableGPA .GPA-group {display: table-row-group;}
-  .tableGPA .GPA-row {display: table-row;}
+  .tableGPA .GPA-group {
+    display: table-row-group;
+  }
+  .tableGPA .GPA-row {
+    display: table-row;
+  }
+  #containerGPA {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+  }
   .tableGPA .GPA-cell { display: table-cell; padding: 6px; border-right: 1px solid #ccc;  border-bottom: 1px solid #ccc;}
   .tableGPA .GPA-row:nth-child(even) {background: #FFF}
   .tableGPA .GPA-row:nth-child(odd) {background: #E4EEF2}
@@ -197,3 +208,11 @@
     color: #fff;
   }
 }
+
+.bootstrap-table tbody tr {
+  cursor: pointer;
+}
+
+.bootstrap-table .pagination-info { padding-left: 7px }
+
+.sbHolder, .sbOptions { width: auto !important; }
