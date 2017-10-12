@@ -75,7 +75,7 @@ define(function () {
         "4_filter-dd_filter_item_11" : ["1", "2", "3"],
 
         //15= indicator id
-        "5_filter-dd_filter_item_1" :  ["ABW","AFG","AGO","AIA"],
+        "5_filter-dd_filter_item_1" :  [],
         "5_filter-dd_filter_item_2" : ["1"],
         "5_filter-dd_filter_item_3" : ["1", "2"],
         "5_filter-dd_filter_item_4_1" : ["5000"],
@@ -93,7 +93,7 @@ define(function () {
         "5_filter-dd_filter_item_12" : ["1", "2", "3"],
 
         //14= indicator id
-        "6_filter-dd_filter_item_1" :  ["ABW","AFG","AGO","AIA"],
+        "6_filter-dd_filter_item_1" :  [],
         "6_filter-dd_filter_item_2" : ["1"],
         "6_filter-dd_filter_item_3" : ["1", "2"],
         "6_filter-dd_filter_item_4_1" : ["5000"],
@@ -167,7 +167,7 @@ define(function () {
         "9_filter-dd_filter_item_12" : ["1", "2", "3"],
 
         //28= indicator id
-        "10_filter-dd_filter_item_1" :  ["ABW","AFG","AGO","AIA"],
+        "10_filter-dd_filter_item_1" :  [],
         "10_filter-dd_filter_item_2" : ["1"],
         "10_filter-dd_filter_item_3" : ["1", "2"],
         "10_filter-dd_filter_item_4_1" : ["5000"],

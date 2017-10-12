@@ -11,7 +11,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                 filter: {
                     hostConfig: {
                         geoSelector: {
-                            default: 'dd_filter_item_4_1'
+                            default: 'dd_filter_item_1'
                         }
                     },
                     items: [
@@ -214,8 +214,26 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         {
                             "name": "order",
                             "parameters": {
+                                "domain" : "ASC",
+                                "iteration" : "ASC",
                                 "rank" : "ASC",
-                                "wiews_region" : "ASC"
+                                "wiews_region" : "ASC",
+                                "indicator" : "ASC",
+                                "indicator_label" : "ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters" : {
+                                "columns" : [
+                                    "domain",
+                                    "iteration",
+                                    "wiews_region",
+                                    "indicator",
+                                    "indicator_label",
+                                    "value",
+                                    "um"
+                                ]
                             }
                         }
 
@@ -303,8 +321,26 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         {
                             "name": "order",
                             "parameters": {
+                                "domain" : "ASC",
+                                "iteration" : "ASC",
                                 "rank" : "ASC",
-                                "wiews_region" : "ASC"
+                                "wiews_region" : "ASC",
+                                "indicator" : "ASC",
+                                "indicator_label" : "ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters" : {
+                                "columns" : [
+                                    "domain",
+                                    "iteration",
+                                    "wiews_region",
+                                    "indicator",
+                                    "indicator_label",
+                                    "value",
+                                    "um"
+                                ]
                             }
                         }
 
@@ -341,12 +377,47 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                             }
                                         ]
                                     },
-                                    "country" : {
+                                    "country_iso3" : {
                                         "variable" : "required_countries"
                                     }
                                 }
                             }
-                        }]
+                        },
+                        {
+                            "name": "order",
+                            "parameters": {
+                                "iteration" : "ASC",
+                                "country" : "ASC",
+                                "org_name" : "ASC",
+                                "crop_name" : "ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters" : {
+                                "columns" : [
+                                    "iteration",
+                                    "country",
+                                    "org_name",
+                                    "mission_id",
+                                    "mission_name",
+                                    "mission_name_local",
+                                    "start_date",
+                                    "end_date",
+                                    "crop_id",
+                                    "crop_name",
+                                    "crop_name_local",
+                                    "taxon_id",
+                                    "taxon_name_local",
+                                    "accessions_number",
+                                    "secured_accessions_number",
+                                    "area_id",
+                                    "area_name",
+                                    "area_name_local"
+                                ]
+                            }
+                        }
+                    ]
 
                 }
             },

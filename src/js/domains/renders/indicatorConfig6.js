@@ -206,7 +206,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                         "element = 'stk'", "element <> 'stk'"
                                     ],
                                     "values": [
-                                        "@@direct 'Indicator (' || stakeholder || ' / ' || stakeholder_en || ')'","element_en"
+                                        "@@direct 'Indicator (' || stakeholder || ' / ' || stakeholder_en || ')'","@@direct element_en"
                                     ]
                                 }
                             }
@@ -214,8 +214,26 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         {
                             "name": "order",
                             "parameters": {
+                                "domain" : "ASC",
+                                "iteration" : "ASC",
                                 "rank" : "ASC",
-                                "wiews_region" : "ASC"
+                                "wiews_region" : "ASC",
+                                "indicator" : "ASC",
+                                "indicator_label" : "ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters" : {
+                                "columns" : [
+                                    "domain",
+                                    "iteration",
+                                    "wiews_region",
+                                    "indicator",
+                                    "indicator_label",
+                                    "value",
+                                    "um"
+                                ]
                             }
                         }
 
@@ -295,7 +313,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                         "element = 'stk'", "element <> 'stk'"
                                     ],
                                     "values": [
-                                        "@@direct 'Indicator (' || stakeholder || ' / ' || stakeholder_en || ')'","element_en"
+                                        "@@direct 'Indicator (' || stakeholder || ' / ' || stakeholder_en || ')'","@@direct element_en"
                                     ]
                                 }
                             }
@@ -303,8 +321,26 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                         {
                             "name": "order",
                             "parameters": {
+                                "domain" : "ASC",
+                                "iteration" : "ASC",
                                 "rank" : "ASC",
-                                "wiews_region" : "ASC"
+                                "wiews_region" : "ASC",
+                                "indicator" : "ASC",
+                                "indicator_label" : "ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters" : {
+                                "columns" : [
+                                    "domain",
+                                    "iteration",
+                                    "wiews_region",
+                                    "indicator",
+                                    "indicator_label",
+                                    "value",
+                                    "um"
+                                ]
                             }
                         }
 
@@ -341,12 +377,42 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                                             }
                                         ]
                                     },
-                                    "country" : {
+                                    "country_iso3" : {
                                         "variable" : "required_countries"
                                     }
                                 }
                             }
-                        }]
+                        },
+                        {
+                            "name": "order",
+                            "parameters": {
+                                "iteration" : "ASC",
+                                "country" : "ASC",
+                                "org_name" : "ASC",
+                                "crop_name" : "ASC"
+                            }
+                        },
+                        {
+                            "name": "columns",
+                            "parameters" : {
+                                "columns" : [
+                                    "iteration",
+                                    "country",
+                                    "org_name",
+                                    "strategy",
+                                    "crop_id",
+                                    "crop_name",
+                                    "crop_name_local",
+                                    "gaps",
+                                    "other_gaps_local",
+                                    "other_gaps",
+                                    "methods",
+                                    "other_methods_local",
+                                    "other_methods"
+                                ]
+                            }
+                        }
+                        ]
                 }
             },
             visualizeData: {

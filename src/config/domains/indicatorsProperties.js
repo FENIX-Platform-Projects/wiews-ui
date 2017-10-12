@@ -3,6 +3,7 @@ define(function () {
 
     "use strict";
     return {
+
         "20": {
             indicator_id : "1",
             dd_filter_category : "1",
