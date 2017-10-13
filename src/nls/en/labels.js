@@ -637,7 +637,7 @@ define(function () {
 
         // Organizations
 
-        "search_advanced": "Switch to Basic",
-        "search_basic": "Switch to Advanced"
+        "search_advanced": "Hide Advanced",
+        "search_basic": "Show Advanced"
     }
 });

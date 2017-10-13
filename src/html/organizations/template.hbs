@@ -4,15 +4,21 @@
     <div data-role='filters'>
         <div class="row">
             <!-- Filters -->
-            <div class="col-md-12"><h2>Search</h2></div>
+            <div class="col-md-10"><h2>Search</h2></div>
+            <div class="col-md-2"><a id="advanced" class="pull-right">Show Advanced</a></div>
         </div>
         <div class="row spacer">
             <!-- Filters -->
             <div class="col-md-12">
                 <div class="form-inline">
-                    <input style="width: 715px" type="text" class="form-control" id="omnibox"
+                    <input type="text" class="form-control" id="omnibox"
                            placeholder="Type here your search by Name, Organization acronym, WIEWS instcode, City or Country">
-                    <button id="advanced" type="button" class="btn btn-default">Switch to Advanced Search</button>
+                    <div class="pull-right">
+                        <button style="width: 55px" id="search" type="button" class="btn btn-primary"><span class="icojam icojam_search"></span></button>
+                        <!--
+                        <button  type="button" class="btn btn-default">Switch to Advanced Search</button>
+                        -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -100,7 +106,7 @@
                 <div class="col-md-6">
                     <div class="pull-right">
                         <div style="margin-top: 24px">
-                            <button id="search" type="button" class="btn btn-primary">Search</button>
+                            <button id="adv_search" type="button" class="btn btn-primary"><span class="icojam icojam_search"></span></button>
                         </div>
                     </div>
                 </div>
@@ -148,6 +154,7 @@
             <div class="col-md-6">
                 <div class="pull-right">
                     <button id="backtoresults" type="button" class="btn btn-default">Back to Results</button>
+                    <button id="backtosearch_fromomni" type="button" class="btn btn-default">Back to Search</button>
                 </div>
             </div>
         </div>
@@ -240,13 +247,5 @@
             </div>
         </div>
         <div class="row spacer"><!-- Spacer --></div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="pull-right">
-                    <button id="next" type="button" class="btn btn-default glyphicon glyphicon-arrow-left"></button>
-                    <button id="prev" type="button" class="btn btn-default glyphicon glyphicon-arrow-right"></button>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
