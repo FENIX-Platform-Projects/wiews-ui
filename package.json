@@ -12,6 +12,7 @@
     "dev:cultivars": "cross-env SECTIONS=cultivars NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "dev:domains": "cross-env SECTIONS=domains NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "dev:organizations": "cross-env SECTIONS=organizations NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
+    "dev:exsitu": "cross-env SECTIONS=exsitu NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "dev:sdg": "cross-env SECTIONS=sdg NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "build": "cross-env SECTIONS=base,countryProfile,cultivars,domains,organizations,sdg NODE_ENV=production webpack --display-error-details ",
     "build:base": "cross-env SECTIONS=base NODE_ENV=production webpack --display-error-details ",
@@ -53,6 +54,7 @@
     "loglevel": "^1.4.1",
     "moment": "^2.17.1",
     "swiper": "^3.4.1",
+    "typeahead.js": "^0.11.1",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
