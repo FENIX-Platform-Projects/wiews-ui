@@ -3,7 +3,7 @@ define([
     "loglevel",
     "underscore",
     "../config/config",
-    "../html/organizations/template.hbs",
+    "../html/exsitu/template.hbs",
     "../nls/labels",
     "bootstrap",
     "bootstrap-table",
@@ -55,7 +55,10 @@ define([
                     "parentorg": "Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria. Subdirección General de Investigación y Tecnología",
                     "address": "Autovía de Aragón km 36. Apdo. 1045",
                     "city": "Alcalá de Henares. Madrid",
-                    "country": "Spain"
+                    "country": "Spain",
+                    "accessions": Math.floor(Math.random() * 100),
+                    "genera": Math.floor(Math.random() * 100),
+                    "taxa": Math.floor(Math.random() * 100)
                 },
                 {
                     "id": "2",
@@ -64,7 +67,10 @@ define([
                     "instcode": "ITA001",
                     "address": "Via Fioranello 52",
                     "city": "Roma",
-                    "country": "Italy"
+                    "country": "Italy",
+                    "accessions": Math.floor(Math.random() * 100),
+                    "genera": Math.floor(Math.random() * 100),
+                    "taxa": Math.floor(Math.random() * 100)
                 },
                 {
                     "id": "3",
@@ -73,7 +79,10 @@ define([
                     "instcode": "DEU001",
                     "address": "Bundesallee 50",
                     "city": "Braunschweig",
-                    "country": "Germany"
+                    "country": "Germany",
+                    "accessions": Math.floor(Math.random() * 100),
+                    "genera": Math.floor(Math.random() * 100),
+                    "taxa": Math.floor(Math.random() * 100)
                 },
                 {
                     "id": "4",
@@ -82,7 +91,10 @@ define([
                     "instcode": "PAN001",
                     "address": "Apdo. 6-4391",
                     "city": "Panamá 6a, CA",
-                    "country": "Panama"
+                    "country": "Panama",
+                    "accessions": Math.floor(Math.random() * 100),
+                    "genera": Math.floor(Math.random() * 100),
+                    "taxa": Math.floor(Math.random() * 100)
                 },
                 {
                     "id": "5",
@@ -92,7 +104,10 @@ define([
                     "parentorg": "Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria. Subdirección General de Investigación y Tecnología",
                     "address": "Autovía de Aragón km 36. Apdo. 1045",
                     "city": "Alcalá de Henares. Madrid",
-                    "country": "Spain"
+                    "country": "Spain",
+                    "accessions": Math.floor(Math.random() * 100),
+                    "genera": Math.floor(Math.random() * 100),
+                    "taxa": Math.floor(Math.random() * 100)
                 },
                 {
                     "id": "6",
@@ -101,7 +116,10 @@ define([
                     "instcode": "ITA001",
                     "address": "Via Fioranello 52",
                     "city": "Roma",
-                    "country": "Italy"
+                    "country": "Italy",
+                    "accessions": Math.floor(Math.random() * 100),
+                    "genera": Math.floor(Math.random() * 100),
+                    "taxa": Math.floor(Math.random() * 100)
                 },
                 {
                     "id": "7",
@@ -110,7 +128,10 @@ define([
                     "instcode": "DEU001",
                     "address": "Bundesallee 50",
                     "city": "Braunschweig",
-                    "country": "Germany"
+                    "country": "Germany",
+                    "accessions": Math.floor(Math.random() * 100),
+                    "genera": Math.floor(Math.random() * 100),
+                    "taxa": Math.floor(Math.random() * 100)
                 },
                 {
                     "id": "8",
@@ -119,7 +140,10 @@ define([
                     "instcode": "PAN001",
                     "address": "Apdo. 6-4391",
                     "city": "Panamá 6a, CA",
-                    "country": "Panama"
+                    "country": "Panama",
+                    "accessions": Math.floor(Math.random() * 100),
+                    "genera": Math.floor(Math.random() * 100),
+                    "taxa": Math.floor(Math.random() * 100)
                 },
                 {
                     "id": "9",
@@ -129,7 +153,10 @@ define([
                     "parentorg": "Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria. Subdirección General de Investigación y Tecnología",
                     "address": "Autovía de Aragón km 36. Apdo. 1045",
                     "city": "Alcalá de Henares. Madrid",
-                    "country": "Spain"
+                    "country": "Spain",
+                    "accessions": Math.floor(Math.random() * 100),
+                    "genera": Math.floor(Math.random() * 100),
+                    "taxa": Math.floor(Math.random() * 100)
                 },
                 {
                     "id": "10",
@@ -138,7 +165,10 @@ define([
                     "instcode": "ITA001",
                     "address": "Via Fioranello 52",
                     "city": "Roma",
-                    "country": "Italy"
+                    "country": "Italy",
+                    "accessions": Math.floor(Math.random() * 100),
+                    "genera": Math.floor(Math.random() * 100),
+                    "taxa": Math.floor(Math.random() * 100)
                 },
                 {
                     "id": "11",
@@ -147,7 +177,10 @@ define([
                     "instcode": "DEU001",
                     "address": "Bundesallee 50",
                     "city": "Braunschweig",
-                    "country": "Germany"
+                    "country": "Germany",
+                    "accessions": Math.floor(Math.random() * 100),
+                    "genera": Math.floor(Math.random() * 100),
+                    "taxa": Math.floor(Math.random() * 100)
                 },
                 {
                     "id": "12",
@@ -156,7 +189,10 @@ define([
                     "instcode": "PAN001",
                     "address": "Apdo. 6-4391",
                     "city": "Panamá 6a, CA",
-                    "country": "Panama"
+                    "country": "Panama",
+                    "accessions": Math.floor(Math.random() * 100),
+                    "genera": Math.floor(Math.random() * 100),
+                    "taxa": Math.floor(Math.random() * 100)
                 }
 
             ],
@@ -169,8 +205,11 @@ define([
         });
 
         $('#table').on('click-row.bs.table', function(row, $element, field){
+            return;
+
             $('[data-role=filters]').hide();
             $('[data-role=results]').hide();
+            $('[data-role=map]').hide();
             $('[data-role=details]').show();
             $('#backtosearch_fromomni').hide();
             $('#backtoresults').show();
@@ -221,6 +260,7 @@ define([
             $('#backtosearch_fromomni').show();
             $('#backtoresults').hide();
         });
+
     };
 
     Exsitu.prototype._initVariables = function () {
@@ -272,6 +312,11 @@ define([
             $('[data-role=filters]').show();
             $('[data-role=results]').hide();
             $('[data-role=details]').hide();
+        });
+
+        $('#showasmap').on('click', function(){
+            $('#tabled').toggle();
+            $('#map').toggle();
         });
 
         $('#backtoresults').on('click', function(){
