@@ -2,38 +2,34 @@ define([
     "jquery",
     "loglevel",
     "underscore",
+    "handlebars",
     "../config/config",
     "../html/organizations/template.hbs",
     "../nls/labels",
+    'typeahead.js',
     "bootstrap",
     "bootstrap-table",
-    '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export',
-    'typeahead.js'
-], function ($, log, _, C, template, labels, bootstrap) {
+    '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
+], function ($, log, _, Handlebars, C, template, labels, Bloodhound, bootstrap) {
 
     "use strict";
-    var Clang = C.lang.toLowerCase();
+    var Clang = C.lang.toLowerCase(),
+        services_url = "http://fenix.fao.org/d3s/processes",
+        iso3 = "http://fenixservices.fao.org/d3s/msd/resources/uid/ISO3";
 
     var s = {
-        EL: "#organizations"
+        EL: "#organizations",
+        TABLE: "#table"
     };
 
     function Organizations() {
-
         console.clear();
-
         // silent trace
-
         log.setLevel("silent");
-
         this._importThirdPartyCss();
-
         this._validateConfig();
-
         this._attach();
-
         this._initVariables();
-
         this._bindEventListeners();
     };
 
@@ -43,130 +39,142 @@ define([
 
     };
 
-    Organizations.prototype._attach = function () {
-        $(s.EL).html(template(labels[Clang]));
-        $('#table').bootstrapTable({
-            data : [
-                {
-                    "id": "1",
-                    "name": "Centro Nacional de Recursos Fitogenéticos",
-                    "acronym": "INIA-CRF",
-                    "instcode": "ESP004",
-                    "parentorg": "Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria. Subdirección General de Investigación y Tecnología",
-                    "address": "Autovía de Aragón km 36. Apdo. 1045",
-                    "city": "Alcalá de Henares. Madrid",
-                    "country": "Spain"
-                },
-                {
-                    "id": "2",
-                    "name": "C.R.A. Istituto Sperimentale per la Frutticoltura, Ministero delle Politiche Agricole e Forestali\n",
-                    "acronym": "ISF-Roma",
-                    "instcode": "ITA001",
-                    "address": "Via Fioranello 52",
-                    "city": "Roma",
-                    "country": "Italy"
-                },
-                {
-                    "id": "3",
-                    "name": "Plant Genetic Resource Collection",
-                    "acronym": "PGR",
-                    "instcode": "DEU001",
-                    "address": "Bundesallee 50",
-                    "city": "Braunschweig",
-                    "country": "Germany"
-                },
-                {
-                    "id": "4",
-                    "name": "División de Mejoramiento Genético, IDIAP",
-                    "acronym": "IDIAP-DMG",
-                    "instcode": "PAN001",
-                    "address": "Apdo. 6-4391",
-                    "city": "Panamá 6a, CA",
-                    "country": "Panama"
-                },
-                {
-                    "id": "5",
-                    "name": "Centro Nacional de Recursos Fitogenéticos",
-                    "acronym": "INIA-CRF",
-                    "instcode": "ESP004",
-                    "parentorg": "Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria. Subdirección General de Investigación y Tecnología",
-                    "address": "Autovía de Aragón km 36. Apdo. 1045",
-                    "city": "Alcalá de Henares. Madrid",
-                    "country": "Spain"
-                },
-                {
-                    "id": "6",
-                    "name": "C.R.A. Istituto Sperimentale per la Frutticoltura, Ministero delle Politiche Agricole e Forestali\n",
-                    "acronym": "ISF-Roma",
-                    "instcode": "ITA001",
-                    "address": "Via Fioranello 52",
-                    "city": "Roma",
-                    "country": "Italy"
-                },
-                {
-                    "id": "7",
-                    "name": "Plant Genetic Resource Collection",
-                    "acronym": "PGR",
-                    "instcode": "DEU001",
-                    "address": "Bundesallee 50",
-                    "city": "Braunschweig",
-                    "country": "Germany"
-                },
-                {
-                    "id": "8",
-                    "name": "División de Mejoramiento Genético, IDIAP",
-                    "acronym": "IDIAP-DMG",
-                    "instcode": "PAN001",
-                    "address": "Apdo. 6-4391",
-                    "city": "Panamá 6a, CA",
-                    "country": "Panama"
-                },
-                {
-                    "id": "9",
-                    "name": "Centro Nacional de Recursos Fitogenéticos",
-                    "acronym": "INIA-CRF",
-                    "instcode": "ESP004",
-                    "parentorg": "Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria. Subdirección General de Investigación y Tecnología",
-                    "address": "Autovía de Aragón km 36. Apdo. 1045",
-                    "city": "Alcalá de Henares. Madrid",
-                    "country": "Spain"
-                },
-                {
-                    "id": "10",
-                    "name": "C.R.A. Istituto Sperimentale per la Frutticoltura, Ministero delle Politiche Agricole e Forestali\n",
-                    "acronym": "ISF-Roma",
-                    "instcode": "ITA001",
-                    "address": "Via Fioranello 52",
-                    "city": "Roma",
-                    "country": "Italy"
-                },
-                {
-                    "id": "11",
-                    "name": "Plant Genetic Resource Collection",
-                    "acronym": "PGR",
-                    "instcode": "DEU001",
-                    "address": "Bundesallee 50",
-                    "city": "Braunschweig",
-                    "country": "Germany"
-                },
-                {
-                    "id": "12",
-                    "name": "División de Mejoramiento Genético, IDIAP",
-                    "acronym": "IDIAP-DMG",
-                    "instcode": "PAN001",
-                    "address": "Apdo. 6-4391",
-                    "city": "Panamá 6a, CA",
-                    "country": "Panama"
-                }
+    Organizations.prototype._callServices = function (payload) {
+        var table_data = [];
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'POST',
+            contentType: "application/json; charset=utf-8",
+            url: services_url,
+            data: JSON.stringify(payload),
+            success: function(res) {
+                //console.log(res.metadata.dsd);
+                _.each( res.data, function( element ) {
+                    table_data.push(
+                        {
+                            "name": element[0],
+                            "acronym": element[1],
+                            "instcode": element[2],
+                            "parentorg": element[3],
+                            "parent_instcode" : element[4],
+                            "address": element[5],
+                            "city": element[6],
+                            "country": element[7],
+                            "country_iso3": element[8],
+                            "valid_flag": element[9],
+                            // 10 to 15 are indexes
+                            "i_name" : element[10],
+                            "i_acronym" : element[11],
+                            "i_instcode" : element[12],
+                            "i_address" : element[13],
+                            "i_city" : element[14],
+                            "freetext_index" : element[15],
+                            // 10 to 15 are indexes
+                            "zip_code": element[16],
+                            "telephone": element[17],
+                            "fax": element[18],
+                            "email": element[19],
+                            "website": element[20],
+                            "status": element[21],
+                            "longitute": element[22],
+                            "latitude": element[23]
+                        }
+                    );
+                });
+            }
 
-            ],
+        });
+
+        $(s.TABLE).bootstrapTable('destroy');
+        this._initTable(table_data);
+
+    };
+
+    Organizations.prototype._exportList = function () {
+
+        var payload = {
+            "outConfig": {
+                "plugin": "wiewsOutputCSV"
+            },
+            "flow": [
+                {
+                    "name": "wiews_organization_filter",
+                    "sid": [
+                        {
+                            "uid": "wiews_organizations"
+                        }
+                    ],
+                    "parameters": {
+                        "freetext": "ritA ora de c",
+                        "name": "ritA ora de c",
+                        "acronym": "ritA ora de c",
+                        "instcode": "ritA ora de c",
+                        "city": "ritA ora de c",
+                        "country_iso3": [
+                            "EGY",
+                            "UGA"
+                        ],
+                        "valid": true
+                    }
+                },
+                {
+                    "name": "order",
+                    "parameters": {
+                        "search_rank": "ASC",
+                        "name": "ASC",
+                        "acronym": "ASC",
+                        "instcode": "ASC",
+                        "parent_name": "ASC",
+                        "address": "ASC",
+                        "city": "ASC",
+                        "country": "ASC"
+                    }
+                },
+                {
+                    "name": "columns",
+                    "parameters": {
+                        "columns": [
+                            "name",
+                            "acronym",
+                            "instcode",
+                            "parent_name",
+                            "address",
+                            "city",
+                            "country"
+                        ]
+                    }
+                }
+            ]
+        };
+
+
+    };
+
+    Organizations.prototype._initTable = function(data) {
+        $(s.TABLE).bootstrapTable({
+            data : data,
             pagination: true,
             pageSize: 10,
             pageList: [10, 25, 50, 100, 200],
             search: true,
+            formatSearch: function() {
+                return labels[Clang]['organizations_search_filter']
+            },
             sortable: true,
-            showExport: true
+            icons: {
+
+            },
+            showExport: true,
+            exportTypes: []
         });
+    }
+
+    Organizations.prototype._attach = function () {
+        var self = this;
+
+        $(s.EL).html(template(labels[Clang]));
+        this._initTable([]);
 
         $('#table').on('click-row.bs.table', function(row, $element, field){
             $('[data-role=filters]').hide();
@@ -174,52 +182,105 @@ define([
             $('[data-role=details]').show();
             $('#backtosearch_fromomni').hide();
             $('#backtoresults').show();
-            //console.log(row, $element, field);
+            self._fillResults($element);
         });
         $('[data-role=results]').hide();
         $('[data-role=details]').hide();
 
-        var substringMatcher = function(strs) {
-            return function findMatches(q, cb) {
-                var matches;
+        var prefetchOrganizations = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            identify: function(obj) { return obj.name; },
+            remote: {
+                url: services_url,
+                prepare: function (query, settings) {
+                    settings.async = false;
+                    settings.type = "POST";
+                    settings.contentType = "application/json; charset=utf-8";
+                    settings.dataType = 'json';
+                    settings.data = JSON.stringify(self._preparePayload(query));
 
-                // an array that will be populated with substring matches
-                matches = [];
+                    return settings;
+                },
+                transform: function(response) {
+                    var response_data = [];
+                    //console.log('response is ', response);
+                    _.each( response.data, function( element ) {
+                        response_data.push(
+                            {
+                                "name": element[0] ,
+                                "acronym": element[1],
+                                "instcode": element[2],
+                                "parentorg": element[3],
+                                "parent_instcode" : element[4],
+                                "address": element[5],
+                                "city": element[6],
+                                "country": element[7],
+                                "country_iso3": element[8],
+                                "valid_flag": element[9],
+                                // 10 to 15 are indexes
+                                "i_name" : element[10],
+                                "i_acronym" : element[11],
+                                "i_instcode" : element[12],
+                                "i_address" : element[13],
+                                "i_city" : element[14],
+                                "freetext_index" : element[15],
+                                // 10 to 15 are indexes
+                                "zip_code": element[16],
+                                "telephone": element[17],
+                                "fax": element[18],
+                                "email": element[19],
+                                "website": element[20],
+                                "status": element[21],
+                                "longitute": element[22],
+                                "latitude": element[23]
 
-                // regex used to determine if a string contains the substring `q`
-                var substrRegex = new RegExp(q, 'i');
+                            }
+                        );
+                    });
 
-                // iterate through the pool of strings and for any string that
-                // contains the substring `q`, add it to the `matches` array
-                $.each(strs, function(i, str) {
-                    if (substrRegex.test(str)) {
-                        matches.push(str);
-                    }
-                });
+                    return response_data;
+                }
 
-                cb(matches);
-            };
-        };
+            }
+        });
 
-        var states = ['ESP004', 'PAN001', 'DEU001', 'ITA001'];
-
-        $('#omnibox').typeahead({
+        $('#search_omnibox').typeahead({
                 hint: true,
                 highlight: true,
                 minLength: 3
             },
             {
-                name: 'states',
-                source: substringMatcher(states)
+                name: 'name',
+                display: 'name',
+                source: prefetchOrganizations,
+                templates: {
+                    suggestion: Handlebars.compile('<div><strong>{{name}}</strong> - {{instcode}} <span class="suggestion-country pull-right">{{country}}</span></div>'),
+                    empty: Handlebars.compile('<div class="tya_notfound">'+labels[Clang]['organizations_search_not_found']+'</div>'),
+                }
             }
         );
 
-        $('#omnibox').bind('typeahead:select', function(ev, suggestion) {
+        $('#search_omnibox').bind('typeahead:select', function(ev, suggestion) {
             $('[data-role=filters]').hide();
             $('[data-role=results]').hide();
             $('[data-role=details]').show();
             $('#backtosearch_fromomni').show();
             $('#backtoresults').hide();
+            self._fillResults(suggestion);
+        });
+    };
+
+    Organizations.prototype._fillResults = function(content) {
+        _.each(content, function(row_value, row_name) {
+            var content = row_value;
+            if (row_value == "undefined" || row_value == null) content = " - ";
+            $('[data-GPAIndex='+row_name+']').html(content);
+            if (row_name == "valid_flag") if (row_value == false) {
+                $('#containerGPA div.tableheader').css('display', 'table');
+            } else {
+                $('#containerGPA div.tableheader').css('display', 'none');
+            }
         });
     };
 
@@ -232,33 +293,150 @@ define([
 
     };
 
+    Organizations.prototype._preparePayload = function (freetext) {
+
+        if (freetext) return [
+            {
+                "name": "wiews_organization_filter",
+                "sid": [ { "uid": "wiews_organizations" } ],
+                "parameters": {
+                    "freetext" : freetext,
+                    "valid" : true
+                }
+            },
+            {
+                "name":"order",
+                "parameters":{
+                    "search_rank":"ASC",
+                    "name":"ASC",
+                    "acronym":"ASC",
+                    "instcode":"ASC",
+                    "parent_name":"ASC",
+                    "address":"ASC",
+                    "city":"ASC",
+                    "country":"ASC"
+                }
+            }
+        ];
+        var isValid = ($('#search_validation').val() == 'true');
+
+
+        var payload = [
+            {
+                "name": "wiews_organization_filter",
+                "sid": [ { "uid": "wiews_organizations" } ],
+                "parameters": {
+                    //"freetext" :  $('#search_omnibox').val(),
+                    "name" : $('#search_name').val(),
+                    "acronym" : $('#search_organization').val(),
+                    "instcode" : $('#search_instcode').val(),
+                    "city" : $('#search_city').val()
+
+                }
+            },
+            {
+                "name":"order",
+                "parameters":{
+                    "search_rank":"ASC",
+                    "name":"ASC",
+                    "acronym":"ASC",
+                    "instcode":"ASC",
+                    "parent_name":"ASC",
+                    "address":"ASC",
+                    "city":"ASC",
+                    "country":"ASC"
+                }
+            }
+        ];
+
+        if ($('#search_validation').val() != 'null') payload[0].parameters.valid = isValid;
+        if ($('#search_country').val() != '') {
+            var country = [];
+            country.push($('#search_country').val());
+            payload[0].parameters.country_iso3 = country;
+
+        }
+
+        return payload;
+    }
+
+    Organizations.prototype._searchfromkeyboard = function (freetext) {
+        freetext ? this._callServices(this._preparePayload($('#search_omnibox').val())) : this._callServices(this._preparePayload());
+        $('[data-role=filters]').hide();
+        $('[data-role=results]').show();
+        $('[data-role=details]').hide();
+    };
 
     // Events
     Organizations.prototype._bindEventListeners = function () {
         var self = this;
 
-        $('#omnibox').on("keypress", function(e) {
+        // Enter keypress
+
+        $('#search_name').on("keypress", function(e) {
             if (e.keyCode == 13) { // Enter
-                $('[data-role=filters]').hide();
-                $('[data-role=results]').show();
-                $('[data-role=details]').hide();
+                self._searchfromkeyboard();
+                return false; // prevent the button click from happening
+            }
+        });
+        $('#search_organization').on("keypress", function(e) {
+            if (e.keyCode == 13) { // Enter
+                self._searchfromkeyboard();
+                return false; // prevent the button click from happening
+            }
+        });
+        $('#search_instcode').on("keypress", function(e) {
+            if (e.keyCode == 13) { // Enter
+                self._searchfromkeyboard();
+                return false; // prevent the button click from happening
+            }
+        });
+        $('#search_city').on("keypress", function(e) {
+            if (e.keyCode == 13) { // Enter
+                self._searchfromkeyboard();
                 return false; // prevent the button click from happening
             }
         });
 
-        $('#search').on('click', function(){
+        $('#search_omnibox').on("keypress", function(e) {
+            if (e.keyCode == 13) { // Enter
+                $('[data-role=messages]').hide();
+                if ($('#search_omnibox').val().length < 1) {
+                    $('[data-role=messages]').show();
+                    return;
+                }
+                self._searchfromkeyboard($('#search_omnibox').val());
+                return false; // prevent the button click from happening
+            }
+        });
+
+        $('#search_omnibox').on('typeahead:asyncreceive', function() {
+            if ($(this).data('tt-typeahead').menu._allDatasetsEmpty()) {
+                $(this).trigger('typeahead:empty')
+            }
+        });
+
+        $('#search_button').on('click', function(){
+            $('[data-role=messages]').hide();
+            if ($('#search_omnibox').val().length < 1) {
+                $('[data-role=messages]').show();
+                return;
+            }
+            self._callServices(self._preparePayload($('#search_omnibox').val()));
             $('[data-role=filters]').hide();
             $('[data-role=results]').show();
             $('[data-role=details]').hide();
         });
 
-        $('#adv_search').on('click', function(){
+        $('#adv_search_button').on('click', function(){
+            self._callServices(self._preparePayload());
             $('[data-role=filters]').hide();
             $('[data-role=results]').show();
             $('[data-role=details]').hide();
         });
 
         $('#advanced').on('click', function(){
+           $('[data-role=messages]').hide();
            var str = $('#advanced-search').hasClass('advanced') ? labels[self.lang]['search_advanced'] : labels[self.lang]['search_basic'];
            $('#advanced-search').toggleClass('advanced');
            $(this).html(str);
@@ -291,7 +469,6 @@ define([
         require("../css/sandboxed-bootstrap.css");
         //dropdown selector
         require("../../node_modules/selectize/dist/css/selectize.bootstrap3.css");
-
 
         require("../../node_modules/fenix-ui-table-creator/dist/fenix-ui-table-creator.min.css");
 

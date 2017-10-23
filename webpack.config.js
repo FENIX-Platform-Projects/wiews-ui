@@ -29,6 +29,7 @@ module.exports = sections.map(function (section) {
                 'bootstrap-table': Path.join(__dirname, 'node_modules/bootstrap-table/dist/bootstrap-table.min.js'),
                 'handlebars': Path.join(__dirname, 'node_modules/handlebars/dist/handlebars.js'),
                 'jquery': Path.join(__dirname, 'node_modules/jquery/dist/jquery'),
+                'typeahead.js': Path.join(__dirname, 'node_modules/typeahead.js/dist/typeahead.bundle.js')
                 //'bootstrap-table-locale': Path.join(__dirname, 'node_modules/bootstrap-table/dist/bootstrap-table-locale-all.min')
                 // 'fenix-ui-bridge': Path.join(__dirname, 'node_modules/fenix-ui-bridge/src/js/index.js'),
                 // 'fenix-ui-reports': Path.join(__dirname, 'node_modules/fenix-ui-reports/src/js/index.js')

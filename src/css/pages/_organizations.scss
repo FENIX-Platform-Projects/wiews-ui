@@ -4,9 +4,7 @@
 
   max-width: 920px;
 
-  div#c353693 {margin-top:20px;}
   div.divider hr {border:0; height:1px; background-color:#DEDEDE;}
-  #c366480 h4 {margin-top: 0px; font-size: 14px;}
   /**** MAP *** */
   #map_canvas {height: 100%; margin: 0px; padding: 0px; position: relative;}
   #info-box {display:none; position: absolute; background: white; border: 1px solid #ccc; font-size:11px; font-family:arial; padding:2px 4px;}
@@ -157,7 +155,7 @@
   /****************** GPA   ****************/
   .search-header {padding-bottom: 12px; font-size: 17px;}
   .tableGPA {display:table; width:100%; background-color:#E4EEF2;}
-  .tableheader{display:table; width:100%; background-color:#FFF; margin-bottom: 10px; margin-top: 12px;}
+  .tableheader{ display:none; width:100%; background-color:#FFF; margin-bottom: 10px; margin-top: 12px; margin-left: 6px;  }
   .tableGPA {display: table; width: 100%;}
   .tableGPA .GPA-group {
     display: table-row-group;
@@ -219,7 +217,7 @@
 
 #advanced { cursor: pointer; }
 
-#omnibox { width: 860px }
+#search_omnibox { width: 860px }
 
 // Typeahead
 
@@ -297,4 +295,17 @@
   left: 5px;
 }
 
-#search, #adv_search { height: 34px }
+#search_button, #adv_search_button { height: 34px }
+#search_button { width: 55px }
+
+.suggestion-country { font-size: smaller; }
+.suggestion-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tya_notfound {
+    margin-left: 10px;
+    font-style: italic;
+}
