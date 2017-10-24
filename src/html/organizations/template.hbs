@@ -380,7 +380,13 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
                 <!-- Result -->
-                <table id="table">
+                <div id="toolbar" class="bootstrapTableExport">
+                    <button data-role="organizations_exportbutton" alt="{{organizations_export_button_alt}}" class="btn btn-default"><span alt="{{organizations_export_button_alt}}" class="glyphicon glyphicon-export"></span></button>
+                </div>
+                <table id="table"
+                       data-toolbar="#toolbar"
+                       data-toolbar-align="right"
+                >
                     <thead>
                     <tr>
                         <th data-sortable="true" data-width="16%" data-field="name">{{organizations_table_header_name}}</th>

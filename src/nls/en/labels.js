@@ -668,5 +668,10 @@ define(function () {
         "organizations_table_header_city" : "City",
         "organizations_table_header_country" : "Country",
         "organizations_details_invalidheader" : "This record is invalid.",
+        "organizations_export_button_alt" : "Export this result",
+
+        // Other stuff
+
+        "bootstraptable_search_filter" : "Filter",
     }
 });

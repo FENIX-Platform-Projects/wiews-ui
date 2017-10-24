@@ -534,6 +534,8 @@ define([
 
     //Render of the bootstrap table
     IndicatorCommon.prototype._tableRender = function (table, param) {
+
+        var self = this;
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
         param.indicatorDashboardSection.show();
 
@@ -545,6 +547,9 @@ define([
             pageSize: 20,
             pageList: [10, 25, 50, 100, 200],
             search: true,
+            formatSearch: function() {
+                return labels[self.lang.toLowerCase()]['bootstraptable_search_filter']
+            },
             sortable: true
         });
 

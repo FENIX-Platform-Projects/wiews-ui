@@ -3,6 +3,7 @@ define([
     "loglevel",
     "underscore",
     "handlebars",
+    "fenix-ui-reports",
     "../config/config",
     "../html/organizations/template.hbs",
     "../nls/labels",
@@ -10,12 +11,13 @@ define([
     "bootstrap",
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
-], function ($, log, _, Handlebars, C, template, labels, Bloodhound, bootstrap) {
+], function ($, log, _, Handlebars, Report, C, template, labels, Bloodhound, bootstrap) {
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
         services_url = "http://fenix.fao.org/d3s/processes",
-        iso3 = "http://fenixservices.fao.org/d3s/msd/resources/uid/ISO3";
+        iso3 = "http://fenixservices.fao.org/d3s/msd/resources/uid/ISO3",
+        fromFreetext = false;
 
     var s = {
         EL: "#organizations",
@@ -91,11 +93,16 @@ define([
 
     };
 
-    Organizations.prototype._exportList = function () {
-
-        var payload = {
+    Organizations.prototype._exportList = function (freetext) {
+        var flow_model = {
             "outConfig": {
                 "plugin": "wiewsOutputCSV"
+            },
+            "options": {
+                "params" : {
+                    "maxSize" : 2000000,
+                    "language": this.lang.toUpperCase()
+                }
             },
             "flow": [
                 {
@@ -106,16 +113,10 @@ define([
                         }
                     ],
                     "parameters": {
-                        "freetext": "ritA ora de c",
-                        "name": "ritA ora de c",
-                        "acronym": "ritA ora de c",
-                        "instcode": "ritA ora de c",
-                        "city": "ritA ora de c",
-                        "country_iso3": [
-                            "EGY",
-                            "UGA"
-                        ],
-                        "valid": true
+                        "name" : $('#search_name').val(),
+                        "acronym" : $('#search_organization').val(),
+                        "instcode" : $('#search_instcode').val(),
+                        "city" : $('#search_city').val()
                     }
                 },
                 {
@@ -149,6 +150,23 @@ define([
         };
 
 
+
+        if (freetext) {
+            flow_model.flow[0].parameters = {};
+            flow_model.flow[0].parameters.freetext = $('#search_omnibox').val();
+        } else {
+            var isValid = ($('#search_validation').val() == 'true');
+            if ($('#search_validation').val() != 'null') flow_model.flow[0].parameters.valid = isValid;
+            if ($('#search_country').val() != '') {
+                var country = [];
+                country.push($('#search_country').val());
+                flow_model.flow[0].parameters.country_iso3 = country;
+            }
+        }
+        this.report.export({
+            format: "flow",
+            config: flow_model
+        });
     };
 
     Organizations.prototype._initTable = function(data) {
@@ -161,12 +179,7 @@ define([
             formatSearch: function() {
                 return labels[Clang]['organizations_search_filter']
             },
-            sortable: true,
-            icons: {
-
-            },
-            showExport: true,
-            exportTypes: []
+            sortable: true
         });
     }
 
@@ -291,35 +304,48 @@ define([
         this.environment = C.ENVIRONMENT;
         this.cache = C.cache;
 
+        if (this.report && $.isFunction(this.report.dispose)) {
+            this.report.dispose();
+        }
+
+        this.report = new Report({
+            environment: this.environment,
+            cache: this.cache,
+            silent: true
+        });
+
     };
 
     Organizations.prototype._preparePayload = function (freetext) {
+        fromFreetext = false;
+        if (freetext){
+            fromFreetext = true;
+            return [
+                {
+                    "name": "wiews_organization_filter",
+                    "sid": [ { "uid": "wiews_organizations" } ],
+                    "parameters": {
+                        "freetext" : freetext,
+                        "valid" : true
+                    }
+                },
+                {
+                    "name":"order",
+                    "parameters":{
+                        "search_rank":"ASC",
+                        "name":"ASC",
+                        "acronym":"ASC",
+                        "instcode":"ASC",
+                        "parent_name":"ASC",
+                        "address":"ASC",
+                        "city":"ASC",
+                        "country":"ASC"
+                    }
+                }
+            ];
+        }
 
-        if (freetext) return [
-            {
-                "name": "wiews_organization_filter",
-                "sid": [ { "uid": "wiews_organizations" } ],
-                "parameters": {
-                    "freetext" : freetext,
-                    "valid" : true
-                }
-            },
-            {
-                "name":"order",
-                "parameters":{
-                    "search_rank":"ASC",
-                    "name":"ASC",
-                    "acronym":"ASC",
-                    "instcode":"ASC",
-                    "parent_name":"ASC",
-                    "address":"ASC",
-                    "city":"ASC",
-                    "country":"ASC"
-                }
-            }
-        ];
         var isValid = ($('#search_validation').val() == 'true');
-
 
         var payload = [
             {
@@ -460,6 +486,10 @@ define([
             $('[data-role=details]').hide();
         });
 
+
+        $('[data-role=organizations_exportbutton]').on('click', function() {
+            self._exportList(fromFreetext);
+        });
 
     };
 
