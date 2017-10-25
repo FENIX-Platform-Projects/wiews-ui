@@ -553,7 +553,9 @@ define([
             sortable: true
         });
 
+
         $('[data-table = "dd-dashboard-table"]').on('post-body.bs.table', function (event, data) {
+            $('.dropdown-toggle').dropdown();
             $('[data-dashboardContainer = "dd-dashboard-container"]').show();
         });
         $('[data-table = "dd-dashboard-table"]').bootstrapTable('load', {data: table});
@@ -607,7 +609,7 @@ define([
         });
 
         this.report.on('export.error', function() {
-            self.filter_btnMsg1Obj.html('<div class="alert alert-danger" role="alert"><center>'+labels[self.lang]['download_in_error']+'</center></div>');
+            self.filter_btnMsg1Obj.html('<div class="alert alert-danger" role="alert"><center>'+labels[self.lang]['download_toomuch']+'</center></div>');
             self.filter_btnMsg1Obj.show();
         });
 

@@ -2,6 +2,21 @@
 
 [data-page='organizations'] {
 
+  .GPAListElement {
+    margin-bottom: 6px !important;
+    position: relative !important;
+    left: 1.5em !important;
+  }
+
+  div.pagination > ul > li.page-number.active > a, .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    color: white !important;
+  }
+
+  ul li {
+    margin-bottom: 0 !important;
+    left: 0 !important;
+  }
+
   max-width: 920px;
 
   div.divider hr {border:0; height:1px; background-color:#DEDEDE;}
@@ -213,7 +228,8 @@
 
 .bootstrap-table .pagination-info { padding-left: 7px }
 
-.sbHolder, .sbOptions { width: auto !important; }
+.sbHolder, .sbOptions, .sbSelector { width: auto !important; }
+.sbOptions ul { width:100% !important }
 
 #advanced { cursor: pointer; }
 
@@ -319,3 +335,6 @@
 .bootstrapTableExport button {
   height: 34px;
 }
+
+.hiddenflag { display:  none; }
+

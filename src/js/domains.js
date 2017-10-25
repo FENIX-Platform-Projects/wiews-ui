@@ -2,15 +2,15 @@ define([
     "jquery",
     "loglevel",
     "underscore",
+    "handlebars",
     "../config/config",
     "../config/domains/config",
     "../config/domains/indicatorsProperties",
     "../html/domains/template.hbs",
     "./domains/downloadData",
     "./domains/visualizeData",
-    "../nls/labels",
-    "bootstrap"
-], function ($, log, _, C, PAGC, CATEG, template, DownloadData, VisualizeData, labels, bootstrap) {
+    "../nls/labels"
+], function ($, log, _, Handlebars, C, PAGC, CATEG, template, DownloadData, VisualizeData, labels) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
@@ -148,9 +148,6 @@ define([
     // Events
     Domains.prototype._bindEventListeners = function () {
 
-        $('#dropdownMenu2').dropdown();
-        // MANNAGGIA @#&%@!
-
         if(!s.noVisualize) {
             this.$tabs.on("click", _.bind(this._onTabClick, this))
         }
@@ -190,12 +187,10 @@ define([
         //dropdown selector
         require("../../node_modules/selectize/dist/css/selectize.bootstrap3.css");
 
-
         //material icons
         // require("../../node_modules/material-design-icons/iconfont/material-icons.css");
 
         require("../../node_modules/leaflet/dist/leaflet.css");
-
         require("../../node_modules/fenix-ui-map-creator/dist/fenix-ui-map-creator.min.css");
         require("../../node_modules/fenix-ui-table-creator/dist/fenix-ui-table-creator.min.css");
 
@@ -210,7 +205,7 @@ define([
         require("../../node_modules/fenix-ui-filter/dist/fenix-ui-filter.min.css");
 
         // fenix-ui-dropdown
-        // require("../../node_modules/fenix-ui-dropdown/dist/fenix-ui-dropdown.min.css");
+        require("../../node_modules/fenix-ui-dropdown/dist/fenix-ui-dropdown.min.css");
 
         // bootstrap-table
         require("../../node_modules/bootstrap-table/dist/bootstrap-table.min.css");

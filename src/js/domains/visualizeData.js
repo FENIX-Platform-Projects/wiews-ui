@@ -11,10 +11,7 @@ define([
     "fenix-ui-filter-utils",
     "./renders/IndicatorCommon",
     "../../nls/labels",
-    '../common/progressBar',
-    "jstree",
-    "bootstrap",
-    "bootstrap-table"
+    '../common/progressBar'
 ], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, labels, ProgressBar) {
 
     "use strict";

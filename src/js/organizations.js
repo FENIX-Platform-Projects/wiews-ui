@@ -4,6 +4,7 @@ define([
     "underscore",
     "handlebars",
     "fenix-ui-reports",
+    "fenix-ui-filter",
     "../config/config",
     "../html/organizations/template.hbs",
     "../nls/labels",
@@ -11,17 +12,17 @@ define([
     "bootstrap",
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
-], function ($, log, _, Handlebars, Report, C, template, labels, Bloodhound, bootstrap) {
+], function ($, log, _, Handlebars, Report, Filter, C, template, labels, Bloodhound, bootstrap) {
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
         services_url = "http://fenix.fao.org/d3s/processes",
-        iso3 = "http://fenixservices.fao.org/d3s/msd/resources/uid/ISO3",
         fromFreetext = false;
 
     var s = {
         EL: "#organizations",
-        TABLE: "#table"
+        TABLE: "#table",
+        FENIX_FILTER : "#fenixfilter"
     };
 
     function Organizations() {
@@ -30,8 +31,8 @@ define([
         log.setLevel("silent");
         this._importThirdPartyCss();
         this._validateConfig();
-        this._attach();
         this._initVariables();
+        this._attach();
         this._bindEventListeners();
     };
 
@@ -80,7 +81,26 @@ define([
                             "website": element[20],
                             "status": element[21],
                             "longitute": element[22],
-                            "latitude": element[23]
+                            "latitude": element[23],
+                            "organization_roles" : element[24],
+                            // Flags
+                            "flag_646": element[25],
+                            "flag_647": element[26],
+                            "flag_648": element[27],
+                            "flag_649": element[28],
+                            "flag_650": element[29],
+                            "flag_651": element[30],
+                            "flag_652": element[31],
+                            "flag_653": element[32],
+                            "flag_654": element[33],
+                            "flag_655": element[34],
+                            "flag_656": element[35],
+                            "flag_657": element[36],
+                            "flag_658": element[37],
+                            "flag_869": element[38],
+                            "flag_874": element[39],
+                            "flag_875": element[40],
+                            "search_rank" : element[41]
                         }
                     );
                 });
@@ -88,8 +108,7 @@ define([
 
         });
 
-        $(s.TABLE).bootstrapTable('destroy');
-        this._initTable(table_data);
+        return table_data;
 
     };
 
@@ -139,16 +158,31 @@ define([
                             "name",
                             "acronym",
                             "instcode",
+                            "parent_instcode",
                             "parent_name",
                             "address",
+                            "zip_code",
                             "city",
-                            "country"
+                            "country_iso3",
+                            "country",
+                            "telephone",
+                            "fax",
+                            "email",
+                            "website",
+                            "status",
+                            "organization_roles",
+                            "longitude",
+                            "latitude",
+                            "valid_instcode"
                         ]
                     }
                 }
             ]
-        };
+        },
+            filter_values = this.filter.getValues();
 
+
+        console.log('from export', filter_values);
 
 
         if (freetext) {
@@ -157,11 +191,9 @@ define([
         } else {
             var isValid = ($('#search_validation').val() == 'true');
             if ($('#search_validation').val() != 'null') flow_model.flow[0].parameters.valid = isValid;
-            if ($('#search_country').val() != '') {
-                var country = [];
-                country.push($('#search_country').val());
-                flow_model.flow[0].parameters.country_iso3 = country;
-            }
+            if (filter_values.values.country.length > 0 ) flow_model.flow[0].parameters.country_iso3 = filter_values.values.country;
+            if (filter_values.values.organizations_role.length > 0 ) flow_model.flow[0].parameters.roles = filter_values.values.organizations_role;
+
         }
         this.report.export({
             format: "flow",
@@ -169,7 +201,14 @@ define([
         });
     };
 
+    Organizations.prototype._getParameterByName = function (name) {
+        var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    };
+
     Organizations.prototype._initTable = function(data) {
+        if (this.instcode.length) this._fillResults(data[0]);
+        $(s.TABLE).bootstrapTable('destroy');
         $(s.TABLE).bootstrapTable({
             data : data,
             pagination: true,
@@ -221,7 +260,7 @@ define([
                     _.each( response.data, function( element ) {
                         response_data.push(
                             {
-                                "name": element[0] ,
+                                "name": element[0],
                                 "acronym": element[1],
                                 "instcode": element[2],
                                 "parentorg": element[3],
@@ -246,7 +285,26 @@ define([
                                 "website": element[20],
                                 "status": element[21],
                                 "longitute": element[22],
-                                "latitude": element[23]
+                                "latitude": element[23],
+                                "organization_roles" : element[24],
+                                // Flags
+                                "flag_646": element[25],
+                                "flag_647": element[26],
+                                "flag_648": element[27],
+                                "flag_649": element[28],
+                                "flag_650": element[29],
+                                "flag_651": element[30],
+                                "flag_652": element[31],
+                                "flag_653": element[32],
+                                "flag_654": element[33],
+                                "flag_655": element[34],
+                                "flag_656": element[35],
+                                "flag_657": element[36],
+                                "flag_658": element[37],
+                                "flag_869": element[38],
+                                "flag_874": element[39],
+                                "flag_875": element[40],
+                                "search_rank" : element[41]
 
                             }
                         );
@@ -258,7 +316,8 @@ define([
             }
         });
 
-        $('#search_omnibox').typeahead({
+        $('#search_omnibox').typeahead(
+            {
                 hint: true,
                 highlight: true,
                 minLength: 3
@@ -282,22 +341,106 @@ define([
             $('#backtoresults').hide();
             self._fillResults(suggestion);
         });
+
+        // FENIX Filter
+
+        this.filter = new Filter({
+            el: s.FENIX_FILTER,
+            selectors: {
+                "country": {
+                    "cl": { uid: "ISO3" },
+                    "selector": {
+                        "id": "dropdown",
+                        "config": {
+                            "maxItems": 1
+                        }
+                    },
+                    "format": {
+                        "output": "codes"
+                    }
+                },
+                "organizations_role": {
+                    "cl": { uid: "organizations_role" },
+                    "selector": {
+                        "id": "dropdown"
+                    },
+                    "format": {
+                        "output": "codes"
+                    }
+                }
+            },
+            environment: this.environment,
+            cache : this.cache,
+
+            common: {
+                template: {
+                    hideSwitch: true,
+                    hideRemoveButton: true,
+                    hideHeader: true
+                }
+            }
+        });
+
+        if (this.instcode.length) {
+            var result = this._callServices([
+                {
+                    "name": "wiews_organization_filter",
+                    "sid": [ { "uid": "wiews_organizations" } ],
+                    "parameters": {
+                        "instcode" : this.instcode.toUpperCase()
+                    }
+                },
+                {
+                    "name":"order",
+                    "parameters":{
+                        "search_rank":"ASC",
+                        "name":"ASC",
+                        "acronym":"ASC",
+                        "instcode":"ASC",
+                        "parent_name":"ASC",
+                        "address":"ASC",
+                        "city":"ASC",
+                        "country":"ASC"
+                    }
+                }
+            ]);
+            if (result.length) {
+                this._initTable(result);
+                $('[data-role=filters]').hide();
+                $('[data-role=results]').hide();
+                $('[data-role=details]').show();
+                $('#backtosearch_fromomni').show();
+                $('#backtoresults').hide();
+            } else {
+                $('#orgalert_message').html(labels[Clang]['organizations_search_from_querystring']);
+                $('[data-role=messages]').show();
+            }
+        }
+
     };
 
     Organizations.prototype._fillResults = function(content) {
         _.each(content, function(row_value, row_name) {
             var content = row_value;
             if (row_value == "undefined" || row_value == null) content = " - ";
+            if (row_name == "parent_instcode") {
+                $('[data-GPAIndex='+row_name+']').attr('href', window.location.href.split('?')[0] + '?instcode='+row_value);
+                return;
+            }
             $('[data-GPAIndex='+row_name+']').html(content);
+            //Special Cases
             if (row_name == "valid_flag") if (row_value == false) {
                 $('#containerGPA div.tableheader').css('display', 'table');
             } else {
                 $('#containerGPA div.tableheader').css('display', 'none');
             }
+            if (row_name.startsWith('flag_') && row_value == true) $('[data-GPAFlag='+row_name+']').removeClass('hiddenflag');
         });
     };
 
     Organizations.prototype._initVariables = function () {
+
+        this.instcode = ((this._getParameterByName('instcode')) ? this._getParameterByName('instcode') : "");
 
         this.$el = $(s.EL);
         this.lang = Clang;
@@ -345,7 +488,8 @@ define([
             ];
         }
 
-        var isValid = ($('#search_validation').val() == 'true');
+        var isValid = ($('#search_validation').val() == 'true'),
+            filter_values = this.filter.getValues();
 
         var payload = [
             {
@@ -357,7 +501,6 @@ define([
                     "acronym" : $('#search_organization').val(),
                     "instcode" : $('#search_instcode').val(),
                     "city" : $('#search_city').val()
-
                 }
             },
             {
@@ -376,18 +519,14 @@ define([
         ];
 
         if ($('#search_validation').val() != 'null') payload[0].parameters.valid = isValid;
-        if ($('#search_country').val() != '') {
-            var country = [];
-            country.push($('#search_country').val());
-            payload[0].parameters.country_iso3 = country;
-
-        }
+        if (filter_values.values.country.length > 0 ) payload[0].parameters.country_iso3 = filter_values.values.country;
+        if (filter_values.values.organizations_role.length > 0 ) payload[0].parameters.roles = filter_values.values.organizations_role;
 
         return payload;
     }
 
     Organizations.prototype._searchfromkeyboard = function (freetext) {
-        freetext ? this._callServices(this._preparePayload($('#search_omnibox').val())) : this._callServices(this._preparePayload());
+        freetext ? this._initTable(this._callServices(this._preparePayload($('#search_omnibox').val()))) : this._initTable(this._callServices(this._preparePayload()));
         $('[data-role=filters]').hide();
         $('[data-role=results]').show();
         $('[data-role=details]').hide();
@@ -423,11 +562,11 @@ define([
                 return false; // prevent the button click from happening
             }
         });
-
         $('#search_omnibox').on("keypress", function(e) {
             if (e.keyCode == 13) { // Enter
                 $('[data-role=messages]').hide();
                 if ($('#search_omnibox').val().length < 1) {
+                    $('#orgalert_message').html(labels[Clang]['organizations_search_orgalert_message']);
                     $('[data-role=messages]').show();
                     return;
                 }
@@ -445,17 +584,18 @@ define([
         $('#search_button').on('click', function(){
             $('[data-role=messages]').hide();
             if ($('#search_omnibox').val().length < 1) {
+                $('#orgalert_message').html(labels[Clang]['organizations_search_orgalert_message']);
                 $('[data-role=messages]').show();
                 return;
             }
-            self._callServices(self._preparePayload($('#search_omnibox').val()));
+            self._initTable(self._callServices(self._preparePayload($('#search_omnibox').val())));
             $('[data-role=filters]').hide();
             $('[data-role=results]').show();
             $('[data-role=details]').hide();
         });
 
         $('#adv_search_button').on('click', function(){
-            self._callServices(self._preparePayload());
+            self._initTable(self._callServices(self._preparePayload()));
             $('[data-role=filters]').hide();
             $('[data-role=results]').show();
             $('[data-role=details]').hide();

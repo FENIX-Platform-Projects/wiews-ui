@@ -10,10 +10,7 @@ define([
     "fenix-ui-filter",
     "fenix-ui-filter-utils",
     "./renders/IndicatorCommon",
-    "../../nls/labels",
-    "jstree",
-    "bootstrap",
-    "bootstrap-table"
+    "../../nls/labels"
 ], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, labels) {
 
     "use strict";

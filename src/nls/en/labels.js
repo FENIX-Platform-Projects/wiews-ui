@@ -65,6 +65,7 @@ define(function () {
         "filter-dd_filter_button_2_title": "Table Data",
         "filter-dd_filter_button_3_title": "Raw Data",
         "download_in_progress": "Your download request has been sent. Please wait.",
+        "download_toomuch" : "Too many records please refine your query.<br>The maximum limit is 200,000 records",
         "download_in_error": "Error occurred during resource export. Please contact support.",
 
         // Indicator 20
@@ -645,6 +646,7 @@ define(function () {
         "organizations_search_not_found": "No matching records found.",
         "organizations_search_filter" : "Filter",
         "organizations_search_orgalert_message" : "Please provide a valid search",
+        "organizations_search_from_querystring" : "Instcode not found. Please use the search form.",
         "organizations_omnisearch_placeholder": "Type here your search by Name, Organization acronym, WIEWS instcode, City or Country",
         "organizations_search_header": "Search",
         "organizations_results_header": "Results",

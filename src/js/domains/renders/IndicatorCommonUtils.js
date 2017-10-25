@@ -1,17 +1,6 @@
 define([
-    "jquery",
-    "loglevel",
-    'underscore',
-    "../../../config/config",
-    "../../../config/errors",
-    "../../../config/events",
-    "../../../config/domains/config",
-    "../../../config/domains/filterSelectors",
-    "fenix-ui-reports",
-    "../../../nls/labels",
-    "fenix-ui-bridge",
-    "bootstrap-table"
-], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, Report, labels, Bridge, bootstrapTable) {
+    "jquery"
+], function ($) {
 
     'use strict';
 

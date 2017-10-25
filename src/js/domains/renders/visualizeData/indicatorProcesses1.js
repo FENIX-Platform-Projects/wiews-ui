@@ -299,6 +299,7 @@ define([
     IndicatorProcesses1.prototype.bindEventListener = function () {
         var self = this;
         var anchor;
+
         $( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function( evt ) {
 
             // Read the a href of the anchor that was clicked
@@ -329,7 +330,8 @@ define([
                 }
             }
         });
-    }
+
+    };
 
     IndicatorProcesses1.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
         var filterDivMsg1 = hostParam.filterDivMsg_1;
