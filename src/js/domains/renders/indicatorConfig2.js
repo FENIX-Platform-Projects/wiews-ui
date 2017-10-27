@@ -218,12 +218,12 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             "name": "filter",
                             "parameters": {
                                 "columns": [
+                                    "iteration",
                                     "domain",
                                     "rank",
                                     "wiews_region",
                                     "indicator",
                                     "element",
-                                    "iteration",
                                     "value",
                                     "um"
                                 ],
@@ -264,11 +264,11 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             "name": "columns",
                             "parameters": {
                                 "columns": [
+                                    "iteration",
                                     "domain",
                                     "wiews_region",
                                     "indicator",
                                     "element",
-                                    "iteration",
                                     "value",
                                     "um"
                                 ]

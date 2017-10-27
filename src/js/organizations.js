@@ -182,15 +182,15 @@ define([
             filter_values = this.filter.getValues();
 
 
-        console.log('from export', filter_values);
+        //console.log('from export', filter_values);
 
 
         if (freetext) {
             flow_model.flow[0].parameters = {};
             flow_model.flow[0].parameters.freetext = $('#search_omnibox').val();
         } else {
-            var isValid = ($('#search_validation').val() == 'true');
-            if ($('#search_validation').val() != 'null') flow_model.flow[0].parameters.valid = isValid;
+            var isValid = (filter_values.values.valid == 'true');
+            if (filter_values.values.valid != 'null') flow_model.flow[0].parameters.valid = isValid;
             if (filter_values.values.country.length > 0 ) flow_model.flow[0].parameters.country_iso3 = filter_values.values.country;
             if (filter_values.values.organizations_role.length > 0 ) flow_model.flow[0].parameters.roles = filter_values.values.organizations_role;
 
@@ -229,11 +229,10 @@ define([
         this._initTable([]);
 
         $('#table').on('click-row.bs.table', function(row, $element, field){
-            $('[data-role=filters]').hide();
-            $('[data-role=results]').hide();
-            $('[data-role=details]').show();
+            self._statesManagement('details');
             $('#backtosearch_fromomni').hide();
             $('#backtoresults').show();
+            history.replaceState({ page : "details" }, null, "?instcode="+$element['instcode']+"#details");
             self._fillResults($element);
         });
         $('[data-role=results]').hide();
@@ -334,9 +333,7 @@ define([
         );
 
         $('#search_omnibox').bind('typeahead:select', function(ev, suggestion) {
-            $('[data-role=filters]').hide();
-            $('[data-role=results]').hide();
-            $('[data-role=details]').show();
+            self._statesManagement('details');
             $('#backtosearch_fromomni').show();
             $('#backtoresults').hide();
             self._fillResults(suggestion);
@@ -352,7 +349,8 @@ define([
                     "selector": {
                         "id": "dropdown",
                         "config": {
-                            "maxItems": 1
+                            "maxItems": 1,
+                            "placeholder" : labels[Clang]['organizations_searchform_search_country']
                         }
                     },
                     "format": {
@@ -362,10 +360,29 @@ define([
                 "organizations_role": {
                     "cl": { uid: "organizations_role" },
                     "selector": {
-                        "id": "dropdown"
+                        "id": "dropdown",
+                        "config" : {
+                            "placeholder": labels[Clang]['organizations_searchform_search_organizationrole']
+                        }
                     },
                     "format": {
                         "output": "codes"
+                    }
+                },
+                "valid" : {
+                    selector: {
+                        id: "dropdown",
+                        default : ['true'],
+                        source: [
+                            {value: "true", label: labels[Clang]['organizations_searchform_search_validation_true']},
+                            {value: "null", label: labels[Clang]['organizations_searchform_search_validation_null']},
+                            {value: "false", label: labels[Clang]['organizations_searchform_search_validation_false']}
+                        ],
+                        "config" : {
+                            "maxItems": 1,
+                            "placeholder": labels[Clang]['organizations_searchform_search_validation']
+                        },
+                        sort: false
                     }
                 }
             },
@@ -406,9 +423,7 @@ define([
             ]);
             if (result.length) {
                 this._initTable(result);
-                $('[data-role=filters]').hide();
-                $('[data-role=results]').hide();
-                $('[data-role=details]').show();
+                self._statesManagement('querystring');
                 $('#backtosearch_fromomni').show();
                 $('#backtoresults').hide();
             } else {
@@ -459,6 +474,40 @@ define([
 
     };
 
+    Organizations.prototype._statesManagement = function (whichstate, payload, frombutton) {
+        switch(whichstate) {
+
+            case 'initial' :
+                if (!frombutton) history.pushState({ page : "initial" }, "Search", this._RemoveParameterFromUrl(window.location.href.split('#')[0],'instcode'));
+                $('[data-role=filters]').show();
+                $('[data-role=results]').hide();
+                $('[data-role=details]').hide();
+            break;
+
+            case 'querystring' :
+                $('[data-role=filters]').hide();
+                $('[data-role=results]').hide();
+                $('[data-role=details]').show();
+            break;
+
+            case 'results' :
+                if (!frombutton) history.pushState({ page : "results", payload : payload }, "Results", this._RemoveParameterFromUrl(window.location.href.split('#')[0],'instcode') + "#results");
+                $('[data-role=filters]').hide();
+                $('[data-role=results]').show();
+                $('[data-role=details]').hide();
+            break;
+
+            case 'details' :
+                if (!frombutton) history.pushState({ page : "details" }, "Details", "#details");
+                $('[data-role=filters]').hide();
+                $('[data-role=results]').hide();
+                $('[data-role=details]').show();
+            break;
+
+        }
+
+    };
+
     Organizations.prototype._preparePayload = function (freetext) {
         fromFreetext = false;
         if (freetext){
@@ -488,8 +537,8 @@ define([
             ];
         }
 
-        var isValid = ($('#search_validation').val() == 'true'),
-            filter_values = this.filter.getValues();
+        var filter_values = this.filter.getValues(),
+            isValid = (filter_values.values.valid == 'true');
 
         var payload = [
             {
@@ -518,7 +567,7 @@ define([
             }
         ];
 
-        if ($('#search_validation').val() != 'null') payload[0].parameters.valid = isValid;
+        if (filter_values.values.valid != 'null') payload[0].parameters.valid = isValid;
         if (filter_values.values.country.length > 0 ) payload[0].parameters.country_iso3 = filter_values.values.country;
         if (filter_values.values.organizations_role.length > 0 ) payload[0].parameters.roles = filter_values.values.organizations_role;
 
@@ -527,9 +576,7 @@ define([
 
     Organizations.prototype._searchfromkeyboard = function (freetext) {
         freetext ? this._initTable(this._callServices(this._preparePayload($('#search_omnibox').val()))) : this._initTable(this._callServices(this._preparePayload()));
-        $('[data-role=filters]').hide();
-        $('[data-role=results]').show();
-        $('[data-role=details]').hide();
+        self._statesManagement('results');
     };
 
     // Events
@@ -589,16 +636,12 @@ define([
                 return;
             }
             self._initTable(self._callServices(self._preparePayload($('#search_omnibox').val())));
-            $('[data-role=filters]').hide();
-            $('[data-role=results]').show();
-            $('[data-role=details]').hide();
+            self._statesManagement('results');
         });
 
         $('#adv_search_button').on('click', function(){
             self._initTable(self._callServices(self._preparePayload()));
-            $('[data-role=filters]').hide();
-            $('[data-role=results]').show();
-            $('[data-role=details]').hide();
+            self._statesManagement('results');
         });
 
         $('#advanced').on('click', function(){
@@ -609,21 +652,15 @@ define([
         });
 
         $('#backtosearch').on('click', function(){
-            $('[data-role=filters]').show();
-            $('[data-role=results]').hide();
-            $('[data-role=details]').hide();
+            self._statesManagement('initial');
         });
 
         $('#backtosearch_fromomni').on('click', function(){
-            $('[data-role=filters]').show();
-            $('[data-role=results]').hide();
-            $('[data-role=details]').hide();
+            self._statesManagement('initial');
         });
 
         $('#backtoresults').on('click', function(){
-            $('[data-role=filters]').hide();
-            $('[data-role=results]').show();
-            $('[data-role=details]').hide();
+            self._statesManagement('results');
         });
 
 
@@ -631,6 +668,18 @@ define([
             self._exportList(fromFreetext);
         });
 
+        window.onpopstate = function(event) {
+            //console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
+            //console.log((event.state) ? event.state.page : "initial");
+            self._statesManagement((event.state) ? event.state.page : "initial",{},true);
+        }
+
+    };
+
+    Organizations.prototype._RemoveParameterFromUrl = function(url, parameter) {
+        return url
+            .replace(new RegExp('[?&]' + parameter + '=[^&#]*(#.*)?$'), '$1')
+            .replace(new RegExp('([?&])' + parameter + '=[^&]*&'), '$1');
     };
 
     Organizations.prototype._importThirdPartyCss = function () {

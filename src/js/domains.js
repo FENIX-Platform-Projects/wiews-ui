@@ -148,6 +148,9 @@ define([
     // Events
     Domains.prototype._bindEventListeners = function () {
 
+        $('#dropdownMenu2').dropdown();
+        // MANNAGGIA @#&%@!
+
         if(!s.noVisualize) {
             this.$tabs.on("click", _.bind(this._onTabClick, this))
         }
