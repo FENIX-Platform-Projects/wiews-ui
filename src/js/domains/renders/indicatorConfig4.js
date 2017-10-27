@@ -341,7 +341,9 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                             "parameters" : {
                                 "columns" : [
                                     "iteration",
+                                    "country_iso3",
                                     "country",
+                                    "org_id",
                                     "organization_name",
                                     "sites_total",
                                     "sites_with_management"

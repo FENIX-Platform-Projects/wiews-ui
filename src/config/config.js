@@ -6,7 +6,7 @@ define(function () {
     return {
         //ENVIRONMENT : "develop"
         // ENVIRONMENT : "production",
-        ENVIRONMENT : "demo",
+        ENVIRONMENT : "wiews",
         cache: false,
         lang: "EN"
     };

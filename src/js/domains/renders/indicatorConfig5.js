@@ -399,7 +399,9 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             "parameters" : {
                                 "columns" : [
                                     "iteration",
+                                    "country_iso3",
                                     "country",
+                                    "org_id",
                                     "org_name",
                                     "mission_id",
                                     "mission_name",

@@ -405,7 +405,9 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             "parameters": {
                                 "columns": [
                                     "iteration",
+                                    "country_iso3",
                                     "country",
+                                    "org_id",
                                     "organization_name",
                                     "crop_id",
                                     "crop_name",

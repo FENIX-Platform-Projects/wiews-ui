@@ -16,7 +16,7 @@ define([
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
-        services_url = "http://fenix.fao.org/d3s/processes",
+        services_url = "http://fenix.fao.org/d3s_wiews/processes",
         fromFreetext = false;
 
     var s = {

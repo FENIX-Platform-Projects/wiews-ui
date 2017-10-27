@@ -343,7 +343,9 @@ define(["highcharts",
                             "parameters": {
                                 "columns": [
                                     "iteration",
+                                    "country_iso3",
                                     "country",
+                                    "org_id",
                                     "organization_name",
                                     "species",
                                     "threatened_species",
