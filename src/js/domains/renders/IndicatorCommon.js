@@ -454,12 +454,12 @@ define([
     //Download  Tab Button 1
     IndicatorCommon.prototype._DD_onClick_button1 = function (param) {
 
+
         $('[data-dashboardContainer = "dd-dashboard-container"]').hide();
         var values = this.filter.getValues();
         var newDashboardConfig = this.indicatorProcesses.onClickButton1(values, this.dashboard_config, param);
 
-        if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
-        {
+        if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig))) {
             this._DD_getTableData(param, newDashboardConfig, values)
         }
     }
@@ -500,6 +500,7 @@ define([
 
                 var columnsMap = this._columnMapCreation(param, dsdColumns);
                 var tableData = this.indicatorProcesses.tableDataCreation(param, columnsMap, data, filterValues);
+                console.log('cartonianimatigiapponesi',tableData);
                 this._tableRender(tableData, param);
 
             }, this),
@@ -535,6 +536,8 @@ define([
     //Render of the bootstrap table
     IndicatorCommon.prototype._tableRender = function (table, param) {
 
+        console.log('table render');
+
         var self = this;
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
         param.indicatorDashboardSection.show();
@@ -555,6 +558,7 @@ define([
 
 
         $('[data-table = "dd-dashboard-table"]').on('post-body.bs.table', function (event, data) {
+            console.log('post-body.bs.table', event, data);
             $('.dropdown-toggle').dropdown();
             $('[data-dashboardContainer = "dd-dashboard-container"]').show();
         });

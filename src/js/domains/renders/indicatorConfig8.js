@@ -216,7 +216,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             "parameters":{
                                 "iteration":"ASC",
                                 "rank":"ASC",
-                                "wiews_region":"ASC",
+                                "wiews_region_EN":"ASC",
                                 "indicator":"ASC",
                                 "indicator_label":"ASC"
                             }
@@ -321,7 +321,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             "parameters":{
                                 "iteration":"ASC",
                                 "rank":"ASC",
-                                "wiews_region":"ASC",
+                                "wiews_region_EN":"ASC",
                                 "indicator":"ASC",
                                 "indicator_label":"ASC"
                             }

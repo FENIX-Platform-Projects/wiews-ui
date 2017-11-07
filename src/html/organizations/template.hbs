@@ -116,7 +116,7 @@
                         <th data-sortable="true" data-width="16%" data-field="name">{{organizations_table_header_name}}</th>
                         <th data-sortable="true" data-width="7%" data-field="acronym">{{organizations_table_header_acronym}}</th>
                         <th data-sortable="true" data-width="7%" data-field="instcode">{{organizations_table_header_instcode}}</th>
-                        <th data-sortable="true" data-width="21%" data-field="parentorg">{{organizations_table_header_parentorg}}</th>
+                        <th data-sortable="true" data-width="21%" data-field="parent_name">{{organizations_table_header_parentorg}}</th>
                         <th data-sortable="true" data-width="21%" data-field="address">{{organizations_table_header_address}}</th>
                         <th data-sortable="true" data-width="14%" data-field="city">{{organizations_table_header_city}}</th>
                         <th data-sortable="true" data-width="14%" data-field="country">{{organizations_table_header_country}}</th>
@@ -162,7 +162,7 @@
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Parent organization</div>
-                                        <div class="GPA-cell txt"><a data-GPAIndex="parent_instcode" href="#"><span data-GPAIndex="parentorg"></span></a></div>
+                                        <div class="GPA-cell txt"><a data-GPAIndex="parent_instcode" href="#"><span data-GPAIndex="parent_name"></span></a></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Address</div>
@@ -204,28 +204,28 @@
                                         <div class="GPA-cell lbl">Organization role categories</div>
                                         <div class="GPA-cell txt">
                                             <ul>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_646">Genebank (long term collections)</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_647">Botanical garden</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_648">Breeder</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_649">Network</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_650">Community</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_651">Educational</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_652">Seed producer</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_653">Seed supplier</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_654">Farmer community</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_655">Research</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_656">Extensionist</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_657">Laboratory</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_658">Publisher</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_869">Administration/Policy</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_874">Genebank (medium term collections)</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="flag_875">Genebank (short term collections)</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f646">Genebank (long term collections)</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f647">Botanical garden</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f648">Breeder</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f649">Network</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f650">Community</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f651">Educational</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f652">Seed producer</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f653">Seed supplier</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f654">Farmer community</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f655">Research</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f656">Extensionist</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f657">Laboratory</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f658">Publisher</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f869">Administration/Policy</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f874">Genebank (medium term collections)</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f875">Genebank (short term collections)</li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Longitude (decimal degrees format)</div>
-                                        <div data-GPAIndex="longitute" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="longitude" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Latitude (decimal degrees format)</div>

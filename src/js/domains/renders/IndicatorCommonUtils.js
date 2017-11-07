@@ -31,6 +31,8 @@ define([
     //Values Formatter for the Values Column in the table shown in the Download Data Tab
     IndicatorCommonUtils.prototype.valuesFormatter = function (option,value) {
 
+        if (value == null) return null;
+
         // value.toLocaleString('en-US')/('de-DE')
         var separator = ",";
         var decimal = ".";

@@ -260,8 +260,6 @@ define([
 
     IndicatorProcesses3.prototype._geoItemSelectionValidation = function (values) {
 
-        console.log(values)
-
         s.filterDivMsg1_text = '';
         var paramsForGeoValidation = {};
         paramsForGeoValidation.regionFilterItem = s.filter_items.item_2;
@@ -522,6 +520,8 @@ define([
         dashboardConfig.tableProcess[0].parameters.filter = {};
         dashboardConfig.tableProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.tableProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.tableProcess[1].parameters.rows["indicator"].codes[0].codes = values[s.filter_items.item_8];
+        dashboardConfig.tableProcess[1].parameters.rows["indicator"].codes[0].codes.push("3"); // As Ivano requested.
         dashboardConfig.tableProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
 
         return dashboardConfig;
@@ -533,6 +533,7 @@ define([
         dashboardConfig.downloadProcessTableData[0].parameters.filter = {};
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.downloadProcessTableData[1].parameters.rows["indicator"].codes[0].codes = values[s.filter_items.item_8];
         dashboardConfig.downloadProcessTableData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
 
         return dashboardConfig;
@@ -544,6 +545,8 @@ define([
         dashboardConfig.downloadProcessTableData[0].parameters.filter = {};
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
+        dashboardConfig.downloadProcessTableData[1].parameters.rows["indicator"].codes[0].codes = values[s.filter_items.item_8];
+        dashboardConfig.downloadProcessTableData[1].parameters.rows["indicator"].codes[0].codes.push("3"); // As Ivano requested.
         dashboardConfig.downloadProcessTableData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
 
         return dashboardConfig;

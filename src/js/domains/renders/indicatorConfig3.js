@@ -173,7 +173,7 @@ define(["highcharts",
                                         "codes": [
                                             {
                                                 "uid": "wiews_output_indicators",
-                                                "codes": [ "3_1", "3_2" ]
+                                                "codes": DOWNLOAD_DV["3_filter-vd_filter_item_8"]
                                             }
                                         ]
                                     },
@@ -204,7 +204,7 @@ define(["highcharts",
                             "parameters": {
                                 "iteration" : "ASC",
                                 "rank" : "ASC",
-                                "wiews_region" : "ASC",
+                                "wiews_region_EN" : "ASC",
                                 "indicator" : "ASC",
                                 "element" : "ASC"
                             }
@@ -248,7 +248,7 @@ define(["highcharts",
                                         "codes": [
                                             {
                                                 "uid": "wiews_output_indicators",
-                                                "codes": [ "3_1", "3_2" ]
+                                                "codes": DOWNLOAD_DV["3_filter-vd_filter_item_8"]
                                             }
                                         ]
                                     },
@@ -271,7 +271,7 @@ define(["highcharts",
                             "parameters": {
                                 "iteration" : "ASC",
                                 "rank" : "ASC",
-                                "wiews_region" : "ASC",
+                                "wiews_region_EN" : "ASC",
                                 "indicator" : "ASC",
                                 "element" : "ASC"
                             }

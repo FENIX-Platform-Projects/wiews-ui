@@ -317,6 +317,8 @@ define([
 
     IndicatorProcesses2.prototype.onClickButton1 = function (values, dashboardConfig, params) {
 
+//        console.log (values, dashboardConfig, params)
+
         $('[data-field = "1"]').attr('data-field', s.table_columns.domain);
         $('[data-field = "'+s.table_columns.domain+'"]').text(dashboardConfig.columntableName[0]);
         $('[data-field = "2"]').attr('data-field', s.table_columns.wiews_region);
@@ -434,6 +436,7 @@ define([
             separatorValue = '1';
         var tableData = [];
         var tableColumns = param.tableColumns;
+        console.log ( data.length );
         for(var iData = 0; iData<data.length; iData++)
         {
             var row = [];
@@ -464,6 +467,7 @@ define([
 
             tableData.push(row);
         }
+        console.log(tableData);
         return tableData;
     }
 
@@ -543,6 +547,7 @@ define([
         dashboardConfig.tableProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.tableProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
         dashboardConfig.tableProcess[1].parameters.rows["indicator"].codes[0].codes = values[s.filter_items.item_8];
+        dashboardConfig.tableProcess[1].parameters.rows["indicator"].codes[0].codes.push("2"); // As Ivano requested.
         dashboardConfig.tableProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
 
         return dashboardConfig;
@@ -555,6 +560,7 @@ define([
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
         dashboardConfig.downloadProcessTableData[1].parameters.rows["indicator"].codes[0].codes = values[s.filter_items.item_8];
+        dashboardConfig.downloadProcessTableData[1].parameters.rows["indicator"].codes[0].codes.push("2"); // As Ivano requested.
         dashboardConfig.downloadProcessTableData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
 
         return dashboardConfig;

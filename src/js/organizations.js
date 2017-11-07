@@ -52,58 +52,21 @@ define([
             url: services_url,
             data: JSON.stringify(payload),
             success: function(res) {
+                var dsd = [];
                 //console.log(res.metadata.dsd);
+                _.each ( res.metadata.dsd.columns , function ( column ) {
+                    dsd.push(column.id)
+                } );
+                //console.log(dsd);
                 _.each( res.data, function( element ) {
-                    table_data.push(
-                        {
-                            "name": element[0],
-                            "acronym": element[1],
-                            "instcode": element[2],
-                            "parentorg": element[3],
-                            "parent_instcode" : element[4],
-                            "address": element[5],
-                            "city": element[6],
-                            "country": element[7],
-                            "country_iso3": element[8],
-                            "valid_flag": element[9],
-                            // 10 to 15 are indexes
-                            "i_name" : element[10],
-                            "i_acronym" : element[11],
-                            "i_instcode" : element[12],
-                            "i_address" : element[13],
-                            "i_city" : element[14],
-                            "freetext_index" : element[15],
-                            // 10 to 15 are indexes
-                            "zip_code": element[16],
-                            "telephone": element[17],
-                            "fax": element[18],
-                            "email": element[19],
-                            "website": element[20],
-                            "status": element[21],
-                            "longitute": element[22],
-                            "latitude": element[23],
-                            "organization_roles" : element[24],
-                            // Flags
-                            "flag_646": element[25],
-                            "flag_647": element[26],
-                            "flag_648": element[27],
-                            "flag_649": element[28],
-                            "flag_650": element[29],
-                            "flag_651": element[30],
-                            "flag_652": element[31],
-                            "flag_653": element[32],
-                            "flag_654": element[33],
-                            "flag_655": element[34],
-                            "flag_656": element[35],
-                            "flag_657": element[36],
-                            "flag_658": element[37],
-                            "flag_869": element[38],
-                            "flag_874": element[39],
-                            "flag_875": element[40],
-                            "search_rank" : element[41]
-                        }
-                    );
+                    var item = {};
+                    _.each(dsd, function (col_name, col_index) {
+                        item[col_name] = element[col_index];
+                    });
+                    table_data.push(item);
                 });
+
+               //console.log(table_data);
             }
 
         });
@@ -232,7 +195,7 @@ define([
             self._statesManagement('details');
             $('#backtosearch_fromomni').hide();
             $('#backtoresults').show();
-            history.replaceState({ page : "details" }, null, "?instcode="+$element['instcode']+"#details");
+            history.replaceState({ page : "details" }, null, "/wiews/data/organizations/"+self.lang.toLowerCase()+"/?instcode="+$element['instcode']+"#details");
             self._fillResults($element);
         });
         $('[data-role=results]').hide();
@@ -255,58 +218,18 @@ define([
                 },
                 transform: function(response) {
                     var response_data = [];
+                    var dsd = [];
                     //console.log('response is ', response);
+                    _.each ( response.metadata.dsd.columns , function ( column ) {
+                        dsd.push(column.id)
+                    } );
+                    //console.log(dsd);
                     _.each( response.data, function( element ) {
-                        response_data.push(
-                            {
-                                "name": element[0],
-                                "acronym": element[1],
-                                "instcode": element[2],
-                                "parentorg": element[3],
-                                "parent_instcode" : element[4],
-                                "address": element[5],
-                                "city": element[6],
-                                "country": element[7],
-                                "country_iso3": element[8],
-                                "valid_flag": element[9],
-                                // 10 to 15 are indexes
-                                "i_name" : element[10],
-                                "i_acronym" : element[11],
-                                "i_instcode" : element[12],
-                                "i_address" : element[13],
-                                "i_city" : element[14],
-                                "freetext_index" : element[15],
-                                // 10 to 15 are indexes
-                                "zip_code": element[16],
-                                "telephone": element[17],
-                                "fax": element[18],
-                                "email": element[19],
-                                "website": element[20],
-                                "status": element[21],
-                                "longitute": element[22],
-                                "latitude": element[23],
-                                "organization_roles" : element[24],
-                                // Flags
-                                "flag_646": element[25],
-                                "flag_647": element[26],
-                                "flag_648": element[27],
-                                "flag_649": element[28],
-                                "flag_650": element[29],
-                                "flag_651": element[30],
-                                "flag_652": element[31],
-                                "flag_653": element[32],
-                                "flag_654": element[33],
-                                "flag_655": element[34],
-                                "flag_656": element[35],
-                                "flag_657": element[36],
-                                "flag_658": element[37],
-                                "flag_869": element[38],
-                                "flag_874": element[39],
-                                "flag_875": element[40],
-                                "search_rank" : element[41]
-
-                            }
-                        );
+                        var item = {};
+                        _.each(dsd, function (col_name, col_index) {
+                            item[col_name] = element[col_index];
+                        });
+                        response_data.push(item);
                     });
 
                     return response_data;
@@ -333,7 +256,7 @@ define([
         );
 
         $('#search_omnibox').bind('typeahead:select', function(ev, suggestion) {
-            self._statesManagement('details');
+            self._statesManagement('details', suggestion);
             $('#backtosearch_fromomni').show();
             $('#backtoresults').hide();
             self._fillResults(suggestion);
@@ -435,11 +358,12 @@ define([
     };
 
     Organizations.prototype._fillResults = function(content) {
+        var self = this;
         _.each(content, function(row_value, row_name) {
             var content = row_value;
             if (row_value == "undefined" || row_value == null) content = " - ";
             if (row_name == "parent_instcode") {
-                $('[data-GPAIndex='+row_name+']').attr('href', window.location.href.split('?')[0] + '?instcode='+row_value);
+                $('[data-GPAIndex='+row_name+']').attr('href', '/wiews/data/organizations/'+self.lang.toLowerCase()+'/?instcode='+row_value+'#details');
                 return;
             }
             $('[data-GPAIndex='+row_name+']').html(content);
@@ -449,7 +373,7 @@ define([
             } else {
                 $('#containerGPA div.tableheader').css('display', 'none');
             }
-            if (row_name.startsWith('flag_') && row_value == true) $('[data-GPAFlag='+row_name+']').removeClass('hiddenflag');
+            if (row_name.startsWith('role_f') && row_value == true) $('[data-GPAFlag='+row_name+']').removeClass('hiddenflag');
         });
     };
 
@@ -498,7 +422,8 @@ define([
             break;
 
             case 'details' :
-                if (!frombutton) history.pushState({ page : "details" }, "Details", "#details");
+                var details_url = (payload) ? "/wiews/data/organizations/"+this.lang.toLowerCase()+"/?instcode="+payload.instcode+"#details" : "#details";
+                if (!frombutton) history.pushState({ page : "details" }, "Details", details_url);
                 $('[data-role=filters]').hide();
                 $('[data-role=results]').hide();
                 $('[data-role=details]').show();
