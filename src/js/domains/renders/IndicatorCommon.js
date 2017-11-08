@@ -413,8 +413,7 @@ define([
 
         if(this.mainTabName == s.mainTabNames.visualizeData){
             indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.vd_dashboard_category+'"]');
-        }
-        else {
+        } else {
             indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dd_dashboard_category+'"]');
         }
 
@@ -500,7 +499,6 @@ define([
 
                 var columnsMap = this._columnMapCreation(param, dsdColumns);
                 var tableData = this.indicatorProcesses.tableDataCreation(param, columnsMap, data, filterValues);
-                console.log('cartonianimatigiapponesi',tableData);
                 this._tableRender(tableData, param);
 
             }, this),
@@ -558,7 +556,7 @@ define([
 
 
         $('[data-table = "dd-dashboard-table"]').on('post-body.bs.table', function (event, data) {
-            console.log('post-body.bs.table', event, data);
+            //console.log('post-body.bs.table', event, data);
             $('.dropdown-toggle').dropdown();
             $('[data-dashboardContainer = "dd-dashboard-container"]').show();
         });

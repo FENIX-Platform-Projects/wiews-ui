@@ -547,11 +547,16 @@ define([
         var codes = '';
         if((values[s.filter_items.item_10]!=null)&&(typeof values[s.filter_items.item_10]!='undefined')&&(values[s.filter_items.item_10].length>0)){
             codes= [ "ind", "nfp", "nfpa", "stk" ];
-        }
-        else{
+        } else{
             codes= [ "ind", "nfp", "nfpa" ];
         }
         dashboardConfig.tableProcess[1].parameters.rows["element"].codes[0].codes = codes;
+        // Flags
+        var flags = values[s.geo_property].listType;
+        if (flags.length > 0) {
+            dashboardConfig.tableProcess[0].parameters.total = _.contains(flags,"total");
+            dashboardConfig.tableProcess[0].parameters.list = _.contains(flags,"list");
+        }
 
 
         return dashboardConfig;
@@ -573,6 +578,12 @@ define([
             codes= [ "ind", "nfp", "nfpa" ];
         }
         dashboardConfig.downloadProcessTableData[1].parameters.rows["element"].codes[0].codes = codes;
+        // Flags
+        var flags = values[s.geo_property].listType;
+        if (flags.length > 0) {
+            dashboardConfig.downloadProcessTableData[0].parameters.total = _.contains(flags,"total");
+            dashboardConfig.downloadProcessTableData[0].parameters.list = _.contains(flags,"list");
+        }
 
 
         return dashboardConfig;

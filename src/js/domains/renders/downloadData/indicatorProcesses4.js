@@ -544,6 +544,12 @@ define([
         dashboardConfig.tableProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
         dashboardConfig.tableProcess[1].parameters.rows["indicator"].codes[0].codes = values[s.filter_items.item_8];
         dashboardConfig.tableProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
+        // Flags
+        var flags = values[s.geo_property].listType;
+        if (flags.length > 0) {
+            dashboardConfig.tableProcess[0].parameters.total = _.contains(flags,"total");
+            dashboardConfig.tableProcess[0].parameters.list = _.contains(flags,"list");
+        }
 
         return dashboardConfig;
     };
@@ -556,6 +562,12 @@ define([
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
         dashboardConfig.downloadProcessTableData[1].parameters.rows["indicator"].codes[0].codes = values[s.filter_items.item_8];
         dashboardConfig.downloadProcessTableData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
+        // Flags
+        var flags = values[s.geo_property].listType;
+        if (flags.length > 0) {
+            dashboardConfig.downloadProcessTableData[0].parameters.total = _.contains(flags,"total");
+            dashboardConfig.downloadProcessTableData[0].parameters.list = _.contains(flags,"list");
+        }
 
         return dashboardConfig;
     };

@@ -1,6 +1,7 @@
 define([
-    "jquery"
-], function ($) {
+    "jquery",
+    "underscore"
+], function ($, _) {
 
     'use strict';
 
@@ -166,16 +167,12 @@ define([
     IndicatorCommonUtils.prototype._geoSelector_getListType = function (radioValue, type, checkboxRegionItem, checkboxSpecialGroupItem) {
 
         var listType= [];
-        var code = radioValue[Object.keys(radioValue)[0]];
         switch (type){
             case checkboxRegionItem:
             case checkboxSpecialGroupItem:
-                switch (code){
-                    case "1":
-                        listType.push(s.choices_code.total);
-                    case "2":
-                        listType.push(s.choices_code.list);
-                }
+                if (_.contains(radioValue,"1")) listType.push(s.choices_code.total);
+                if (_.contains(radioValue,"2")) listType.push(s.choices_code.list);
+
                 break;
         }
 

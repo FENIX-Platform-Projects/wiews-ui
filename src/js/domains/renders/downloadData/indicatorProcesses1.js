@@ -541,6 +541,7 @@ define([
     IndicatorProcesses1.prototype._table_element_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
+
         dashboardConfig.tableProcess[0].parameters.filter = {};
         dashboardConfig.tableProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.tableProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
@@ -553,6 +554,13 @@ define([
             codes= [ "ind", "nfp", "nfpa" ];
         }
         dashboardConfig.tableProcess[1].parameters.rows["element"].codes[0].codes = codes;
+
+        // Flags
+        var flags = values[s.geo_property].listType;
+        if (flags.length > 0) {
+            dashboardConfig.tableProcess[0].parameters.total = _.contains(flags,"total");
+            dashboardConfig.tableProcess[0].parameters.list = _.contains(flags,"list");
+        }
 
         var indicator_label = "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_"+params.lang+" || ')' else element_"+params.lang+" end"
         dashboardConfig.tableProcess[3].parameters.values["indicator_label"] = indicator_label;
@@ -575,6 +583,13 @@ define([
             codes= [ "ind", "nfp", "nfpa" ];
         }
         dashboardConfig.downloadProcessTableData[1].parameters.rows["element"].codes[0].codes = codes;
+
+        // Flags
+        var flags = values[s.geo_property].listType;
+        if (flags.length > 0) {
+            dashboardConfig.downloadProcessTableData[0].parameters.total = _.contains(flags,"total");
+            dashboardConfig.downloadProcessTableData[0].parameters.list = _.contains(flags,"list");
+        }
 
         var indicator_label = "case when element = 'stk' then 'Indicator (' || stakeholder || ' / ' || stakeholder_"+params.lang+" || ')' else element_"+params.lang+" end"
         dashboardConfig.downloadProcessTableData[3].parameters.values["indicator_label"] = indicator_label;
