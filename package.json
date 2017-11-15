@@ -34,6 +34,7 @@
     "url": "https://github.com/FENIX-Platform-Projects/wiews/issues"
   },
   "dependencies": {
+    "@google/maps": "^0.4.5",
     "amplify-pubsub": "^0.0.1",
     "bloodhound-js": "^1.2.2",
     "bootstrap": "^3.3.7",
@@ -54,6 +55,7 @@
     "jstree": "^3.3.3",
     "leaflet": "^0.7.7",
     "leaflet-panel-layers": "^0.9.5",
+    "load-google-maps-api": "^1.0.0",
     "loglevel": "^1.4.1",
     "moment": "^2.17.1",
     "swiper": "^3.4.1",

@@ -2,21 +2,23 @@ define([
     "jquery",
     "loglevel",
     "underscore",
+    "load-google-maps-api-2",
     "../config/config",
+    "../config/exsitu/config",
     "../html/exsitu/template.hbs",
     "../nls/labels",
     "bootstrap",
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export',
     'typeahead.js'
-], function ($, log, _, C, template, labels, bootstrap) {
+], function ($, log, _, GoogleMaps, C, exsituC, template, labels, bootstrap) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
 
-    var s = {
-        EL: "#exsitu"
-    };
+    var s = { EL: "#exsitu" },
+        services_url = "http://hqlprfenixapp2.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/wiews_2016_map.saiku",
+        google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc";
 
     function Exsitu() {
 
@@ -30,21 +32,52 @@ define([
 
         this._validateConfig();
 
-        this._attach();
-
         this._initVariables();
+
+        this._attach();
 
         this._bindEventListeners();
     };
 
     Exsitu.prototype._validateConfig = function () {
-
         if (!C.lang) alert("Please specify a valid LANGUAGE in config/config.js");
+        GoogleMaps.key = google_apikey;
+        GoogleMaps.language = 'en';
+    };
+
+    Exsitu.prototype._getData = function () {
+
+        return exsituC.dev_wiews_2016_map_saiku;
+
+        /*
+                $.get(services_url, function(data, status){
+                    console.log(data,status);
+                });
+
+
+                $.ajax({
+                    async: false,
+                    dataType: 'jsonp',
+                    method: 'GET',
+                    contentType: "application/json; charset=utf-8",
+                    url: services_url,
+                    //data: JSON.stringify(payload),
+                    success: function(res) {
+                        console.log(res);
+                    }
+                });
+
+        */
+
 
     };
 
     Exsitu.prototype._attach = function () {
         $(s.EL).html(template(labels[Clang]));
+
+        $('[data-role=details]').hide();
+        $('#tabled').hide();
+
         $('#table').bootstrapTable({
             data : [
                 {
@@ -204,62 +237,82 @@ define([
             showExport: true
         });
 
-        $('#table').on('click-row.bs.table', function(row, $element, field){
-            return;
+        var data = this._getData();
 
-            $('[data-role=filters]').hide();
-            $('[data-role=results]').hide();
-            $('[data-role=map]').hide();
-            $('[data-role=details]').show();
-            $('#backtosearch_fromomni').hide();
-            $('#backtoresults').show();
-            //console.log(row, $element, field);
-        });
-        $('[data-role=results]').hide();
-        $('[data-role=details]').hide();
 
-        var substringMatcher = function(strs) {
-            return function findMatches(q, cb) {
-                var matches;
+        GoogleMaps().then(function (googleMaps) {
+            //console.log(googleMaps);
+            var map = new googleMaps.Map(document.getElementById('map'), {
+                zoom: 1,
+                center: new google.maps.LatLng(2.8,-187.3),
+                //disableDefaultUI: true,
+                gestureHandling: 'cooperative',
+                streetViewControl: false,
+                fullscreenControl: false
+            });
 
-                // an array that will be populated with substring matches
-                matches = [];
 
-                // regex used to determine if a string contains the substring `q`
-                var substrRegex = new RegExp(q, 'i');
+            $.each(data.cellset, function(index, item){
+                if (index > 0 && item[2].value.length > 0) {
+                    var myLatLng = {lat: Number(item[2].value), lng: Number(item[3].value)};
+                    console.log( myLatLng, item[1].value )
+                    var marker = new googleMaps.Marker({
+                        position: myLatLng,
+                        map: map,
+                        title: item[1].value
+                    });
+                }
+            });
 
-                // iterate through the pool of strings and for any string that
-                // contains the substring `q`, add it to the `matches` array
-                $.each(strs, function(i, str) {
-                    if (substrRegex.test(str)) {
-                        matches.push(str);
-                    }
-                });
 
-                cb(matches);
-            };
-        };
 
-        var states = ['ESP004', 'PAN001', 'DEU001', 'ITA001'];
 
-        $('#omnibox').typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 3
-            },
-            {
-                name: 'states',
-                source: substringMatcher(states)
+            /*
+
+            map.data.setStyle(function(feature) {
+                var magnitude = feature.getProperty('mag');
+                return {
+                    icon: getCircle(magnitude),
+                    title: feature.getProperty('place')
+                };
+            });
+
+            var infowindow = new googleMaps.InfoWindow({});
+
+            map.data.addGeoJson(exsituC.geodemodata);
+
+            map.data.addListener('click', function(event) {
+                //console.log(event.feature);
+                infowindow.close();
+                var opening = new googleMaps.LatLng(event.feature.b.b.lat(), event.feature.b.b.lng());
+                infowindow.setPosition(opening);
+                infowindow.setContent(event.feature.getProperty('place'));
+                infowindow.open(map);
+
+            });
+
+            function getCircle(magnitude) {
+                return {
+                    path: googleMaps.SymbolPath.CIRCLE,
+                    fillColor: 'red',
+                    fillOpacity: .2,
+                    scale: Math.pow(2, magnitude) / 2,
+                    strokeColor: 'white',
+                    strokeWeight: .5
+                };
             }
-        );
 
-        $('#omnibox').bind('typeahead:select', function(ev, suggestion) {
-            $('[data-role=filters]').hide();
-            $('[data-role=results]').hide();
-            $('[data-role=details]').show();
-            $('#backtosearch_fromomni').show();
-            $('#backtoresults').hide();
+            */
+
+
+        }).catch(function (err) {
+            console.error(err);
         });
+
+
+
+
+        //console.log(data.cellset);
 
     };
 
@@ -273,58 +326,18 @@ define([
     };
 
     Exsitu.prototype._bindEventListeners = function () {
-        var self = this;
 
-        $('#omnibox').on("keypress", function(e) {
-            if (e.keyCode == 13) { // Enter
-                $('[data-role=filters]').hide();
-                $('[data-role=results]').show();
-                $('[data-role=details]').hide();
-                return false; // prevent the button click from happening
-            }
-        });
-
-        $('#search').on('click', function(){
-            $('[data-role=filters]').hide();
-            $('[data-role=results]').show();
-            $('[data-role=details]').hide();
-        });
-
-        $('#adv_search').on('click', function(){
-            $('[data-role=filters]').hide();
-            $('[data-role=results]').show();
-            $('[data-role=details]').hide();
-        });
-
-        $('#advanced').on('click', function(){
-           var str = $('#advanced-search').hasClass('advanced') ? labels[self.lang]['search_advanced'] : labels[self.lang]['search_basic'];
-           $('#advanced-search').toggleClass('advanced');
-           $(this).html(str);
-        });
-
-        $('#backtosearch').on('click', function(){
-            $('[data-role=filters]').show();
-            $('[data-role=results]').hide();
-            $('[data-role=details]').hide();
-        });
-
-        $('#backtosearch_fromomni').on('click', function(){
-            $('[data-role=filters]').show();
-            $('[data-role=results]').hide();
-            $('[data-role=details]').hide();
-        });
-
-        $('#showasmap').on('click', function(){
+        $('#showasmap').on('click', function () {
+            $('#maped').toggle();
             $('#tabled').toggle();
-            $('#map').toggle();
-        });
 
-        $('#backtoresults').on('click', function(){
-            $('[data-role=filters]').hide();
-            $('[data-role=results]').show();
-            $('[data-role=details]').hide();
-        });
+            if ($('#map').is(":visible")) {
+                $('#btn_text').html('Table')
+            } else {
+                $('#btn_text').html('Map')
+            }
 
+        });
 
     };
 
