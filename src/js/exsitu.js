@@ -7,17 +7,20 @@ define([
     "../config/exsitu/config",
     "../html/exsitu/template.hbs",
     "../nls/labels",
+    "json-2-csv",
+    "file-saver",
     "bootstrap",
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export',
     'typeahead.js'
-], function ($, log, _, GoogleMaps, C, exsituC, template, labels, bootstrap) {
+
+], function ($, log, _, GoogleMaps, C, exsituC, template, labels, converter, FileSaver, bootstrap) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
 
     var s = { EL: "#exsitu" },
-        services_url = "http://hqlprfenixapp2.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/wiews_2016_map.saiku",
+        services_url = "http://hqlprfenixapp2.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/{{YEAR}}.saiku",
         google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc";
 
     function Exsitu() {
@@ -45,31 +48,142 @@ define([
         GoogleMaps.language = 'en';
     };
 
-    Exsitu.prototype._getData = function () {
+    Exsitu.prototype._convert2TableData = function (input) {
+        var output = [];
 
-        return exsituC.dev_wiews_2016_map_saiku;
-
-        /*
-                $.get(services_url, function(data, status){
-                    console.log(data,status);
-                });
-
-
-                $.ajax({
-                    async: false,
-                    dataType: 'jsonp',
-                    method: 'GET',
-                    contentType: "application/json; charset=utf-8",
-                    url: services_url,
-                    //data: JSON.stringify(payload),
-                    success: function(res) {
-                        console.log(res);
-                    }
-                });
-
-        */
+        _.each(input, function(object, index) {
+            var obj = {
+                "instcode": object[0].value,
+                "name": object[1].value,
+                "country": object[4].value,
+                "accessions" : Number(object[5].value.split('.').join("")),
+                "genus" : Number(object[6].value.split('.').join("")),
+                "species" : Number(object[7].value.split('.').join(""))
+            };
+            if (index>0) output.push(obj);
+            if (object[5].value == 1 ) console.log(object[0].value)
+        });
 
 
+        return output;
+    };
+
+    Exsitu.prototype._convert2GEOJson = function (input) {
+        var geoJSON = {
+            "type": "FeatureCollection",
+            "features" : []
+            },
+            output = [];
+
+        _.each(input, function (object, index) {
+            var obj = {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [ Number(object[3].value), Number(object[2].value) ]
+                },
+                "properties": {
+                    "instcode" : object[0].value,
+                    "name": object[1].value,
+                    "country" : object[4].value,
+                    "accessions" : Number(object[5].value.split('.').join("")),
+                    "genus" : Number(object[6].value.split('.').join("")),
+                    "species" : Number(object[7].value.split('.').join(""))
+                },
+                "id" : object[0].value
+            };
+
+            if (index > 0 && object[2].value.length > 0) {
+                //console.log(obj);
+                output.push(obj);
+            }
+        });
+
+        geoJSON.features = output;
+        return geoJSON;
+
+    };
+
+    Exsitu.prototype._getData = function (year) {
+
+        //return exsituC.dev_wiews_2016_map_saiku;
+
+        return exsituC[year];
+
+        $.get(services_url, function(data){
+            return data;
+        });
+
+    };
+
+    Exsitu.prototype._processMap = function (data_toshow) {
+
+        var data = this._getData($('#year').val());
+        if (data == undefined) {
+            alert('Data not available');
+            return;
+        }
+
+        var geodata = this._convert2GEOJson(data.cellset);
+
+        GoogleMaps().then(function (googleMaps) {
+            //console.log(googleMaps);
+            var map = new googleMaps.Map(document.getElementById('map'), {
+                zoom: 2,
+                center: new google.maps.LatLng(15,-5),
+                //disableDefaultUI: true,
+                gestureHandling: 'cooperative',
+                streetViewControl: false,
+                fullscreenControl: false
+            });
+
+            map.data.setStyle(function(feature) {
+                var size = feature.getProperty(data_toshow);
+                return {
+                    icon: getCircle(size),
+                    title: feature.getProperty('name')
+                };
+            });
+
+            var infowindow = new googleMaps.InfoWindow({});
+
+            map.data.addGeoJson(geodata);
+
+            map.data.addListener('click', function(event) {
+                //console.log(event.feature);
+                infowindow.close();
+                var opening = new googleMaps.LatLng(event.feature.b.b.lat(), event.feature.b.b.lng());
+                infowindow.setPosition(opening);
+                infowindow.setContent(
+                    "<span><b><a target='_blank' href='http://www.fao.org/wiews/data/organizations/en/?instcode="+event.feature.getProperty('instcode')+"'>"+event.feature.getProperty('instcode')+"</a></b>" +
+                    " - <i>"+event.feature.getProperty('name')+"</i> </span>" +
+                    "<br><span> <b>Accessions:</b> "+event.feature.getProperty('accessions')+"</span><br>" +
+                    "<span> <b>Genus:</b> "+event.feature.getProperty('genus')+"</span><br>" +
+                    "<span> <b>Species:</b> "+event.feature.getProperty('species')+"</span><br>" +
+                    "<br><b><a href='#'> More details </a></b>"
+                );
+                infowindow.open(map);
+
+            });
+
+            function getCircle(size) {
+                var value = $('#data_filter').val();
+
+                return {
+                    path: googleMaps.SymbolPath.CIRCLE,
+                    fillColor: 'red',
+                    fillOpacity: .2,
+                    scale:  (size > value) ? Math.pow(Number(size), 1/4) *2 : 0,
+                    strokeColor: 'white',
+                    strokeWeight: .5
+                };
+            }
+
+
+
+        }).catch(function (err) {
+            console.error(err);
+        });
     };
 
     Exsitu.prototype._attach = function () {
@@ -78,241 +192,23 @@ define([
         $('[data-role=details]').hide();
         $('#tabled').hide();
 
-        $('#table').bootstrapTable({
-            data : [
-                {
-                    "id": "1",
-                    "name": "Centro Nacional de Recursos Fitogenéticos",
-                    "acronym": "INIA-CRF",
-                    "instcode": "ESP004",
-                    "parentorg": "Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria. Subdirección General de Investigación y Tecnología",
-                    "address": "Autovía de Aragón km 36. Apdo. 1045",
-                    "city": "Alcalá de Henares. Madrid",
-                    "country": "Spain",
-                    "accessions": Math.floor(Math.random() * 100),
-                    "genera": Math.floor(Math.random() * 100),
-                    "taxa": Math.floor(Math.random() * 100)
-                },
-                {
-                    "id": "2",
-                    "name": "C.R.A. Istituto Sperimentale per la Frutticoltura, Ministero delle Politiche Agricole e Forestali\n",
-                    "acronym": "ISF-Roma",
-                    "instcode": "ITA001",
-                    "address": "Via Fioranello 52",
-                    "city": "Roma",
-                    "country": "Italy",
-                    "accessions": Math.floor(Math.random() * 100),
-                    "genera": Math.floor(Math.random() * 100),
-                    "taxa": Math.floor(Math.random() * 100)
-                },
-                {
-                    "id": "3",
-                    "name": "Plant Genetic Resource Collection",
-                    "acronym": "PGR",
-                    "instcode": "DEU001",
-                    "address": "Bundesallee 50",
-                    "city": "Braunschweig",
-                    "country": "Germany",
-                    "accessions": Math.floor(Math.random() * 100),
-                    "genera": Math.floor(Math.random() * 100),
-                    "taxa": Math.floor(Math.random() * 100)
-                },
-                {
-                    "id": "4",
-                    "name": "División de Mejoramiento Genético, IDIAP",
-                    "acronym": "IDIAP-DMG",
-                    "instcode": "PAN001",
-                    "address": "Apdo. 6-4391",
-                    "city": "Panamá 6a, CA",
-                    "country": "Panama",
-                    "accessions": Math.floor(Math.random() * 100),
-                    "genera": Math.floor(Math.random() * 100),
-                    "taxa": Math.floor(Math.random() * 100)
-                },
-                {
-                    "id": "5",
-                    "name": "Centro Nacional de Recursos Fitogenéticos",
-                    "acronym": "INIA-CRF",
-                    "instcode": "ESP004",
-                    "parentorg": "Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria. Subdirección General de Investigación y Tecnología",
-                    "address": "Autovía de Aragón km 36. Apdo. 1045",
-                    "city": "Alcalá de Henares. Madrid",
-                    "country": "Spain",
-                    "accessions": Math.floor(Math.random() * 100),
-                    "genera": Math.floor(Math.random() * 100),
-                    "taxa": Math.floor(Math.random() * 100)
-                },
-                {
-                    "id": "6",
-                    "name": "C.R.A. Istituto Sperimentale per la Frutticoltura, Ministero delle Politiche Agricole e Forestali\n",
-                    "acronym": "ISF-Roma",
-                    "instcode": "ITA001",
-                    "address": "Via Fioranello 52",
-                    "city": "Roma",
-                    "country": "Italy",
-                    "accessions": Math.floor(Math.random() * 100),
-                    "genera": Math.floor(Math.random() * 100),
-                    "taxa": Math.floor(Math.random() * 100)
-                },
-                {
-                    "id": "7",
-                    "name": "Plant Genetic Resource Collection",
-                    "acronym": "PGR",
-                    "instcode": "DEU001",
-                    "address": "Bundesallee 50",
-                    "city": "Braunschweig",
-                    "country": "Germany",
-                    "accessions": Math.floor(Math.random() * 100),
-                    "genera": Math.floor(Math.random() * 100),
-                    "taxa": Math.floor(Math.random() * 100)
-                },
-                {
-                    "id": "8",
-                    "name": "División de Mejoramiento Genético, IDIAP",
-                    "acronym": "IDIAP-DMG",
-                    "instcode": "PAN001",
-                    "address": "Apdo. 6-4391",
-                    "city": "Panamá 6a, CA",
-                    "country": "Panama",
-                    "accessions": Math.floor(Math.random() * 100),
-                    "genera": Math.floor(Math.random() * 100),
-                    "taxa": Math.floor(Math.random() * 100)
-                },
-                {
-                    "id": "9",
-                    "name": "Centro Nacional de Recursos Fitogenéticos",
-                    "acronym": "INIA-CRF",
-                    "instcode": "ESP004",
-                    "parentorg": "Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria. Subdirección General de Investigación y Tecnología",
-                    "address": "Autovía de Aragón km 36. Apdo. 1045",
-                    "city": "Alcalá de Henares. Madrid",
-                    "country": "Spain",
-                    "accessions": Math.floor(Math.random() * 100),
-                    "genera": Math.floor(Math.random() * 100),
-                    "taxa": Math.floor(Math.random() * 100)
-                },
-                {
-                    "id": "10",
-                    "name": "C.R.A. Istituto Sperimentale per la Frutticoltura, Ministero delle Politiche Agricole e Forestali\n",
-                    "acronym": "ISF-Roma",
-                    "instcode": "ITA001",
-                    "address": "Via Fioranello 52",
-                    "city": "Roma",
-                    "country": "Italy",
-                    "accessions": Math.floor(Math.random() * 100),
-                    "genera": Math.floor(Math.random() * 100),
-                    "taxa": Math.floor(Math.random() * 100)
-                },
-                {
-                    "id": "11",
-                    "name": "Plant Genetic Resource Collection",
-                    "acronym": "PGR",
-                    "instcode": "DEU001",
-                    "address": "Bundesallee 50",
-                    "city": "Braunschweig",
-                    "country": "Germany",
-                    "accessions": Math.floor(Math.random() * 100),
-                    "genera": Math.floor(Math.random() * 100),
-                    "taxa": Math.floor(Math.random() * 100)
-                },
-                {
-                    "id": "12",
-                    "name": "División de Mejoramiento Genético, IDIAP",
-                    "acronym": "IDIAP-DMG",
-                    "instcode": "PAN001",
-                    "address": "Apdo. 6-4391",
-                    "city": "Panamá 6a, CA",
-                    "country": "Panama",
-                    "accessions": Math.floor(Math.random() * 100),
-                    "genera": Math.floor(Math.random() * 100),
-                    "taxa": Math.floor(Math.random() * 100)
-                }
+        var data = this._getData($('#year').val());
+        var tableData = this._convert2TableData(data.cellset);
 
-            ],
+        $('#table').bootstrapTable({
+            data : tableData,
             pagination: true,
             pageSize: 10,
             pageList: [10, 25, 50, 100, 200],
             search: true,
             sortable: true,
-            showExport: true
+            paginationVAlign: "top"
         });
 
-        var data = this._getData();
+        this._processMap($('#data_showed').val());
 
+        this.tabledata = tableData;
 
-        GoogleMaps().then(function (googleMaps) {
-            //console.log(googleMaps);
-            var map = new googleMaps.Map(document.getElementById('map'), {
-                zoom: 1,
-                center: new google.maps.LatLng(2.8,-187.3),
-                //disableDefaultUI: true,
-                gestureHandling: 'cooperative',
-                streetViewControl: false,
-                fullscreenControl: false
-            });
-
-
-            $.each(data.cellset, function(index, item){
-                if (index > 0 && item[2].value.length > 0) {
-                    var myLatLng = {lat: Number(item[2].value), lng: Number(item[3].value)};
-                    console.log( myLatLng, item[1].value )
-                    var marker = new googleMaps.Marker({
-                        position: myLatLng,
-                        map: map,
-                        title: item[1].value
-                    });
-                }
-            });
-
-
-
-
-            /*
-
-            map.data.setStyle(function(feature) {
-                var magnitude = feature.getProperty('mag');
-                return {
-                    icon: getCircle(magnitude),
-                    title: feature.getProperty('place')
-                };
-            });
-
-            var infowindow = new googleMaps.InfoWindow({});
-
-            map.data.addGeoJson(exsituC.geodemodata);
-
-            map.data.addListener('click', function(event) {
-                //console.log(event.feature);
-                infowindow.close();
-                var opening = new googleMaps.LatLng(event.feature.b.b.lat(), event.feature.b.b.lng());
-                infowindow.setPosition(opening);
-                infowindow.setContent(event.feature.getProperty('place'));
-                infowindow.open(map);
-
-            });
-
-            function getCircle(magnitude) {
-                return {
-                    path: googleMaps.SymbolPath.CIRCLE,
-                    fillColor: 'red',
-                    fillOpacity: .2,
-                    scale: Math.pow(2, magnitude) / 2,
-                    strokeColor: 'white',
-                    strokeWeight: .5
-                };
-            }
-
-            */
-
-
-        }).catch(function (err) {
-            console.error(err);
-        });
-
-
-
-
-        //console.log(data.cellset);
 
     };
 
@@ -327,16 +223,41 @@ define([
 
     Exsitu.prototype._bindEventListeners = function () {
 
+        var self = this;
+
         $('#showasmap').on('click', function () {
             $('#maped').toggle();
             $('#tabled').toggle();
+            $('[data-role = filters]').toggle();
 
             if ($('#map').is(":visible")) {
+                self._processMap($('#data_showed').val());
                 $('#btn_text').html('Table')
             } else {
                 $('#btn_text').html('Map')
             }
 
+        });
+
+        $('#year').on('change', function () {
+            self._processMap($('#data_showed').val());
+        });
+
+        $('#data_showed').on('change', function () {
+            self._processMap($('#data_showed').val());
+        });
+
+       $('#data_filter').on('change', function () {
+            self._processMap($('#data_showed').val());
+        });
+
+        $('[data-role=exsitu_exportbutton]').on('click', function() {
+            var json2csvCallback = function (err, csv) {
+                if (err) throw err;
+                var blob = new Blob([csv], {type: "text/csv;charset=utf-8"});
+                FileSaver.saveAs(blob, "exsitu.csv");
+            };
+            converter.json2csv(self.tabledata, json2csvCallback);
         });
 
     };
