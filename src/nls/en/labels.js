@@ -672,8 +672,27 @@ define(function () {
         "organizations_details_invalidheader" : "This record is invalid.",
         "organizations_export_button_alt" : "Export this result",
 
+
+        // Ex Situ Search
+
+        "exsitu-search_omnisearch_placeholder" :  "Type here your search",
+        "exsitu-search_search_instcode" :  "Holding institute code",
+        "exsitu-search_search_accessions" :  "Accession number",
+        "exsitu-search_search_genus" :  "Name of Genus",
+        "exsitu-search_search_spieces" :  "Name of Spieces",
+        "exsitu-search_search_crop" :  "Name of Crop",
+        "exsitu-search_search_country_origin" :  "Country of origin",
+        "exsitu-search_search_country_institute" :  "Country of institute",
+        "exsitu-search_search_year" :  "Year",
+        "exsitu-search_search_taxon" :  "Name of Taxon",
+        "exsitu-search_search_statusofaccession" :  "Biological status of accession",
+        "exsitu-search_search_statusmultilateral" :  "Status under the Multilateral System",
+
+        "exsitu-search_search_statusmultilateral_true" : "Included",
+        "exsitu-search_search_statusmultilateral_false" : "Not Included",
+
         // Other stuff
 
-        "bootstraptable_search_filter" : "Filter",
+        "bootstraptable_search_filter" : "Filter"
     }
 });

@@ -1,7 +1,35 @@
 <div data-page='exsitu'>
     <h1><i>Ex Situ</i> holdings</h1>
     <hr>
-    <div data-role
+    <div data-role='filters'>
+        <div class="row">
+            <div class="col-md-6">
+                <select id="year">
+                    <option value="wiews_2016_map_saiku">2016</option>
+                    <option value="wiews_2014_map_saiku">2014</option>
+                </select>
+
+            </div>
+            <div class="col-md-6">
+                <select id="data_showed">
+                    <option value="accessions">Accessions</option>
+                    <option value="genus">Genus</option>
+                    <option value="species">Species</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <select id="data_filter">
+                    <option value="0">All</option>
+                    <option value="5000">Above 5K</option>
+                    <option value="10000">Above 10K</option>
+                    <option value="50000">Above 50K</option>
+                </select>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+    </div>
     <div data-role='results'>
         <div class="row">
             <div class="col-md-12">
@@ -13,16 +41,21 @@
         <div id="tabled" class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
                 <!-- Result -->
-                <table id="table">
+                <div id="toolbar" class="bootstrapTableExport">
+                    <button data-role="exsitu_exportbutton" alt="{{exsitu_export_button_alt}}" class="btn btn-default"><span alt="{{exsitu_export_button_alt}}" class="glyphicon glyphicon-export"></span></button>
+                </div>
+                <table id="table"
+                       data-toolbar="#toolbar"
+                       data-toolbar-align="right"
+                >
                     <thead>
                     <tr>
-                        <th data-sortable="true" data-width="20%" data-field="country">Country</th>
-                        <th data-sortable="true" data-width="20%" data-field="name">Name of organization</th>
-                        <th data-sortable="true" data-width="20%" data-field="address">Address</th>
-                        <th data-sortable="true" data-width="20%" data-field="taxon">Taxon</th>
-                        <th data-sortable="true" data-width="7%" data-field="accessions">Accessions</th>
-                        <th data-sortable="true" data-width="7%" data-field="genera">Genera</th>
-                        <th data-sortable="true" data-width="7%" data-field="taxa">Taxa</th>
+                        <th data-sortable="true" data-width="10%" data-field="instcode">WIEWS Instcode</th>
+                        <th data-sortable="true" data-width="38%" data-field="name">Name of organization</th>
+                        <th data-sortable="true" data-width="15%" data-field="country">Country</th>
+                        <th data-sortable="true" data-width="14%" data-align="right" data-field="accessions">Accessions</th>
+                        <th data-sortable="true" data-width="14%" data-align="right" data-field="genus">Genus</th>
+                        <th data-sortable="true" data-width="14%" data-align="right" data-field="species">Species</th>
                     </tr>
                     </thead>
                 </table>

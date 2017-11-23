@@ -12,7 +12,8 @@ define([
     "bootstrap",
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export',
-    'typeahead.js'
+    'typeahead.js',
+    'select2'
 
 ], function ($, log, _, GoogleMaps, C, exsituC, template, labels, converter, FileSaver, bootstrap) {
 
@@ -50,9 +51,11 @@ define([
 
     Exsitu.prototype._convert2TableData = function (input) {
         var output = [];
+        var year = $('#year').val().split(/[^0-9]/).join("");
 
         _.each(input, function(object, index) {
             var obj = {
+                "year" : year,
                 "instcode": object[0].value,
                 "name": object[1].value,
                 "country": object[4].value,
@@ -61,7 +64,6 @@ define([
                 "species" : Number(object[7].value.split('.').join(""))
             };
             if (index>0) output.push(obj);
-            if (object[5].value == 1 ) console.log(object[0].value)
         });
 
 
@@ -156,9 +158,9 @@ define([
                 infowindow.setPosition(opening);
                 infowindow.setContent(
                     "<span><b><a target='_blank' href='http://www.fao.org/wiews/data/organizations/en/?instcode="+event.feature.getProperty('instcode')+"'>"+event.feature.getProperty('instcode')+"</a></b>" +
-                    " - <i>"+event.feature.getProperty('name')+"</i> </span>" +
+                    " - <i>"+event.feature.getProperty('name')+"</i> </span><br>" +
                     "<br><span> <b>Accessions:</b> "+event.feature.getProperty('accessions')+"</span><br>" +
-                    "<span> <b>Genus:</b> "+event.feature.getProperty('genus')+"</span><br>" +
+                    "<span> <b>Genera:</b> "+event.feature.getProperty('genus')+"</span><br>" +
                     "<span> <b>Species:</b> "+event.feature.getProperty('species')+"</span><br>" +
                     "<br><b><a href='#'> More details </a></b>"
                 );
@@ -173,7 +175,7 @@ define([
                     path: googleMaps.SymbolPath.CIRCLE,
                     fillColor: 'red',
                     fillOpacity: .2,
-                    scale:  (size > value) ? Math.pow(Number(size), 1/4) *2 : 0,
+                    scale:  (size > value) ? (Math.pow(Number(size), 1/4) /4 )*3 : 0,
                     strokeColor: 'white',
                     strokeWeight: .5
                 };
@@ -209,6 +211,9 @@ define([
 
         this.tabledata = tableData;
 
+        $('#year').select2({ width: '100%',  theme: "bootstrap" });
+        $('#data_showed').select2({ width: '100%' , theme: "bootstrap" });
+        $('#data_filter').select2({ width: '100%',  theme: "bootstrap" });
 
     };
 
@@ -264,16 +269,17 @@ define([
 
     Exsitu.prototype._importThirdPartyCss = function () {
 
+
         //SANDBOXED BOOTSTRAP
         require("../css/sandboxed-bootstrap.css");
         //dropdown selector
-        require("../../node_modules/selectize/dist/css/selectize.bootstrap3.css");
-
+        require("../../node_modules/select2/dist/css/select2.css");
+        require("../../node_modules/select2-bootstrap-theme/dist/select2-bootstrap.css")
 
         require("../../node_modules/fenix-ui-table-creator/dist/fenix-ui-table-creator.min.css");
 
         //tree selector
-        require("../../node_modules/jstree/dist/themes/default/style.min.css");
+        //require("../../node_modules/jstree/dist/themes/default/style.min.css");
         // fenix-ui-filter
         require("../../node_modules/fenix-ui-filter/dist/fenix-ui-filter.min.css");
 

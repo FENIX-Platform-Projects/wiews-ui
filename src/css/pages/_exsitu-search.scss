@@ -1,12 +1,25 @@
-/* Ex Situ */
+/* Homepage */
 
-[data-page='exsitu'] {
+[data-page='exsitu-search'] {
+
+  .GPAListElement {
+    margin-bottom: 6px !important;
+    position: relative !important;
+    left: 1.5em !important;
+  }
+
+  div.pagination > ul > li.page-number.active > a, .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    color: white !important;
+  }
+
+  ul li {
+    margin-bottom: 0 !important;
+    left: 0 !important;
+  }
 
   max-width: 920px;
 
-  div#c353693 {margin-top:20px;}
   div.divider hr {border:0; height:1px; background-color:#DEDEDE;}
-  #c366480 h4 {margin-top: 0px; font-size: 14px;}
   /**** MAP *** */
   #map_canvas {height: 100%; margin: 0px; padding: 0px; position: relative;}
   #info-box {display:none; position: absolute; background: white; border: 1px solid #ccc; font-size:11px; font-family:arial; padding:2px 4px;}
@@ -157,7 +170,7 @@
   /****************** GPA   ****************/
   .search-header {padding-bottom: 12px; font-size: 17px;}
   .tableGPA {display:table; width:100%; background-color:#E4EEF2;}
-  .tableheader{display:table; width:100%; background-color:#FFF; margin-bottom: 10px; margin-top: 12px;}
+  .tableheader{ display:none; width:100%; background-color:#FFF; margin-bottom: 10px; margin-top: 12px; margin-left: 6px;  }
   .tableGPA {display: table; width: 100%;}
   .tableGPA .GPA-group {
     display: table-row-group;
@@ -207,14 +220,6 @@
     background-color: #657b8a;
     color: #fff;
   }
-
-
-
-  li[role=treeitem] {
-    background-color: #ddd !important;
-    color: black !important;
-  }
-
 }
 
 .bootstrap-table tbody tr {
@@ -223,11 +228,12 @@
 
 .bootstrap-table .pagination-info { padding-left: 7px }
 
-//.sbHolder, .sbOptions, .sbSelector { width: 100% !important; }
+.sbHolder, .sbOptions, .sbSelector { width: auto !important; }
+.sbOptions ul { width:100% !important }
 
 #advanced { cursor: pointer; }
 
-#omnibox { width: 860px }
+#search_omnibox { width: 860px }
 
 // Typeahead
 
@@ -305,12 +311,30 @@
   left: 5px;
 }
 
-#search, #adv_search { height: 34px }
+#search_button, #adv_search_button { height: 34px }
+#search_button { width: 55px }
 
-/*
-.sbHolder { display:  none !important }
+.suggestion-country { font-size: smaller; }
+.suggestion-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-select#year { display:  block !important }
-select#data_showed { display:  block !important }
-select#data_filter { display:  block !important }
-*/
+.tya_notfound {
+    margin-left: 10px;
+    font-style: italic;
+}
+
+
+.bootstrapTableExport {
+  position: relative;
+  top: -2px;
+  padding-left: 2px;
+}
+.bootstrapTableExport button {
+  height: 34px;
+}
+
+.hiddenflag { display:  none; }
+

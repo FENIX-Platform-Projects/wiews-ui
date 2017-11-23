@@ -1,0 +1,266 @@
+<div data-page='exsitu-search'>
+    <h1><i>Ex Situ</i> holdings</h1>
+    <hr>
+    <div data-role='filters'>
+        <div class="row">
+            <!-- Filters -->
+            <div class="col-md-10"><h2>{{organizations_search_header}}</h2></div>
+            <div class="col-md-2"><a id="advanced" class="pull-right">{{organizations_search_showadvanced}}</a></div>
+        </div>
+        <div class="row spacer">
+            <div class="col-md-12">
+                <div class="form-inline">
+                    <input type="text" class="form-control" id="search_omnibox"
+                           placeholder="{{exsitu-search_omnisearch_placeholder}}">
+                    <div class="pull-right">
+                        <button id="search_button" type="button" class="btn btn-primary"><span class="icojam icojam_search"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display: none" data-role='messages' class="row spacer">
+            <!-- Messages -->
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert"><center id="orgalert_message"></center></div>
+            </div>
+        </div>
+        <div id="advanced-search" class="advanced">
+            <hr>
+            <br/>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="search_instcode">{{exsitu-search_search_instcode}}</label>
+                        <input type="text" class="form-control" id="search_instcode" placeholder="{{exsitu-search_search_instcode}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="search_accessions">{{exsitu-search_search_accessions}}</label>
+                        <input type="text" class="form-control" id="search_accessions" placeholder="{{exsitu-search_search_accessions}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="search_genus">{{exsitu-search_search_genus}}</label>
+                        <input type="text" class="form-control" id="search_genus" placeholder="{{exsitu-search_search_genus}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="search_spieces">{{exsitu-search_search_spieces}}</label>
+                        <input type="text" class="form-control" id="search_spieces" placeholder="{{exsitu-search_search_spieces}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="search_crop">{{exsitu-search_search_crop}}</label>
+                        <input type="text" class="form-control" id="search_crop" placeholder="{{exsitu-search_search_crop}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="search_search_taxon">{{exsitu-search_search_taxon}}</label>
+                        <input type="text" class="form-control" id="search_search_taxon" placeholder="{{exsitu-search_search_taxon}}">
+                    </div>
+                </div>
+            </div>
+            <div id="fenixfilter">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div data-selector="search_country_institute" class="form-group">
+                            <label for="search_country_institute">{{exsitu-search_search_country_institute}}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div data-selector="search_year" class="form-group">
+                            <label for="search_year">{{exsitu-search_search_year}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div data-selector="search_country_origin" class="form-group">
+                            <label for="search_country_origin">{{exsitu-search_search_country_origin}}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div data-selector="search_statusofaccession" class="form-group">
+                            <label for="search_statusofaccession">{{exsitu-search_search_statusofaccession}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div data-selector="search_statusmultilateral" class="form-group">
+                            <label for="search_statusmultilateral">{{exsitu-search_search_statusmultilateral}}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pull-right">
+                            <div style="margin-top: 24px">
+                                <button id="adv_search_button" type="button" class="btn btn-primary"><span class="icojam icojam_search"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row spacer"><!-- Spacer --></div>
+    </div>
+    <div data-role='results'>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>{{organizations_results_header}}</h2></br>
+            </div>
+            <div class="col-md-6">
+                <div class="pull-right">
+                    <button id="backtosearch" type="button" class="btn btn-default">{{organizations_button_backtosearch}}</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
+                <!-- Result -->
+                <div id="toolbar" class="bootstrapTableExport">
+                    <button data-role="organizations_exportbutton" alt="{{organizations_export_button_alt}}" class="btn btn-default"><span alt="{{organizations_export_button_alt}}" class="glyphicon glyphicon-export"></span></button>
+                </div>
+                <table id="table"
+                       data-toolbar="#toolbar"
+                       data-toolbar-align="right"
+                >
+                    <thead>
+                    <tr>
+                        <th data-sortable="true" data-width="7%" data-field="instcode">{{organizations_table_header_instcode}}</th>
+                        <th data-sortable="true" data-width="21%" data-field="parent_name">{{organizations_table_header_parentorg}}</th>
+                        <th data-sortable="true" data-width="16%" data-field="name">{{organizations_table_header_name}}</th>
+                        <th data-sortable="true" data-width="7%" data-field="acronym">{{organizations_table_header_acronym}}</th>
+                        <th data-sortable="true" data-width="21%" data-field="address">{{organizations_table_header_address}}</th>
+                        <th data-sortable="true" data-width="14%" data-field="city">{{organizations_table_header_city}}</th>
+                        <th data-sortable="true" data-width="14%" data-field="country">{{organizations_table_header_country}}</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="row spacer"><!-- Spacer --></div>
+    </div>
+    <div data-role='details'>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>{{organizations_details_header}}</h2></br>
+            </div>
+            <div class="col-md-6">
+                <div class="pull-right">
+                    <button id="backtoresults" type="button" class="btn btn-default">{{organizations_button_backtoresults}}</button>
+                    <button id="backtosearch_fromomni" type="button" class="btn btn-default">{{organizations_button_backtosearch_fromomni}}</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
+                <!-- Details -->
+                <div class="csc-default">
+                    <div class="tx-xinclude-pi1">
+                        <div id="containerGPA">
+                            <div class="tableheader"> {{organizations_details_invalidheader}} <!-- The valid record is reachable <a href="http://www.fao.org/wiews/instab/en/?idcode=" target="_top">here</a> --></div>
+                            <div class="tableGPA">
+                                <div class="GPA-group">
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Holding institute code</div>
+                                        <div data-GPAIndex="name" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Holding institute name</div>
+                                        <div data-GPAIndex="acronym" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Holding institute country</div>
+                                        <div data-GPAIndex="instcode" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Accession number</div>
+                                        <div class="GPA-cell txt"><a data-GPAIndex="parent_instcode" href="#"><span data-GPAIndex="parent_name"></span></a></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Name of taxon</div>
+                                        <div data-GPAIndex="address" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Name of crop</div>
+                                        <div data-GPAIndex="zip_code" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Acquisition Date (YYYY/MM)</div>
+                                        <div data-GPAIndex="city" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Country of origin</div>
+                                        <div data-GPAIndex="country" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Biological status of accession</div>
+                                        <div data-GPAIndex="telephone" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Genebank(s) holding safety duplications</div>
+                                        <div data-GPAIndex="fax" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Latitude of collecting site (decimal degrees format)</div>
+                                        <div data-GPAIndex="email" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Longitude of collecting site (decimal degrees format)</div>
+                                        <div data-GPAIndex="website" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Collecting/acquisition source</div>
+                                        <div data-GPAIndex="status" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Organization role categories</div>
+                                        <div class="GPA-cell txt">
+                                            <ul style="display: none;">
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f646">Genebank (long term collections)</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f647">Botanical garden</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f648">Breeder</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f649">Network</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f650">Community</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f651">Educational</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f652">Seed producer</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f653">Seed supplier</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f654">Farmer community</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f655">Research</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f656">Extensionist</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f657">Laboratory</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f658">Publisher</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f869">Administration/Policy</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f874">Genebank (medium term collections)</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f875">Genebank (short term collections)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Type of germplasm storage</div>
+                                        <div data-GPAIndex="longitude" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Status under the Multilateral System</div>
+                                        <div data-GPAIndex="latitude" class="GPA-cell txt"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row spacer"><!-- Spacer --></div>
+    </div>
+</div>
