@@ -210,7 +210,7 @@
 
 
 
-  li[role=treeitem] {
+  li[role=treeitem], li[role=treeitem]:hover {
     background-color: #ddd !important;
     color: black !important;
   }
@@ -307,10 +307,15 @@
 
 #search, #adv_search { height: 34px }
 
-/*
-.sbHolder { display:  none !important }
 
+.sbHolder { display:  none !important }
+/*
 select#year { display:  block !important }
 select#data_showed { display:  block !important }
 select#data_filter { display:  block !important }
 */
+
+li.select2-results__option--highlighted[aria-selected] {
+  color: black !important;
+  background-color:  white !important;
+}

@@ -258,7 +258,7 @@ define([
 
         if((filterConfig!=null)&&(typeof filterConfig != 'undefined')){
             var itemsArray = filterConfig.items;
-            var itemCount = 1, selectorConfig, id, type, defaultValue, title, choicesTitle, codelist, codes, maxItems, source, max;
+            var itemCount = 1, selectorConfig, id, type, defaultValue, title, choicesTitle, codelist, codes, maxItems, source, max, blacklist;
 
             itemsArray.forEach(function (item) {
 
@@ -268,6 +268,7 @@ define([
                 title = item.title;
                 choicesTitle = item.choicesTitle;
                 codelist = item.clUid;
+                blacklist = item.clBlackList;
                 codes = item.clCodes;
                 maxItems = item.maxItems;
                 max = item.max;
@@ -289,6 +290,10 @@ define([
 
                             if((source!=null)&&(typeof source!= 'undefined')){
                                 selectorConfig.selector.source = source;
+                            }
+
+                            if((blacklist!=null)&&(typeof blacklist!= 'undefined')){
+                                selectorConfig.selector.blacklist = blacklist;
                             }
 
                             //Setting title for radio button selector(title is an array)
@@ -621,7 +626,7 @@ define([
             },
             options : {
                 params : {
-                    maxSize : 2000000,
+                    maxSize : 200000,
                     language: this.lang.toUpperCase()
                 },
             },

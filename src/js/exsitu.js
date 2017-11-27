@@ -120,6 +120,8 @@ define([
 
     Exsitu.prototype._processMap = function (data_toshow) {
 
+        var self = this;
+
         var data = this._getData($('#year').val());
         if (data == undefined) {
             alert('Data not available');
@@ -149,6 +151,17 @@ define([
 
             var infowindow = new googleMaps.InfoWindow({});
 
+            map.addListener('zoom_changed', function(event) {
+                self.zoomlevel = map.getZoom();
+                map.data.setStyle(function(feature) {
+                    var size = feature.getProperty(data_toshow);
+                    return {
+                        icon: getCircle(size),
+                        title: feature.getProperty('name')
+                    };
+                });
+            });
+
             map.data.addGeoJson(geodata);
 
             map.data.addListener('click', function(event) {
@@ -169,13 +182,18 @@ define([
             });
 
             function getCircle(size) {
-                var value = $('#data_filter').val();
+                var value = $('#data_filter').val(),
+                    kind = $('#data_showed').val(),
+                    mag = Math.pow(Number(size), 1/4),
+                    divisor = (kind === "accessions") ? 3 : 4,
+                    multi = 1; //self.zoomlevel /2;
+
 
                 return {
                     path: googleMaps.SymbolPath.CIRCLE,
                     fillColor: 'red',
                     fillOpacity: .2,
-                    scale:  (size > value) ? (Math.pow(Number(size), 1/4) /4 )*3 : 0,
+                    scale:  (size > value) ? ((mag/4)*divisor)*multi : 0,
                     strokeColor: 'white',
                     strokeWeight: .5
                 };
@@ -209,11 +227,19 @@ define([
 
         this._processMap($('#data_showed').val());
 
-        this.tabledata = tableData;
+        this.tabledata = this._convert2CSV(tableData);
 
         $('#year').select2({ width: '100%',  theme: "bootstrap" });
         $('#data_showed').select2({ width: '100%' , theme: "bootstrap" });
         $('#data_filter').select2({ width: '100%',  theme: "bootstrap" });
+
+    };
+
+    Exsitu.prototype._convert2CSV = function (data) {
+        _.each(data, function(object) {
+            object['name'] = "\""+object['name']+"\"";
+        });
+        return data;
 
     };
 
@@ -223,6 +249,7 @@ define([
         this.lang = Clang;
         this.environment = C.ENVIRONMENT;
         this.cache = C.cache;
+        this.zoomlevel = 2;
 
     };
 

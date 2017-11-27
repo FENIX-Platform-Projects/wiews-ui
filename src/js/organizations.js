@@ -82,7 +82,7 @@ define([
             },
             "options": {
                 "params" : {
-                    "maxSize" : 2000000,
+                    "maxSize" : 200000,
                     "language": this.lang.toUpperCase()
                 }
             },

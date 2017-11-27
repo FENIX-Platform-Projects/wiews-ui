@@ -82,7 +82,7 @@ define([
             },
             "options": {
                 "params" : {
-                    "maxSize" : 2000000,
+                    "maxSize" : 200000,
                     "language": this.lang.toUpperCase()
                 }
             },
@@ -284,12 +284,14 @@ define([
                 "search_year" : {
                     "selector": {
                         "id": "dropdown",
+                        default : ['2016'],
                         source: [
                             {value: "2014", label: "2014"},
                             {value: "2016", label: "2016"}
                         ],
                         "config" : {
-                            "placeholder": labels[Clang]['exsitu-search_search_year']
+                            "placeholder": labels[Clang]['exsitu-search_search_year'],
+                            "maxItems": 1
                         }
                     }
                 },

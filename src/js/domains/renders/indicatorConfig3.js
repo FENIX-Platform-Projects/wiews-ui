@@ -43,14 +43,16 @@ define(["highcharts",
                             type: 'tree',
                             default: DOWNLOAD_DV["3_filter-dd_filter_item_4_1"],
                             title: labels[Clang]['3_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_fao_region_only"
+                            clUid: "wiews_fao_region_only",
+                            clBlackList: ['WITC']
                         },
                         {
                             id: 'dd_filter_item_4_2',
                             type: 'tree',
                             default: DOWNLOAD_DV["3_filter-dd_filter_item_4_2"],
                             title: labels[Clang]['3_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_m49_region_only"
+                            clUid: "wiews_m49_region_only",
+                            clBlackList: ['WITC']
                         },
                         {
                             id: 'dd_filter_item_4_3',
@@ -90,7 +92,8 @@ define(["highcharts",
                             type: 'tree',
                             default: DOWNLOAD_DV["3_filter-dd_filter_item_7_2"],
                             title: labels[Clang]['3_filter-dd_filter_item_7_title'],
-                            clUid: "wiews_itpgrfa_region_only"
+                            clUid: "wiews_itpgrfa_region_only",
+                            clBlackList: ['WITC']
                         },
                         {
                             id: 'dd_filter_item_8',
