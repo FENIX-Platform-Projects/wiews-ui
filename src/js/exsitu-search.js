@@ -385,6 +385,8 @@ define([
             }
         }
 
+        $('#advanced').click();
+
     };
 
     Exsitu_search.prototype._fillResults = function(content) {

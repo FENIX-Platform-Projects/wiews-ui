@@ -678,7 +678,7 @@ define(function () {
 
         // Ex Situ Search
         "exsitu_search_header": "Search for ",
-        "exsitu_search_showadvanced": "Show Advanced",
+        "exsitu_search_showadvanced": "Hide Advanced",
         "exsitu-search_omnisearch_placeholder" :  "Type here your search",
         "exsitu-search_search_instcode" :  "Holding institute code",
         "exsitu-search_search_accessions" :  "Accession number",

@@ -175,7 +175,7 @@ define([
                     "<br><span> <b>Accessions:</b> "+event.feature.getProperty('accessions')+"</span><br>" +
                     "<span> <b>Genera:</b> "+event.feature.getProperty('genus')+"</span><br>" +
                     "<span> <b>Species:</b> "+event.feature.getProperty('species')+"</span><br>" +
-                    "<br><b><a href='#'> More details </a></b>"
+                    "<br><b><a href='#'>To the <i>ex situ</i> collection </a></b>"
                 );
                 infowindow.open(map);
 
@@ -185,7 +185,7 @@ define([
                 var value = $('#data_filter').val(),
                     kind = $('#data_showed').val(),
                     mag = Math.pow(Number(size), 1/4),
-                    divisor = (kind === "accessions") ? 3 : 4,
+                    divisor = (kind === "accessions") ? 3 : 8,
                     multi = 1; //self.zoomlevel /2;
 
 
