@@ -208,7 +208,7 @@ define(["highcharts",
                                 "iteration" : "ASC",
                                 "rank" : "ASC",
                                 "wiews_region_EN" : "ASC",
-                                "indicator" : "ASC",
+                                "indicator" : "DESC",
                                 "element" : "ASC"
                             }
                         }
@@ -275,7 +275,7 @@ define(["highcharts",
                                 "iteration" : "ASC",
                                 "rank" : "ASC",
                                 "wiews_region_EN" : "ASC",
-                                "indicator" : "ASC",
+                                "indicator" : "DESC",
                                 "element" : "ASC"
                             }
                         },

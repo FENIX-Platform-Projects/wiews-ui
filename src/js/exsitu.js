@@ -22,7 +22,8 @@ define([
 
     var s = { EL: "#exsitu" },
         services_url = "http://hqlprfenixapp2.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/{{YEAR}}.saiku",
-        google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc";
+        //google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; < DEV
+        google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
 
     function Exsitu() {
 

@@ -189,7 +189,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                 "iteration" : "ASC",
                                 "rank" : "ASC",
                                 "wiews_region_EN" : "ASC",
-                                "indicator" : "ASC",
+                                "indicator" : "DESC",
                                 "element" : "ASC"
                             }
                         },
@@ -272,7 +272,7 @@ define(["jquery","highcharts", "../../../config/config", "../../../config/domain
                                 "iteration" : "ASC",
                                 "rank" : "ASC",
                                 "wiews_region_EN" : "ASC",
-                                "indicator" : "ASC",
+                                "indicator" : "DESC",
                                 "element" : "ASC"
                             }
                         },
