@@ -91,6 +91,8 @@ define([
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
                         codelist = this._geoSelector_getCodelist(values.values[paramsForGeoValidation.filter_items_codelistItem_tabItem_second], paramsForGeoValidation.filter_items_codelistItem_tabItem_second, regionFilterItem, specialGroupFilterItem)
                         listType = this._geoSelector_getListType(values.values[paramsForGeoValidation.filter_items_listTypetItem_tabItem_second], paramsForGeoValidation.filter_items_listTypetItem_tabItem_second, checkboxRegionItem, checkboxSpecialGroupItem);
+                        // Removal of "total/list"  checkboxes
+                        /*
                         if(listType.length<=0){
                             newValues = '';
                             listTypeError = true;
@@ -98,6 +100,8 @@ define([
                         else{
                             newValues = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
                         }
+                        */
+                        newValues = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
                     }
                     break;
                 case paramsForGeoValidation.filter_items_tabItem_third:

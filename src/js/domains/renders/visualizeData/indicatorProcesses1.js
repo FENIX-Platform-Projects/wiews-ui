@@ -223,7 +223,7 @@ define([
                 textMsg = labels[params.lang][s.buttonMsg.button_1];
             }
 
-            s.filterDivMsg1.html(textMsg)
+            s.filterDivMsg1.html(textMsg);
             s.filterDivMsg1.show();
         }
 
