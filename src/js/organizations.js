@@ -181,7 +181,8 @@ define([
             formatSearch: function() {
                 return labels[Clang]['organizations_search_filter']
             },
-            sortable: true
+            sortable: true,
+            paginationVAlign: "top"
         });
     }
 
@@ -272,7 +273,7 @@ define([
                     "selector": {
                         "id": "dropdown",
                         "config": {
-                            "maxItems": 1,
+                        //    "maxItems": 1,
                             "placeholder" : labels[Clang]['organizations_searchform_search_country']
                         }
                     },

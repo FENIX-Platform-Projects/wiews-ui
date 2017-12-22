@@ -30,9 +30,9 @@ module.exports = sections.map(function (section) {
                 'handlebars': Path.join(__dirname, 'node_modules/handlebars/dist/handlebars.js'),
                 'jquery': Path.join(__dirname, 'node_modules/jquery/dist/jquery'),
                 'typeahead.js': Path.join(__dirname, 'node_modules/typeahead.js/dist/typeahead.bundle.js'),
-                'historyjs': Path.join(__dirname, 'node_modules/historyjs/scripts/compressed/history.js')
+                'historyjs': Path.join(__dirname, 'node_modules/historyjs/scripts/compressed/history.js'),
                 //'bootstrap-table-locale': Path.join(__dirname, 'node_modules/bootstrap-table/dist/bootstrap-table-locale-all.min')
-                // 'fenix-ui-bridge': Path.join(__dirname, 'node_modules/fenix-ui-bridge/src/js/index.js'),
+                'fenix-ui-bridge': Path.join(__dirname, 'node_modules/fenix-ui-bridge/src/js/index.js'),
                 // 'fenix-ui-reports': Path.join(__dirname, 'node_modules/fenix-ui-reports/src/js/index.js')
                 //'fenix-ui-chart-creator': Path.join(__dirname, 'node_modules/fenix-ui-chart-creator/src/js/index.js')
                 //'fenix-ui-filter': Path.join(__dirname, 'node_modules/fenix-ui-filter/src/js/index.js')

@@ -220,6 +220,92 @@
     background-color: #657b8a;
     color: #fff;
   }
+
+  // Typeahead
+
+  .typeahead,
+  .tt-query {
+    width: 100%;
+    height: 30px;
+    padding: 8px 12px;
+    line-height: 30px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    outline: none;
+  }
+
+  .typeahead {
+    background-color: #fff;
+  }
+
+  .typeahead:focus {
+    border: 2px solid #0097cf;
+  }
+
+  .tt-query {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  }
+
+  .tt-hint {
+    color: #999
+  }
+
+  .tt-menu {
+    width: 100%;
+    margin: 3px 0;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    max-height: 100px;
+    overflow-y: auto;
+  }
+
+  .tt-suggestion {
+    padding: 3px 20px;
+    line-height: 18px;
+  }
+
+  .tt-suggestion:hover {
+    cursor: pointer;
+    color: #fff;
+    background-color: #0097cf;
+  }
+
+  .tt-suggestion.tt-cursor {
+    color: #fff;
+    background-color: #0097cf;
+
+  }
+
+  .tt-suggestion p {
+    margin: 0;
+  }
+
+  .twitter-typeahead {
+    display: block;
+    width: 100%;
+    height: 34px;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #555555;
+    background-color: #fff;
+    background-image: none;
+    //border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  }
 }
 
 .bootstrap-table tbody tr {
@@ -235,83 +321,14 @@
 
 #search_omnibox { width: 820px }
 
-// Typeahead
-
-.typeahead,
-.tt-query {
-  width: 860px;
-  height: 30px;
-  padding: 8px 12px;
-  line-height: 30px;
-  border: 2px solid #ccc;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  outline: none;
-}
-
-.typeahead {
-  background-color: #fff;
-}
-
-.typeahead:focus {
-  border: 2px solid #0097cf;
-}
-
-.tt-query {
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-}
-
-.tt-hint {
-  color: #999
-}
-
-.tt-menu {
-  width: 860px;
-  margin: 12px 0;
-  padding: 8px 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-  -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-  box-shadow: 0 5px 10px rgba(0,0,0,.2);
-}
-
-.tt-suggestion {
-  padding: 3px 20px;
-  line-height: 24px;
-}
-
-.tt-suggestion:hover {
-  cursor: pointer;
-  color: #fff;
-  background-color: #0097cf;
-}
-
-.tt-suggestion.tt-cursor {
-  color: #fff;
-  background-color: #0097cf;
-
-}
-
-.tt-suggestion p {
-  margin: 0;
-}
-
-.icojam_search {
+.icojam_search, .icojam_add, .icojam_delete {
   font-size: 1.5em;
   position: relative;
   top: 4px;
   left: 5px;
 }
 
-#search_button, #adv_search_button { height: 34px }
+#search_button, #adv_search_button, #btn_addserach, #btn_clearserach, #adv_clear_button { height: 34px }
 #search_button { width: 55px }
 
 .suggestion-country { font-size: smaller; }
@@ -326,7 +343,6 @@
     font-style: italic;
 }
 
-
 .bootstrapTableExport {
   position: relative;
   top: -2px;
@@ -338,3 +354,49 @@
 
 .hiddenflag { display:  none; }
 
+.addedelement {
+  width: auto;
+  height: auto;
+  cursor: pointer;
+  margin: 0 3px 3px 0;
+  padding: 2px 3px;
+  background: #efefef;
+  color: #333333;
+  border: 1px solid #ccc;
+  display: inline-table;
+  user-select: none;
+}
+
+#combined_elements_container {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fcfcfc;
+  min-height:  34px;
+  margin-bottom: 8px;
+  padding: 5px;
+  overflow-y: auto;
+  height: 125px;
+}
+
+#label_combined_elements_container {
+  margin-top: 3px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.addedelement_remove { color: red; }
+div[data-selector=search_year] {
+  margin-top: -4px;
+  margin-left: -45px;
+  font-size: small;
+}
+
+.crop-selection, .genus-spieces-selection {
+  background-color: whitesmoke;
+  border: 1px solid #ccc;
+  padding-top:  5px;
+}
+
+.filling-gap {
+  margin: 5px;
+}

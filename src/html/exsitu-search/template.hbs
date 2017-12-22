@@ -6,8 +6,9 @@
             <!-- Filters -->
             <div class="col-md-2"><h2>{{exsitu_search_header}}</h2></div>
             <div class="col-md-2"><div data-selector="search_year"></div></div>
-            <div class="col-md-8"><a id="advanced" class="pull-right">{{exsitu_search_showadvanced}}</a></div>
+            <!--<div class="col-md-8"><a id="advanced" class="pull-right">{{exsitu_search_showadvanced}}</a></div>-->
         </div>
+        <!--
         <div class="row spacer">
             <div class="col-md-12">
                 <div class="form-inline">
@@ -17,8 +18,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        -->
         <div style="display: none" data-role='messages' class="row spacer">
             <!-- Messages -->
             <div class="col-md-12">
@@ -39,79 +40,107 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="search_instcode">{{exsitu-search_search_instcode}}</label>
-                        <input type="text" class="form-control" id="search_instcode"
-                               placeholder="{{exsitu-search_search_instcode}}">
+                        <input type="text" class="form-control" id="search_instcode" placeholder="{{exsitu-search_search_instcode}}">
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row crop-selection">
+                <div class="col-md-8">
                     <div class="form-group">
                         <label for="search_crop">{{exsitu-search_search_crop}}</label>
-                        <input type="text" class="form-control" id="search_crop"
-                               placeholder="{{exsitu-search_search_crop}}">
+                        <input type="text" class="form-control" id="search_crop" placeholder="{{exsitu-search_search_crop}}">
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="search_search_taxon">{{exsitu-search_search_taxon}}</label>
-                        <input type="text" class="form-control" id="search_search_taxon"
-                               placeholder="{{exsitu-search_search_taxon}}">
+                <div class="col-md-3">
+                    <div data-selector="search_search_crop_wild_relatives" class="form-group">
+                        <label for="search_search_crop_wild_relatives">{{exsitu-search_search_crop_wild_relatives}}</label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group pull-right">
+                        <div style="margin-top: 24px">
+                            <button id="btn_addfromcrop" title="{{exsitu-search_add_button}}" type="button" class="btn btn-info"><span class="icojam icojam_add"></span></button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row filling-gap"></div>
+            <div class="row genus-spieces-selection">
+                <div class="col-md-5">
                     <div class="form-group">
                         <label for="search_genus">{{exsitu-search_search_genus}}</label>
-                        <input type="text" class="form-control" id="search_genus"
-                               placeholder="{{exsitu-search_search_genus}}">
+                        <input type="text" class="form-control" id="search_genus" placeholder="{{exsitu-search_search_genus}}">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="search_spieces">{{exsitu-search_search_spieces}}</label>
-                        <input type="text" class="form-control" id="search_spieces"
-                               placeholder="{{exsitu-search_search_spieces}}">
+                        <input type="text" class="form-control" id="search_spieces" placeholder="{{exsitu-search_search_spieces_placeholder}}">
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group pull-right">
+                        <div style="margin-top: 24px">
+                            <button id="btn_addserach" title="{{exsitu-search_add_button}}" type="button" class="btn btn-info"><span class="icojam icojam_add"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-11">
+                    <div id="label_combined_elements_container">{{exsitu-search_search_added_element}}</div>
+                    <div id="combined_elements_container"></div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group pull-right">
+                        <div style="margin-top: 24px">
+                            <button id="btn_clearserach" title="{{exsitu-search_search_added_element_clear}}" type="button" class="btn btn-info"><span class="icojam icojam_delete"></span></button>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="search_accessions">{{exsitu-search_search_accessions}}</label>
-                        <input type="text" class="form-control" id="search_accessions"
-                               placeholder="{{exsitu-search_search_accessions}}">
+                        <label for="search_search_taxon">{{exsitu-search_search_taxon}}</label>
+                        <input type="text" class="form-control" id="search_taxon" placeholder="{{exsitu-search_search_taxon}}">
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="search_accessions">{{exsitu-search_search_accessions}}</label>
+                        <input type="text" class="form-control" id="search_accessions" placeholder="{{exsitu-search_search_accessions}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <div data-selector="search_country_origin" class="form-group">
                         <label for="search_country_origin">{{exsitu-search_search_country_origin}}</label>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6">
                     <div data-selector="search_statusofaccession" class="form-group">
                         <label for="search_statusofaccession">{{exsitu-search_search_statusofaccession}}</label>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <div data-selector="search_statusmultilateral" class="form-group">
                         <label for="search_statusmultilateral">{{exsitu-search_search_statusmultilateral}}</label>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="pull-right">
                         <div style="margin-top: 24px">
-                            <button id="adv_search_button" type="button" class="btn btn-primary"><span
-                                    class="icojam icojam_search"></span></button>
+                            <button id="adv_search_button" type="button" class="btn btn-primary"><span class="icojam icojam_search"></span></button>
+                            <button id="adv_clear_button" type="button" class="btn btn-primary disabled"><span class="icojam icojam_delete"></span></button>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="row spacer"><!-- Spacer --></div>
     </div>
@@ -141,20 +170,11 @@
                 >
                     <thead>
                     <tr>
-                        <th data-sortable="true" data-width="7%"
-                            data-field="instcode">{{organizations_table_header_instcode}}</th>
-                        <th data-sortable="true" data-width="21%"
-                            data-field="parent_name">{{organizations_table_header_parentorg}}</th>
-                        <th data-sortable="true" data-width="16%"
-                            data-field="name">{{organizations_table_header_name}}</th>
-                        <th data-sortable="true" data-width="7%"
-                            data-field="acronym">{{organizations_table_header_acronym}}</th>
-                        <th data-sortable="true" data-width="21%"
-                            data-field="address">{{organizations_table_header_address}}</th>
-                        <th data-sortable="true" data-width="14%"
-                            data-field="city">{{organizations_table_header_city}}</th>
-                        <th data-sortable="true" data-width="14%"
-                            data-field="country">{{organizations_table_header_country}}</th>
+                        <th data-sortable="true" data-width="15%" data-field="w_instcode">{{exsitu-search_table_instcode}}</th>
+                        <th data-sortable="true" data-width="15%" data-field="accenumb">{{exsitu-search_table_accenumb}}</th>
+                        <th data-sortable="true" data-width="30%" data-field="taxon">{{exsitu-search_table_taxon}}</th>
+                        <th data-sortable="true" data-width="20%" data-field="acqdate">{{exsitu-search_table_acqdate}}</th>
+                        <th data-sortable="true" data-width="20%" data-field="storage">{{exsitu-search_table_storage}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -187,121 +207,63 @@
                             <div class="tableGPA">
                                 <div class="GPA-group">
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Holding institute code</div>
-                                        <div data-GPAIndex="name" class="GPA-cell txt"></div>
-                                    </div>
-                                    <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Holding institute name</div>
-                                        <div data-GPAIndex="acronym" class="GPA-cell txt"></div>
+                                        <div class="GPA-cell lbl">Holding institute code and name</div>
+                                        <div data-GPAIndex="w_institute_en" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Holding institute country</div>
-                                        <div data-GPAIndex="instcode" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="country_en" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Accession number</div>
-                                        <div class="GPA-cell txt"><a data-GPAIndex="parent_instcode" href="#"><span
-                                                data-GPAIndex="parent_name"></span></a></div>
+                                        <div data-GPAIndex="accenumb" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Name of taxon</div>
-                                        <div data-GPAIndex="address" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="taxon" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Name of crop</div>
-                                        <div data-GPAIndex="zip_code" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="cropname" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Acquisition Date (YYYY/MM)</div>
-                                        <div data-GPAIndex="city" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="acqdate" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Country of origin</div>
-                                        <div data-GPAIndex="country" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="country_en" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Biological status of accession</div>
-                                        <div data-GPAIndex="telephone" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="sampstat" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Genebank(s) holding safety duplications</div>
-                                        <div data-GPAIndex="fax" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="genebanks" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Latitude of collecting site (decimal degrees format)
                                         </div>
-                                        <div data-GPAIndex="email" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="declatitude" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Longitude of collecting site (decimal degrees
                                             format)
                                         </div>
-                                        <div data-GPAIndex="website" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="declongitude" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Collecting/acquisition source</div>
-                                        <div data-GPAIndex="status" class="GPA-cell txt"></div>
-                                    </div>
-                                    <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Organization role categories</div>
-                                        <div class="GPA-cell txt">
-                                            <ul style="display: none;">
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f646">Genebank
-                                                    (long term collections)
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f647">Botanical
-                                                    garden
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f648">Breeder
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f649">Network
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f650">
-                                                    Community
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f651">
-                                                    Educational
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f652">Seed
-                                                    producer
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f653">Seed
-                                                    supplier
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f654">Farmer
-                                                    community
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f655">
-                                                    Research
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f656">
-                                                    Extensionist
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f657">
-                                                    Laboratory
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f658">
-                                                    Publisher
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f869">
-                                                    Administration/Policy
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f874">Genebank
-                                                    (medium term collections)
-                                                </li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f875">Genebank
-                                                    (short term collections)
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <div data-GPAIndex="collsrc" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Type of germplasm storage</div>
-                                        <div data-GPAIndex="longitude" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="storage" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Status under the Multilateral System</div>
-                                        <div data-GPAIndex="latitude" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="mlsstat" class="GPA-cell txt"></div>
                                     </div>
                                 </div>
                             </div>

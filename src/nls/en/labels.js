@@ -25,7 +25,7 @@ define(function () {
         "activity1_3": "Surveys and inventories -",
         "activity2_3": "Priority activity 1: Surveying and inventorying plant genetic resources for food and agriculture",
         "title_3": "Threatened species/varieties -",
-        "indicator_3": "Indicator 3: Percentage of PGRFA surveyed/inventoried",
+        "indicator_3": "Indicator 3: Percentage of PGRFA threatened out of those surveyed/inventoried",
         "domain_15": "Ex situ conservation",
         "activity1_15": "Targeted collecting -",
         "activity2_15": "Priority activity 5: Supporting targeted collecting of plant genetic resources for food and agriculture",
@@ -684,7 +684,9 @@ define(function () {
         "exsitu-search_search_accessions" :  "Accession number",
         "exsitu-search_search_genus" :  "Name of genus",
         "exsitu-search_search_spieces" :  "Name of species",
+        "exsitu-search_search_spieces_placeholder" :  "Name of species, empty for all",
         "exsitu-search_search_crop" :  "Name of crop",
+        "exsitu-search_search_crop_wild_relatives" :  "Crop Wild Relatives",
         "exsitu-search_search_country_origin" :  "Country of origin",
         "exsitu-search_search_country_institute" :  "Country",
         "exsitu-search_search_year" :  "Reporting year",
@@ -695,8 +697,24 @@ define(function () {
         "exsitu-search_search_statusmultilateral_true" : "Included",
         "exsitu-search_search_statusmultilateral_false" : "Not Included",
 
+        "exsitu-search_search_crop_wild_relatives_true" :  "Include",
+        "exsitu-search_search_crop_wild_relatives_false" :  "Exclude",
+        "exsitu-search_search_crop_wild_relatives_null" :  "Ignore",
+
+        "exsitu-search_search_added_element" : "Current selected elements",
+        "exsitu-search_search_added_element_remove" : "Remove",
+        "exsitu-search_search_added_element_clear" : "Clear Selection",
+
+        "exsitu-search_table_accenumb" : "Accession number",
+        "exsitu-search_table_instcode" : "WIEWS code",
+        "exsitu-search_table_taxon" : "Taxon",
+        "exsitu-search_table_storage" : "Storage",
+        "exsitu-search_table_w_instcode" : "Institution",
+        "exsitu-search_table_acqdate" : "Acquisition Date",
+
         // Other stuff
 
-        "bootstraptable_search_filter" : "Filter"
+        "bootstraptable_search_filter" : "Filter",
+        "exsitu-search_add_button" : "Add"
     }
 });
