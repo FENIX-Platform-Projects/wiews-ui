@@ -367,6 +367,10 @@ define([
                 $('[data-GPAIndex='+row_name+']').attr('href', '/wiews/data/organizations/'+self.lang.toLowerCase()+'/?instcode='+row_value+'#details');
                 return;
             }
+            if (row_name == "valid_instcode") {
+                $('[data-GPAIndex='+row_name+']').attr('href', '/wiews/data/organizations/'+self.lang.toLowerCase()+'/?instcode='+row_value+'#details');
+                return;
+            }
             $('[data-GPAIndex='+row_name+']').html(content);
             //Special Cases
             if (row_name == "valid_flag") if (row_value == false) {

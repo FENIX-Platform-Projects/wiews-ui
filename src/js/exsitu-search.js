@@ -344,6 +344,7 @@ define([
                 }
             }
         });
+        self.initial = {};
 
         if (this.instcode.length) {
             var result = this._callServices([
@@ -652,13 +653,41 @@ define([
         self._statesManagement('results');
     };
 
-    Exsitu_search.prototype._resetForm = function () {
-        // Clear
+    Exsitu_search.prototype._resetForm = function (withyear) {
+        // Clear them all
+        // Country (FENIX)
+        // Holding Instcode
+        $('#search_instcode').val('');
+        // Name of Crop
+        $('#search_crop').val('');
+        // Wild Crop relative (FENIX)
+        // Genus
+        $('#search_genus').val('');
+        // Species
+        $('#search_spieces').val('');
+        // Selection
+        $('#combined_elements_container').empty();
+        // Taxon
+        $('#search_taxon').val('');
+        // Accession Number
+        $('#search_instcode').val('');
+        // Country of Origin (FENIX)
+        // Biological status (FENIX)
+        // Multilateral (FENIX)
+        // Year (FENIX)
+        if (withyear) this.initial.values['search_year'][0] = this.selected_year;
+        this.filter.setValues({
+            values: this.initial.values
+        });
     };
 
     // Events
     Exsitu_search.prototype._bindEventListeners = function () {
         var self = this;
+
+        this.filter.on('ready', function(){
+            self.initial = self.filter.getValues();
+        });
 
         $('#search_button').on('click', function(){
             $('[data-role=messages]').hide();
@@ -674,6 +703,10 @@ define([
         $('#adv_search_button').on('click', function(){
             self._initTable(self._callServices(self._preparePayload()));
             self._statesManagement('results');
+        });
+
+        $('#adv_clear_button').on('click', function(){
+            self._resetForm(true);
         });
 
         $('#advanced').on('click', function(){
@@ -743,9 +776,11 @@ define([
             _.each(self.loaded_crop, function(element) { appendElement(element[0],element[1]) });
         });
 
+        /*
         $('[data-selector=search_year]').on('change', function(){
-            self._resetForm();
+            self._resetForm(false);
         });
+        */
 
         $('#search_genus').on('typeahead:select', function(event, selection) {
             $('#search_spieces').typeahead('destroy');
@@ -799,6 +834,9 @@ define([
 
         //$('div.selectize-control.multi div.selectize-input div.item').click(function(){ alert('removeme!')});
 
+        this.filter.on('select', function(evt) {
+            if (evt.id == "search_year") self.selected_year = evt.values[0];
+        });
 
         window.onpopstate = function(event) {
             //console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
