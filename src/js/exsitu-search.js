@@ -17,7 +17,7 @@ define([
     "use strict";
     var Clang = C.lang.toLowerCase(),
         services_url = "http://fenix.fao.org/d3s_wiews/processes",
-        fromFreetext = false;
+        defaultYear = 2016;
 
     var s = {
         EL: "#exsitu_search",
@@ -35,8 +35,6 @@ define([
         this._attach();
         this._bindEventListeners();
     };
-
-
 
     Exsitu_search.prototype._validateConfig = function () {
 
@@ -252,6 +250,7 @@ define([
                         "config": {
                             "placeholder" : labels[Clang]['exsitu-search_search_country_institute'],
                             "maxItems": 1
+
                         }
                     },
                     "format": {
@@ -261,7 +260,7 @@ define([
                 "search_year" : {
                     "selector": {
                         "id": "dropdown",
-                        default : ['2016'],
+                        default : [defaultYear],
                         source: [
                             {value: "2014", label: "2014"},
                             {value: "2016", label: "2016"}
@@ -277,7 +276,8 @@ define([
                     "selector": {
                         "id": "dropdown",
                         "config": {
-                            "placeholder" : labels[Clang]['exsitu-search_search_country_origin']
+                            "placeholder" : labels[Clang]['exsitu-search_search_country_origin'],
+                            plugins: ['remove_button']
                         }
                     },
                     "format": {
@@ -299,7 +299,8 @@ define([
                         ],
                         */
                         "config" : {
-                            "placeholder": labels[Clang]['exsitu-search_search_statusofaccession']
+                            "placeholder": labels[Clang]['exsitu-search_search_statusofaccession'],
+                            plugins: ['remove_button']
                         },
                         sort: false
                     }
@@ -312,7 +313,8 @@ define([
                             {value: "false", label: labels[Clang]['exsitu-search_search_statusmultilateral_false']}
                         ],
                         "config" : {
-                            "placeholder": labels[Clang]['exsitu-search_search_statusmultilateral']
+                            "placeholder": labels[Clang]['exsitu-search_search_statusmultilateral'],
+                            plugins: ['remove_button']
                         },
                         sort: false
                     }
@@ -414,7 +416,7 @@ define([
         });
 
         this.genus = "";
-        this.selected_year = 2016;
+        this.selected_year = defaultYear;
         this.cwr = null;
         this.loaded_crop = [];
         this.genus_species = [];
@@ -653,31 +655,28 @@ define([
         self._statesManagement('results');
     };
 
-    Exsitu_search.prototype._resetForm = function (withyear) {
+    Exsitu_search.prototype._resetForm = function (saveyear) {
+        $('[data-selector=search_year]').off('change');
         // Clear them all
-        // Country (FENIX)
-        // Holding Instcode
         $('#search_instcode').val('');
-        // Name of Crop
         $('#search_crop').val('');
-        // Wild Crop relative (FENIX)
-        // Genus
         $('#search_genus').val('');
-        // Species
         $('#search_spieces').val('');
-        // Selection
         $('#combined_elements_container').empty();
-        // Taxon
         $('#search_taxon').val('');
-        // Accession Number
         $('#search_instcode').val('');
-        // Country of Origin (FENIX)
-        // Biological status (FENIX)
-        // Multilateral (FENIX)
-        // Year (FENIX)
-        if (withyear) this.initial.values['search_year'][0] = this.selected_year;
+        if (saveyear) this.initial.values['search_year'][0] = this.selected_year;
         this.filter.setValues({
             values: this.initial.values
+        });
+        this.initial.values['search_year'][0] = defaultYear;
+        this._bindYearListener();
+    };
+
+    Exsitu_search.prototype._bindYearListener = function () {
+        var self = this;
+        $('[data-selector=search_year]').on('change', function(){
+            self._resetForm(true);
         });
     };
 
@@ -687,6 +686,11 @@ define([
 
         this.filter.on('ready', function(){
             self.initial = self.filter.getValues();
+            self._bindYearListener();
+        });
+
+        this.filter.on('select', function(evt) {
+            if (evt.id == "search_year") self.selected_year = Number(evt.values[0]);
         });
 
         $('#search_button').on('click', function(){
@@ -706,7 +710,7 @@ define([
         });
 
         $('#adv_clear_button').on('click', function(){
-            self._resetForm(true);
+            self._resetForm(false);
         });
 
         $('#advanced').on('click', function(){
@@ -740,6 +744,7 @@ define([
         }
 
         $('#btn_clearserach').on('click', function(){
+           self.genus_species = [];
             $('#combined_elements_container').empty();
         });
 
@@ -775,12 +780,6 @@ define([
             self.loaded_crop = output;
             _.each(self.loaded_crop, function(element) { appendElement(element[0],element[1]) });
         });
-
-        /*
-        $('[data-selector=search_year]').on('change', function(){
-            self._resetForm(false);
-        });
-        */
 
         $('#search_genus').on('typeahead:select', function(event, selection) {
             $('#search_spieces').typeahead('destroy');
@@ -832,11 +831,11 @@ define([
             }
         });
 
-        //$('div.selectize-control.multi div.selectize-input div.item').click(function(){ alert('removeme!')});
-
-        this.filter.on('select', function(evt) {
-            if (evt.id == "search_year") self.selected_year = evt.values[0];
+        $('li.active a').on('click', function(){
+            alert('clock');
         });
+
+        //$('div.selectize-control.multi div.selectize-input div.item').click(function(){ alert('removeme!')});
 
         window.onpopstate = function(event) {
             //console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
