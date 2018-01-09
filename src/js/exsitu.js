@@ -21,8 +21,10 @@ define([
     var Clang = C.lang.toLowerCase();
 
     var s = { EL: "#exsitu" },
+        exsitu_search_url = "http://www.fao.org/wiews/data/search/",
+        organization_url = "http://www.fao.org/wiews/data/organizations/",
         services_url = "http://hqlprfenixapp2.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/{{YEAR}}.saiku",
-        //google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; < DEV
+        //google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
         google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
 
     function Exsitu() {
@@ -171,12 +173,12 @@ define([
                 var opening = new googleMaps.LatLng(event.feature.b.b.lat(), event.feature.b.b.lng());
                 infowindow.setPosition(opening);
                 infowindow.setContent(
-                    "<span><b><a target='_blank' href='http://www.fao.org/wiews/data/organizations/en/?instcode="+event.feature.getProperty('instcode')+"'>"+event.feature.getProperty('instcode')+"</a></b>" +
+                    "<span><b><a target='_blank' href='"+organization_url+self.lang.toLowerCase()+"/?instcode="+event.feature.getProperty('instcode')+"'>"+event.feature.getProperty('instcode')+"</a></b>" +
                     " - <i>"+event.feature.getProperty('name')+"</i> </span><br>" +
                     "<br><span> <b>Accessions:</b> "+event.feature.getProperty('accessions')+"</span><br>" +
                     "<span> <b>Genera:</b> "+event.feature.getProperty('genus')+"</span><br>" +
                     "<span> <b>Species:</b> "+event.feature.getProperty('species')+"</span><br>" +
-                    "<br><b><a href='#'>To the <i>ex situ</i> collection </a></b>"
+                    "<br><b><a href='"+exsitu_search_url+self.lang.toLowerCase()+"/?instcode="+event.feature.getProperty('instcode')+"'>To the <i>ex situ</i> collection </a></b>"
                 );
                 infowindow.open(map);
 

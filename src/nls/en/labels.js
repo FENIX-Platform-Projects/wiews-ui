@@ -686,7 +686,7 @@ define(function () {
         "exsitu-search_search_accessions" :  "Accession number",
         "exsitu-search_search_genus" :  "Name of genus",
         "exsitu-search_search_spieces" :  "Name of species",
-        "exsitu-search_search_spieces_placeholder" :  "Name of species, empty for all",
+        "exsitu-search_search_spieces_placeholder" :  "Name of species",
         "exsitu-search_search_crop" :  "Name of crop",
         "exsitu-search_search_crop_wild_relatives" :  "Crop Wild Relatives",
         "exsitu-search_search_country_origin" :  "Country of origin",
@@ -713,6 +713,8 @@ define(function () {
         "exsitu-search_table_storage" : "Storage",
         "exsitu-search_table_w_instcode" : "Institution",
         "exsitu-search_table_acqdate" : "Acquisition Date",
+
+        "exsitu-search_search_from_cropmissing" : "You typed a crop without adding it. It will shows a very long result, please wait",
 
         // Other stuff
 

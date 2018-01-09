@@ -79,7 +79,7 @@ define([
         var flow_model =  this.flowmodel;
         flow_model.flow[2].rid = { "uid" : "exsitu_data" };
         if (flow_model.flow[0].parameters.accenumb == null) delete flow_model.flow[0].parameters.accenumb;
-        console.log(JSON.stringify(flow_model));
+        //console.log(JSON.stringify(flow_model));
         this.report.export({
             format: "flow",
             config: flow_model
@@ -195,7 +195,7 @@ define([
         $('#search_instcode').typeahead(this.tya_options,
             {
                 name: 'search_instcode',
-                display: 'w_institute_en',
+                display: 'w_institute',
                 limit: 100,
                 source: prefetchInstitute,
                 templates: {
@@ -230,14 +230,7 @@ define([
                 }
             }
         );
-        /*
-        $('#search_omnibox').bind('typeahead:select', function(ev, suggestion) {
-            self._statesManagement('details', suggestion);
-            $('#backtosearch_fromomni').show();
-            $('#backtoresults').hide();
-            self._fillResults(suggestion);
-        });
-        */
+
         // FENIX Filter
 
         this.filter = new Filter({
@@ -250,7 +243,6 @@ define([
                         "config": {
                             "placeholder" : labels[Clang]['exsitu-search_search_country_institute'],
                             "maxItems": 1
-
                         }
                     },
                     "format": {
@@ -314,7 +306,8 @@ define([
                         ],
                         "config" : {
                             "placeholder": labels[Clang]['exsitu-search_search_statusmultilateral'],
-                            plugins: ['remove_button']
+                            plugins: ['remove_button'],
+                            "maxItems": 1
                         },
                         sort: false
                     }
@@ -347,51 +340,24 @@ define([
             }
         });
         self.initial = {};
-
         if (this.instcode.length) {
-            var result = this._callServices([
-                {
-                    "name": "wiews_organization_filter",
-                    "sid": [ { "uid": "wiews_organizations" } ],
-                    "parameters": {
-                        "instcode" : this.instcode.toUpperCase()
-                    }
-                },
-                {
-                    "name":"order",
-                    "parameters":{
-                        "search_rank":"ASC",
-                        "name":"ASC",
-                        "acronym":"ASC",
-                        "instcode":"ASC",
-                        "parent_name":"ASC",
-                        "address":"ASC",
-                        "city":"ASC",
-                        "country":"ASC"
-                    }
-                }
-            ]);
-            if (result.length) {
-                this._initTable(result);
-                self._statesManagement('querystring');
-                $('#backtosearch_fromomni').show();
-                $('#backtoresults').hide();
-            } else {
-                $('#orgalert_message').html(labels[Clang]['organizations_search_from_querystring']);
-                $('[data-role=messages]').show();
-            }
+            $('#search_instcode').val(this.instcode);
+            $('[data-role=filters]').hide();
         }
-
-        $('#advanced').click();
 
     };
 
     Exsitu_search.prototype._fillResults = function(content) {
+        var self = this;
         _.each(content, function(row_value, row_name) {
             var content = row_value;
             if (row_value == "undefined" || row_value == null || row_value == "") content = " - ";
-            $('[data-GPAIndex='+row_name+']').html(content);
             //Special Case
+            if (row_name == "w_instcode") {
+                $('[data-GPAIndex=' + row_name + ']').attr('href', '/wiews/data/organizations/' + self.lang.toLowerCase() + '/?instcode=' + row_value + '#details');
+                return;
+            }
+            $('[data-GPAIndex='+row_name+']').html(content);
             if (row_name == "mlsstat") $('[data-GPAIndex='+row_name+']').html((content)? 'Included' : 'Not included' );
         });
     };
@@ -687,24 +653,22 @@ define([
         this.filter.on('ready', function(){
             self.initial = self.filter.getValues();
             self._bindYearListener();
+            if (self.instcode.length) {
+                self._initTable(self._callServices(self._preparePayload()));
+                self._statesManagement('results');
+            }
         });
 
         this.filter.on('select', function(evt) {
             if (evt.id == "search_year") self.selected_year = Number(evt.values[0]);
         });
 
-        $('#search_button').on('click', function(){
-            $('[data-role=messages]').hide();
-            if ($('#search_omnibox').val().length < 1) {
-                $('#orgalert_message').html(labels[Clang]['organizations_search_orgalert_message']);
-                $('[data-role=messages]').show();
-                return;
-            }
-            self._initTable(self._callServices(self._preparePayload($('#search_omnibox').val())));
-            self._statesManagement('results');
-        });
-
         $('#adv_search_button').on('click', function(){
+            if ($('#search_crop').val() != "" && self.genus_species == 0) {
+                $('#orgalert_message').html(labels[Clang]['exsitu-search_search_from_cropmissing']);
+                $('[data-role=messages]').show();
+                //return;
+            }
             self._initTable(self._callServices(self._preparePayload()));
             self._statesManagement('results');
         });
@@ -738,8 +702,12 @@ define([
 
         function appendElement(genus, species) {
             var element = (species.length > 0)? genus+' '+species : genus+' '+'[all]';
-            $('#combined_elements_container').prepend('<div data-value="'+element+'" class="addedelement">'+element+'<span title="'+labels[Clang]['exsitu-search_search_added_element_remove']+'" class="addedelement_remove"> × </span></div>');
-            $('[data-value="'+element+'"]').click( function(){ this.remove(); } );
+            if ($('#combined_elements_container').find('[data-value="'+element+'"]').length > 0) return;
+            $('#combined_elements_container').prepend('<div data-value="'+element+'" data-position="'+self.genus_species.length+'" class="addedelement">'+element+'<span title="'+labels[Clang]['exsitu-search_search_added_element_remove']+'" class="addedelement_remove"> × </span></div>');
+            $('[data-value="'+element+'"]').click( function(){
+                self.genus_species.splice($(this).data('position'),1);
+                this.remove();
+            } );
             (species.length > 0)? self.genus_species.push([genus,species]) : self.genus_species.push([genus,null]);
         }
 
@@ -831,11 +799,9 @@ define([
             }
         });
 
-        $('li.active a').on('click', function(){
-            alert('clock');
+        $('li.active > a').on('click', function(){
+            console.log('clock');
         });
-
-        //$('div.selectize-control.multi div.selectize-input div.item').click(function(){ alert('removeme!')});
 
         window.onpopstate = function(event) {
             //console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
