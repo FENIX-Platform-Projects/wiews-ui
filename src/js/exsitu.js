@@ -20,7 +20,10 @@ define([
     "use strict";
     var Clang = C.lang.toLowerCase();
 
-    var s = { EL: "#exsitu" },
+    var s = {
+        EL: "#exsitu",
+        TABLE : "#table"
+        },
         exsitu_search_url = "http://www.fao.org/wiews/data/search/",
         organization_url = "http://www.fao.org/wiews/data/organizations/",
         services_url = "http://hqlprfenixapp2.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/{{YEAR}}.saiku",
@@ -28,21 +31,13 @@ define([
         google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
 
     function Exsitu() {
-
         console.clear();
-
         // silent trace
-
         log.setLevel("silent");
-
         this._importThirdPartyCss();
-
         this._validateConfig();
-
         this._initVariables();
-
         this._attach();
-
         this._bindEventListeners();
     };
 
@@ -207,6 +202,23 @@ define([
         }).catch(function (err) {
             console.error(err);
         });
+
+        var tableData = this._convert2TableData(data.cellset);
+        this._bootstrapTable(tableData);
+
+    };
+
+    Exsitu.prototype._bootstrapTable = function (data) {
+        $(s.TABLE).bootstrapTable('destroy');
+        $(s.TABLE).bootstrapTable({
+            data : data,
+            pagination: true,
+            pageSize: 10,
+            pageList: [10, 25, 50, 100, 200],
+            search: true,
+            sortable: true,
+            paginationVAlign: "top"
+        });
     };
 
     Exsitu.prototype._attach = function () {
@@ -217,16 +229,7 @@ define([
 
         var data = this._getData($('#year').val());
         var tableData = this._convert2TableData(data.cellset);
-
-        $('#table').bootstrapTable({
-            data : tableData,
-            pagination: true,
-            pageSize: 10,
-            pageList: [10, 25, 50, 100, 200],
-            search: true,
-            sortable: true,
-            paginationVAlign: "top"
-        });
+        this._bootstrapTable(tableData);
 
         this._processMap($('#data_showed').val());
 

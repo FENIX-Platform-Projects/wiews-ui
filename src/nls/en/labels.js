@@ -638,8 +638,8 @@ define(function () {
 
         // Organizations
 
-        "search_advanced": "Hide Advanced",
-        "search_basic": "Show Advanced",
+        "search_advanced": "Simple search",
+        "search_basic": "Advanced search",
         "organizations_button_backtosearch": "Back to Search",
         "organizations_button_backtoresults": "Back to Results",
         "organizations_button_backtosearch_fromomni": "Back to Search",
@@ -651,7 +651,7 @@ define(function () {
         "organizations_search_header": "Search",
         "organizations_results_header": "Results",
         "organizations_details_header": "Details",
-        "organizations_search_showadvanced": "Show Advanced",
+        "organizations_search_showadvanced": "Advanced search",
         "organizations_searchform_search_name": "Name of organization",
         "organizations_searchform_search_organization": "Organization acronym",
         "organizations_searchform_search_instcode": "WIEWS instcode",
@@ -684,15 +684,15 @@ define(function () {
         "exsitu-search_omnisearch_placeholder" :  "Type here your search",
         "exsitu-search_search_instcode" :  "Holding institute code",
         "exsitu-search_search_accessions" :  "Accession number",
-        "exsitu-search_search_genus" :  "Name of genus",
-        "exsitu-search_search_spieces" :  "Name of species",
-        "exsitu-search_search_spieces_placeholder" :  "Name of species",
-        "exsitu-search_search_crop" :  "Name of crop",
+        "exsitu-search_search_genus" :  "Genus",
+        "exsitu-search_search_spieces" :  "Species",
+        "exsitu-search_search_spieces_placeholder" :  "Species",
+        "exsitu-search_search_crop" :  "Crop",
         "exsitu-search_search_crop_wild_relatives" :  "Crop Wild Relatives",
         "exsitu-search_search_country_origin" :  "Country of origin",
         "exsitu-search_search_country_institute" :  "Country",
         "exsitu-search_search_year" :  "Reporting year",
-        "exsitu-search_search_taxon" :  "Name of taxon",
+        "exsitu-search_search_taxon" :  "Taxon",
         "exsitu-search_search_statusofaccession" :  "Biological status of accession",
         "exsitu-search_search_statusmultilateral" :  "Status under the Multilateral System",
 
@@ -714,7 +714,11 @@ define(function () {
         "exsitu-search_table_w_instcode" : "Institution",
         "exsitu-search_table_acqdate" : "Acquisition Date",
 
-        "exsitu-search_search_from_cropmissing" : "You typed a crop without adding it. It will shows a very long result, please wait",
+        "exsitu-search_search_from_cropmissing" : "You typed a crop without adding it. It may shows a very long table, if you want to proceed, click on the search button again",
+        "exsitu-search_search_error_416" : "Too many results. Please narrow your search.",
+        "exsitu-search_search_is_empty" : "Selection currently empty",
+        "exsitu-search_search_came_empty" : "No result found with the current seleciton.",
+        "exsitu-search_search_orgalert_message" : "Please provide a valid search.",
 
         // Other stuff
 

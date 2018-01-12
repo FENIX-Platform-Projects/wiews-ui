@@ -7,13 +7,13 @@
             <div class="col-md-10"><h2>{{organizations_search_header}}</h2></div>
             <div class="col-md-2"><a id="advanced" class="pull-right">{{organizations_search_showadvanced}}</a></div>
         </div>
-        <div class="row spacer">
+        <div id="simple-search" class="row spacer">
             <div class="col-md-12">
                 <div class="form-inline">
                     <input type="text" class="form-control" id="search_omnibox"
                            placeholder="{{organizations_omnisearch_placeholder}}">
                     <div class="pull-right">
-                        <button id="search_button" type="button" class="btn btn-primary"><span class="icojam icojam_search"></span></button>
+                        <button id="search_button" type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
                         <!--
                         <button  type="button" class="btn btn-default">Switch to Advanced Search</button>
                         -->
@@ -28,16 +28,15 @@
             </div>
         </div>
         <div id="advanced-search" class="advanced">
-            <hr>
             <br/>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="form-group">
                         <label for="search_name">{{organizations_searchform_search_name}}</label>
                         <input type="text" class="form-control" id="search_name" placeholder="{{organizations_searchform_search_name}}">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="form-group">
                         <label for="search_organization">{{organizations_searchform_search_organization}}</label>
                         <input type="text" class="form-control" id="search_organization" placeholder="{{organizations_searchform_search_organization}}">
@@ -45,13 +44,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="form-group">
                         <label for="search_instcode">{{organizations_searchform_search_instcode}}</label>
                         <input type="text" class="form-control" id="search_instcode" placeholder="{{organizations_searchform_search_instcode}}">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="form-group">
                         <label for="search_city">{{organizations_searchform_search_city}}</label>
                         <input type="text" class="form-control" id="search_city" placeholder="{{organizations_searchform_search_city}}">
@@ -60,28 +59,28 @@
             </div>
             <div id="fenixfilter">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div data-selector="country" class="form-group">
                             <label for="search_country">{{organizations_searchform_search_country}}</label>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div data-selector="organizations_role" class="form-group">
                             <label for="search_organizationrole">{{organizations_searchform_search_organizationrole}}</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div data-selector="valid" class="form-group">
                             <label for="search_validation">{{organizations_searchform_search_validation}}</label>
 
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <div class="pull-right">
                             <div style="margin-top: 24px">
-                                <button id="adv_search_button" type="button" class="btn btn-primary"><span class="icojam icojam_search"></span></button>
+                                <button id="adv_search_button" type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
                             </div>
                         </div>
                     </div>
@@ -105,7 +104,8 @@
             <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
                 <!-- Result -->
                 <div id="toolbar" class="bootstrapTableExport">
-                    <button data-role="organizations_exportbutton" alt="{{organizations_export_button_alt}}" class="btn btn-default"><span alt="{{organizations_export_button_alt}}" class="glyphicon glyphicon-export"></span></button>
+                    <button data-role="organizations_exportbutton" alt="{{organizations_export_button_alt}}" class="btn btn-default">
+                        <span alt="{{organizations_export_button_alt}}" class="glyphicon glyphicon-export"> Download Result </span></button>
                 </div>
                 <table id="table"
                        data-toolbar="#toolbar"
@@ -231,6 +231,10 @@
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Latitude (decimal degrees format)</div>
                                         <div data-GPAIndex="latitude" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl"><i>Ex Situ</i> Holdings</div>
+                                        <div class="GPA-cell txt"><a data-GPAIndex="exsitu_search" href="#">Check for <i>Ex Situ</i> holdings here</a></div>
                                     </div>
                                 </div>
                             </div>

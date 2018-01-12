@@ -44,6 +44,7 @@ define([
 
     Exsitu_search.prototype._callServices = function (payload) {
         var table_data = [];
+        $('[data-role=messages]').hide();
         $.ajax({
             async: false,
             dataType: 'json',
@@ -65,8 +66,12 @@ define([
                     });
                     table_data.push(item);
                 });
-
                 //console.log(table_data);
+            },
+            error : function(res) {
+                $('#orgalert_message').html(labels[Clang]['exsitu-search_search_error_416']);
+                $('[data-role=messages]').show();
+                //return;
             }
 
         });
@@ -79,11 +84,32 @@ define([
         var flow_model =  this.flowmodel;
         flow_model.flow[2].rid = { "uid" : "exsitu_data" };
         if (flow_model.flow[0].parameters.accenumb == null) delete flow_model.flow[0].parameters.accenumb;
+        flow_model.outConfig.config.fileName = "exsitu_"+this.selected_year;
         //console.log(JSON.stringify(flow_model));
         this.report.export({
             format: "flow",
             config: flow_model
         });
+    };
+
+    Exsitu_search.prototype._isEmptyQuery = function () {
+        var isempty = true,
+            fenixvalues = this.filter.getValues();
+        if (
+            $('#search_instcode').val().length > 0 ||
+            fenixvalues.values.search_country_institute.length > 0 ||
+            fenixvalues.values.search_country_origin.length > 0 ||
+            fenixvalues.values.search_statusofaccession.length > 0 ||
+            /*
+            $('#search_crop').val() == '' ||
+            $('#search_genus').val() == '' ||
+            $('#search_spieces').val() == '' ||
+            */
+            this.genus_species.length > 0
+        ) isempty = false;
+
+
+        return isempty;
     };
 
     Exsitu_search.prototype._getParameterByName = function (name) {
@@ -97,7 +123,7 @@ define([
         $(s.TABLE).bootstrapTable({
             data : data,
             pagination: true,
-            pageSize: 10,
+            pageSize: 25,
             pageList: [10, 25, 50, 100, 200],
             search: true,
             formatSearch: function() {
@@ -139,7 +165,6 @@ define([
                         });
                         response_data.push(item);
                     });
-
                     return response_data;
                 }
 
@@ -358,7 +383,7 @@ define([
                 return;
             }
             $('[data-GPAIndex='+row_name+']').html(content);
-            if (row_name == "mlsstat") $('[data-GPAIndex='+row_name+']').html((content)? 'Included' : 'Not included' );
+            if (row_name == "mlsstat") $('[data-GPAIndex='+row_name+']').html((row_value)? 'Included' : 'Not included' );
         });
     };
 
@@ -382,6 +407,7 @@ define([
         });
 
         this.genus = "";
+        this.warning = false;
         this.selected_year = defaultYear;
         this.cwr = null;
         this.loaded_crop = [];
@@ -395,7 +421,8 @@ define([
 
         this.flowmodel = {
             "outConfig": {
-                "plugin": "wiewsOutputCSV"
+                "plugin": "wiewsOutputCSV",
+                "config" :{ "fileName" : "wiews_2020.csv" }
             },
             "flow": [],
             "options": {
@@ -409,6 +436,8 @@ define([
     };
 
     Exsitu_search.prototype._statesManagement = function (whichstate, payload, frombutton) {
+        $('[data-role=messages]').hide();
+        this.warning = false;
         switch(whichstate) {
 
             case 'initial' :
@@ -622,13 +651,18 @@ define([
     };
 
     Exsitu_search.prototype._resetForm = function (saveyear) {
+        // Reset variables and boxes
+        $('[data-role=messages]').hide();
+        this.warning = false;
         $('[data-selector=search_year]').off('change');
         // Clear them all
         $('#search_instcode').val('');
         $('#search_crop').val('');
         $('#search_genus').val('');
         $('#search_spieces').val('');
+        this.genus_species = [];
         $('#combined_elements_container').empty();
+        $('#combined_elements_container_empty').css('visibility','visible');
         $('#search_taxon').val('');
         $('#search_instcode').val('');
         if (saveyear) this.initial.values['search_year'][0] = this.selected_year;
@@ -654,8 +688,11 @@ define([
             self.initial = self.filter.getValues();
             self._bindYearListener();
             if (self.instcode.length) {
-                self._initTable(self._callServices(self._preparePayload()));
-                self._statesManagement('results');
+                var result = self._callServices(self._preparePayload());
+                if (result.length) {
+                    self._initTable(result);
+                    self._statesManagement('results');
+                }
             }
         });
 
@@ -664,24 +701,35 @@ define([
         });
 
         $('#adv_search_button').on('click', function(){
+            $('[data-role=messages]').hide();
+            //console.log(self._isEmptyQuery());
+            if (self._isEmptyQuery()) {
+                $('#orgalert_message').html(labels[Clang]['exsitu-search_search_orgalert_message']);
+                $('[data-role=messages]').show();
+                return;
+            }
+            /*
             if ($('#search_crop').val() != "" && self.genus_species == 0) {
                 $('#orgalert_message').html(labels[Clang]['exsitu-search_search_from_cropmissing']);
                 $('[data-role=messages]').show();
-                //return;
+                if (!this.warning) {
+                    this.warning = true;
+                    return;
+                }
             }
-            self._initTable(self._callServices(self._preparePayload()));
-            self._statesManagement('results');
+            */
+            var result = self._callServices(self._preparePayload());
+            if (result.length) {
+                self._initTable(result);
+                self._statesManagement('results');
+            } else {
+                $('#orgalert_message').html(labels[Clang]['exsitu-search_search_came_empty']);
+                $('[data-role=messages]').show();
+            }
         });
 
         $('#adv_clear_button').on('click', function(){
             self._resetForm(false);
-        });
-
-        $('#advanced').on('click', function(){
-           $('[data-role=messages]').hide();
-           var str = $('#advanced-search').hasClass('advanced') ? labels[self.lang]['search_advanced'] : labels[self.lang]['search_basic'];
-           $('#advanced-search').toggleClass('advanced');
-           $(this).html(str);
         });
 
         $('#backtosearch').on('click', function(){
@@ -707,13 +755,17 @@ define([
             $('[data-value="'+element+'"]').click( function(){
                 self.genus_species.splice($(this).data('position'),1);
                 this.remove();
+                if (self.genus_species == 0) $('#combined_elements_container_empty').css("visibility","visible");
             } );
+            if (self.genus_species == 0) $('#combined_elements_container_empty').css('visibility','hidden');
             (species.length > 0)? self.genus_species.push([genus,species]) : self.genus_species.push([genus,null]);
         }
 
         $('#btn_clearserach').on('click', function(){
-           self.genus_species = [];
+            $('[data-role=messages]').hide();
+            self.genus_species = [];
             $('#combined_elements_container').empty();
+            $('#combined_elements_container_empty').css('visibility','visible');
         });
 
         $('#btn_addserach').on('click', function() {
@@ -799,9 +851,16 @@ define([
             }
         });
 
-        $('li.active > a').on('click', function(){
-            console.log('clock');
+        $('#btn_clearfromcrop').on('click', function(){
+            $('#search_crop').val("");
         });
+
+        $('#btn_clearfromgenuspecies').on('click', function(){
+            $('#search_genus').val("");
+            $('#search_spieces').val("");
+        });
+
+        $('li.active > a').on('click', function(){ console.log('clock'); });
 
         window.onpopstate = function(event) {
             //console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
@@ -838,6 +897,7 @@ define([
         require("../css/wiews.css");
 
     };
+
 
     return new Exsitu_search();
 

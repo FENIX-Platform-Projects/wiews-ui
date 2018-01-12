@@ -2,6 +2,21 @@
 
 [data-page='exsitu-search'] {
 
+  #combined_elements_container_empty {
+    position: relative;
+    top: -124px;
+    left: 10px;
+    color: gray;
+    user-select: none;
+  }
+
+  .element-selection-box {
+    //border: 1px solid #eaeaea;
+    //padding: 20px;
+    padding-top:  10px;
+    background: #fafafa;
+  }
+
   .GPAListElement {
     margin-bottom: 6px !important;
     position: relative !important;
@@ -212,6 +227,10 @@
     margin-top: 40px;
   }
 
+  .half-spacer {
+    margin-top: 20px;
+  }
+
   .advanced {
     display:  none;
   }
@@ -385,11 +404,6 @@
 }
 
 .addedelement_remove { color: red; }
-div[data-selector=search_year] {
-  margin-top: -4px;
-  margin-left: -45px;
-  font-size: small;
-}
 
 .crop-selection, .genus-spieces-selection {
   background-color: whitesmoke;

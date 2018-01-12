@@ -274,7 +274,8 @@ define([
                         "id": "dropdown",
                         "config": {
                         //    "maxItems": 1,
-                            "placeholder" : labels[Clang]['organizations_searchform_search_country']
+                            "placeholder" : labels[Clang]['organizations_searchform_search_country'],
+                            plugins: ['remove_button']
                         }
                     },
                     "format": {
@@ -286,7 +287,8 @@ define([
                     "selector": {
                         "id": "dropdown",
                         "config" : {
-                            "placeholder": labels[Clang]['organizations_searchform_search_organizationrole']
+                            "placeholder": labels[Clang]['organizations_searchform_search_organizationrole'],
+                            plugins: ['remove_button']
                         }
                     },
                     "format": {
@@ -361,6 +363,7 @@ define([
     Organizations.prototype._fillResults = function(content) {
         var self = this;
         _.each(content, function(row_value, row_name) {
+            console.log(row_value, row_name);
             var content = row_value;
             if (row_value == "undefined" || row_value == null) content = " - ";
             if (row_name == "parent_instcode") {
@@ -370,6 +373,9 @@ define([
             if (row_name == "valid_instcode") {
                 $('[data-GPAIndex='+row_name+']').attr('href', '/wiews/data/organizations/'+self.lang.toLowerCase()+'/?instcode='+row_value+'#details');
                 return;
+            }
+            if (row_name == "instcode") {
+                $('[data-GPAIndex=exsitu_search]').attr('href', '/wiews/data/search/'+self.lang.toLowerCase()+'/?instcode='+row_value+'#details');
             }
             $('[data-GPAIndex='+row_name+']').html(content);
             //Special Cases
@@ -578,6 +584,7 @@ define([
            $('[data-role=messages]').hide();
            var str = $('#advanced-search').hasClass('advanced') ? labels[self.lang]['search_advanced'] : labels[self.lang]['search_basic'];
            $('#advanced-search').toggleClass('advanced');
+           $('#simple-search').toggle();
            $(this).html(str);
         });
 
