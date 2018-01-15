@@ -4,6 +4,13 @@
 
   max-width: 920px;
 
+  .icojam_download_1 { font-size: 1.6em; position: relative;
+    top: 6px;
+    left: 4px;}
+  div.pagination > ul > li.page-number.active > a, .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    color: white !important;
+  }
+
   div#c353693 {margin-top:20px;}
   div.divider hr {border:0; height:1px; background-color:#DEDEDE;}
   #c366480 h4 {margin-top: 0px; font-size: 14px;}

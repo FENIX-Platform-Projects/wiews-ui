@@ -17,6 +17,11 @@
     left: 0 !important;
   }
 
+  .icojam_download_1 { font-size: 1.6em;
+    position: relative;
+    top: 6px;
+    left: 4px; }
+
   max-width: 920px;
 
   div.divider hr {border:0; height:1px; background-color:#DEDEDE;}
@@ -313,7 +318,7 @@
   left: 5px;
 }
 
-#search_button, #adv_search_button { height: 34px }
+#search_button, #clear_button, #adv_search_button { height: 34px }
 #search_button { width: 55px }
 
 .suggestion-country { font-size: smaller; }

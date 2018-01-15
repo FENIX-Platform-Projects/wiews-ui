@@ -209,15 +209,19 @@ define([
     };
 
     Exsitu.prototype._bootstrapTable = function (data) {
+        var self = this;
         $(s.TABLE).bootstrapTable('destroy');
         $(s.TABLE).bootstrapTable({
             data : data,
             pagination: true,
-            pageSize: 10,
+            pageSize: 25,
             pageList: [10, 25, 50, 100, 200],
             search: true,
             sortable: true,
             paginationVAlign: "top"
+        });
+        $('#table').on('click-row.bs.table', function(row, $element, field){
+            window.location.href = organization_url +self.lang.toLowerCase()+"/?instcode="+$element['instcode']+"#details";
         });
     };
 

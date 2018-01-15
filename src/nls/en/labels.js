@@ -679,7 +679,7 @@ define(function () {
         "exsitu_holdings_footnote" : "This map currently shows Institution with georeferencing data only.",
 
         // Ex Situ Search
-        "exsitu_search_header": "Search for ",
+        "exsitu_search_header": "Year",
         "exsitu_search_showadvanced": "Hide Advanced",
         "exsitu-search_omnisearch_placeholder" :  "Type here your search",
         "exsitu-search_search_instcode" :  "Holding institute code",

@@ -175,7 +175,7 @@ define([
         $(s.TABLE).bootstrapTable({
             data : data,
             pagination: true,
-            pageSize: 10,
+            pageSize: 25,
             pageList: [10, 25, 50, 100, 200],
             search: true,
             formatSearch: function() {
@@ -360,6 +360,17 @@ define([
 
     };
 
+    Organizations.prototype._clearSearch = function () {
+        $('#search_name').val('');
+        $('#search_organization').val('');
+        $('#search_instcode').val('');
+        $('#search_city').val('');
+        $('#search_city').val('');
+        this.filter.setValues({
+            values: this.initial.values
+        });
+    };
+
     Organizations.prototype._fillResults = function(content) {
         var self = this;
         _.each(content, function(row_value, row_name) {
@@ -375,7 +386,7 @@ define([
                 return;
             }
             if (row_name == "instcode") {
-                $('[data-GPAIndex=exsitu_search]').attr('href', '/wiews/data/search/'+self.lang.toLowerCase()+'/?instcode='+row_value+'#details');
+                $('[data-GPAIndex=exsitu_search]').attr('href', '/wiews/data/search/'+self.lang.toLowerCase()+'/?instcode='+row_value+'#results');
             }
             $('[data-GPAIndex='+row_name+']').html(content);
             //Special Cases
@@ -518,6 +529,14 @@ define([
     // Events
     Organizations.prototype._bindEventListeners = function () {
         var self = this;
+
+        this.filter.on('ready', function(){
+            self.initial = self.filter.getValues();
+        });
+
+        $('#clear_button').on('click', function () {
+            self._clearSearch();
+        });
 
         // Enter keypress
 

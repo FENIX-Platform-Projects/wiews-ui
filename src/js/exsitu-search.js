@@ -71,7 +71,7 @@ define([
             error : function(res) {
                 $('#orgalert_message').html(labels[Clang]['exsitu-search_search_error_416']);
                 $('[data-role=messages]').show();
-                //return;
+                return;
             }
 
         });
@@ -97,6 +97,7 @@ define([
             fenixvalues = this.filter.getValues();
         if (
             $('#search_instcode').val().length > 0 ||
+            $('#search_accessions').val().length > 0 ||
             fenixvalues.values.search_country_institute.length > 0 ||
             fenixvalues.values.search_country_origin.length > 0 ||
             fenixvalues.values.search_statusofaccession.length > 0 ||
@@ -718,14 +719,20 @@ define([
                 }
             }
             */
-            var result = self._callServices(self._preparePayload());
-            if (result.length) {
-                self._initTable(result);
-                self._statesManagement('results');
-            } else {
-                $('#orgalert_message').html(labels[Clang]['exsitu-search_search_came_empty']);
-                $('[data-role=messages]').show();
-            }
+            $('#exsitu_search').css('opacity','0.7');
+            setTimeout(function(){
+                $('#exsitu_search').css('opacity','1');
+                var result = self._callServices(self._preparePayload());
+                if (result.length) {
+                    self._initTable(result);
+                    self._statesManagement('results');
+                } else {
+                    if (!$('[data-role=messages]').is(":visible")) {
+                        $('#orgalert_message').html(labels[Clang]['exsitu-search_search_came_empty']);
+                        $('[data-role=messages]').show();
+                    }
+                }
+            },100);
         });
 
         $('#adv_clear_button').on('click', function(){
@@ -830,7 +837,7 @@ define([
             $('#search_spieces').typeahead({
                     hint: true,
                     highlight: true,
-                    minLength: 0
+                    minLength: 1
                 },
                 {
                   name: 'search_species',
