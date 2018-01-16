@@ -306,16 +306,6 @@ define([
                     "cl" : { uid: "wiews_biological" },
                     selector: {
                         id: "dropdown",
-                        /*
-                        source: [
-                            { value: "100", label: "100) Wild" },
-                            { value: "200", label: "200) Weedy" },
-                            { value: "300", label: "300) Traditional cultivar/Landrace" },
-                            { value: "400", label: "400) Breeding/research material" },
-                            { value: "500", label: "500) Advanced/Improved cultivar" },
-                            { value: "600", label: "600) GMO" }
-                        ],
-                        */
                         "config" : {
                             "placeholder": labels[Clang]['exsitu-search_search_statusofaccession'],
                             plugins: ['remove_button']
@@ -343,8 +333,9 @@ define([
                         id: "dropdown",
                         default : ['false'],
                         source: [
-                           // {value: "null", label: labels[Clang]['exsitu-search_search_crop_wild_relatives_null']},
-                            {value: "true", label: labels[Clang]['exsitu-search_search_crop_wild_relatives_true']},
+                            // it's null / true / false originally
+                            //{value: "null", label: labels[Clang]['exsitu-search_search_crop_wild_relatives_null']},
+                            {value: "null", label: labels[Clang]['exsitu-search_search_crop_wild_relatives_true']},
                             {value: "false", label: labels[Clang]['exsitu-search_search_crop_wild_relatives_false']}
                         ],
                         "config" : {
@@ -666,6 +657,7 @@ define([
         $('#combined_elements_container_empty').css('visibility','visible');
         $('#search_taxon').val('');
         $('#search_instcode').val('');
+        $('#search_search_accessions').val('');
         if (saveyear) this.initial.values['search_year'][0] = this.selected_year;
         this.filter.setValues({
             values: this.initial.values
