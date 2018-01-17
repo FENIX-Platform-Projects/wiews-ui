@@ -453,7 +453,7 @@ define([
             break;
 
             case 'details' :
-                var details_url = (payload) ? "/wiews/data/organizations/"+this.lang.toLowerCase()+"/?instcode="+payload.instcode+"#details" : "#details";
+                var details_url = "/wiews/data/search/"+this.lang.toLowerCase()+"/#details" ;
                 if (!frombutton) history.pushState({ page : "details" }, "Details", details_url);
                 $('[data-role=filters]').hide();
                 $('[data-role=results]').hide();
@@ -657,7 +657,7 @@ define([
         $('#combined_elements_container_empty').css('visibility','visible');
         $('#search_taxon').val('');
         $('#search_instcode').val('');
-        $('#search_search_accessions').val('');
+        $('#search_accessions').val('');
         if (saveyear) this.initial.values['search_year'][0] = this.selected_year;
         this.filter.setValues({
             values: this.initial.values
