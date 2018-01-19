@@ -47,7 +47,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             default: DOWNLOAD_DV["5_filter-dd_filter_item_4_2"],
                             title: labels[Clang]['5_filter-dd_filter_item_4_1_title'],
                             clUid: "wiews_m49_region_only",
-                            clBlackList: ['WITC']
+                            clBlackList: ['WITC','WITC_t']
                         },
                         {
                             id: 'dd_filter_item_4_3',
@@ -55,7 +55,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             default: DOWNLOAD_DV["5_filter-dd_filter_item_4_3"],
                             title: labels[Clang]['5_filter-dd_filter_item_4_1_title'],
                             clUid: "wiews_sdg_region_only",
-                            clBlackList: ['WITC']
+                            clBlackList: ['WITC','WITC_t']
                         },
                         {
                             id: 'dd_filter_item_4_4',
@@ -89,7 +89,7 @@ define(["highcharts", "../../../config/config", "../../../config/domains/visuali
                             default: DOWNLOAD_DV["5_filter-dd_filter_item_7_2"],
                             title: labels[Clang]['5_filter-dd_filter_item_7_title'],
                             clUid: "wiews_itpgrfa_region_only",
-                            clBlackList: ['WITC']
+                            clBlackList: ['WITC','WITC_t']
                         },
                         {
                             id: 'dd_filter_item_8',

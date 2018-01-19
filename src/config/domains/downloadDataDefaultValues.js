@@ -18,7 +18,7 @@ define(function () {
         "1_filter-dd_filter_item_7_2" : ["36"],
         "1_filter-dd_filter_item_8" : ["20"],
         "1_filter-dd_filter_item_9" : ["1"],
-        "1_filter-dd_filter_item_10" : ["stk"],
+        "1_filter-dd_filter_item_10" : [],
         "1_filter-dd_filter_item_11" : ["1"],
         "1_filter-dd_filter_item_12" : ["1", "2", "3"],
 
@@ -53,7 +53,7 @@ define(function () {
         "3_filter-dd_filter_item_7_2" : ["36"],
         "3_filter-dd_filter_item_8" : [],
         "3_filter-dd_filter_item_9" : ["1"],
-        "3_filter-dd_filter_item_10" : ["stk"],
+        "3_filter-dd_filter_item_10" : [],
         "3_filter-dd_filter_item_11" : ["1"],
         "3_filter-dd_filter_item_12" : ["1", "2", "3"],
 
@@ -88,7 +88,7 @@ define(function () {
         "5_filter-dd_filter_item_7_2" : ["36"],
         "5_filter-dd_filter_item_8" : ["15"],
         "5_filter-dd_filter_item_9" : ["1"],
-        "5_filter-dd_filter_item_10" : ["stk"],
+        "5_filter-dd_filter_item_10" : [],
         "5_filter-dd_filter_item_11" : ["1"],
         "5_filter-dd_filter_item_12" : ["1", "2", "3"],
 
@@ -106,7 +106,7 @@ define(function () {
         "6_filter-dd_filter_item_7_2" : ["36"],
         "6_filter-dd_filter_item_8" : ["14"],
         "6_filter-dd_filter_item_9" : ["1"],
-        "6_filter-dd_filter_item_10" : ["stk"],
+        "6_filter-dd_filter_item_10" : [],
         "6_filter-dd_filter_item_11" : ["1"],
         "6_filter-dd_filter_item_12" : ["1", "2", "3"],
 
@@ -124,7 +124,7 @@ define(function () {
         "7_filter-dd_filter_item_7_2" : ["36"],
         "7_filter-dd_filter_item_8" : ["22"],
         "7_filter-dd_filter_item_9" : ["1"],
-        "7_filter-dd_filter_item_10" : ["stk"],
+        "7_filter-dd_filter_item_10" : [],
         "7_filter-dd_filter_item_11" : ["1"],
         "7_filter-dd_filter_item_12" : ["1", "2", "3"],
 
@@ -143,7 +143,7 @@ define(function () {
         "8_filter-dd_filter_item_7_2" : ["36"],
         "8_filter-dd_filter_item_8" : ["24"],
         "8_filter-dd_filter_item_9" : ["1"],
-        "8_filter-dd_filter_item_10" : ["stk"],
+        "8_filter-dd_filter_item_10" : [],
         "8_filter-dd_filter_item_11" : ["1"],
         "8_filter-dd_filter_item_12" : ["1", "2", "3"],
 
@@ -162,7 +162,7 @@ define(function () {
         "9_filter-dd_filter_item_7_2" : ["36"],
         "9_filter-dd_filter_item_8" : ["28"],
         "9_filter-dd_filter_item_9" : ["1"],
-        "9_filter-dd_filter_item_10" : ["stk"],
+        "9_filter-dd_filter_item_10" : [],
         "9_filter-dd_filter_item_11" : ["1"],
         "9_filter-dd_filter_item_12" : ["1", "2", "3"],
 
@@ -180,7 +180,7 @@ define(function () {
         "10_filter-dd_filter_item_7_2" : ["36"],
         "10_filter-dd_filter_item_8" : ["16"],
         "10_filter-dd_filter_item_9" : ["1"],
-        "10_filter-dd_filter_item_10" : ["stk"],
+        "10_filter-dd_filter_item_10" : [],
         "10_filter-dd_filter_item_11" : ["1"],
         "10_filter-dd_filter_item_12" : ["1", "2", "3"]
 

@@ -198,7 +198,7 @@ define([
         });
         $('[data-role=results]').hide();
         $('[data-role=details]').hide();
-
+        $('div#exsitu-search-ux-loader').hide();
 
         var prefetchCrops = this._bloodHoundPrefetch('wiews_exsitu_crops_filter');
         var prefetchInstitute = this._bloodHoundPrefetch('wiews_exsitu_institute_filter');
@@ -357,10 +357,7 @@ define([
             }
         });
         self.initial = {};
-        if (this.instcode.length) {
-            $('#search_instcode').val(this.instcode);
-            $('[data-role=filters]').hide();
-        }
+        if (this.instcode.length) $('#search_instcode').val(this.instcode);
 
     };
 
@@ -429,6 +426,7 @@ define([
 
     Exsitu_search.prototype._statesManagement = function (whichstate, payload, frombutton) {
         $('[data-role=messages]').hide();
+        $('div#exsitu-search-ux-loader').hide();
         this.warning = false;
         switch(whichstate) {
 
@@ -642,6 +640,34 @@ define([
         self._statesManagement('results');
     };
 
+    Exsitu_search.prototype._executeSearch = function () {
+        var self = this;
+        $('[data-role=messages]').hide();
+        if (this._isEmptyQuery()) {
+            $('html, body').animate({scrollTop: $('[data-role=messages]').offset().top}, 400,'linear');
+            $('#orgalert_message').html(labels[Clang]['exsitu-search_search_orgalert_message']);
+            $('[data-role=messages]').show();
+            return;
+        }
+        $('[data-page=exsitu-search]').css('opacity','0.5');
+        $('div#exsitu-search-ux-loader').show();
+        setTimeout(function(){
+            $('div#exsitu-search-ux-loader').hide();
+            $('[data-page=exsitu-search]').css('opacity','1');
+            var result = self._callServices(self._preparePayload());
+            if (result.length) {
+                self._initTable(result);
+                self._statesManagement('results');
+            } else {
+                if (!$('[data-role=messages]').is(":visible")) {
+                    $('html, body').animate({scrollTop: $('[data-role=messages]').offset().top}, 400,'linear');
+                    $('#orgalert_message').html(labels[Clang]['exsitu-search_search_came_empty']);
+                    $('[data-role=messages]').show();
+                }
+            }
+        },100);
+    };
+
     Exsitu_search.prototype._resetForm = function (saveyear) {
         // Reset variables and boxes
         $('[data-role=messages]').hide();
@@ -680,13 +706,7 @@ define([
         this.filter.on('ready', function(){
             self.initial = self.filter.getValues();
             self._bindYearListener();
-            if (self.instcode.length) {
-                var result = self._callServices(self._preparePayload());
-                if (result.length) {
-                    self._initTable(result);
-                    self._statesManagement('results');
-                }
-            }
+            if (self.instcode.length) self._executeSearch();
         });
 
         this.filter.on('select', function(evt) {
@@ -694,37 +714,7 @@ define([
         });
 
         $('#adv_search_button').on('click', function(){
-            $('[data-role=messages]').hide();
-            //console.log(self._isEmptyQuery());
-            if (self._isEmptyQuery()) {
-                $('#orgalert_message').html(labels[Clang]['exsitu-search_search_orgalert_message']);
-                $('[data-role=messages]').show();
-                return;
-            }
-            /*
-            if ($('#search_crop').val() != "" && self.genus_species == 0) {
-                $('#orgalert_message').html(labels[Clang]['exsitu-search_search_from_cropmissing']);
-                $('[data-role=messages]').show();
-                if (!this.warning) {
-                    this.warning = true;
-                    return;
-                }
-            }
-            */
-            $('#exsitu_search').css('opacity','0.7');
-            setTimeout(function(){
-                $('#exsitu_search').css('opacity','1');
-                var result = self._callServices(self._preparePayload());
-                if (result.length) {
-                    self._initTable(result);
-                    self._statesManagement('results');
-                } else {
-                    if (!$('[data-role=messages]').is(":visible")) {
-                        $('#orgalert_message').html(labels[Clang]['exsitu-search_search_came_empty']);
-                        $('[data-role=messages]').show();
-                    }
-                }
-            },100);
+            self._executeSearch();
         });
 
         $('#adv_clear_button').on('click', function(){
