@@ -8,11 +8,13 @@ define([
     "../config/config",
     "../html/exsitu-search/template.hbs",
     "../nls/labels",
+    "json-2-csv",
+    "file-saver",
     'typeahead.js',
     "bootstrap",
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
-], function ($, log, _, Handlebars, Report, Filter, C, template, labels, Bloodhound, bootstrap) {
+], function ($, log, _, Handlebars, Report, Filter, C, template, labels, converter, FileSaver, Bloodhound, bootstrap) {
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
@@ -133,6 +135,7 @@ define([
             paginationVAlign: "top",
             sortable: true
         });
+        this.tabledata = data;
     };
 
     Exsitu_search.prototype._bloodHoundPrefetch = function (which) {
@@ -259,7 +262,7 @@ define([
 
         // FENIX Filter
 
-        this.filter = new Filter({
+        var fenixFilter = {
             el: s.FENIX_FILTER,
             selectors: {
                 "search_country_institute": {
@@ -355,10 +358,34 @@ define([
                     hideHeader: true
                 }
             }
-        });
+        };
+
+        if (this.country_search.length) fenixFilter.selectors.search_country_institute.selector.default = [this.country_search] ;
+        this.filter = new Filter(fenixFilter);
         self.initial = {};
         if (this.instcode.length) $('#search_instcode').val(this.instcode);
 
+
+    };
+
+    Exsitu_search.prototype._getISO = function () {
+        var iso = [];
+        var url = "http://fenix.fao.org/d3s_wiews/msd/resources/uid/ISO3";
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'GET',
+            contentType: "application/json; charset=utf-8",
+            url: url,
+            success: function(res) {
+                _.each( res.data, function( element ) {
+                    iso[element.code] = element.title.EN;
+                });
+                //console.log(iso);
+            }
+        });
+
+        return iso;
     };
 
     Exsitu_search.prototype._fillResults = function(content) {
@@ -371,6 +398,12 @@ define([
                 $('[data-GPAIndex=' + row_name + ']').attr('href', '/wiews/data/organizations/' + self.lang.toLowerCase() + '/?instcode=' + row_value + '#details');
                 return;
             }
+            if (row_name == "origcty") {
+                var iso = self._getISO(),
+                    output = iso[row_value];
+                $('[data-GPAIndex=' + row_name + ']').html((output != 'undefined')? output : row_value);
+                return;
+            }
             $('[data-GPAIndex='+row_name+']').html(content);
             if (row_name == "mlsstat") $('[data-GPAIndex='+row_name+']').html((row_value)? 'Included' : 'Not included' );
         });
@@ -379,15 +412,14 @@ define([
     Exsitu_search.prototype._initVariables = function () {
 
         this.instcode = ((this._getParameterByName('instcode')) ? this._getParameterByName('instcode') : "");
+        this.country_search = ((this._getParameterByName('country')) ? this._getParameterByName('country') : "");
 
         this.$el = $(s.EL);
         this.lang = Clang;
         this.environment = C.ENVIRONMENT;
         this.cache = C.cache;
 
-        if (this.report && $.isFunction(this.report.dispose)) {
-            this.report.dispose();
-        }
+        if (this.report && $.isFunction(this.report.dispose)) this.report.dispose();
 
         this.report = new Report({
             environment: this.environment,
@@ -633,7 +665,7 @@ define([
         if (which == "wiews_exsitu_genus_filter") return genus_payload;
         if (which == "wiews_exsitu_species_filter") return species_payload;
 
-    }
+    };
 
     Exsitu_search.prototype._searchfromkeyboard = function (freetext) {
         freetext ? this._initTable(this._callServices(this._preparePayload($('#search_omnibox').val()))) : this._initTable(this._callServices(this._preparePayload()));
@@ -644,9 +676,10 @@ define([
         var self = this;
         $('[data-role=messages]').hide();
         if (this._isEmptyQuery()) {
-            $('html, body').animate({scrollTop: $('[data-role=messages]').offset().top}, 400,'linear');
+            debugger;
             $('#orgalert_message').html(labels[Clang]['exsitu-search_search_orgalert_message']);
             $('[data-role=messages]').show();
+            $('html, body').animate({scrollTop: $('div[data-role=messages]').offset().top}, 400,'linear');
             return;
         }
         $('[data-page=exsitu-search]').css('opacity','0.5');
@@ -660,9 +693,9 @@ define([
                 self._statesManagement('results');
             } else {
                 if (!$('[data-role=messages]').is(":visible")) {
-                    $('html, body').animate({scrollTop: $('[data-role=messages]').offset().top}, 400,'linear');
                     $('#orgalert_message').html(labels[Clang]['exsitu-search_search_came_empty']);
                     $('[data-role=messages]').show();
+                    $('html, body').animate({scrollTop: $('[data-role=messages]').offset().top}, 400,'linear');
                 }
             }
         },100);
@@ -690,6 +723,7 @@ define([
         });
         this.initial.values['search_year'][0] = defaultYear;
         this._bindYearListener();
+        history.pushState({ page : "initial" }, "Search", this._RemoveParameterFromUrl(window.location.href.split('#')[0],'instcode'));
     };
 
     Exsitu_search.prototype._bindYearListener = function () {
@@ -707,6 +741,7 @@ define([
             self.initial = self.filter.getValues();
             self._bindYearListener();
             if (self.instcode.length) self._executeSearch();
+            if (self.country_search.length) self._executeSearch();
         });
 
         this.filter.on('select', function(evt) {
@@ -734,7 +769,13 @@ define([
         });
 
         $('[data-role=organizations_exportbutton]').on('click', function() {
-            self._exportList();
+            //self._exportList();
+            var json2csvCallback = function (err, csv) {
+                if (err) throw err;
+                var blob = new Blob([csv], {type: "text/csv;charset=utf-8"});
+                FileSaver.saveAs(blob, "exsitu-search.txt");
+            };
+            converter.json2csv(self.tabledata, json2csvCallback);
         });
 
         function appendElement(genus, species) {
@@ -767,13 +808,14 @@ define([
             var output = [],
                 filter_values = self.filter.getValues(),
                 //selected = selection['crop_en'],
+                text = $('#search_crop').val(),
                 result = self._callServices([
                     {
                         "name": "wiews_exsitu_crops_genus_filter",
                         "sid": [ { "uid": "crop_genus" }, { "uid": "ref_sdg_species" } ],
                         "parameters": {
                             "year" : self.selected_year,
-                            "crops" : [$('#search_crop').val()],
+                            "crops" : [text.charAt(0).toUpperCase() + text.slice(1)],
                             "cwr" : filter_values.values.search_search_crop_wild_relatives[0]
                         }
                     },
@@ -886,7 +928,6 @@ define([
         require("../css/wiews.css");
 
     };
-
 
     return new Exsitu_search();
 

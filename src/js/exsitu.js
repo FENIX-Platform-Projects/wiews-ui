@@ -217,6 +217,9 @@ define([
             pageSize: 25,
             pageList: [10, 25, 50, 100, 200],
             search: true,
+            formatSearch: function() {
+                return labels[Clang]['organizations_search_filter']
+            },
             sortable: true,
             paginationVAlign: "top"
         });

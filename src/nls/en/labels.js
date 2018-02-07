@@ -657,7 +657,7 @@ define(function () {
         "organizations_searchform_search_instcode": "WIEWS instcode",
         "organizations_searchform_search_city": "City",
         "organizations_searchform_search_country": "Country",
-        "organizations_searchform_search_organizationrole" : "Organization role categories",
+        "organizations_searchform_search_organizationrole" : "Organization role(s)",
         "organizations_searchform_search_validation" : "Valid/invalidated organizations",
         "organizations_searchform_search_validation_true" : "Valid only",
         "organizations_searchform_search_validation_null" : "Valid and invalidated",

@@ -1,6 +1,4 @@
 <div data-page='exsitu-search'>
-    <h1><i>Ex Situ</i> search</h1>
-    <hr>
     <div id="fenixfilter" data-role='filters'>
         <div class="row">
             <!-- Filters -->
@@ -24,8 +22,6 @@
         </div>
         -->
         <div id="advanced-search">
-            <hr>
-            <br/>
             <div class="row">
                 <div class="col-md-5">
                     <div data-selector="search_country_institute" class="form-group">
@@ -55,8 +51,8 @@
                     <div class="col-md-2">
                         <div class="form-group pull-right">
                             <div style="margin-top: 24px">
-                                <button id="btn_addfromcrop" title="{{exsitu-search_add_button}}" type="button" class="btn btn-primary"><span class="fa fa-plus"></span></button>
                                 <button id="btn_clearfromcrop" title="{{exsitu-search_search_added_element_clear}}" type="button" class="btn btn-primary"><span class="fa fa-times"></span></button>
+                                <button id="btn_addfromcrop" title="{{exsitu-search_add_button}}" type="button" class="btn btn-primary"><span class="fa fa-plus"></span></button>
                             </div>
                         </div>
                     </div>
@@ -78,8 +74,8 @@
                     <div class="col-md-2">
                         <div class="form-group pull-right">
                             <div style="margin-top: 24px">
-                                <button id="btn_addserach" title="{{exsitu-search_add_button}}" type="button" class="btn btn-primary"><span class="fa fa-plus"></span></button>
                                 <button id="btn_clearfromgenuspecies" title="{{exsitu-search_search_added_element_clear}}" type="button" class="btn btn-primary"><span class="fa fa-times"></span></button>
+                                <button id="btn_addserach" title="{{exsitu-search_add_button}}" type="button" class="btn btn-primary"><span class="fa fa-plus"></span></button>
                             </div>
                         </div>
                     </div>
@@ -94,6 +90,7 @@
                         <div class="form-group pull-right">
                             <div style="margin-top: 24px">
                                 <button id="btn_clearserach" title="{{exsitu-search_search_added_element_clear}}" type="button" class="btn btn-primary"><span class="fa fa-times"></span></button>
+                                <button style="visibility:hidden; height: 34px;" type="button" class="btn btn-primary"><span class="fa fa-times"></span></button>
                             </div>
                         </div>
                     </div>
@@ -137,8 +134,8 @@
                 <div class="col-md-6">
                     <div class="pull-right">
                         <div style="margin-top: 24px">
-                            <button id="adv_search_button" type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
                             <button id="adv_clear_button" type="button" class="btn btn-primary"><span class="fa fa-times"></span></button>
+                            <button id="adv_search_button" type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
                         </div>
                     </div>
                 </div>
@@ -242,7 +239,7 @@
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Country of origin</div>
-                                        <div data-GPAIndex="country_en" class="GPA-cell txt"></div>
+                                        <div data-GPAIndex="origcty" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Biological status of accession</div>

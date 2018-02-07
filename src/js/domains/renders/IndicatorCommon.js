@@ -550,12 +550,13 @@ define([
         $('[data-table = "dd-dashboard-table"]').bootstrapTable({
             //data : table,
             pagination: true,
-            pageSize: 20,
+            pageSize: 25,
             pageList: [10, 25, 50, 100, 200],
             search: true,
             formatSearch: function() {
                 return labels[self.lang.toLowerCase()]['bootstraptable_search_filter']
             },
+            paginationVAlign: "top",
             sortable: true
         });
 

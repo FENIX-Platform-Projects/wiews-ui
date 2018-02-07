@@ -42,6 +42,8 @@ define([
 
     };
 
+
+
     Organizations.prototype._callServices = function (payload) {
         var table_data = [];
         $.ajax({
@@ -191,6 +193,7 @@ define([
 
         $(s.EL).html(template(labels[Clang]));
         this._initTable([]);
+
 
         $('#table').on('click-row.bs.table', function(row, $element, field){
             self._statesManagement('details');
@@ -372,9 +375,9 @@ define([
     };
 
     Organizations.prototype._fillResults = function(content) {
-        var self = this;
+        var self = this,
+            instcode = "";
         _.each(content, function(row_value, row_name) {
-            console.log(row_value, row_name);
             var content = row_value;
             if (row_value == "undefined" || row_value == null) content = " - ";
             if (row_name == "parent_instcode") {
@@ -387,6 +390,7 @@ define([
             }
             if (row_name == "instcode") {
                 $('[data-GPAIndex=exsitu_search]').attr('href', '/wiews/data/search/'+self.lang.toLowerCase()+'/?instcode='+row_value+'#results');
+                instcode = row_value;
             }
             $('[data-GPAIndex='+row_name+']').html(content);
             //Special Cases
@@ -397,6 +401,7 @@ define([
             }
             if (row_name.startsWith('role_f') && row_value == true) $('[data-GPAFlag='+row_name+']').removeClass('hiddenflag');
         });
+        this._checkforHoldings(instcode);
     };
 
     Organizations.prototype._initVariables = function () {
@@ -526,7 +531,6 @@ define([
         self._statesManagement('results');
     };
 
-    // Events
     Organizations.prototype._bindEventListeners = function () {
         var self = this;
 
@@ -638,26 +642,26 @@ define([
             .replace(new RegExp('([?&])' + parameter + '=[^&]*&'), '$1');
     };
 
-    Organizations.prototype._importThirdPartyCss = function () {
+    Organizations.prototype._checkforHoldings = function(payload) {
+        var pay_16 = [{"name":"wiews_exsitu_filter","sid":[{"uid":"wiews_2014"},{"uid":"wiews_2016"},{"uid":"ref_sdg_institutes"},{"uid":"ref_iso3_countries"}],"parameters":{"year":"2016","countries":[],"institutes":[payload],"genus_species":[],"taxons":[],"sampstat":[],"accenumb":null,"originCountries":[]}},{"name":"order","parameters":{"country_en":"ASC","w_institute_en":"ASC","cropname":"ASC","taxon":"ASC"}},{"name":"columns","parameters":{"columns":["nicode","country_en","w_instcode","w_institute_en","accenumb","cropname","genus","species","taxon","acqdate","origcty","sampstat","declatitude","declongitude","collsrc","storage","mlsstat"]}}],
+            out_16 = this._callServices(pay_16);
+        $('[data-gpaindex=exsitu_search]').html(out_16.length+' (for 2016)');
+    };
 
+    Organizations.prototype._importThirdPartyCss = function () {
         //SANDBOXED BOOTSTRAP
         require("../css/sandboxed-bootstrap.css");
         //dropdown selector
         require("../../node_modules/selectize/dist/css/selectize.bootstrap3.css");
-
         require("../../node_modules/fenix-ui-table-creator/dist/fenix-ui-table-creator.min.css");
-
         //tree selector
         require("../../node_modules/jstree/dist/themes/default/style.min.css");
         // fenix-ui-filter
         require("../../node_modules/fenix-ui-filter/dist/fenix-ui-filter.min.css");
-
         // bootstrap-table
         require("../../node_modules/bootstrap-table/dist/bootstrap-table.min.css");
-
         //Wiews CSS
         require("../css/wiews.css");
-
     };
 
     return new Organizations();
