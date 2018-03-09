@@ -19,7 +19,18 @@ define([
     "use strict";
     var Clang = C.lang.toLowerCase(),
         services_url = "http://fenix.fao.org/d3s_wiews/processes",
-        defaultYear = 2016;
+        services_el = "http://hqlqawiews1.hq.un.fao.org:9200/",
+        service_path = {
+            "wiews_results" : "exsitu/exsitu/_search",
+            "countries" : "countries/countries/_search",
+            "biostatus" : "biostatofacc/biostatofacc/_search",
+            "wiews_exsitu_crops_filter" : "crops/crops/_search",
+            "wiews_exsitu_institute_filter" : "exsitu/exsitu/_search",
+            "wiews_exsitu_genus_filter" : "exsitu/exsitu/_search",
+            "wiews_exsitu_species_filter" : "exsitu/exsitu/_search"
+        },
+        defaultYear = 2014,
+        defaultPageSize = 25;
 
     var s = {
         EL: "#exsitu_search",
@@ -58,13 +69,14 @@ define([
                 var dsd = [];
                 //console.log(res.metadata.dsd);
                 _.each ( res.metadata.dsd.columns , function ( column ) {
-                    dsd.push(column.id)
+                    if (column.id != "mlsstat") dsd.push(column.id)
                 } );
                 //console.log(dsd);
                 _.each( res.data, function( element ) {
                     var item = {};
                     _.each(dsd, function (col_name, col_index) {
                         item[col_name] = element[col_index];
+                        if (typeof element[col_index] == "string") if (element[col_index].indexOf(',') > -1) item[col_name] = "\"" +element[col_index] + "\"";
                     });
                     table_data.push(item);
                 });
@@ -80,6 +92,88 @@ define([
 
         return table_data;
 
+    };
+
+    Exsitu_search.prototype._callElastic = function (payload, path) {
+        var response_data = {
+            total : -1,
+            hits : []
+        };
+        $('[data-role=messages]').hide();
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'POST',
+            contentType: "application/json; charset=utf-8",
+            url: services_el + service_path[path],
+            data: JSON.stringify(payload),
+            success: function(res) {
+                //console.log('res is ',res);
+                response_data.total = res.hits.total;
+                // first we check for aggregations
+                if (res.aggregations) {
+                    //res.aggregations.result_set.buckets.length && res.aggregations.result_set.length
+                    //console.log('aggregations');
+                    _.each( res.aggregations.result_set.buckets, function ( element ) {
+                        response_data.hits.push(element);
+                    });
+                }
+                // we check for hits
+                if (res.hits.hits.length) {
+                    //console.log('hits');
+                    _.each( res.hits.hits, function ( element ) {
+                        response_data.hits.push(element);
+                    });
+                }
+            },
+            error : function(res) {
+                console.log(res);
+                $('#orgalert_message').html(labels[Clang]['exsitu-search_search_error_416']);
+                $('[data-role=messages]').show();
+                return;
+            }
+
+        });
+
+        //console.log ('response_data is ', response_data);
+        return response_data;
+
+    };
+
+    Exsitu_search.prototype._getCodelists = function (payload_selection, format) {
+        var codelist = [];
+        var payload = {
+            "countries": {
+                "query": {"match_all": {}},
+                "size": 1000,
+                "_source": ["country_code_iso3","country_name_en"]
+            },
+            "biostatus": {
+                "query": {"match_all": {}},
+                "size": 1000,
+                "_source": ["bio_stat_of_accesion_id","bio_stat_of_accesion_name"]
+            }
+        };
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'POST',
+            data: JSON.stringify(payload[payload_selection]),
+            contentType: "application/json;",
+            url: services_el + service_path[payload_selection],
+            success: function(res) {
+                _.each( res.hits.hits, function( element ) {
+                    if (format) {
+                        // plain
+                        codelist[element._source[payload[payload_selection]._source[0]]] = element._source[payload[payload_selection]._source[1]];
+                    } else {
+                        // fenix
+                        codelist.push({ value: element._source[payload[payload_selection]._source[0]], label:element._source[payload[payload_selection]._source[1]]});
+                    }
+                });
+            }
+        });
+        return codelist;
     };
 
     Exsitu_search.prototype._exportList = function () {
@@ -121,10 +215,123 @@ define([
     };
 
     Exsitu_search.prototype._initTable = function(data) {
+        var self = this;
+        self.offsetPage = 0;
         if (this.instcode.length) this._fillResults(data[0]);
         $(s.TABLE).bootstrapTable('destroy');
         $(s.TABLE).bootstrapTable({
             data : data,
+            pagination: true,
+            pageSize: self.pageSize,
+            pageList: [10, 25, 50, 100, 200],
+            search: true,
+            formatSearch: function() {
+                return labels[Clang]['organizations_search_filter']
+            },
+            paginationVAlign: "top",
+            sortable: true
+        });
+        $(s.TABLE).on('page-change.bs.table', function (event, number, size) {
+            self.pageSize = size;
+            self.offsetPage = self.pageSize * (number - 1);
+        });
+        this.tabledata = data;
+    };
+
+    Exsitu_search.prototype._initTablePaginated = function(data) {
+        var self = this;
+        self.offsetPage = 0;
+        $(s.TABLE).bootstrapTable('destroy');
+        $(s.TABLE).bootstrapTable({
+            ajax:  paginatedAjax,
+            sidePagination: 'server',
+            pagination: true,
+            pageSize: self.pageSize,
+            pageList: [10, 25, 50, 100, 200],
+            search: true,
+            formatSearch: function() {
+                return labels[Clang]['organizations_search_filter']
+            },
+            paginationVAlign: "top",
+            totalField: 'total',
+            sortable: true
+        });
+
+        function parseOutput(input) {
+            var output = {
+                total : 0,
+                rows : []
+            };
+            //console.log(input);
+            _.each(input.hits, function(process){
+                output.rows.push({
+                    "w_instcode" : process._source.stakeholder_id,
+                    "accenumb" : process._source.accession_number,
+                    "stakeholder_fullname" : process._source.stakeholder_fullname,
+                    "taxon" : process._source.taxon_name,
+                    "acqdate" : process._source.acquisition_date,
+                    "storage" : process._source.type_of_germplasm_storage,
+                    "country_en" : process._source.country_name,
+                    "cropname" : process._source.crop_name,
+                    "origcty" : process._source.orig_country_name,
+                    "sampstat" : process._source.biological_status_of_accession,
+                    "genebanks" : process._source.genebank_holding_safety_duplication,
+                    "declatitude" : process._source.latitud_of_collecting_site,
+                    "declongitude" : process._source.longitud_of_collecting_site,
+                    "mlsstat" : process._source.status_under_multilateral_system
+                });
+            });
+            output.total = input.total;
+            //console.log(output);
+            return output;
+        };
+
+        function paginatedAjax(params) {
+            // just use setTimeout
+            setTimeout(function () {
+                var output = parseOutput(self._callElastic(self._preparePayloadElastic(self.offsetPage),'wiews_results'));
+                params.success(output);
+            }, 100);
+
+        };
+        /*
+        {
+                async: false,
+                dataType: 'json',
+                method: 'POST',
+                contentType: "application/json; charset=utf-8",
+                url: services_el + service_path['wiews_results'],
+                data: JSON.stringify(data),
+                success: function(res) {
+                    console.log('relax');
+                    var response_data = [];
+                    if (res.hits.hits.length) {
+                        _.each( res.hits.hits, function ( element ) {
+                            response_data.push(element);
+                        });
+                    } else {
+                        _.each( res.aggregations.result_set.buckets, function ( element ) {
+                            response_data.push(element);
+                        });
+                    }
+                    console.log(response.data);
+                    return response_data;
+                },
+                error : function(res) {
+                    console.log(res);
+                    $('#orgalert_message').html(labels[Clang]['exsitu-search_search_error_416']);
+                    $('[data-role=messages]').show();
+                    return;
+                }
+            }
+        */
+
+        /*
+        if (this.instcode.length) this._fillResults(data[0]);
+        $(s.TABLE).bootstrapTable('destroy');
+        $(s.TABLE).bootstrapTable({
+            //data : data,
+            url: "",
             pagination: true,
             pageSize: 25,
             pageList: [10, 25, 50, 100, 200],
@@ -136,22 +343,24 @@ define([
             sortable: true
         });
         this.tabledata = data;
+        */
     };
 
     Exsitu_search.prototype._bloodHoundPrefetch = function (which) {
         var self = this;
+        var rest_service = services_url;
         return new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             identify: function(obj) { return obj.name; },
             remote: {
-                url: services_url,
+                url: rest_service,
                 prepare: function (query, settings) {
                     settings.async = false;
                     settings.type = "POST";
                     settings.contentType = "application/json; charset=utf-8";
                     settings.dataType = 'json';
-                    settings.data = JSON.stringify(self._prepareFilterPayload(which,query));
+                    settings.data = JSON.stringify(self._prepareElasticPayload(which,query));
                     return settings;
                 },
                 transform: function(response) {
@@ -176,6 +385,38 @@ define([
         });
     };
 
+    Exsitu_search.prototype._bloodHoundPrefetchElastic = function (which) {
+        var self = this;
+        var rest_service = services_el;
+        return new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            identify: function(obj) { return obj.name; },
+            remote: {
+                url: rest_service + service_path[which],
+                prepare: function (query, settings) {
+                    settings.async = false;
+                    settings.type = "POST";
+                    settings.contentType = "application/json; charset=utf-8";
+                    settings.dataType = 'json';
+                    settings.data = JSON.stringify(self._prepareElasticPayload(which,query));
+                    return settings;
+                },
+                transform: function(response) {
+                    var response_data = [];
+                    //console.log('response is ', response);
+                    if (response.aggregations.result_set.buckets.length) {
+                        _.each( response.aggregations.result_set.buckets, function ( element ) {
+                            response_data.push(element);
+                        });
+                    }
+                    return response_data;
+                }
+
+            }
+        });
+    };
+
     Exsitu_search.prototype._speciesTransform = function (arrayofspecies) {
         var output = [];
 
@@ -183,6 +424,14 @@ define([
             output.push(element.species);
         });
 
+        return output;
+    };
+
+    Exsitu_search.prototype._speciesTransformElastic = function (arrayofspecies) {
+        var output = [];
+        _.each(arrayofspecies, function(element) {
+            output.push(element.key);
+        });
         return output;
     };
 
@@ -203,19 +452,21 @@ define([
         $('[data-role=details]').hide();
         $('div#exsitu-search-ux-loader').hide();
 
-        var prefetchCrops = this._bloodHoundPrefetch('wiews_exsitu_crops_filter');
-        var prefetchInstitute = this._bloodHoundPrefetch('wiews_exsitu_institute_filter');
+        var prefetchCrops = this._bloodHoundPrefetchElastic('wiews_exsitu_crops_filter');
+        var prefetchInstitute = this._bloodHoundPrefetchElastic('wiews_exsitu_institute_filter');
         var prefetchTaxon = this._bloodHoundPrefetch('wiews_exsitu_taxon_filter');
-        var prefetchGenus = this._bloodHoundPrefetch('wiews_exsitu_genus_filter');
+        var prefetchGenus = this._bloodHoundPrefetchElastic('wiews_exsitu_genus_filter');
+        var codelist_ISO3 = this._getCodelists('countries');
+        var codelist_BIOS = this._getCodelists('biostatus');
 
         $('#search_crop').typeahead(this.tya_options,
             {
                 name: 'search_crop',
-                display: 'crop_en',
+                display: 'key',
                 limit: 100,
                 source: prefetchCrops,
                 templates: {
-                    suggestion: Handlebars.compile('<div>{{crop_en}}</div>'),
+                    suggestion: Handlebars.compile('<div>{{key}}</div>'),
                     empty: Handlebars.compile('<div class="tya_notfound">'+labels[Clang]['organizations_search_not_found']+'</div>'),
                 }
             }
@@ -224,11 +475,11 @@ define([
         $('#search_instcode').typeahead(this.tya_options,
             {
                 name: 'search_instcode',
-                display: 'w_institute',
+                display: 'key',
                 limit: 100,
                 source: prefetchInstitute,
                 templates: {
-                    suggestion: Handlebars.compile('<div>{{w_institute_en}}</div>'),
+                    suggestion: Handlebars.compile('<div>{{key}}</div>'),
                     empty: Handlebars.compile('<div class="tya_notfound">'+labels[Clang]['organizations_search_not_found']+'</div>'),
                 }
             }
@@ -250,11 +501,11 @@ define([
         $('#search_genus').typeahead(this.tya_options,
             {
                 name: 'search_genus',
-                display: 'genus',
+                display: 'key',
                 limit: 100,
                 source: prefetchGenus,
                 templates: {
-                    suggestion: Handlebars.compile('<div>{{genus}}</div>'),
+                    suggestion: Handlebars.compile('<div>{{key}}</div>'),
                     empty: Handlebars.compile('<div class="tya_notfound">'+labels[Clang]['organizations_search_not_found']+'</div>'),
                 }
             }
@@ -266,9 +517,9 @@ define([
             el: s.FENIX_FILTER,
             selectors: {
                 "search_country_institute": {
-                    "cl": { uid: "ISO3" },
                     "selector": {
                         "id": "dropdown",
+                        "source" : codelist_ISO3,
                         "config": {
                             "placeholder" : labels[Clang]['exsitu-search_search_country_institute'],
                             "maxItems": 1
@@ -293,9 +544,9 @@ define([
                     }
                 },
                 "search_country_origin" : {
-                    "cl": { uid: "ISO3" },
                     "selector": {
                         "id": "dropdown",
+                        "source" : codelist_ISO3,
                         "config": {
                             "placeholder" : labels[Clang]['exsitu-search_search_country_origin'],
                             plugins: ['remove_button']
@@ -306,9 +557,9 @@ define([
                     }
                 },
                 "search_statusofaccession" : {
-                    "cl" : { uid: "wiews_biological" },
                     selector: {
                         id: "dropdown",
+                        "source": codelist_BIOS,
                         "config" : {
                             "placeholder": labels[Clang]['exsitu-search_search_statusofaccession'],
                             plugins: ['remove_button']
@@ -392,18 +643,21 @@ define([
         var self = this;
         _.each(content, function(row_value, row_name) {
             var content = row_value;
+            if (typeof content == "string") if (content.indexOf('"') > -1) content = content.slice(1, -1);
             if (row_value == "undefined" || row_value == null || row_value == "") content = " - ";
             //Special Case
             if (row_name == "w_instcode") {
                 $('[data-GPAIndex=' + row_name + ']').attr('href', '/wiews/data/organizations/' + self.lang.toLowerCase() + '/?instcode=' + row_value + '#details');
                 return;
             }
+            /*
             if (row_name == "origcty") {
                 var iso = self._getISO(),
                     output = iso[row_value];
                 $('[data-GPAIndex=' + row_name + ']').html((output != 'undefined')? output : row_value);
                 return;
             }
+            */
             $('[data-GPAIndex='+row_name+']').html(content);
             if (row_name == "mlsstat") $('[data-GPAIndex='+row_name+']').html((row_value)? 'Included' : 'Not included' );
         });
@@ -426,6 +680,9 @@ define([
             cache: this.cache,
             silent: true
         });
+
+        this.pageSize = defaultPageSize;
+        this.offsetPage = 0;
 
         this.genus = "";
         this.warning = false;
@@ -500,14 +757,20 @@ define([
         var filter_values = this.filter.getValues(),
             filter_taxon = $('#search_taxon').val(),
             array_taxon = [],
-            filter_inst  = $('#search_instcode').val(),
+            filter_inst  = $('#search_instcode').val().substring(0,6),
             array_inst = [],
-            filter_acces = $('#search_accessions').val();
+            filter_acces = $('#search_accessions').val().toUpperCase(),
+            elastic_genus = [];
 
         // Remember that arrays means multiple selection
         if (filter_taxon.length > 0) array_taxon.push(filter_taxon);
         if (filter_inst.length > 0)  array_inst.push(filter_inst);
         if (filter_acces == "") filter_acces = null;
+
+        _.each(this.genus_species, function(object){
+            elastic_genus.push(String(object).split(" "));
+        });
+
 
         var payload = [
             {
@@ -517,7 +780,7 @@ define([
                     "year" : filter_values.values.search_year[0],
                     "countries" : filter_values.values.search_country_institute,
                     "institutes" : array_inst,
-                    "genus_species" : this.genus_species,
+                    "genus_species" : elastic_genus,
                     "taxons" : array_taxon,
                     "sampstat" : filter_values.values.search_statusofaccession,
                     "accenumb" : filter_acces,
@@ -561,6 +824,160 @@ define([
         ];
 
         this.flowmodel.flow = payload;
+
+        return payload;
+    };
+
+    Exsitu_search.prototype._preparePayloadElastic = function (from) {
+        //console.log('called _preparePayloadElastic from ' + from);
+
+        var filter_values = this.filter.getValues(),
+            filter_taxon = $('#search_taxon').val(),
+            array_taxon = [],
+            filter_inst  = $('#search_instcode').val().substring(0,6),
+            array_inst = [],
+            filter_acces = $('#search_accessions').val().toUpperCase(),
+            elastic_genus = [],
+            mlstatus = null,
+            origin_country = "",
+            biostat = "";
+            //elastic_genus = "";
+
+
+        // Remember that arrays means multiple selection...
+        if (filter_taxon.length > 0) array_taxon.push(filter_taxon);
+        if (filter_inst.length > 0)  array_inst.push(filter_inst);
+        if (filter_acces == "") filter_acces = null;
+        // ... and boolean must be boolean.
+        if (filter_values.values.search_statusmultilateral.length > 0)  mlstatus = (filter_values.values.search_statusmultilateral[0] == 'true');
+        if (filter_values.values.search_country_origin.length > 0) origin_country = filter_values.values.search_country_origin.join(" ");
+        if (filter_values.values.search_statusofaccession.length > 0) biostat = filter_values.values.search_statusofaccession.join(" ");
+
+        _.each(this.genus_species, function(object){
+            //console.log(object);
+            elastic_genus.push(String(object).replace(/,/g, '').split(" "));
+            //elastic_genus += object + " ";
+        });
+
+//        console.log('len', this.genus_species.length);
+//        console.log('elastic_genus', elastic_genus);
+
+        var payload = {
+            "query": {
+                "bool": {
+                    "must": [
+                        {"match_phrase": {"year": parseInt(filter_values.values.search_year[0])}}
+                    ]
+                }
+            },
+            "size": this.pageSize,
+            "from": from,
+            "_source": [
+                "stakeholder_id",
+                "stakeholder_fullname",
+                "country_name",
+                "accession_number",
+                "taxon_name",
+                "crop_name",
+                "acquisition_date",
+                "orig_country_name",
+                "biological_status_of_accession",
+                "genebank_holding_safety_duplication",
+                "latitud_of_collecting_site",
+                "longitud_of_collecting_site",
+                "collecting_source",
+                "type_of_germplasm_storage",
+                "status_under_multilateral_system",
+                "year"
+            ]
+        };
+        // Selected Elements - MUST BE [1]!!!
+        if (this.genus_species.length) {
+            payload.query.bool.must.push({"bool": {
+                    "should": []
+                }}
+            );
+            _.each(elastic_genus, function(selection) {
+                console.log(selection);
+                if(selection.length == 1) {
+                    // We're in the "Genus only" section
+                    payload.query.bool.must[1].bool.should.push({"match_phrase": {"genus_name": selection[0]}});
+                } else {
+                    // Standard "Genus/Species" couple.
+                    console.log('payload is', payload);
+                    payload.query.bool.must[1].bool.should.push({"bool": {
+                        "must": [
+                            {"match_phrase": {"genus_name": selection[0]}},
+                            {"match_phrase": {"species_name": selection[1]}}
+                        ]
+                    }});
+                }
+            });
+        }
+        // Country
+        if (filter_values.values.search_country_institute.length) payload.query.bool.must.push({"match_phrase": {"country_iso3": filter_values.values.search_country_institute[0]}});
+        // Stakeholder
+        if (array_inst.length) payload.query.bool.must.push({"match_phrase": {"stakeholder_id": array_inst[0]}});
+        // Acc Number
+        if (filter_acces != null) payload.query.bool.must.push({"match_phrase": {"accession_number": filter_acces}});
+        // Multilateral
+        if (mlstatus != null) payload.query.bool.must.push({"match_phrase": {"status_under_multilateral_system": mlstatus}});
+        // Array > Spaced
+        // Country of Origin
+        if (filter_values.values.search_country_origin.length) payload.query.bool.must.push({"match": {"orig_country_iso3": origin_country}});
+        // Biostat
+        if (filter_values.values.search_statusofaccession.length) payload.query.bool.must.push({"match": {"biological_status_of_accession_id": biostat}});
+
+        this.flowmodel.flow = [
+            {
+                "name": "wiews_exsitu_filter",
+                "sid": [ { "uid": "wiews_2014" },{ "uid": "wiews_2016" },{ "uid": "ref_sdg_institutes" },{ "uid": "ref_iso3_countries" } ],
+                "parameters": {
+                    "year" : filter_values.values.search_year[0],
+                    "countries" : filter_values.values.search_country_institute,
+                    "institutes" : array_inst,
+                    "genus_species" : elastic_genus,
+                    "taxons" : array_taxon,
+                    "sampstat" : filter_values.values.search_statusofaccession,
+                    "accenumb" : filter_acces,
+                    "originCountries" : filter_values.values.search_country_origin,
+                    "mlsstat" : filter_values.values.search_statusmultilateral[0]
+                }
+            },
+            {
+                "name": "order",
+                "parameters": {
+                    "country_en": "ASC",
+                    "w_institute_en": "ASC",
+                    "cropname": "ASC",
+                    "taxon": "ASC"
+                }
+            },
+            {
+                "name" : "columns",
+                "parameters" : {
+                    "columns": [
+                        "nicode",
+                        "country_en",
+                        "w_instcode",
+                        "w_institute_en",
+                        "accenumb",
+                        "cropname",
+                        "genus",
+                        "species",
+                        "taxon",
+                        "acqdate",
+                        "origcty",
+                        "sampstat",
+                        "declatitude",
+                        "declongitude",
+                        "collsrc",
+                        "storage",
+                        "mlsstat"
+                    ]
+                }
+            }
+        ];
 
         return payload;
     };
@@ -610,6 +1027,7 @@ define([
                 }
             }
         ];
+
         var taxon_payload = [
             {
                 "name": "wiews_exsitu_taxon_filter",
@@ -667,6 +1085,164 @@ define([
 
     };
 
+    Exsitu_search.prototype._prepareElasticPayload = function (which, text) {
+        var selected_year, selected_wcr,
+            filter_values = this.filter.getValues();
+
+        if (filter_values.valid = true) {
+            selected_year = filter_values.values.search_year[0];
+            selected_wcr  = filter_values.values.search_search_crop_wild_relatives[0];
+        }
+
+        this.selected_year = filter_values.values.search_year[0];
+        this.cwr = (filter_values.values.search_search_crop_wild_relatives[0] == 'true');
+
+        var inst_payload = {
+                "query": {
+                    "bool": {
+                        "must": [{
+                            "wildcard": {
+                                "stakeholder_fullname.lowercase": {
+                                    "value": "*"+text+"*",
+                                    "rewrite": "scoring_boolean"
+                                }
+                            }
+                        },
+                            {
+                                "match_phrase": {
+                                    "year": parseInt(selected_year)
+                                }
+                            }
+                        ]
+                    }
+                },
+                "size":"0",
+                "aggs": {
+                    "result_set": {
+                        "terms": {
+                            "field": "stakeholder_fullname.aggregator",
+                            "order": {"_key": "asc"},"size": 25
+                        }
+                    }
+                }
+            }
+        ;
+        var crop_payload = {
+            "query": {
+                "wildcard": {
+                    "crop_name_en.lowercase": {
+                        "value": "*"+text+"*",
+                        "rewrite": "scoring_boolean"
+                    }
+                }
+            },
+            "size":"0",
+            "aggs": {
+                "result_set": {
+                    "terms": {
+                        "field": "crop_name_en.aggregator",
+                        "order": {"max_score": "asc"}
+                    },
+                    "aggs": {
+                        "max_score": {
+                            "max": {"script": "_score"}
+                        }
+                    }
+                }
+            }
+        };
+        var taxon_payload = [
+            {
+                "name": "wiews_exsitu_taxon_filter",
+                "sid": [ { "uid": "ref_sdg_taxon" } ],
+                "parameters": {
+                    "year" : parseInt(selected_year),
+                    "taxon" : text
+                }
+            },
+            {
+                "name":"order",
+                "parameters":{
+                    "taxon":"ASC"
+                }
+            }
+        ];
+        var genus_payload = {
+                "query": {
+                    "bool": {
+                        "must": [{
+                            "wildcard": {
+                                "genus_name.lowercase": {
+                                    "value": "*"+text+"*",
+                                    "rewrite": "scoring_boolean"
+                                }
+                            }
+                        },
+                            {
+                                "match_phrase": {
+                                    "year": parseInt(selected_year)
+                                }
+                            }
+                        ]
+                    }
+                },
+                "size":"0",
+                "aggs": {
+                    "result_set": {
+                        "terms": {
+                            "field": "genus_name.aggregator",
+                            "order": {"max_score": "asc"},"size": 25
+                        },
+                        "aggs": {
+                            "max_score": {
+                                "max": {"script": "_score"}
+                            }
+                        }
+                    }
+                }
+            }
+        ;
+        var species_payload = {
+                "query": {
+                    "bool": {
+                        "must": [
+                            {"match_phrase": {"genus_name": this.genus_species}},
+                            {"wildcard": {
+                                "species_name.lowercase": {
+                                    "value": "*"+text+"*",
+                                    "rewrite": "scoring_boolean"
+                                }
+                            }
+                            },
+                            {
+                                "match_phrase": {
+                                    "year": parseInt(selected_year)
+                                }
+                            }
+                        ]
+                    }
+                },
+                "size": 0,
+                "aggregations": {
+                    "result_set": {
+                        "terms": {
+                            "field":
+                                "species_name.aggregator",
+                            "order": {"_key": "asc"}
+                        }
+                    }
+                }
+            }
+        ;
+
+        if (which == "wiews_exsitu_crops_filter") return crop_payload;
+        if (which == "wiews_exsitu_institute_filter") return inst_payload;
+        if (which == "wiews_exsitu_taxon_filter") return taxon_payload;
+        if (which == "wiews_exsitu_genus_filter") return genus_payload;
+        if (which == "wiews_exsitu_species_filter") return species_payload;
+
+    };
+
     Exsitu_search.prototype._searchfromkeyboard = function (freetext) {
         freetext ? this._initTable(this._callServices(this._preparePayload($('#search_omnibox').val()))) : this._initTable(this._callServices(this._preparePayload()));
         self._statesManagement('results');
@@ -676,7 +1252,6 @@ define([
         var self = this;
         $('[data-role=messages]').hide();
         if (this._isEmptyQuery()) {
-            debugger;
             $('#orgalert_message').html(labels[Clang]['exsitu-search_search_orgalert_message']);
             $('[data-role=messages]').show();
             $('html, body').animate({scrollTop: $('div[data-role=messages]').offset().top}, 400,'linear');
@@ -687,9 +1262,10 @@ define([
         setTimeout(function(){
             $('div#exsitu-search-ux-loader').hide();
             $('[data-page=exsitu-search]').css('opacity','1');
-            var result = self._callServices(self._preparePayload());
-            if (result.length) {
-                self._initTable(result);
+            var result = self._callElastic(self._preparePayloadElastic(0),'wiews_results');
+            if (result.hits.length) {
+                //self._initTable(result);
+                self._initTablePaginated(self._preparePayloadElastic(0));
                 self._statesManagement('results');
             } else {
                 if (!$('[data-role=messages]').is(":visible")) {
@@ -779,7 +1355,7 @@ define([
         });
 
         function appendElement(genus, species) {
-            var element = (species.length > 0)? genus+' '+species : genus+' '+'[all]';
+            var element = ((species.length > 0))? genus+' '+species : genus+' '+'[all]';
             if ($('#combined_elements_container').find('[data-value="'+element+'"]').length > 0) return;
             $('#combined_elements_container').prepend('<div data-value="'+element+'" data-position="'+self.genus_species.length+'" class="addedelement">'+element+'<span title="'+labels[Clang]['exsitu-search_search_added_element_remove']+'" class="addedelement_remove"> × </span></div>');
             $('[data-value="'+element+'"]').click( function(){
@@ -789,6 +1365,18 @@ define([
             } );
             if (self.genus_species == 0) $('#combined_elements_container_empty').css('visibility','hidden');
             (species.length > 0)? self.genus_species.push([genus,species]) : self.genus_species.push([genus,null]);
+        }
+
+        function appendElementElastic(element) {
+            if ($('#combined_elements_container').find('[data-value="'+element+'"]').length > 0) return;
+            $('#combined_elements_container').prepend('<div data-value="'+element+'" data-position="'+self.genus_species.length+'" class="addedelement">'+element+'<span title="'+labels[Clang]['exsitu-search_search_added_element_remove']+'" class="addedelement_remove"> × </span></div>');
+            $('[data-value="'+element+'"]').click( function(){
+                self.genus_species.splice($(this).data('position'),1);
+                this.remove();
+                if (self.genus_species == 0) $('#combined_elements_container_empty').css("visibility","visible");
+            } );
+            if (self.genus_species == 0) $('#combined_elements_container_empty').css('visibility','hidden');
+            self.genus_species.push(element);
         }
 
         $('#btn_clearserach').on('click', function(){
@@ -804,6 +1392,44 @@ define([
             if (genus.length> 0) appendElement(genus, species);
         });
 
+        $('#btn_addfromcrop').on('click', function() {
+            var output = [],
+                filter_values = self.filter.getValues(),
+                //selected = selection['crop_en'],
+                text = $('#search_crop').val(),
+                crops = text.charAt(0).toUpperCase() + text.slice(1),
+                wcr = (filter_values.values.search_search_crop_wild_relatives[0] == 'null'),
+                //year is avaiable in self.selected_year
+
+                result = self._callElastic({
+                        "query": {
+                            "bool": {
+                                "must": [
+                                    {"match": {"crop_name_en": crops}},
+                                    {"match": {"crop_wild_relatives_flag": wcr}}
+                                ]
+                            }
+                        },
+                        "size":"0",
+                        "aggs": {
+                            "result_set": {
+                                "terms": {
+                                    "field": "genus_species_name.aggregator",
+                                    "order": {"_key": "asc"},"size": 1000
+                                }
+                            }
+                        }
+                    }, "wiews_exsitu_crops_filter"
+                );
+
+            _.each(result.hits, function(crop) { output.push(crop.key) });
+            self.loaded_crop = output;
+            _.each(self.loaded_crop, function(element) {
+                appendElementElastic(element)
+            });
+        });
+
+        /*
         $('#btn_addfromcrop').on('click', function() {
             var output = [],
                 filter_values = self.filter.getValues(),
@@ -831,31 +1457,44 @@ define([
             self.loaded_crop = output;
             _.each(self.loaded_crop, function(element) { appendElement(element[0],element[1]) });
         });
+        */
 
         $('#search_genus').on('typeahead:select', function(event, selection) {
             $('#search_spieces').typeahead('destroy');
-            self.genus = selection['genus'];
-            var result = self._callServices([
-                {
-                    "name": "wiews_exsitu_species_filter",
-                    "sid": [ { "uid": "ref_sdg_species" } ],
-                    "parameters": {
-                        "year" : self.selected_year,
-                        "genus" : self.genus
+            self.genus = selection.key;
+
+            var result = self._callElastic({
+                    "query": {
+                        "bool": {
+                            "must": [
+                                {"match_phrase": {"genus_name": self.genus}},
+                                {
+                                    "match_phrase": {
+                                        "year": parseInt(self.selected_year)
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "size": 0,
+                    "aggregations": {
+                        "result_set": {
+                            "terms": {
+                                "field": "species_name.aggregator",
+                                "order": {"_key": "asc"},
+                                "size": 1000
+                            }
+                        }
                     }
-                },
-                {
-                    "name":"order",
-                    "parameters":{
-                        "species" : "ASC"
-                    }
-                }
-            ]);
+                }, "wiews_exsitu_species_filter"
+            );
+
+            console.log(result);
 
             var engine = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.whitespace,
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                local: self._speciesTransform(result)
+                local: self._speciesTransformElastic(result)
             });
 
             $('#search_spieces').typeahead({
@@ -890,8 +1529,6 @@ define([
             $('#search_genus').val("");
             $('#search_spieces').val("");
         });
-
-        $('li.active > a').on('click', function(){ console.log('clock'); });
 
         window.onpopstate = function(event) {
             //console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));

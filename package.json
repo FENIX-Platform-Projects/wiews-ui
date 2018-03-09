@@ -13,7 +13,7 @@
     "dev:domains": "cross-env SECTIONS=domains NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "dev:organizations": "cross-env SECTIONS=organizations NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "dev:exsitu": "cross-env SECTIONS=exsitu NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
-    "dev:exsitu-search": "cross-env SECTIONS=exsitu-search NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline",
+    "dev:exsitu-search": "cross-env SECTIONS=exsitu-search NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --host 10.202.36.40",
     "dev:sdg": "cross-env SECTIONS=sdg NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "build": "cross-env SECTIONS=base,countryProfile,cultivars,domains,organizations,sdg,exsitu,exsitu-search NODE_ENV=production webpack --display-error-details ",
     "build:base": "cross-env SECTIONS=base NODE_ENV=production webpack --display-error-details ",
