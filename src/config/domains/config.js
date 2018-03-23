@@ -5,7 +5,7 @@ define(function () {
 
     return {
 
-        1: {
+        20: {
             domain_label: "Accessions conserved",
             query : {
                 "queryModel": {},
@@ -30,7 +30,7 @@ define(function () {
             }
         },
         2: {
-            domain_label : "Yeah",
+            domain_label : "Surveyed species/varieties",
             query : {
                 "queryModel": {},
                 "cube": {
