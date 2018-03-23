@@ -27,7 +27,9 @@ define([
             "wiews_exsitu_crops_filter" : "crops/crops/_search",
             "wiews_exsitu_institute_filter" : "exsitu/exsitu/_search",
             "wiews_exsitu_genus_filter" : "exsitu/exsitu/_search",
-            "wiews_exsitu_species_filter" : "exsitu/exsitu/_search"
+            "wiews_exsitu_species_filter" : "exsitu/exsitu/_search",
+            "elastic_export_fetch" : "exsitu/exsitu/_search?scroll=1m",
+            "elastic_export_consume" : "_search/scroll"
         },
         defaultYear = 2014,
         defaultPageSize = 25;
@@ -87,14 +89,13 @@ define([
                 $('[data-role=messages]').show();
                 return;
             }
-
         });
 
         return table_data;
 
     };
 
-    Exsitu_search.prototype._callElastic = function (payload, path) {
+    Exsitu_search.prototype._callElastic = function (payload, path, full) {
         var response_data = {
             total : -1,
             hits : []
@@ -125,6 +126,7 @@ define([
                         response_data.hits.push(element);
                     });
                 }
+                if (full) response_data = res;
             },
             error : function(res) {
                 console.log(res);
@@ -186,6 +188,42 @@ define([
             format: "flow",
             config: flow_model
         });
+    };
+
+    Exsitu_search.prototype._exportElastic = function () {
+
+        this.elastic_export.size = 2500;
+
+        var result = this._callElastic(this.elastic_export,'elastic_export_fetch', true),
+            export_object = result.hits.hits,
+            forTotal = result.hits.total,
+            perPage = this.elastic_export.size,
+            scroll_id = result._scroll_id,
+            cycle = Math.round((forTotal/perPage)-1),
+            export_csv = [];
+
+        //console.log('You should hit me '+cycle+' more times.');
+
+        while(cycle){
+            var export_var = this._callElastic({
+                "scroll" : "1m",
+                "scroll_id" : scroll_id
+            }, "elastic_export_consume");
+            export_object = export_object.concat(export_var.hits);
+            cycle--;
+        }
+        _.each(export_object, function(key){
+            /*
+            console.log(key._source);
+            var obj = [];
+            _.each(key._source, function(parser){
+                if (typeof parser == "string")  if (parser.indexOf(',') > -1) console.log('we have a comma') //item[col_name] = "\"" +element[col_index] + "\"";
+            });
+            */
+            export_csv.push(key._source);
+        });
+
+        return export_csv;
     };
 
     Exsitu_search.prototype._isEmptyQuery = function () {
@@ -294,56 +332,7 @@ define([
             }, 100);
 
         };
-        /*
-        {
-                async: false,
-                dataType: 'json',
-                method: 'POST',
-                contentType: "application/json; charset=utf-8",
-                url: services_el + service_path['wiews_results'],
-                data: JSON.stringify(data),
-                success: function(res) {
-                    console.log('relax');
-                    var response_data = [];
-                    if (res.hits.hits.length) {
-                        _.each( res.hits.hits, function ( element ) {
-                            response_data.push(element);
-                        });
-                    } else {
-                        _.each( res.aggregations.result_set.buckets, function ( element ) {
-                            response_data.push(element);
-                        });
-                    }
-                    console.log(response.data);
-                    return response_data;
-                },
-                error : function(res) {
-                    console.log(res);
-                    $('#orgalert_message').html(labels[Clang]['exsitu-search_search_error_416']);
-                    $('[data-role=messages]').show();
-                    return;
-                }
-            }
-        */
 
-        /*
-        if (this.instcode.length) this._fillResults(data[0]);
-        $(s.TABLE).bootstrapTable('destroy');
-        $(s.TABLE).bootstrapTable({
-            //data : data,
-            url: "",
-            pagination: true,
-            pageSize: 25,
-            pageList: [10, 25, 50, 100, 200],
-            search: true,
-            formatSearch: function() {
-                return labels[Clang]['organizations_search_filter']
-            },
-            paginationVAlign: "top",
-            sortable: true
-        });
-        this.tabledata = data;
-        */
     };
 
     Exsitu_search.prototype._bloodHoundPrefetch = function (which) {
@@ -439,7 +428,6 @@ define([
         var self = this;
 
         $(s.EL).html(template(labels[Clang]));
-        this._initTable([]);
 
         $('#table').on('click-row.bs.table', function(row, $element, field){
             self._statesManagement('details');
@@ -535,7 +523,8 @@ define([
                         default : [defaultYear],
                         source: [
                             {value: "2014", label: "2014"},
-                            {value: "2016", label: "2016"}
+                            {value: "2016", label: "2016"},
+                            {value: "2017", label: "2017"}
                         ],
                         "config" : {
                             "placeholder": labels[Clang]['exsitu-search_search_year'],
@@ -697,6 +686,8 @@ define([
             minLength: 3
         };
 
+        this.elastic_export = {};
+
         this.flowmodel = {
             "outConfig": {
                 "plugin": "wiewsOutputCSV",
@@ -829,7 +820,6 @@ define([
     };
 
     Exsitu_search.prototype._preparePayloadElastic = function (from) {
-        //console.log('called _preparePayloadElastic from ' + from);
 
         var filter_values = this.filter.getValues(),
             filter_taxon = $('#search_taxon').val(),
@@ -849,9 +839,11 @@ define([
         if (filter_inst.length > 0)  array_inst.push(filter_inst);
         if (filter_acces == "") filter_acces = null;
         // ... and boolean must be boolean.
-        if (filter_values.values.search_statusmultilateral.length > 0)  mlstatus = (filter_values.values.search_statusmultilateral[0] == 'true');
-        if (filter_values.values.search_country_origin.length > 0) origin_country = filter_values.values.search_country_origin.join(" ");
-        if (filter_values.values.search_statusofaccession.length > 0) biostat = filter_values.values.search_statusofaccession.join(" ");
+        if (filter_values.values) {
+            if (filter_values.values.search_statusmultilateral.length > 0)  mlstatus = (filter_values.values.search_statusmultilateral[0] == 'true');
+            if (filter_values.values.search_country_origin.length > 0) origin_country = filter_values.values.search_country_origin.join(" ");
+            if (filter_values.values.search_statusofaccession.length > 0) biostat = filter_values.values.search_statusofaccession.join(" ");
+        }
 
         _.each(this.genus_species, function(object){
             //console.log(object);
@@ -921,7 +913,7 @@ define([
         // Acc Number
         if (filter_acces != null) payload.query.bool.must.push({"match_phrase": {"accession_number": filter_acces}});
         // Multilateral
-        if (mlstatus != null) payload.query.bool.must.push({"match_phrase": {"status_under_multilateral_system": mlstatus}});
+            if (mlstatus != null) payload.query.bool.must.push({"match_phrase": {"status_under_multilateral_system": mlstatus}});
         // Array > Spaced
         // Country of Origin
         if (filter_values.values.search_country_origin.length) payload.query.bool.must.push({"match": {"orig_country_iso3": origin_country}});
@@ -978,6 +970,8 @@ define([
                 }
             }
         ];
+
+        this.elastic_export = payload;
 
         return payload;
     };
@@ -1102,7 +1096,7 @@ define([
                     "bool": {
                         "must": [{
                             "wildcard": {
-                                "stakeholder_fullname.lowercase": {
+                                "stakeholder_id_acronym_fullname.lowercase": {
                                     "value": "*"+text+"*",
                                     "rewrite": "scoring_boolean"
                                 }
@@ -1120,8 +1114,8 @@ define([
                 "aggs": {
                     "result_set": {
                         "terms": {
-                            "field": "stakeholder_fullname.aggregator",
-                            "order": {"_key": "asc"},"size": 25
+                            "field": "stakeholder_id_acronym_fullname.aggregator",
+                            "order": {"_key": "asc"},"size": 1000
                         }
                     }
                 }
@@ -1244,7 +1238,7 @@ define([
     };
 
     Exsitu_search.prototype._searchfromkeyboard = function (freetext) {
-        freetext ? this._initTable(this._callServices(this._preparePayload($('#search_omnibox').val()))) : this._initTable(this._callServices(this._preparePayload()));
+        freetext ? this._initTablePaginated(this._callServices(this._preparePayload($('#search_omnibox').val()))) : this._initTable(this._callServices(this._preparePayload()));
         self._statesManagement('results');
     };
 
@@ -1346,12 +1340,30 @@ define([
 
         $('[data-role=organizations_exportbutton]').on('click', function() {
             //self._exportList();
-            var json2csvCallback = function (err, csv) {
-                if (err) throw err;
-                var blob = new Blob([csv], {type: "text/csv;charset=utf-8"});
-                FileSaver.saveAs(blob, "exsitu-search.txt");
-            };
-            converter.json2csv(self.tabledata, json2csvCallback);
+
+            $('div#exsitu-search-ux-loader').show();
+            $('[data-page=exsitu-search]').css('opacity','0.5');
+            setTimeout(function () {
+                var tabledata = self._exportElastic();
+                var json2csvCallback = function (err, csv) {
+                    if (err) throw err;
+                    var blob = new Blob([csv], {type: "text/csv;charset=utf-8"});
+                    FileSaver.saveAs(blob, "exsitu-search.txt");
+                    $('div#exsitu-search-ux-loader').hide();
+                    $('[data-page=exsitu-search]').css('opacity','1');
+                };
+                converter.json2csv(tabledata, json2csvCallback, {
+                    delimiter : {
+                        wrap  : '"',
+                        field : ',',
+                        array : ';',
+                        eol   : '\n'
+                    },
+                    prependHeader    : true,
+                    sortHeader       : false
+                    //keys             : []
+                });
+            }, 150);
         });
 
         function appendElement(genus, species) {
@@ -1488,8 +1500,6 @@ define([
                     }
                 }, "wiews_exsitu_species_filter"
             );
-
-            console.log(result);
 
             var engine = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.whitespace,

@@ -103,12 +103,12 @@ define([
         },
 
         buttonMsg : {
-            button_1 : "4_dd_filter_button_1_msg",
-            button_1_list : "4_dd_filter_button_1_list_msg",
-            button_2 : "4_dd_filter_button_2_msg",
-            button_2_list : "4_dd_filter_button_2_list_msg",
-            button_3 : "4_dd_filter_button_3_msg",
-            button_3_list : "4_dd_filter_button_3_list_msg"
+            button_1 : "9_dd_filter_button_1_msg",
+            button_1_list : "9_dd_filter_button_1_list_msg",
+            button_2 : "9_dd_filter_button_2_msg",
+            button_2_list : "9_dd_filter_button_2_list_msg",
+            button_3 : "9_dd_filter_button_3_msg",
+            button_3_list : "9_dd_filter_button_3_list_msg"
         },
 
         error_type : {
@@ -137,6 +137,7 @@ define([
             item_9 : "dd_filter_item_9",
             item_10 : "dd_filter_item_10",
             item_11 : "dd_filter_item_11",
+            item_12 : "dd_filter_item_12",
             tabItem_1 : "dd_filter_item_tab_1",
             tabItem_4 : "dd_filter_item_tab_4_1",
             tabItem_7 : "dd_filter_item_tab_7_1"
@@ -146,7 +147,7 @@ define([
             domain : 'domain',
             wiews_region : 'wiews_region',
             indicator : 'indicator',
-            element : 'element',
+            indicator_label : 'indicator_label',
             iteration : 'iteration',
             value : 'value'
         },
@@ -162,7 +163,7 @@ define([
         filterDivMsg1_text : ''
     }
 
-    function IndicatorProcesses4(o) {
+    function IndicatorProcesses10(o) {
 
         $.extend(true, this, defaultOptions, o);
 
@@ -176,23 +177,23 @@ define([
         return this;
     }
 
-    IndicatorProcesses4.prototype._initVariables = function () {
+    IndicatorProcesses10.prototype._initVariables = function () {
 
         s.filterDivMsg1 = this.filterDivMsg1;
     };
 
-    IndicatorProcesses4.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
+    IndicatorProcesses10.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
         this._renderGeoSelection(item_to_show_prefix, item_to_show, codelistMaxIndex);
 
     }
 
-    IndicatorProcesses4.prototype.disable_element = function () {
+    IndicatorProcesses10.prototype.disable_element = function () {
 
-        $('[data-selector = "'+s.filter_items.item_11+'"]').attr('disabled','disabled');
-    };
+        $('[data-selector = "'+s.filter_items.item_12+'"]').attr('disabled','disabled');
+    }
 
-    IndicatorProcesses4.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
+    IndicatorProcesses10.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
         var index = 1;
         for(index = 1; index<= codelistMaxIndex; index++) {
@@ -207,7 +208,7 @@ define([
         }
     }
 
-    IndicatorProcesses4.prototype._filterSelectionValidation = function (values, params, button_type) {
+    IndicatorProcesses10.prototype._filterSelectionValidation = function (values, params, button_type) {
 
         var valid = false, newValues = '', textMsg = '';
 
@@ -225,7 +226,7 @@ define([
                     }
                     else if(button_type==3)
                     {
-                        if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_8)))
+                        if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_8)||(key==s.filter_items.item_10)))
                         {
                             valid = true;
                         }
@@ -234,7 +235,7 @@ define([
                             break;
                         }
                     }
-                    else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)))
+                    else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_10)))
                     {
                         valid = true;
                     }
@@ -271,7 +272,7 @@ define([
                     textMsg = labels[params.lang][s.buttonMsg.button_3];
                 }
             }
-            s.filterDivMsg1.html(this.icUtils.prepareWarning(textMsg))
+            s.filterDivMsg1.html(this.icUtils.prepareWarning(textMsg));
             s.filterDivMsg1.show();
         }
 
@@ -285,7 +286,7 @@ define([
         return newValues;
     }
 
-    IndicatorProcesses4.prototype._geoItemSelectionValidation = function (values) {
+    IndicatorProcesses10.prototype._geoItemSelectionValidation = function (values) {
 
         s.filterDivMsg1_text = '';
         var paramsForGeoValidation = {};
@@ -315,7 +316,7 @@ define([
         return newValues.values;
     }
 
-    IndicatorProcesses4.prototype.onClickButton1 = function (values, dashboardConfig, params) {
+    IndicatorProcesses10.prototype.onClickButton1 = function (values, dashboardConfig, params) {
 
         $('[data-field = "1"]').attr('data-field', s.table_columns.domain);
         $('[data-field = "'+s.table_columns.domain+'"]').text(dashboardConfig.columntableName[0]);
@@ -323,15 +324,15 @@ define([
         $('[data-field = "'+s.table_columns.wiews_region+'"]').text(dashboardConfig.columntableName[1]);
         $('[data-field = "3"]').attr('data-field', s.table_columns.indicator);
         $('[data-field = "'+s.table_columns.indicator+'"]').text(dashboardConfig.columntableName[2]);
-        $('[data-field = "4"]').attr('data-field', s.table_columns.element);
-        $('[data-field = "'+s.table_columns.element+'"]').text(dashboardConfig.columntableName[3]);
+        $('[data-field = "4"]').attr('data-field', s.table_columns.indicator_label);
+        $('[data-field = "'+s.table_columns.indicator_label+'"]').text(dashboardConfig.columntableName[3]);
         $('[data-field = "5"]').attr('data-field', s.table_columns.iteration);
         $('[data-field = "'+s.table_columns.iteration+'"]').text(dashboardConfig.columntableName[4]);
         $('[data-field = "6"]').attr('data-field', s.table_columns.value);
         $('[data-field = "'+s.table_columns.value+'"]').text(dashboardConfig.columntableName[5]);
 
 
-        var tableColumns = [s.table_columns.domain, s.table_columns.wiews_region, s.table_columns.indicator, s.table_columns.element, s.table_columns.iteration, s.table_columns.value];
+        var tableColumns = [s.table_columns.domain, s.table_columns.wiews_region, s.table_columns.indicator, s.table_columns.indicator_label, s.table_columns.iteration, s.table_columns.value];
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params, "1");
@@ -351,7 +352,7 @@ define([
 
     };
 
-    IndicatorProcesses4.prototype.onClickButton2 = function (values, dashboardConfig, params) {
+    IndicatorProcesses10.prototype.onClickButton2 = function (values, dashboardConfig, params) {
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params, "2");
@@ -370,7 +371,7 @@ define([
 
     };
 
-    IndicatorProcesses4.prototype.onClickButton3 = function (values, dashboardConfig, params) {
+    IndicatorProcesses10.prototype.onClickButton3 = function (values, dashboardConfig, params) {
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params, "3");
@@ -390,7 +391,7 @@ define([
     };
 
 
-        IndicatorProcesses4.prototype.bindEventListener = function () {
+        IndicatorProcesses10.prototype.bindEventListener = function () {
         var self = this;
         var anchor;
         $( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function( evt ) {
@@ -425,11 +426,11 @@ define([
         });
     }
 
-    IndicatorProcesses4.prototype.tableDataCreation = function (param, columnsMap, data, filterValues) {
+    IndicatorProcesses10.prototype.tableDataCreation = function (param, columnsMap, data, filterValues) {
 
         var separatorValue = '';
-        if((filterValues.values!= null)&&(typeof filterValues.values!= 'undefined')&&(filterValues.values[s.filter_items.item_10]!= null)&&(typeof filterValues.values[s.filter_items.item_10]!= 'undefined'))
-            separatorValue = filterValues.values[s.filter_items.item_10][0];
+        if((filterValues.values!= null)&&(typeof filterValues.values!= 'undefined')&&(filterValues.values[s.filter_items.item_11]!= null)&&(typeof filterValues.values[s.filter_items.item_11]!= 'undefined'))
+            separatorValue = filterValues.values[s.filter_items.item_11][0];
         else
             separatorValue = '1';
         var tableData = [];
@@ -450,8 +451,8 @@ define([
                     case s.table_columns.indicator :
                         row[s.table_columns.indicator] = data[iData][columnsMap[tableCol+'_text']]
                         break;
-                    case s.table_columns.element :
-                        row[s.table_columns.element] = data[iData][columnsMap[tableCol+'_text']]
+                    case s.table_columns.indicator_label :
+                        row[s.table_columns.indicator_label] = data[iData][columnsMap[tableCol+'_value']]
                         break;
                     case s.table_columns.iteration :
                         row[s.table_columns.iteration] = data[iData][columnsMap[tableCol+'_text']]
@@ -467,7 +468,7 @@ define([
         return tableData;
     }
 
-    IndicatorProcesses4.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
+    IndicatorProcesses10.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
         var filterDivMsg1 = hostParam.filterDivMsg_1;
         if((filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined'))
         {
@@ -506,7 +507,7 @@ define([
         return true;
     }
 
-    IndicatorProcesses4.prototype.updateVariables = function (obj) {
+    IndicatorProcesses10.prototype.updateVariables = function (obj) {
 
         this.filter = obj.filter;
         this.filter_host_config = obj.filter_host_config;
@@ -536,14 +537,20 @@ define([
         }
     }
 
-    IndicatorProcesses4.prototype._table_element_configuration_update = function (dashboardConfig, values, params) {
+    IndicatorProcesses10.prototype._table_element_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
         dashboardConfig.tableProcess[0].parameters.filter = {};
         dashboardConfig.tableProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.tableProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-        dashboardConfig.tableProcess[1].parameters.rows["indicator"].codes[0].codes = values[s.filter_items.item_8];
         dashboardConfig.tableProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
+        var codes = '';
+        if((values[s.filter_items.item_10]!=null)&&(typeof values[s.filter_items.item_10]!='undefined')&&(values[s.filter_items.item_10].length>0)){
+            codes= [ "ind_t", "ind_a", "nfp", "nfpa", "stk_t", "stk_a" ];
+        } else {
+            codes= [ "ind_t", "ind_a", "nfp", "nfpa" ];
+        }
+        dashboardConfig.tableProcess[1].parameters.rows["element"].codes[0].codes = codes;
         // Flags
         var flags = values[s.geo_property].listType;
         if (flags.length > 0) {
@@ -554,14 +561,20 @@ define([
         return dashboardConfig;
     };
 
-    IndicatorProcesses4.prototype._download_element_table_element_configuration_update = function (dashboardConfig, values, params) {
+    IndicatorProcesses10.prototype._download_element_table_element_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
         dashboardConfig.downloadProcessTableData[0].parameters.filter = {};
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist] = s.geo_filter[codelist];
         dashboardConfig.downloadProcessTableData[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-        dashboardConfig.downloadProcessTableData[1].parameters.rows["indicator"].codes[0].codes = values[s.filter_items.item_8];
         dashboardConfig.downloadProcessTableData[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
+        var codes = '';
+        if((values[s.filter_items.item_10]!=null)&&(typeof values[s.filter_items.item_10]!='undefined')&&(values[s.filter_items.item_10].length>0)){
+            codes= [ "ind_t", "ind_a", "nfp", "nfpa", "stk_t", "stk_a" ];
+        } else {
+            codes= [ "ind_t", "ind_a", "nfp", "nfpa" ];
+        }
+        dashboardConfig.downloadProcessTableData[1].parameters.rows["element"].codes[0].codes = codes;
         // Flags
         var flags = values[s.geo_property].listType;
         if (flags.length > 0) {
@@ -572,7 +585,7 @@ define([
         return dashboardConfig;
     };
 
-    IndicatorProcesses4.prototype._download_element_raw_data_configuration_update = function (dashboardConfig, values, params) {
+    IndicatorProcesses10.prototype._download_element_raw_data_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
         dashboardConfig.downloadProcessRawData[0].parameters.filter = {};
@@ -587,7 +600,7 @@ define([
      * pub/sub
      * @return {Object} component instance
      */
-    IndicatorProcesses4.prototype.on = function (channel, fn, context) {
+    IndicatorProcesses10.prototype.on = function (channel, fn, context) {
         var _context = context || this;
         if (!this.channels[channel]) {
             this.channels[channel] = [];
@@ -596,7 +609,7 @@ define([
         return this;
     };
 
-    IndicatorProcesses4.prototype._trigger = function (channel) {
+    IndicatorProcesses10.prototype._trigger = function (channel) {
 
         if (!this.channels[channel]) {
             return false;
@@ -610,6 +623,6 @@ define([
         return this;
     };
 
-    return IndicatorProcesses4;
+    return IndicatorProcesses10;
 
 });

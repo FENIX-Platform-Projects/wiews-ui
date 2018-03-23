@@ -58,6 +58,7 @@ define([
     }
 
     IndicatorCommon.prototype._initVariables = function () {
+        
 
         //indicatorProperties
         var IndicatorProcessesRender = this._getIndicatorProcessesRender();
@@ -82,6 +83,8 @@ define([
         this.$el = $(this.el);
         // pub/sub
         this.channels = {};
+
+        this.isos = this._getISO();
 
         if (this.report && $.isFunction(this.report.dispose)) {
             this.report.dispose();
@@ -117,7 +120,7 @@ define([
     };
 
     IndicatorCommon.prototype._getIndicatorProcessesPath = function () {
-        return './'+ this.mainTabName + s.indicator_processes_renders_path + this.indicatorProperties.processType;
+        return './'+ this.mainTabName + s.indicator_processes_renders_path + this.indicatorProperties.indicator_id;
     };
 
     //To Update the template based on the configuration file
@@ -489,11 +492,106 @@ define([
         }
     }
 
+    IndicatorCommon.prototype._getISO = function () {
+        var iso = [];
+        var url = "http://fenix.fao.org/d3s_wiews/msd/resources/uid/ISO3";
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'GET',
+            contentType: "application/json; charset=utf-8",
+            url: url,
+            success: function(res) {
+                _.each( res.data, function( element ) {
+                    iso[element.code] = element.title.EN;
+                });
+                //console.log(iso);
+            }
+        });
+
+        return iso;
+    };
+
+    IndicatorCommon.prototype._convert2TableData = function (input, structure, labels) {
+        var self = this,
+            output = [];
+
+        _.each(input.cellset, function(object, index) {
+            //console.log(object);
+            var obj = {};
+            _.each(structure, function(str_obj, str_idx){
+                obj[str_obj] = labels[str_obj];
+            });
+
+            //if (index == 0) console.log(object);
+            if (object[0].type != "ROW_HEADER_HEADER") {
+                obj['wiews_region'] = self.isos[object[0].value];
+                obj['value'] = parseInt(object[1].value).toFixed(2);
+            }
+
+            if (index>0) output.push(obj);
+
+        });
+
+
+        return output;
+    };
+
     //Creation of data for the Bootstrap Table of the Download Tab
     IndicatorCommon.prototype._DD_getTableData = function (param, newDashboardConfig, filterValues) {
-        var self = this;
+        var self = this,
+            mdx_query = "",
+            dsd = {},
+            labels = {},
+            geo_array = [],
+            table_output;
 
         param.tableColumns = newDashboardConfig.tableColumns;
+        dsd = param.tableColumns;
+
+        //console.log(param, newDashboardConfig, filterValues);
+        //console.log(dsd,labels);
+
+        // Building the Geo values
+        _.each(filterValues.values.GEO.values, function(elem){
+            geo_array.push("[Region.iso3_code].["+elem+"]")
+        });
+
+        // Building the labels
+
+        labels['indicator'] = filterValues.labels.dd_filter_item_8[Object.keys(filterValues.labels.dd_filter_item_8)[0]];
+        labels['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
+        labels['indicator_label'] = 'National Focal Point rating';
+        labels['domain'] = DM[this.indicatorProperties.indicator_id].domain_label;
+
+
+
+        mdx_query = JSON.stringify(DM[this.indicatorProperties.indicator_id].query);
+        mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
+
+        //console.log (mdx_query);
+
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'POST',
+            contentType: "application/json; charset=utf-8",
+            accept: "application/json, text/javascript, */*; q=0.01",
+            url: "http://hqlprfenixapp2.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/query/execute",
+            data: mdx_query,
+            success: function(res) {
+                table_output = self._convert2TableData(res, dsd, labels);
+                //console.log(table_output);
+                self._tableRender(table_output, param);
+            },
+            error : function(res) {
+                console.log("error", res);
+                return;
+            }
+        });
+
+        return;
+
 
         this.bridge.getProcessedResource({contentType: "application/json", body : newDashboardConfig.tableProcess, params : {language : param.lang}}).then(
             _.bind(function (result) {
@@ -539,7 +637,7 @@ define([
     //Render of the bootstrap table
     IndicatorCommon.prototype._tableRender = function (table, param) {
 
-        console.log('table render');
+        console.log('table render', table);
 
         var self = this;
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');

@@ -103,8 +103,8 @@ define([
         },
 
         buttonMsg : {
-            button_1 : "1_vd_filter_button_1_msg",
-            button_1_list : "1_vd_filter_button_1_list_msg"
+            button_1 : "4_vd_filter_button_1_msg",
+            button_1_list : "4_vd_filter_button_1_list_msg"
         },
 
         error_type : {
@@ -130,7 +130,6 @@ define([
             item_7_1 : "vd_filter_item_7_1",
             item_7_2 : "vd_filter_item_7_2",
             item_8 : "vd_filter_item_8",
-            item_9 : "vd_filter_item_9",
             tabItem_1 : "vd_filter_item_tab_1",
             tabItem_4 : "vd_filter_item_tab_4_1",
             tabItem_7 : "vd_filter_item_tab_7_1"
@@ -138,16 +137,14 @@ define([
 
         dashboard_items : {
             item_1 : "vd_dashboard_item_1",
-            item_2 : "vd_dashboard_item_2",
-            item_3 : "vd_dashboard_item_3",
-            item_4 : "vd_dashboard_item_4"
+            item_2 : "vd_dashboard_item_2"
         },
 
         filterDivMsg1 : '',
         filterDivMsg1_text : ''
     }
 
-    function IndicatorProcesses10(o) {
+    function IndicatorProcesses4(o) {
 
         $.extend(true, this, defaultOptions, o);
 
@@ -157,22 +154,21 @@ define([
         this._renderTemplate(s.filter_items.item_7, 1, 2);
 
         this._initVariables();
-
         return this;
     }
 
-    IndicatorProcesses10.prototype._initVariables = function () {
+    IndicatorProcesses4.prototype._initVariables = function () {
 
         //Setting Default Tab and Item
         s.filterDivMsg1 = this.filterDivMsg1;
     };
 
-    IndicatorProcesses10.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
+    IndicatorProcesses4.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
         this._renderGeoSelection(item_to_show_prefix, item_to_show, codelistMaxIndex);
     }
 
-    IndicatorProcesses10.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
+    IndicatorProcesses4.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
         var index = 1;
         for(index = 1; index<= codelistMaxIndex; index++) {
@@ -187,7 +183,7 @@ define([
         }
     }
 
-    IndicatorProcesses10.prototype._filterSelectionValidation = function (values, params) {
+    IndicatorProcesses4.prototype._filterSelectionValidation = function (values, params) {
 
         var valid = false, newValues = '', textMsg = '';
 
@@ -237,7 +233,7 @@ define([
         return newValues;
     }
 
-    IndicatorProcesses10.prototype._geoItemSelectionValidation = function (values) {
+    IndicatorProcesses4.prototype._geoItemSelectionValidation = function (values) {
 
         s.filterDivMsg1_text = '';
         var paramsForGeoValidation = {};
@@ -270,7 +266,7 @@ define([
 
     //In this way this action is indipendent by the number of items in the configuration
     //Test it removing some items in the configuration
-    IndicatorProcesses10.prototype.onClickButton = function (dashboardConfig, values, params) {
+    IndicatorProcesses4.prototype.onClickButton = function (dashboardConfig, values, params) {
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params);
@@ -296,7 +292,7 @@ define([
         return newDashboardConfig;
     };
 
-    IndicatorProcesses10.prototype.bindEventListener = function () {
+    IndicatorProcesses4.prototype.bindEventListener = function () {
         var self = this;
         var anchor;
         $( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function( evt ) {
@@ -331,7 +327,7 @@ define([
         });
     }
 
-    IndicatorProcesses10.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
+    IndicatorProcesses4.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
         var filterDivMsg1 = hostParam.filterDivMsg_1;
         if((filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined'))
         {
@@ -370,7 +366,7 @@ define([
         return true;
     }
 
-    IndicatorProcesses10.prototype.updateVariables = function (obj) {
+    IndicatorProcesses4.prototype.updateVariables = function (obj) {
 
         this.filter = obj.filter;
         this.filter_host_config = obj.filter_host_config;
@@ -400,7 +396,7 @@ define([
         }
     }
 
-    IndicatorProcesses10.prototype._element_configuration_update = function (dashboardConfig, element, values, itemCount) {
+    IndicatorProcesses4.prototype._element_configuration_update = function (dashboardConfig, element, values, itemCount) {
 
         switch(element){
             case s.dashboard_items.item_1:
@@ -409,16 +405,10 @@ define([
             case s.dashboard_items.item_2:
                 return this._element2_configuration_update(dashboardConfig, values, itemCount);
                 break;
-            case s.dashboard_items.item_3:
-                return this._element3_configuration_update(dashboardConfig, values, itemCount);
-                break;
-            case s.dashboard_items.item_4:
-                return this._element4_configuration_update(dashboardConfig, values, itemCount);
-                break;
         }
     };
 
-    IndicatorProcesses10.prototype._element1_configuration_update = function (dashboardConfig, values, itemCount) {
+    IndicatorProcesses4.prototype._element1_configuration_update = function (dashboardConfig, values, itemCount) {
 
         //Map
         var newDashboardConfig = '';
@@ -445,15 +435,14 @@ define([
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["genus"].codes[0].codes = values[s.filter_items.item_8];
+            dashboardConfig.items[itemCount].postProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_8];
             newDashboardConfig = dashboardConfig;
         }
 
         return newDashboardConfig;
     };
 
-    IndicatorProcesses10.prototype._element2_configuration_update = function (dashboardConfig, values, itemCount) {
+    IndicatorProcesses4.prototype._element2_configuration_update = function (dashboardConfig, values, itemCount) {
 
         //First Chart
         var newDashboardConfig = '';
@@ -480,77 +469,7 @@ define([
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
             dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["genus"].codes[0].codes = values[s.filter_items.item_8];
-            newDashboardConfig = dashboardConfig;
-        }
-
-        return newDashboardConfig;
-    };
-
-    IndicatorProcesses10.prototype._element3_configuration_update = function (dashboardConfig, values, itemCount) {
-
-        //Second Chart
-        var newDashboardConfig = '';
-
-        if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
-            //newDashboardConfig = dashboardConfig.items[0].postProcess
-            var codelist = values[s.geo_property].codelist;
-            var listType = values[s.geo_property].listType;
-
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
-            if($.inArray(s.choices_code.total, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = false;
-            }
-            if($.inArray(s.choices_code.list, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = false;
-            }
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
-            newDashboardConfig = dashboardConfig;
-        }
-
-        return newDashboardConfig;
-    };
-
-    IndicatorProcesses10.prototype._element4_configuration_update = function (dashboardConfig, values, itemCount) {
-
-        //Third Chart
-        var newDashboardConfig = '';
-
-        if((dashboardConfig)&&(dashboardConfig.items[itemCount].postProcess)){
-            //newDashboardConfig = dashboardConfig.items[0].postProcess
-            var codelist = values[s.geo_property].codelist;
-            var listType = values[s.geo_property].listType;
-
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter = {};
-            if($.inArray(s.choices_code.total, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.total = false;
-            }
-            if($.inArray(s.choices_code.list, listType )!=-1)
-            {
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = true;
-            }
-            else{
-                dashboardConfig.items[itemCount].postProcess[0].parameters.list = false;
-            }
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist] = s.geo_filter[codelist];
-            dashboardConfig.items[itemCount].postProcess[0].parameters.filter[codelist].codes[0].codes = values[s.geo_property].values;
-            dashboardConfig.items[itemCount].postProcess[2].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_9];
+            dashboardConfig.items[itemCount].postProcess[1].parameters.rows["iteration"].codes[0].codes = values[s.filter_items.item_8];
             newDashboardConfig = dashboardConfig;
         }
 
@@ -561,7 +480,7 @@ define([
      * pub/sub
      * @return {Object} component instance
      */
-    IndicatorProcesses10.prototype.on = function (channel, fn, context) {
+    IndicatorProcesses4.prototype.on = function (channel, fn, context) {
         var _context = context || this;
         if (!this.channels[channel]) {
             this.channels[channel] = [];
@@ -570,7 +489,7 @@ define([
         return this;
     };
 
-    IndicatorProcesses10.prototype._trigger = function (channel) {
+    IndicatorProcesses4.prototype._trigger = function (channel) {
 
         if (!this.channels[channel]) {
             return false;
@@ -584,6 +503,6 @@ define([
         return this;
     };
 
-    return IndicatorProcesses10;
+    return IndicatorProcesses4;
 
 });
