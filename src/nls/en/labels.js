@@ -723,6 +723,14 @@ define(function () {
         // Other stuff
 
         "bootstraptable_search_filter" : "Filter",
-        "exsitu-search_add_button" : "Add"
+        "exsitu-search_add_button" : "Add",
+
+        // Saiku Labels
+
+        "nfp" : "National Focal Point rating",
+        "varieties_avg" : "Varieties, annual average",
+        "varieties" : "Varieties, total",
+        "species_avg" : "Species, annual average",
+        "distinct_species" : "Species, total"
     }
 });

@@ -512,24 +512,29 @@ define([
         return iso;
     };
 
-    IndicatorCommon.prototype._convert2TableData = function (input, structure, labels) {
+    IndicatorCommon.prototype._convert2TableData = function (input, structure, lab) {
         var self = this,
+            str_lab = {},
+            extendable = {},
             output = [];
 
+        _.each(structure, function(str_obj, str_idx){
+            if (lab[str_obj] !== undefined) extendable[str_obj] = lab[str_obj];
+        });
+
         _.each(input.cellset, function(object, index) {
-            //console.log(object);
-            var obj = {};
-            _.each(structure, function(str_obj, str_idx){
-                obj[str_obj] = labels[str_obj];
-            });
-
-            //if (index == 0) console.log(object);
+            if (index == 0) str_lab = object;
             if (object[0].type != "ROW_HEADER_HEADER") {
-                obj['wiews_region'] = self.isos[object[0].value];
-                obj['value'] = parseInt(object[1].value).toFixed(2);
+                _.each(object, function(item, idx){
+                   if (item.type == "DATA_CELL") {
+                       var obj = $.extend({}, extendable);
+                       obj['element'] = labels[self.lang.toLowerCase()][str_lab[idx].value];
+                       obj['wiews_region'] = self.isos[object[0].value];
+                       obj['value'] = Number(item.value).toFixed(2);
+                       output.push(obj);
+                   }
+                });
             }
-
-            if (index>0) output.push(obj);
 
         });
 
@@ -537,12 +542,46 @@ define([
         return output;
     };
 
+    IndicatorCommon.prototype._parseGEO = function (geovalues) {
+        var geo_array = [];
+        switch(geovalues.codelist) {
+            // Country
+            case "iso3":
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.iso3_code].["+elem+"]") });
+                break;
+            // Region
+            case "fao":
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_FAO].[5000].[World].["+elem+"]") });
+                break;
+            case "m46":
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_FAO].[5000].[World].["+elem+"]") });
+                break;
+            case "sdg":
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_SDG].[5000].[World].["+elem+"]") });
+                break;
+            case "mdg":
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_MDG].[5000].[World].["+elem+"]") });
+                break;
+            // Special Groups
+            case "itpgrfa":
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_ITPGRFA].["+elem+"]") });
+                break;
+            case "cgrfa":
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_CGRFA].["+elem+"]") });
+                break;
+        }
+        return geo_array;
+    };
+
     //Creation of data for the Bootstrap Table of the Download Tab
     IndicatorCommon.prototype._DD_getTableData = function (param, newDashboardConfig, filterValues) {
         var self = this,
             mdx_query = "",
+            selection = "0",
+            select_array = [],
+            index,
             dsd = {},
-            labels = {},
+            lab = {},
             geo_array = [],
             table_tobootstrap = [],
             table_output;
@@ -550,21 +589,22 @@ define([
         param.tableColumns = newDashboardConfig.tableColumns;
         dsd = param.tableColumns;
 
+        select_array = filterValues.values.dd_filter_item_8;
+        index = select_array.indexOf(this.indicatorProperties.indicator_id);
+        if (index > -1) select_array.splice(index, 1);
+        if (select_array.length == 1) { selection = select_array[0] } else { selection = this.indicatorProperties.indicator_id.toString() }
+
+
         // Building the Geo values
-        _.each(filterValues.values.GEO.values, function(elem){
-            geo_array.push("[Region.iso3_code].["+elem+"]")
-        });
-
-
+        geo_array = this._parseGEO(filterValues.values.GEO);
         // First, we fetch the NFP Rating
 
         // Building the labels
-        labels['indicator'] = filterValues.labels.dd_filter_item_8[Object.keys(filterValues.labels.dd_filter_item_8)[0]];
-        labels['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
-        labels['indicator_label'] = 'National Focal Point rating';
-        labels['domain'] = DM[0].domain_label;
+        lab['indicator'] = DM[this.indicatorProperties.indicator_id].element_label[this.indicatorProperties.indicator_id];
+        lab['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
+        lab['domain'] = DM[this.indicatorProperties.indicator_id].domain_label;
 
-        mdx_query = JSON.stringify(DM[0].query);
+        mdx_query = JSON.stringify($.extend(DM[0].cube, DM[0].query["0"]));
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
 
         $.ajax({
@@ -576,7 +616,7 @@ define([
             url: "http://fenixapps2.fao.org/pentaho/plugin/saiku/api/anonymousUser/query/execute",
             data: mdx_query,
             success: function(res) {
-                table_output = self._convert2TableData(res, dsd, labels);
+                table_output = self._convert2TableData(res, dsd, lab);
                 //console.log(table_output);
             },
             error : function(res) {
@@ -589,12 +629,11 @@ define([
 
 
         // Building the labels
-        labels['indicator'] = filterValues.labels.dd_filter_item_8[Object.keys(filterValues.labels.dd_filter_item_8)[0]];
-        labels['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
-        labels['indicator_label'] = DM[this.indicatorProperties.indicator_id].domain_label;
-        labels['domain'] = DM[this.indicatorProperties.indicator_id].domain_label;
+        lab['indicator'] = DM[this.indicatorProperties.indicator_id].element_label[selection];
+        lab['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
+        lab['domain'] = DM[this.indicatorProperties.indicator_id].domain_label;
 
-        mdx_query = JSON.stringify(DM[this.indicatorProperties.indicator_id].query);
+        mdx_query = JSON.stringify($.extend(DM[this.indicatorProperties.indicator_id].cube, DM[this.indicatorProperties.indicator_id].query[selection]));
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
 
         $.ajax({
@@ -606,7 +645,7 @@ define([
             url: "http://fenixapps2.fao.org/pentaho/plugin/saiku/api/anonymousUser/query/execute",
             data: mdx_query,
             success: function(res) {
-                table_tobootstrap = table_output.concat(self._convert2TableData(res, dsd, labels));
+                table_tobootstrap = table_output.concat(self._convert2TableData(res, dsd, lab));
                 //console.log(table_output);
             },
             error : function(res) {
@@ -665,8 +704,6 @@ define([
 
     //Render of the bootstrap table
     IndicatorCommon.prototype._tableRender = function (table, param) {
-
-        console.log('table render', table);
 
         var self = this;
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
