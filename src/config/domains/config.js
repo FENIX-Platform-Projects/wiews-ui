@@ -5,8 +5,8 @@ define(function () {
 
     return {
 
-        20: {
-            domain_label: "Accessions conserved",
+        0: {
+            domain_label: "National Focal Point",
             query : {
                 "queryModel": {},
                 "cube": {

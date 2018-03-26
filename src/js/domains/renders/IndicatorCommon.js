@@ -544,32 +544,28 @@ define([
             dsd = {},
             labels = {},
             geo_array = [],
+            table_tobootstrap = [],
             table_output;
 
         param.tableColumns = newDashboardConfig.tableColumns;
         dsd = param.tableColumns;
-
-        //console.log(param, newDashboardConfig, filterValues);
-        //console.log(dsd,labels);
 
         // Building the Geo values
         _.each(filterValues.values.GEO.values, function(elem){
             geo_array.push("[Region.iso3_code].["+elem+"]")
         });
 
-        // Building the labels
 
+        // First, we fetch the NFP Rating
+
+        // Building the labels
         labels['indicator'] = filterValues.labels.dd_filter_item_8[Object.keys(filterValues.labels.dd_filter_item_8)[0]];
         labels['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
         labels['indicator_label'] = 'National Focal Point rating';
-        labels['domain'] = DM[this.indicatorProperties.indicator_id].domain_label;
+        labels['domain'] = DM[0].domain_label;
 
-
-
-        mdx_query = JSON.stringify(DM[this.indicatorProperties.indicator_id].query);
+        mdx_query = JSON.stringify(DM[0].query);
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
-
-        //console.log (mdx_query);
 
         $.ajax({
             async: false,
@@ -577,18 +573,51 @@ define([
             method: 'POST',
             contentType: "application/json; charset=utf-8",
             accept: "application/json, text/javascript, */*; q=0.01",
-            url: "http://hqlprfenixapp2.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/query/execute",
+            url: "http://fenixapps2.fao.org/pentaho/plugin/saiku/api/anonymousUser/query/execute",
             data: mdx_query,
             success: function(res) {
                 table_output = self._convert2TableData(res, dsd, labels);
                 //console.log(table_output);
-                self._tableRender(table_output, param);
             },
             error : function(res) {
                 console.log("error", res);
                 return;
             }
         });
+
+        // Then we fetch the current indicator
+
+
+        // Building the labels
+        labels['indicator'] = filterValues.labels.dd_filter_item_8[Object.keys(filterValues.labels.dd_filter_item_8)[0]];
+        labels['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
+        labels['indicator_label'] = DM[this.indicatorProperties.indicator_id].domain_label;
+        labels['domain'] = DM[this.indicatorProperties.indicator_id].domain_label;
+
+        mdx_query = JSON.stringify(DM[this.indicatorProperties.indicator_id].query);
+        mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
+
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'POST',
+            contentType: "application/json; charset=utf-8",
+            accept: "application/json, text/javascript, */*; q=0.01",
+            url: "http://fenixapps2.fao.org/pentaho/plugin/saiku/api/anonymousUser/query/execute",
+            data: mdx_query,
+            success: function(res) {
+                table_tobootstrap = table_output.concat(self._convert2TableData(res, dsd, labels));
+                //console.log(table_output);
+            },
+            error : function(res) {
+                console.log("error", res);
+                return;
+            }
+        });
+
+        // Finally, we generate the table
+
+        self._tableRender(table_tobootstrap, param);
 
         return;
 
