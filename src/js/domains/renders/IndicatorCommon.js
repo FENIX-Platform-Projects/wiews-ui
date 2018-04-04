@@ -7,11 +7,13 @@ define([
     "../../../config/events",
     "../../../config/domains/config",
     "../../../config/domains/filterSelectors",
+    "../../../config/domains/codelistPayloads",
+    "../renders/IndicatorCommonUtils",
     "fenix-ui-reports",
     "../../../nls/labels",
     "fenix-ui-bridge",
     "bootstrap-table"
-], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, Report, labels, Bridge, bootstrapTable) {
+], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, CL, ICUtils, Report, labels, Bridge, bootstrapTable) {
 
     'use strict';
 
@@ -99,6 +101,8 @@ define([
         this.bridge = new Bridge({
             environment : this.environment
         });
+
+        this.icutils = new ICUtils();
     };
 
     //This method is called after the dashboard render
@@ -261,7 +265,7 @@ define([
 
         if((filterConfig!=null)&&(typeof filterConfig != 'undefined')){
             var itemsArray = filterConfig.items;
-            var itemCount = 1, selectorConfig, id, type, defaultValue, title, choicesTitle, codelist, codes, maxItems, source, max, blacklist;
+            var itemCount = 1, selectorConfig, id, type, defaultValue, title, choicesTitle, codelist, codes, maxItems, source, max, blacklist
 
             itemsArray.forEach(function (item) {
 
@@ -314,6 +318,7 @@ define([
                             }
                         }
 
+
                         // //Setting title for all the selectors
                         // if((selectorConfig.template!=null)&&(typeof selectorConfig.template!= 'undefined')){
                         //     if((title!=null)&&(typeof title!= 'undefined')){
@@ -340,8 +345,7 @@ define([
                         if((maxItems!=null)&&(typeof maxItems!= 'undefined')){
                             if((selectorConfig.config!=null)&&(typeof selectorConfig.config!= 'undefined')){
                                 selectorConfig.config.maxItems = maxItems;
-                            }
-                            else{
+                            } else{
                                 selectorConfig.config = {maxItems: maxItems};
                             }
                         }
@@ -512,11 +516,28 @@ define([
         return iso;
     };
 
+    IndicatorCommon.prototype._getCodelist = function (coding) {
+        var codes = [],
+            output = [];
+
+        output = this.icutils.callElastic(CL[coding.toUpperCase()],true).hits;
+
+        _.each( output, function( element ) {
+            codes[element.value] = element.label;
+        });
+
+        return codes;
+    };
+
     IndicatorCommon.prototype._convert2TableData = function (input, structure, lab) {
         var self = this,
             str_lab = {},
             extendable = {},
-            output = [];
+            output = [],
+            region_code = 0,
+            geocodes = [];
+        
+        if (lab['geocode'] != "iso3") geocodes = self._getCodelist(lab['geocode']);
 
         _.each(structure, function(str_obj, str_idx){
             if (lab[str_obj] !== undefined) extendable[str_obj] = lab[str_obj];
@@ -526,11 +547,12 @@ define([
             if (index == 0) str_lab = object;
             if (object[0].type != "ROW_HEADER_HEADER") {
                 _.each(object, function(item, idx){
+                   if (item.type == "ROW_HEADER") region_code = Number(item.value);
                    if (item.type == "DATA_CELL") {
                        var obj = $.extend({}, extendable);
                        obj['element'] = labels[self.lang.toLowerCase()][str_lab[idx].value];
-                       obj['wiews_region'] = self.isos[object[0].value];
-                       obj['value'] = Number(item.value).toFixed(2);
+                       obj['wiews_region'] = (lab['geocode'] != "iso3") ?  geocodes[region_code] : self.isos[object[0].value];
+                       obj['value'] = item.value;
                        output.push(obj);
                    }
                 });
@@ -553,8 +575,8 @@ define([
             case "fao":
                 _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_FAO].[5000].[World].["+elem+"]") });
                 break;
-            case "m46":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_FAO].[5000].[World].["+elem+"]") });
+            case "m49":
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_M49].[1].[World].["+elem+"]") });
                 break;
             case "sdg":
                 _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_SDG].[5000].[World].["+elem+"]") });
@@ -572,6 +594,8 @@ define([
         }
         return geo_array;
     };
+
+
 
     //Creation of data for the Bootstrap Table of the Download Tab
     IndicatorCommon.prototype._DD_getTableData = function (param, newDashboardConfig, filterValues) {
@@ -603,6 +627,8 @@ define([
         lab['indicator'] = DM[this.indicatorProperties.indicator_id].element_label[this.indicatorProperties.indicator_id];
         lab['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
         lab['domain'] = DM[this.indicatorProperties.indicator_id].domain_label;
+        lab['indicator_label'] = DM[0].domain_label;
+        lab['geocode'] = filterValues.values.GEO.codelist;
 
         mdx_query = JSON.stringify($.extend(DM[0].cube, DM[0].query["0"]));
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
@@ -632,6 +658,7 @@ define([
         lab['indicator'] = DM[this.indicatorProperties.indicator_id].element_label[selection];
         lab['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
         lab['domain'] = DM[this.indicatorProperties.indicator_id].domain_label;
+        lab['indicator_label'] = "Indicator";
 
         mdx_query = JSON.stringify($.extend(DM[this.indicatorProperties.indicator_id].cube, DM[this.indicatorProperties.indicator_id].query[selection]));
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());

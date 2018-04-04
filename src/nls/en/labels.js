@@ -439,7 +439,7 @@ define(function () {
         "7_filter-dd_filter_item_12_choicesTitle3": "Units",
         "7_filter-dd_filter_item_12_choicesTitle4": "Null Values",
 
-        "7_filter-dd_filter_item_10_source1": "Stakeholders",
+        "7_filter-dd_filter_item_10_source1": "Include stakeholders",
 
         "7_dd_table_title_col_1": "Domain",
         "7_dd_table_title_col_2": "Country",
@@ -708,11 +708,11 @@ define(function () {
         "exsitu-search_search_added_element_clear" : "Clear Selection",
 
         "exsitu-search_table_accenumb" : "Accession number",
-        "exsitu-search_table_instcode" : "WIEWS code",
+        "exsitu-search_table_instcode" : "Holding institute",
         "exsitu-search_table_taxon" : "Taxon",
         "exsitu-search_table_storage" : "Storage",
         "exsitu-search_table_w_instcode" : "Institution",
-        "exsitu-search_table_acqdate" : "Acquisition Date",
+        "exsitu-search_table_acqdate" : "Acquisition date",
 
         "exsitu-search_search_from_cropmissing" : "You typed a crop without adding it. It may shows a very long table, if you want to proceed, click on the search button again",
         "exsitu-search_search_error_416" : "Too many results. Please narrow your search.",
