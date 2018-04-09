@@ -12,7 +12,7 @@
     "dev:cultivars": "cross-env SECTIONS=cultivars NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "dev:domains": "cross-env SECTIONS=domains NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot --host 10.202.36.40",
     "dev:organizations": "cross-env SECTIONS=organizations NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
-    "dev:exsitu": "cross-env SECTIONS=exsitu NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
+    "dev:maps": "cross-env SECTIONS=maps NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "dev:exsitu-search": "cross-env SECTIONS=exsitu-search NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --host 10.202.36.40",
     "dev:sdg": "cross-env SECTIONS=sdg NODE_ENV=develop webpack-dev-server --content-base dev --display-error-details --progress --color --inline --hot",
     "build": "cross-env SECTIONS=base,countryProfile,cultivars,domains,organizations,sdg,exsitu,exsitu-search NODE_ENV=production webpack --display-error-details ",
@@ -22,7 +22,7 @@
     "build:domains": "cross-env SECTIONS=domains NODE_ENV=production webpack --display-error-details ",
     "build:organizations": "cross-env SECTIONS=organizations NODE_ENV=production webpack --display-error-details ",
     "build:sdg": "cross-env SECTIONS=sdg NODE_ENV=production webpack --display-error-details ",
-    "build:exsitu": "cross-env SECTIONS=exsitu NODE_ENV=production webpack --display-error-details",
+    "build:maps": "cross-env SECTIONS=exsitu NODE_ENV=production webpack --display-error-details",
     "build:stats": "cross-env SECTIONS=base,countryProfile,cultivars,domains,organizations,sdg NODE_ENV=production webpack --display-error-details --profile --json  > stats.json"
   },
   "repository": {

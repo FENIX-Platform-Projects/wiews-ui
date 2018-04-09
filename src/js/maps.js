@@ -4,8 +4,8 @@ define([
     "underscore",
     "load-google-maps-api-2",
     "../config/config",
-    "../config/exsitu/config",
-    "../html/exsitu/template.hbs",
+    "../config/maps/config",
+    "../html/maps/template.hbs",
     "../nls/labels",
     "json-2-csv",
     "file-saver",
@@ -21,7 +21,7 @@ define([
     var Clang = C.lang.toLowerCase();
 
     var s = {
-        EL: "#exsitu",
+        EL: "#maps",
         TABLE : "#table"
         },
         exsitu_search_url = "http://www.fao.org/wiews/data/search/",
