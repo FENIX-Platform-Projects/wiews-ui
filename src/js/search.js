@@ -6,7 +6,7 @@ define([
     "fenix-ui-reports",
     "fenix-ui-filter",
     "../config/config",
-    "../html/exsitu-search/template.hbs",
+    "../html/search/template.hbs",
     "../nls/labels",
     "json-2-csv",
     "file-saver",
@@ -40,7 +40,7 @@ define([
         FENIX_FILTER : "#fenixfilter"
     };
 
-    function Maps() {
+    function Search() {
         console.clear();
         // silent trace
         log.setLevel("silent");
@@ -51,13 +51,13 @@ define([
         this._bindEventListeners();
     };
 
-    Maps.prototype._validateConfig = function () {
+    Search.prototype._validateConfig = function () {
 
         if (!C.lang) alert("Please specify a valid LANGUAGE in config/config.js");
 
     };
 
-    Maps.prototype._callServices = function (payload) {
+    Search.prototype._callServices = function (payload) {
         var table_data = [];
         $('[data-role=messages]').hide();
         $.ajax({
@@ -95,7 +95,7 @@ define([
 
     };
 
-    Maps.prototype._callElastic = function (payload, path, full) {
+    Search.prototype._callElastic = function (payload, path, full) {
         var response_data = {
             total : -1,
             hits : []
@@ -142,7 +142,7 @@ define([
 
     };
 
-    Maps.prototype._getCodelists = function (payload_selection, format) {
+    Search.prototype._getCodelists = function (payload_selection, format) {
         var codelist = [];
         var payload = {
             "countries": {
@@ -178,7 +178,7 @@ define([
         return codelist;
     };
 
-    Maps.prototype._exportList = function () {
+    Search.prototype._exportList = function () {
         var flow_model =  this.flowmodel;
         flow_model.flow[2].rid = { "uid" : "exsitu_data" };
         if (flow_model.flow[0].parameters.accenumb == null) delete flow_model.flow[0].parameters.accenumb;
@@ -190,7 +190,7 @@ define([
         });
     };
 
-    Maps.prototype._exportElastic = function () {
+    Search.prototype._exportElastic = function () {
 
         this.elastic_export.size = 2500;
 
@@ -226,7 +226,7 @@ define([
         return export_csv;
     };
 
-    Maps.prototype._isEmptyQuery = function () {
+    Search.prototype._isEmptyQuery = function () {
         var isempty = true,
             fenixvalues = this.filter.getValues();
         if (
@@ -247,12 +247,12 @@ define([
         return isempty;
     };
 
-    Maps.prototype._getParameterByName = function (name) {
+    Search.prototype._getParameterByName = function (name) {
         var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
         return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
     };
 
-    Maps.prototype._initTable = function(data) {
+    Search.prototype._initTable = function(data) {
         var self = this;
         self.offsetPage = 0;
         if (this.instcode.length) this._fillResults(data[0]);
@@ -276,7 +276,7 @@ define([
         this.tabledata = data;
     };
 
-    Maps.prototype._initTablePaginated = function(data) {
+    Search.prototype._initTablePaginated = function(data) {
         var self = this;
         self.offsetPage = 0;
         $(s.TABLE).bootstrapTable('destroy');
@@ -335,7 +335,7 @@ define([
 
     };
 
-    Maps.prototype._bloodHoundPrefetch = function (which) {
+    Search.prototype._bloodHoundPrefetch = function (which) {
         var self = this;
         var rest_service = services_url;
         return new Bloodhound({
@@ -374,7 +374,7 @@ define([
         });
     };
 
-    Maps.prototype._bloodHoundPrefetchElastic = function (which) {
+    Search.prototype._bloodHoundPrefetchElastic = function (which) {
         var self = this;
         var rest_service = services_el;
         return new Bloodhound({
@@ -406,7 +406,7 @@ define([
         });
     };
 
-    Maps.prototype._speciesTransform = function (arrayofspecies) {
+    Search.prototype._speciesTransform = function (arrayofspecies) {
         var output = [];
 
         _.each(arrayofspecies, function(element) {
@@ -416,7 +416,7 @@ define([
         return output;
     };
 
-    Maps.prototype._speciesTransformElastic = function (arrayofspecies) {
+    Search.prototype._speciesTransformElastic = function (arrayofspecies) {
         var output = [];
         _.each(arrayofspecies, function(element) {
             output.push(element.key);
@@ -424,7 +424,7 @@ define([
         return output;
     };
 
-    Maps.prototype._attach = function () {
+    Search.prototype._attach = function () {
         var self = this;
 
         $(s.EL).html(template(labels[Clang]));
@@ -608,7 +608,7 @@ define([
 
     };
 
-    Maps.prototype._getISO = function () {
+    Search.prototype._getISO = function () {
         var iso = [];
         var url = "http://fenix.fao.org/d3s_wiews/msd/resources/uid/ISO3";
         $.ajax({
@@ -628,7 +628,7 @@ define([
         return iso;
     };
 
-    Maps.prototype._fillResults = function(content) {
+    Search.prototype._fillResults = function(content) {
         var self = this;
         _.each(content, function(row_value, row_name) {
             var content = row_value;
@@ -652,7 +652,7 @@ define([
         });
     };
 
-    Maps.prototype._initVariables = function () {
+    Search.prototype._initVariables = function () {
 
         this.instcode = ((this._getParameterByName('instcode')) ? this._getParameterByName('instcode') : "");
         this.country_search = ((this._getParameterByName('country')) ? this._getParameterByName('country') : "");
@@ -704,7 +704,7 @@ define([
 
     };
 
-    Maps.prototype._statesManagement = function (whichstate, payload, frombutton) {
+    Search.prototype._statesManagement = function (whichstate, payload, frombutton) {
         $('[data-role=messages]').hide();
         $('div#exsitu-search-ux-loader').hide();
         this.warning = false;
@@ -742,7 +742,7 @@ define([
 
     };
 
-    Maps.prototype._preparePayload = function (freetext) {
+    Search.prototype._preparePayload = function (freetext) {
         if (freetext) alert('Check configuration');
 
         var filter_values = this.filter.getValues(),
@@ -819,7 +819,7 @@ define([
         return payload;
     };
 
-    Maps.prototype._preparePayloadElastic = function (from) {
+    Search.prototype._preparePayloadElastic = function (from) {
 
         var filter_values = this.filter.getValues(),
             filter_taxon = $('#search_taxon').val(),
@@ -976,7 +976,7 @@ define([
         return payload;
     };
 
-    Maps.prototype._prepareFilterPayload = function (which, text) {
+    Search.prototype._prepareFilterPayload = function (which, text) {
         var selected_year, selected_wcr,
             filter_values = this.filter.getValues();
 
@@ -1079,7 +1079,7 @@ define([
 
     };
 
-    Maps.prototype._prepareElasticPayload = function (which, text) {
+    Search.prototype._prepareElasticPayload = function (which, text) {
         var selected_year, selected_wcr,
             filter_values = this.filter.getValues();
 
@@ -1237,12 +1237,12 @@ define([
 
     };
 
-    Maps.prototype._searchfromkeyboard = function (freetext) {
+    Search.prototype._searchfromkeyboard = function (freetext) {
         freetext ? this._initTablePaginated(this._callServices(this._preparePayload($('#search_omnibox').val()))) : this._initTable(this._callServices(this._preparePayload()));
         self._statesManagement('results');
     };
 
-    Maps.prototype._executeSearch = function () {
+    Search.prototype._executeSearch = function () {
         var self = this;
         $('[data-role=messages]').hide();
         if (this._isEmptyQuery()) {
@@ -1271,7 +1271,7 @@ define([
         },100);
     };
 
-    Maps.prototype._resetForm = function (saveyear) {
+    Search.prototype._resetForm = function (saveyear) {
         // Reset variables and boxes
         $('[data-role=messages]').hide();
         this.warning = false;
@@ -1296,7 +1296,7 @@ define([
         history.pushState({ page : "initial" }, "Search", this._RemoveParameterFromUrl(window.location.href.split('#')[0],'instcode'));
     };
 
-    Maps.prototype._bindYearListener = function () {
+    Search.prototype._bindYearListener = function () {
         var self = this;
         $('[data-selector=search_year]').on('change', function(){
             self._resetForm(true);
@@ -1304,7 +1304,7 @@ define([
     };
 
     // Events
-    Maps.prototype._bindEventListeners = function () {
+    Search.prototype._bindEventListeners = function () {
         var self = this;
 
         this.filter.on('ready', function(){
@@ -1548,13 +1548,13 @@ define([
 
     };
 
-    Maps.prototype._RemoveParameterFromUrl = function(url, parameter) {
+    Search.prototype._RemoveParameterFromUrl = function(url, parameter) {
         return url
             .replace(new RegExp('[?&]' + parameter + '=[^&#]*(#.*)?$'), '$1')
             .replace(new RegExp('([?&])' + parameter + '=[^&]*&'), '$1');
     };
 
-    Maps.prototype._importThirdPartyCss = function () {
+    Search.prototype._importThirdPartyCss = function () {
 
         //SANDBOXED BOOTSTRAP
         require("../css/sandboxed-bootstrap.css");
@@ -1576,6 +1576,6 @@ define([
 
     };
 
-    return new Maps();
+    return new Search();
 
 });

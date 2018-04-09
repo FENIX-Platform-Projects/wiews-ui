@@ -30,7 +30,7 @@ define([
         //google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
         google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
 
-    function Exsitu() {
+    function Maps() {
         console.clear();
         // silent trace
         log.setLevel("silent");
@@ -41,13 +41,13 @@ define([
         this._bindEventListeners();
     };
 
-    Exsitu.prototype._validateConfig = function () {
+    Maps.prototype._validateConfig = function () {
         if (!C.lang) alert("Please specify a valid LANGUAGE in config/config.js");
         GoogleMaps.key = google_apikey;
         GoogleMaps.language = 'en';
     };
 
-    Exsitu.prototype._convert2TableData = function (input) {
+    Maps.prototype._convert2TableData = function (input) {
         var output = [];
         var year = $('#year').val().split(/[^0-9]/).join("");
 
@@ -68,7 +68,7 @@ define([
         return output;
     };
 
-    Exsitu.prototype._convert2GEOJson = function (input) {
+    Maps.prototype._convert2GEOJson = function (input) {
         var geoJSON = {
             "type": "FeatureCollection",
             "features" : []
@@ -104,7 +104,7 @@ define([
 
     };
 
-    Exsitu.prototype._getData = function (year) {
+    Maps.prototype._getData = function (year) {
 
         //return exsituC.dev_wiews_2016_map_saiku;
 
@@ -116,7 +116,7 @@ define([
 
     };
 
-    Exsitu.prototype._processMap = function (data_toshow) {
+    Maps.prototype._processMap = function (data_toshow) {
 
         var self = this;
 
@@ -208,7 +208,7 @@ define([
 
     };
 
-    Exsitu.prototype._bootstrapTable = function (data) {
+    Maps.prototype._bootstrapTable = function (data) {
         var self = this;
         $(s.TABLE).bootstrapTable('destroy');
         $(s.TABLE).bootstrapTable({
@@ -228,7 +228,7 @@ define([
         });
     };
 
-    Exsitu.prototype._attach = function () {
+    Maps.prototype._attach = function () {
         $(s.EL).html(template(labels[Clang]));
 
         $('[data-role=details]').hide();
@@ -248,7 +248,7 @@ define([
 
     };
 
-    Exsitu.prototype._convert2CSV = function (data) {
+    Maps.prototype._convert2CSV = function (data) {
         _.each(data, function(object) {
             object['name'] = "\""+object['name']+"\"";
         });
@@ -256,7 +256,7 @@ define([
 
     };
 
-    Exsitu.prototype._initVariables = function () {
+    Maps.prototype._initVariables = function () {
 
         this.$el = $(s.EL);
         this.lang = Clang;
@@ -266,7 +266,7 @@ define([
 
     };
 
-    Exsitu.prototype._bindEventListeners = function () {
+    Maps.prototype._bindEventListeners = function () {
 
         var self = this;
 
@@ -307,7 +307,7 @@ define([
 
     };
 
-    Exsitu.prototype._importThirdPartyCss = function () {
+    Maps.prototype._importThirdPartyCss = function () {
 
 
         //SANDBOXED BOOTSTRAP
@@ -331,6 +331,6 @@ define([
 
     };
 
-    return new Exsitu();
+    return new Maps();
 
 });
