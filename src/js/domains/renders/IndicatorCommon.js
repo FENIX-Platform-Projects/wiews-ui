@@ -86,8 +86,6 @@ define([
         // pub/sub
         this.channels = {};
 
-        this.isos = this._getISO();
-
         if (this.report && $.isFunction(this.report.dispose)) {
             this.report.dispose();
         }
@@ -103,6 +101,7 @@ define([
         });
 
         this.icutils = new ICUtils();
+        this.isos = this._getISO();
     };
 
     //This method is called after the dashboard render
@@ -497,23 +496,17 @@ define([
     }
 
     IndicatorCommon.prototype._getISO = function () {
-        var iso = [];
-        var url = "http://fenix.fao.org/d3s_wiews/msd/resources/uid/ISO3";
-        $.ajax({
-            async: false,
-            dataType: 'json',
-            method: 'GET',
-            contentType: "application/json; charset=utf-8",
-            url: url,
-            success: function(res) {
-                _.each( res.data, function( element ) {
-                    iso[element.code] = element.title.EN;
-                });
-                //console.log(iso);
-            }
+        var iso = [],
+            output = [];
+
+        output = this.icutils.callElastic(CL['FAO'],false).hits;
+
+        _.each( output, function( element ) {
+            iso[element.value] = element.label;
         });
 
         return iso;
+
     };
 
     IndicatorCommon.prototype._getCodelist = function (coding) {
@@ -612,6 +605,8 @@ define([
 
         param.tableColumns = newDashboardConfig.tableColumns;
         dsd = param.tableColumns;
+        
+        console.log(filterValues);
 
         select_array = filterValues.values.dd_filter_item_8;
         index = select_array.indexOf(this.indicatorProperties.indicator_id);
@@ -632,6 +627,7 @@ define([
 
         mdx_query = JSON.stringify($.extend(DM[0].cube, DM[0].query["0"]));
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
+
 
         $.ajax({
             async: false,
@@ -659,6 +655,10 @@ define([
         lab['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
         lab['domain'] = DM[this.indicatorProperties.indicator_id].domain_label;
         lab['indicator_label'] = "Indicator";
+
+        if (filterValues.values.dd_filter_item_10[0] == "stk") selection = filterValues.values.dd_filter_item_10[0];
+        
+        console.log(geo_array);
 
         mdx_query = JSON.stringify($.extend(DM[this.indicatorProperties.indicator_id].cube, DM[this.indicatorProperties.indicator_id].query[selection]));
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
@@ -770,6 +770,7 @@ define([
 
     //Filter Selection Action
     IndicatorCommon.prototype.onSelectFilter = function (hostParam, filterResponse) {
+
 
         var commonParam = {bridge : this.bridge};
         var res = this.indicatorProcesses.onSelectFilter(hostParam, filterResponse, commonParam);

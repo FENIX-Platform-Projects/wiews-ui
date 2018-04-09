@@ -229,12 +229,16 @@ define([
             //The geo element has been checked and updated
             newValues = this._geoItemSelectionValidation(values);
 
-
-            return newValues;
-
+            //console.log(newValues.GEO)
 
             if((newValues!= null) && (typeof newValues!= 'undefined'))
             {
+
+                if (newValues.GEO.values.length > 0) valid = true;
+                // No Controls
+                //return newValues;
+                /*
+                console.log(newValues.GEO.values.length);
                 for(var key in newValues) {
                     if(key== s.geo_property)
                     {
@@ -260,6 +264,7 @@ define([
                         break;
                     }
                 }
+                */
             }
         }
 
@@ -415,7 +420,6 @@ define([
         var self = this;
         var anchor;
         $( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function( evt ) {
-
             // Read the a href of the anchor that was clicked
             anchor = $( evt.target ).attr( 'href' );
             // Trim the leading '#' from the href attribute
@@ -424,19 +428,22 @@ define([
                 switch (anchor){
                     case s.filter_items.tabItem_1:
                         s.dd_tab_active.geo_item = anchor;
-                        break;
+                        var obj = {};
+                        obj[s.filter_items.item_1] = ["1"];
+                        self.filter.setValues(obj);
+                    break;
                     case s.filter_items.tabItem_4:
                         s.dd_tab_active.geo_item = anchor;
                         var obj = {};
-                        obj[s.filter_items.item_2] = ["1"];
+                        obj[s.filter_items.item_3] = ["1"];
                         self.filter.setValues(obj);
-                        break;
+                    break;
                     case s.filter_items.tabItem_7:
                         s.dd_tab_active.geo_item = anchor;
                         var obj = {};
                         obj[s.filter_items.item_5] = ["1"];
                         self.filter.setValues(obj);
-                        break;
+                    break;
                 }
                 if((s.filterDivMsg1!=null)&&(typeof s.filterDivMsg1!='undefined')){
                     s.filterDivMsg1.html('');
@@ -490,8 +497,6 @@ define([
 
     IndicatorProcesses22.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
 
-
-
         var filterDivMsg1 = hostParam.filterDivMsg_1;
         if((filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined')) {
             filterDivMsg1.html('');
@@ -536,6 +541,8 @@ define([
     }
 
     IndicatorProcesses22.prototype.updateVariables = function (obj) {
+
+            console.log('not really')
 
         this.filter = obj.filter;
         this.filter_host_config = obj.filter_host_config;
