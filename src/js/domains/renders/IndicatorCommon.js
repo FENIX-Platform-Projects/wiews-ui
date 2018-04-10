@@ -511,9 +511,10 @@ define([
 
     IndicatorCommon.prototype._getCodelist = function (coding) {
         var codes = [],
+            geo = coding.toUpperCase() + "_R",
             output = [];
 
-        output = this.icutils.callElastic(CL[coding.toUpperCase()],true).hits;
+        output = this.icutils.callElastic(CL[geo],true).hits;
 
         _.each( output, function( element ) {
             codes[element.value] = element.label;
@@ -606,8 +607,6 @@ define([
         param.tableColumns = newDashboardConfig.tableColumns;
         dsd = param.tableColumns;
         
-        console.log(filterValues);
-
         select_array = filterValues.values.dd_filter_item_8;
         index = select_array.indexOf(this.indicatorProperties.indicator_id);
         if (index > -1) select_array.splice(index, 1);
@@ -658,8 +657,6 @@ define([
 
         if (filterValues.values.dd_filter_item_10[0] == "stk") selection = filterValues.values.dd_filter_item_10[0];
         
-        console.log(geo_array);
-
         mdx_query = JSON.stringify($.extend(DM[this.indicatorProperties.indicator_id].cube, DM[this.indicatorProperties.indicator_id].query[selection]));
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
 

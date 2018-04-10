@@ -445,7 +445,7 @@ define(function () {
         "22_filter-dd_filter_item_12_choicesTitle3": "Units",
         "22_filter-dd_filter_item_12_choicesTitle4": "Null Values",
 
-        "22_filter-dd_filter_item_10_source1": "Include stakeholders",
+        "22_filter-dd_filter_item_10_source1": "Include",
 
         "22_dd_table_title_col_1": "Domain",
         "22_dd_table_title_col_2": "Country",
@@ -724,6 +724,7 @@ define(function () {
         "exsitu-search_search_error_416" : "Too many results. Please narrow your search.",
         "exsitu-search_search_is_empty" : "Selection currently empty",
         "exsitu-search_search_came_empty" : "No result found with the current seleciton.",
+        "exsitu-search_search_storage" : "Type of germplasm storage",
         "exsitu-search_search_orgalert_message" : "Please provide a valid search.",
 
         // Other stuff

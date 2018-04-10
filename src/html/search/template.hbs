@@ -128,10 +128,12 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <!-- Empty, for now -->
+                <div class="col-md-5">
+                    <div data-selector="search_storage" class="form-group">
+                        <label for="search_storage">{{exsitu-search_search_storage}}</label>
+                    </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <div class="pull-right">
                         <div style="margin-top: 24px">
                             <button id="adv_clear_button" type="button" class="btn btn-primary"><span class="fa fa-times"></span></button>
@@ -215,7 +217,7 @@
                                 <div class="GPA-group">
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Holding institute code and name</div>
-                                        <div class="GPA-cell txt"><a data-GPAIndex="w_instcode" href="#"><span data-GPAIndex="stakeholder_fullname"></span></a></div>
+                                        <div class="GPA-cell txt"><a target="_blank" data-GPAIndex="w_instcode" href="#"><span data-GPAIndex="stakeholder_fullname"></span></a></div>
                                     </div>
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Holding institute country</div>
@@ -271,6 +273,10 @@
                                     <div class="GPA-row">
                                         <div class="GPA-cell lbl">Status under the Multilateral System</div>
                                         <div data-GPAIndex="mlsstat" class="GPA-cell txt"></div>
+                                    </div>
+                                    <div class="GPA-row">
+                                        <div class="GPA-cell lbl">Data Owner</div>
+                                        <div data-GPAIndex="dataowner" class="GPA-cell txt"></div>
                                     </div>
                                 </div>
                             </div>

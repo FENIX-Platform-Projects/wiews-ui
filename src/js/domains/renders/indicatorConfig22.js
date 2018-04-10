@@ -122,6 +122,12 @@ define([
                             //clBlackList: ['WITC','WITC_t']
                         },
                         {
+                            id: 'dd_filter_item_6',
+                            type: 'radio',
+                            default: DOWNLOAD_DV["22_filter-dd_filter_item_6"],
+                            choicesTitle: [labels[Clang]["22_filter-dd_filter_item_6_choicesTitle1"], labels[Clang]["22_filter-dd_filter_item_6_choicesTitle2"]]
+                        },
+                        {
                             id: 'dd_filter_item_8',
                             type: 'tree',
                             default: DOWNLOAD_DV["22_filter-dd_filter_item_8"],

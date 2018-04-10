@@ -130,19 +130,24 @@ define([
     IndicatorCommonUtils.prototype.geoItemSelectionValidation = function (paramsForGeoValidation) {
 
         //console.log('we are geovalidators', paramsForGeoValidation);
-
-        var newValues = paramsForGeoValidation.values.values[paramsForGeoValidation.geo_SelectedItem], codelist = paramsForGeoValidation.geo_SelectedCode, listType = '', values = paramsForGeoValidation.values;
+        var newValues = paramsForGeoValidation.values.values[paramsForGeoValidation.geo_SelectedItem],
+            codelist = paramsForGeoValidation.geo_SelectedCode,
+            listType = '',
+            values = paramsForGeoValidation.values;
         var listTypeError = false;
         var regionFilterItem = paramsForGeoValidation.regionFilterItem, specialGroupFilterItem = paramsForGeoValidation.specialGroupFilterItem;
         var checkboxRegionItem = paramsForGeoValidation.checkboxRegionItem, checkboxSpecialGroupItem = paramsForGeoValidation.checkboxSpecialGroupItem;
         var toDelete = paramsForGeoValidation.toDelete;
 
-        //console.log('the value(s) I want is', newValues, 'from', codelist);
-        /*
+        //if((paramsForGeoValidation.tab_active_geo_item!=null)&&(typeof paramsForGeoValidation.tab_active_geo_item != 'undefined')) console.log('tab_active_geo_item', paramsForGeoValidation.tab_active_geo_item)
 
+        //console.log('the value(s) I want is', newValues, 'from', codelist);
+
+        /*
         if((paramsForGeoValidation.tab_active_geo_item!=null)&&(typeof paramsForGeoValidation.tab_active_geo_item != 'undefined')){
             switch (paramsForGeoValidation.tab_active_geo_item){
                 case paramsForGeoValidation.filter_items_tabItem_first:
+                    console.log('first')
                     newValues = values.values[paramsForGeoValidation.filter_items_item_first];
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
                         codelist = s.choices_code.iso3;
@@ -153,6 +158,7 @@ define([
                     }
                     break;
                 case paramsForGeoValidation.filter_items_tabItem_second:
+                    console.log('second')
                     newValues = values.values[paramsForGeoValidation.geoCodelistSelector];
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
                         codelist = this._geoSelector_getCodelist(values.values[paramsForGeoValidation.filter_items_codelistItem_tabItem_second], paramsForGeoValidation.filter_items_codelistItem_tabItem_second, regionFilterItem, specialGroupFilterItem)
@@ -171,6 +177,7 @@ define([
                     }
                     break;
                 case paramsForGeoValidation.filter_items_tabItem_third:
+                    console.log('third')
                     newValues = values.values[paramsForGeoValidation.geoCodelistSelector];
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
                         codelist = this._geoSelector_getCodelist(values.values[paramsForGeoValidation.filter_items_codelistItem_tabItem_third], paramsForGeoValidation.filter_items_codelistItem_tabItem_third, regionFilterItem, specialGroupFilterItem)
@@ -191,11 +198,9 @@ define([
 
         var updatedValues = {};
         updatedValues.values = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
-        //updatedValues.listType = 'total';
+        updatedValues.listType = 'total';
         updatedValues.listTypeError = listTypeError;
         updatedValues.codelist = codelist;
-
-        //console.log(updatedValues);
 
         return updatedValues;
     }
@@ -266,15 +271,11 @@ define([
     //To Update the selection done in the geo selector
     IndicatorCommonUtils.prototype._geoSelector_valuesUpdate = function (values, newValues, toDelete, codelist, listType) {
         
-        //console.log((values, newValues, toDelete, codelist, listType));
-
         toDelete.forEach(function (item) {
             delete values[item];
         });
 
         values[s.geo_property] = {codelist : codelist, listType: listType, values : newValues};
-
-        //console.log(values);
 
         return values;
     }

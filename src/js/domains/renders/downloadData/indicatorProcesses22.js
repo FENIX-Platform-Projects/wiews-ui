@@ -136,7 +136,7 @@ define([
             item_4_3 : "dd_filter_item_4_3",
             item_4_4 : "dd_filter_item_4_4",
             item_5 : "dd_filter_item_5",
-            //item_6 : "dd_filter_item_6",
+            item_6 : "dd_filter_item_6",
             item_7 : "dd_filter_item_7",
             item_7_1 : "dd_filter_item_4_5",
             item_7_2 : "dd_filter_item_4_6",
@@ -206,9 +206,7 @@ define([
     }
 
     IndicatorProcesses22.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
-        var index = 1;
-
-        for(index = 1; index<= codelistMaxIndex; index++) {
+        for(var index = 1; index<= codelistMaxIndex; index++) {
             var indicatorFilterSection = this.el.find('[data-selector = "'+item_to_show_prefix+'_'+index+'"]');
             indicatorFilterSection.hide();
             if((indicatorFilterSection!=null)&&(typeof indicatorFilterSection!='undefined')&&(index == item_to_show)){
@@ -297,12 +295,7 @@ define([
             s.filterDivMsg1.show();
         }
 
-        if(!valid){
-            newValues = '';
-        }
-        else{
-            console.log("true")
-        }
+        if(!valid) newValues = '';
 
         return newValues;
     }
@@ -315,7 +308,7 @@ define([
         paramsForGeoValidation.specialGroupFilterItem = s.filter_items.item_5;
         paramsForGeoValidation.checkboxRegionItem = s.filter_items.item_3;
         paramsForGeoValidation.checkboxSpecialGroupItem = s.filter_items.item_6;
-        paramsForGeoValidation.toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_3, s.filter_items.item_4_1, s.filter_items.item_4_2, s.filter_items.item_4_3, s.filter_items.item_4_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7_1, s.filter_items.item_7_2];
+        paramsForGeoValidation.toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_2_1, s.filter_items.item_2_2, s.filter_items.item_2_3, s.filter_items.item_3, s.filter_items.item_4_1, s.filter_items.item_4_2, s.filter_items.item_4_3, s.filter_items.item_4_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7_1, s.filter_items.item_7_2];
         paramsForGeoValidation.tab_active_geo_item = s.dd_tab_active.geo_item;
         paramsForGeoValidation.filter_items_tabItem_first = s.filter_items.tabItem_1;
         paramsForGeoValidation.filter_items_tabItem_second = s.filter_items.tabItem_4;
@@ -541,8 +534,6 @@ define([
     }
 
     IndicatorProcesses22.prototype.updateVariables = function (obj) {
-
-            console.log('not really')
 
         this.filter = obj.filter;
         this.filter_host_config = obj.filter_host_config;

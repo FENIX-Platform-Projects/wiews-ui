@@ -19,15 +19,16 @@ define([
     "use strict";
     var Clang = C.lang.toLowerCase(),
         services_url = "http://fenix.fao.org/d3s_wiews/processes",
-        services_el = "http://hqlqawiews1.hq.un.fao.org:9200/",
+        services_el = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchApi",
         service_path = {
-            "wiews_results" : "exsitu/exsitu/_search",
-            "countries" : "countries/countries/_search",
-            "biostatus" : "biostatofacc/biostatofacc/_search",
-            "wiews_exsitu_crops_filter" : "crops/crops/_search",
-            "wiews_exsitu_institute_filter" : "exsitu/exsitu/_search",
-            "wiews_exsitu_genus_filter" : "exsitu/exsitu/_search",
-            "wiews_exsitu_species_filter" : "exsitu/exsitu/_search",
+            "wiews_results" : "?index=exsitu&multiSearch=false",
+            "countries" : "?index=countries&multiSearch=false",
+            "biostatus" : "?index=biostatofacc&multiSearch=false",
+            "germplasm_storage" : "?index=germplasm_storage&multiSearch=false",
+            "wiews_exsitu_crops_filter" : "?index=crops&multiSearch=false",
+            "wiews_exsitu_institute_filter" : "?index=exsitu&multiSearch=false",
+            "wiews_exsitu_genus_filter" : "?index=exsitu&multiSearch=false",
+            "wiews_exsitu_species_filter" : "?index=exsitu&multiSearch=false",
             "elastic_export_fetch" : "exsitu/exsitu/_search?scroll=1m",
             "elastic_export_consume" : "_search/scroll"
         },
@@ -52,9 +53,7 @@ define([
     };
 
     Search.prototype._validateConfig = function () {
-
         if (!C.lang) alert("Please specify a valid LANGUAGE in config/config.js");
-
     };
 
     Search.prototype._callServices = function (payload) {
@@ -105,7 +104,7 @@ define([
             async: false,
             dataType: 'json',
             method: 'POST',
-            contentType: "application/json; charset=utf-8",
+            contentType: "text/plain; charset=utf-8",
             url: services_el + service_path[path],
             data: JSON.stringify(payload),
             success: function(res) {
@@ -154,17 +153,25 @@ define([
                 "query": {"match_all": {}},
                 "size": 1000,
                 "_source": ["bio_stat_of_accesion_id","bio_stat_of_accesion_name"]
+            },
+            "germplasm_storage": {
+                "query": {"match_all": {}},
+                "_source": ["germplasm_storage_id","germplasm_storage_name"],
+                "sort": [ {"_id": {"order": "asc"}} ]
             }
         };
+        console.log(payload_selection);
+
         $.ajax({
             async: false,
             dataType: 'json',
             method: 'POST',
             data: JSON.stringify(payload[payload_selection]),
-            contentType: "application/json;",
+            contentType: "text/plain; charset=utf-8",
             url: services_el + service_path[payload_selection],
             success: function(res) {
                 _.each( res.hits.hits, function( element ) {
+                   // console.log(element);
                     if (format) {
                         // plain
                         codelist[element._source[payload[payload_selection]._source[0]]] = element._source[payload[payload_selection]._source[1]];
@@ -175,6 +182,8 @@ define([
                 });
             }
         });
+
+        console.log(codelist);
         return codelist;
     };
 
@@ -235,6 +244,7 @@ define([
             fenixvalues.values.search_country_institute.length > 0 ||
             fenixvalues.values.search_country_origin.length > 0 ||
             fenixvalues.values.search_statusofaccession.length > 0 ||
+            fenixvalues.values.search_storage.length > 0 ||
             /*
             $('#search_crop').val() == '' ||
             $('#search_genus').val() == '' ||
@@ -305,7 +315,7 @@ define([
                 output.rows.push({
                     "w_instcode" : process._source.stakeholder_id,
                     "accenumb" : process._source.accession_number,
-                    "stakeholder_fullname" : process._source.stakeholder_fullname,
+                    "stakeholder_fullname" : process._source.stakeholder_id_fullname,
                     "taxon" : process._source.taxon_name,
                     "acqdate" : process._source.acquisition_date,
                     "storage" : process._source.type_of_germplasm_storage,
@@ -316,7 +326,8 @@ define([
                     "genebanks" : process._source.genebank_holding_safety_duplication,
                     "declatitude" : process._source.latitud_of_collecting_site,
                     "declongitude" : process._source.longitud_of_collecting_site,
-                    "mlsstat" : process._source.status_under_multilateral_system
+                    "mlsstat" : process._source.status_under_multilateral_system,
+                    "dataowner" : process._source.stakeholder_id_fullname,
                 });
             });
             output.total = input.total;
@@ -386,7 +397,7 @@ define([
                 prepare: function (query, settings) {
                     settings.async = false;
                     settings.type = "POST";
-                    settings.contentType = "application/json; charset=utf-8";
+                    settings.contentType = "text/plain; charset=utf-8";
                     settings.dataType = 'json';
                     settings.data = JSON.stringify(self._prepareElasticPayload(which,query));
                     return settings;
@@ -446,6 +457,7 @@ define([
         var prefetchGenus = this._bloodHoundPrefetchElastic('wiews_exsitu_genus_filter');
         var codelist_ISO3 = this._getCodelists('countries');
         var codelist_BIOS = this._getCodelists('biostatus');
+        var codelist_Stor = this._getCodelists('germplasm_storage');
 
         $('#search_crop').typeahead(this.tya_options,
             {
@@ -551,6 +563,17 @@ define([
                         "source": codelist_BIOS,
                         "config" : {
                             "placeholder": labels[Clang]['exsitu-search_search_statusofaccession'],
+                            plugins: ['remove_button']
+                        },
+                        sort: false
+                    }
+                },
+                "search_storage" : {
+                    selector: {
+                        id: "dropdown",
+                        "source": codelist_Stor,
+                        "config" : {
+                            "placeholder": labels[Clang]['exsitu-search_search_storage'],
                             plugins: ['remove_button']
                         },
                         sort: false
@@ -830,7 +853,8 @@ define([
             elastic_genus = [],
             mlstatus = null,
             origin_country = "",
-            biostat = "";
+            biostat = "",
+            typeofstorage ="";
             //elastic_genus = "";
 
 
@@ -843,6 +867,7 @@ define([
             if (filter_values.values.search_statusmultilateral.length > 0)  mlstatus = (filter_values.values.search_statusmultilateral[0] == 'true');
             if (filter_values.values.search_country_origin.length > 0) origin_country = filter_values.values.search_country_origin.join(" ");
             if (filter_values.values.search_statusofaccession.length > 0) biostat = filter_values.values.search_statusofaccession.join(" ");
+            if (filter_values.values.search_storage.length > 0) typeofstorage = filter_values.values.search_storage.join(" ");
         }
 
         _.each(this.genus_species, function(object){
@@ -866,7 +891,8 @@ define([
             "from": from,
             "_source": [
                 "stakeholder_id",
-                "stakeholder_fullname",
+                "stakeholder_id_fullname",
+                "stakeholder_id_acronym_fullname",
                 "country_name",
                 "accession_number",
                 "taxon_name",
@@ -919,6 +945,8 @@ define([
         if (filter_values.values.search_country_origin.length) payload.query.bool.must.push({"match": {"orig_country_iso3": origin_country}});
         // Biostat
         if (filter_values.values.search_statusofaccession.length) payload.query.bool.must.push({"match": {"biological_status_of_accession_id": biostat}});
+        // Storage
+        if (filter_values.values.search_storage.length) payload.query.bool.must.push({"match": {"type_of_germplasm_storage": typeofstorage}});
 
         this.flowmodel.flow = [
             {
