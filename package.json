@@ -23,6 +23,7 @@
     "build:domains": "cross-env SECTIONS=domains NODE_ENV=production webpack --display-error-details ",
     "build:organizations": "cross-env SECTIONS=organizations NODE_ENV=production webpack --display-error-details ",
     "build:sdg": "cross-env SECTIONS=sdg NODE_ENV=production webpack --display-error-details ",
+    "build:search": "cross-env SECTIONS=search NODE_ENV=production webpack --display-error-details ",
     "build:maps": "cross-env SECTIONS=exsitu NODE_ENV=production webpack --display-error-details",
     "build:stats": "cross-env SECTIONS=base,countryProfile,cultivars,domains,organizations,sdg NODE_ENV=production webpack --display-error-details --profile --json  > stats.json"
   },

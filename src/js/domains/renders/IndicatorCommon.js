@@ -476,7 +476,7 @@ define([
 
     //Download  Tab Button 2
     IndicatorCommon.prototype._DD_onClick_button2 = function (param) {
-
+        console.log('export client side')
         var values = this.filter.getValues();
         var newDashboardConfig = this.indicatorProcesses.onClickButton2(values, this.dashboard_config, param);
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
@@ -487,6 +487,7 @@ define([
 
     //Download  Tab Button 3
     IndicatorCommon.prototype._DD_onClick_button3 = function (param) {
+
         var values = this.filter.getValues();
         var newDashboardConfig = this.indicatorProcesses.onClickButton3(values, this.dashboard_config, param);
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))

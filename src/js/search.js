@@ -20,6 +20,7 @@ define([
     var Clang = C.lang.toLowerCase(),
         services_url = "http://fenix.fao.org/d3s_wiews/processes",
         services_el = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchApi",
+        services_ex = " https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchReport",
         service_path = {
             "wiews_results" : "?index=exsitu&multiSearch=false",
             "countries" : "?index=countries&multiSearch=false",
@@ -29,8 +30,8 @@ define([
             "wiews_exsitu_institute_filter" : "?index=exsitu&multiSearch=false",
             "wiews_exsitu_genus_filter" : "?index=exsitu&multiSearch=false",
             "wiews_exsitu_species_filter" : "?index=exsitu&multiSearch=false",
-            "elastic_export_fetch" : "exsitu/exsitu/_search?scroll=1m",
-            "elastic_export_consume" : "_search/scroll"
+            "elastic_export_fetch" : "?index=exsitu&scroll=false",
+            "elastic_export_consume" : "?index=exsitu&scroll=true"
         },
         defaultYear = 2014,
         defaultPageSize = 25;
@@ -94,7 +95,7 @@ define([
 
     };
 
-    Search.prototype._callElastic = function (payload, path, full) {
+    Search.prototype._callElastic = function (payload, path, full, service) {
         var response_data = {
             total : -1,
             hits : []
@@ -105,7 +106,7 @@ define([
             dataType: 'json',
             method: 'POST',
             contentType: "text/plain; charset=utf-8",
-            url: services_el + service_path[path],
+            url:  (service !== undefined) ? service + service_path[path] : services_el + service_path[path],
             data: JSON.stringify(payload),
             success: function(res) {
                 //console.log('res is ',res);
@@ -160,7 +161,6 @@ define([
                 "sort": [ {"_id": {"order": "asc"}} ]
             }
         };
-        console.log(payload_selection);
 
         $.ajax({
             async: false,
@@ -183,7 +183,6 @@ define([
             }
         });
 
-        console.log(codelist);
         return codelist;
     };
 
@@ -192,7 +191,6 @@ define([
         flow_model.flow[2].rid = { "uid" : "exsitu_data" };
         if (flow_model.flow[0].parameters.accenumb == null) delete flow_model.flow[0].parameters.accenumb;
         flow_model.outConfig.config.fileName = "exsitu_"+this.selected_year;
-        //console.log(JSON.stringify(flow_model));
         this.report.export({
             format: "flow",
             config: flow_model
@@ -203,7 +201,7 @@ define([
 
         this.elastic_export.size = 2500;
 
-        var result = this._callElastic(this.elastic_export,'elastic_export_fetch', true),
+        var result = this._callElastic(this.elastic_export,'elastic_export_fetch', true, services_ex),
             export_object = result.hits.hits,
             forTotal = result.hits.total,
             perPage = this.elastic_export.size,
@@ -217,7 +215,7 @@ define([
             var export_var = this._callElastic({
                 "scroll" : "1m",
                 "scroll_id" : scroll_id
-            }, "elastic_export_consume");
+            }, "elastic_export_consume", false, services_ex);
             export_object = export_object.concat(export_var.hits);
             cycle--;
         }
