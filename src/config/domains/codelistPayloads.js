@@ -83,6 +83,19 @@ define(function () {
         '{"query": {"bool": {"must_not": [{"match": {"sdg_region_name":"INT REG"}}]}},"size": 0,"aggregations": {"result_set": {"terms": {"field":"faol0_code.aggregator","order": {"_key": "asc"},"size":300},"aggs":{"childs_set": {"terms": {"field":"faol0_name.aggregator","order": {"_key": "asc"},"size": 300}}}}}}\n' +
         '{}\n' +
         '{"query": {"bool": {"must_not": [{"match": {"sdg_region_name":"INT REG"}}]}}, "size": 0, "aggregations": {"result_set": {"terms": {"field": "sdg_region_code.aggregator","order": {"_key": "asc"},"size":300},"aggs": {"childs_set":{"terms": { "field": "sdg_region_name.aggregator","order":{"_key": "asc"},"size": 300}}}}}}\n',
+        M49_R : '{}\n' +
+        '{"query": {"bool": {"must_not": [{"match": {"m49l1_name":"INT REG"}}]}},"size": 0,"aggregations": {"result_set": {"terms": {"field":"m49l0_code.aggregator","order": {"_key": "asc"},"size":300},"aggs":{"childs_set": {"terms": {"field":"m49l0_name.aggregator","order": {"_key": "asc"},"size": 300}}}}}}\n' +
+        '{}\n' +
+        '{"query": {"bool": {"must_not": [{"match": {"m49l1_name":"INT REG"}}]}}, "size": 0, "aggregations": {"result_set": {"terms": {"field": "m49l1_code.aggregator","order": {"_key": "asc"},"size":300},"aggs": {"childs_set":{"terms": { "field": "m49l1_name.aggregator","order":{"_key": "asc"},"size": 300}}}}}}\n' +
+        '{}\n' +
+        '{"query": {"bool": {"must_not": [{"match": {"m49l1_name":"INT REG"}}]}}, "size": 0, "aggregations": {"result_set": {"terms":{"field": "m49l2_code.aggregator","order": {"_key": "asc"},"size":300},"aggs": {"childs_set": {"terms": { "field":"m49l2_name.aggregator","order": {"_key": "asc"},"size": 300}}}}}}\n',
+        MDG_R : '{}\n' +
+        '{"query": {"bool": {"must_not": [{"match": {"mdg_region_name":"INT REG"}}]}},"size": 0,"aggregations": {"result_set": {"terms": {"field":"faol0_code.aggregator","order": {"_key": "asc"},"size":300},"aggs":{"childs_set": {"terms": {"field":"faol0_name.aggregator","order": {"_key": "asc"},"size": 300}}}}}}\n' +        '{}\n' +
+        '{"query": {"bool": {"must_not": [{"match": {"mdg_region_name":"INT REG"}}]}}, "size": 0, "aggregations": {"result_set": {"terms": {"field": "mdg_region_code.aggregator","order": {"_key": "asc"},"size":300},"aggs": {"childs_set":{"terms": { "field": "mdg_region_name.aggregator","order":{"_key": "asc"},"size": 300}}}}}}\n',
+        SDG_R : '{}\n' +
+        '{"query": {"bool": {"must_not": [{"match": {"sdg_region_name":"INT REG"}}]}},"size": 0,"aggregations": {"result_set": {"terms": {"field":"faol0_code.aggregator","order": {"_key": "asc"},"size":300},"aggs":{"childs_set": {"terms": {"field":"faol0_name.aggregator","order": {"_key": "asc"},"size": 300}}}}}}\n' +
+        '{}\n' +
+        '{"query": {"bool": {"must_not": [{"match": {"sdg_region_name":"INT REG"}}]}}, "size": 0, "aggregations": {"result_set": {"terms": {"field": "sdg_region_code.aggregator","order": {"_key": "asc"},"size":300},"aggs": {"childs_set":{"terms": { "field": "sdg_region_name.aggregator","order":{"_key": "asc"},"size": 300}}}}}}\n',
         ITPGRFA_R: '{}\n' +
         '{"query": {"bool": {"must_not": [{"match": {"sdg_region_name":"INT REG"}}]}},"size": 0,"aggregations": {"result_set": {"terms": {"field":"faol0_code.aggregator","order": {"_key": "asc"},"size":300},"aggs":{"childs_set": {"terms": {"field":"faol0_name.aggregator","order": {"_key": "asc"},"size": 300}}}}}}\n' +
         '{}\n' +

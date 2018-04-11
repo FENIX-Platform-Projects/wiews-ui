@@ -79,6 +79,7 @@ define([
             },
             error : function(res) {
                 alert('Elastic Search Error');
+                console.log('I was sending',payload)
                 console.log(res);
                 return;
             }
@@ -141,13 +142,16 @@ define([
 
         //if((paramsForGeoValidation.tab_active_geo_item!=null)&&(typeof paramsForGeoValidation.tab_active_geo_item != 'undefined')) console.log('tab_active_geo_item', paramsForGeoValidation.tab_active_geo_item)
 
-        //console.log('the value(s) I want is', newValues, 'from', codelist);
+        //console.log('the value(s) I want is', newValues, 'from', codelist, 'using', paramsForGeoValidation.geo_SelectedTree, 'with values', paramsForGeoValidation.values.values[paramsForGeoValidation.geo_SelectedTree]);
 
-        /*
-        if((paramsForGeoValidation.tab_active_geo_item!=null)&&(typeof paramsForGeoValidation.tab_active_geo_item != 'undefined')){
+        if((paramsForGeoValidation.tab_active_geo_item!=null)&&(typeof paramsForGeoValidation.tab_active_geo_item != 'undefined')) {
+
+            if (paramsForGeoValidation.values.values[paramsForGeoValidation.geo_SelectedTree].length < 1) listTypeError = true;
+            /*
+            //if (newValues.length < 1) listTypeError = true; // DA QUA
+            //console.log('the value(s) I want is', newValues, 'from', codelist);
             switch (paramsForGeoValidation.tab_active_geo_item){
                 case paramsForGeoValidation.filter_items_tabItem_first:
-                    console.log('first')
                     newValues = values.values[paramsForGeoValidation.filter_items_item_first];
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
                         codelist = s.choices_code.iso3;
@@ -158,7 +162,6 @@ define([
                     }
                     break;
                 case paramsForGeoValidation.filter_items_tabItem_second:
-                    console.log('second')
                     newValues = values.values[paramsForGeoValidation.geoCodelistSelector];
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
                         codelist = this._geoSelector_getCodelist(values.values[paramsForGeoValidation.filter_items_codelistItem_tabItem_second], paramsForGeoValidation.filter_items_codelistItem_tabItem_second, regionFilterItem, specialGroupFilterItem)
@@ -177,7 +180,6 @@ define([
                     }
                     break;
                 case paramsForGeoValidation.filter_items_tabItem_third:
-                    console.log('third')
                     newValues = values.values[paramsForGeoValidation.geoCodelistSelector];
                     if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.length>0)){
                         codelist = this._geoSelector_getCodelist(values.values[paramsForGeoValidation.filter_items_codelistItem_tabItem_third], paramsForGeoValidation.filter_items_codelistItem_tabItem_third, regionFilterItem, specialGroupFilterItem)
@@ -192,9 +194,11 @@ define([
                     }
                     break;
             }
+            */
 
         }
-        */
+
+        //console.log('we will say that listTypeError is ', listTypeError)
 
         var updatedValues = {};
         updatedValues.values = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);

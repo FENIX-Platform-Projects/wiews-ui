@@ -464,7 +464,6 @@ define([
     //Download  Tab Button 1
     IndicatorCommon.prototype._DD_onClick_button1 = function (param) {
 
-
         $('[data-dashboardContainer = "dd-dashboard-container"]').hide();
         var values = this.filter.getValues();
         var newDashboardConfig = this.indicatorProcesses.onClickButton1(values, this.dashboard_config, param);
@@ -476,7 +475,8 @@ define([
 
     //Download  Tab Button 2
     IndicatorCommon.prototype._DD_onClick_button2 = function (param) {
-        console.log('export client side')
+        console.log('export client side');
+
         var values = this.filter.getValues();
         var newDashboardConfig = this.indicatorProcesses.onClickButton2(values, this.dashboard_config, param);
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
@@ -613,7 +613,6 @@ define([
         if (index > -1) select_array.splice(index, 1);
         if (select_array.length == 1) { selection = select_array[0] } else { selection = this.indicatorProperties.indicator_id.toString() }
 
-
         // Building the Geo values
         geo_array = this._parseGEO(filterValues.values.GEO);
         // First, we fetch the NFP Rating
@@ -635,7 +634,7 @@ define([
             method: 'POST',
             contentType: "application/json; charset=utf-8",
             accept: "application/json, text/javascript, */*; q=0.01",
-            url: "http://fenixapps2.fao.org/pentaho/plugin/saiku/api/anonymousUser/query/execute",
+            url: "http://hqlqawiews1.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/query/execute",
             data: mdx_query,
             success: function(res) {
                 table_output = self._convert2TableData(res, dsd, lab);
@@ -657,7 +656,7 @@ define([
         lab['indicator_label'] = "Indicator";
 
         if (filterValues.values.dd_filter_item_10[0] == "stk") selection = filterValues.values.dd_filter_item_10[0];
-        
+
         mdx_query = JSON.stringify($.extend(DM[this.indicatorProperties.indicator_id].cube, DM[this.indicatorProperties.indicator_id].query[selection]));
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
 
@@ -667,7 +666,7 @@ define([
             method: 'POST',
             contentType: "application/json; charset=utf-8",
             accept: "application/json, text/javascript, */*; q=0.01",
-            url: "http://fenixapps2.fao.org/pentaho/plugin/saiku/api/anonymousUser/query/execute",
+            url: "http://hqlqawiews1.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/query/execute",
             data: mdx_query,
             success: function(res) {
                 table_tobootstrap = table_output.concat(self._convert2TableData(res, dsd, lab));

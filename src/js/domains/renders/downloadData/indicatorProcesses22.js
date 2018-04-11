@@ -103,6 +103,21 @@ define([
                     5 : 'cgrfa',
                     6 : 'itpgrfa'
                 }
+            },
+            groups: {
+                countries: {
+                    1 : "dd_filter_item_2_1",
+                    2 : "dd_filter_item_2_2",
+                    3 : "dd_filter_item_2_3"
+                },
+                regions : {
+                    1 : "dd_filter_item_4_1",
+                    2 : "dd_filter_item_4_2",
+                    3 : "dd_filter_item_4_3",
+                    4 : "dd_filter_item_4_4",
+                    5 : "dd_filter_item_4_5",
+                    6 : "dd_filter_item_4_6"
+                }
             }
         },
 
@@ -120,8 +135,18 @@ define([
         },
 
         dd_tab_active : {
-            geo_item : ''
+            geo_item : 'dd_filter_item_tab_1'
         },
+
+        filter_available: [
+            'dd_filter_item_2_1',
+            'dd_filter_item_2_2',
+            'dd_filter_item_2_3',
+            'dd_filter_item_4_1',
+            'dd_filter_item_4_2',
+            'dd_filter_item_4_3',
+            'dd_filter_item_4_4'
+        ],
 
         filter_items : {
             item_1 : "dd_filter_item_1",
@@ -192,6 +217,7 @@ define([
 
         this.geoSelectedItem = "dd_filter_item_1";
         this.geoSelectedCode = "iso3";
+        this.geoTreeItem = "dd_filter_item_2_1";
     };
 
     IndicatorProcesses22.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
@@ -226,8 +252,6 @@ define([
 
             //The geo element has been checked and updated
             newValues = this._geoItemSelectionValidation(values);
-
-            //console.log(newValues.GEO)
 
             if((newValues!= null) && (typeof newValues!= 'undefined'))
             {
@@ -313,8 +337,8 @@ define([
         paramsForGeoValidation.filter_items_tabItem_first = s.filter_items.tabItem_1;
         paramsForGeoValidation.filter_items_tabItem_second = s.filter_items.tabItem_4;
         paramsForGeoValidation.filter_items_tabItem_third = s.filter_items.tabItem_7;
-        paramsForGeoValidation.filter_items_item_first = s.filter_items.item_1;
-        paramsForGeoValidation.filter_items_codelistItem_tabItem_second = s.filter_items.item_2;
+        paramsForGeoValidation.filter_items_item_first = s.filter_items.item_2_1;
+        paramsForGeoValidation.filter_items_codelistItem_tabItem_second = s.filter_items.item_1;
         paramsForGeoValidation.filter_items_listTypetItem_tabItem_second = s.filter_items.item_3;
         paramsForGeoValidation.filter_items_codelistItem_tabItem_third = s.filter_items.item_5;
         paramsForGeoValidation.filter_items_listTypetItem_tabItem_third = s.filter_items.item_6;
@@ -323,11 +347,13 @@ define([
 
         paramsForGeoValidation.geo_SelectedItem = this.geoSelectedItem;
         paramsForGeoValidation.geo_SelectedCode = this.geoSelectedCode;
+        paramsForGeoValidation.geo_SelectedTree = this.geoTreeItem;
 
         var newValues = this.icUtils.geoItemSelectionValidation(paramsForGeoValidation);
 
-        if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.listTypeError)){
-            s.filterDivMsg1_text = s.error_type.list;
+        if(newValues.listTypeError){
+            //s.filterDivMsg1_text = s.error_type.list;
+            return;
         }
 
         return newValues.values;
@@ -490,6 +516,8 @@ define([
 
     IndicatorProcesses22.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
 
+        //console.log('chaanges', filterResponse)
+
         var filterDivMsg1 = hostParam.filterDivMsg_1;
         if((filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined')) {
             filterDivMsg1.html('');
@@ -504,6 +532,7 @@ define([
                             var value = filterResponse.values[0];
                             if((value!=null)&&(typeof value!='undefined')){
                                 var codelist = s.choices_code.position.countries[value];
+                                this.geoTreeItem = s.choices_code.groups.countries[value]
                                 commonParam.codelist = codelist;
                                 this.geoSelectedCode = codelist;
                                 this._renderGeoSelection(s.filter_items.item_2, value, 3);
@@ -513,14 +542,17 @@ define([
                             var value = filterResponse.values[0];
                             if((value!=null)&&(typeof value!='undefined')){
                                 var codelist = s.choices_code.position.regions[value];
+                                this.geoTreeItem = s.choices_code.groups.regions[value]
                                 commonParam.codelist = codelist;
                                 this.geoSelectedCode = codelist;
-                                this._renderGeoSelection(s.filter_items.item_4, value, 7);
+                                this._renderGeoSelection(s.filter_items.item_4, value, 6);
                             }
                             break;
 
                     }
-                    this.geoSelectedItem = selectorId;
+                    if (s.filter_available.includes(selectorId)) this.geoSelectedItem = selectorId;
+                    //console.log(s.filter_available.includes(selectorId));
+                    //console.log(this.geoSelectedItem, selectorId);
                     //console.log(this.geoSelectedCode);
                     //console.log(selectorId, filterResponse.values[0]);
                 }

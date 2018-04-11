@@ -33,7 +33,7 @@ define([
             "elastic_export_fetch" : "?index=exsitu&scroll=false",
             "elastic_export_consume" : "?index=exsitu&scroll=true"
         },
-        defaultYear = 2014,
+        defaultYear = 2017,
         defaultPageSize = 25;
 
     var s = {

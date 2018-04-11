@@ -102,11 +102,11 @@ define(function () {
             },
             query : {
                 "22" : {
-                    "mdx":  "WITH SET [~FILTER] AS {[DataAvalable_ind22].[1]} MEMBER [Measures].[%_of_accessions_without_budget] AS ([Measures].[accessions_out_of_budget] / [Measures].[accessions_need_regeneration]) SET [~ROWS] AS    {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[%_of_accessions_without_budget]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] WHERE [~FILTER]",
+                    "mdx":  "WITH SET [~FILTER] AS {[DataAvalable_ind22].[1]} MEMBER [Measures].[%_of_accessions_without_budget] AS IIf(([Measures].[accessions_need_regeneration] = 0), 0.0, ([Measures].[accessions_out_of_budget] / [Measures].[accessions_need_regeneration])) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[%_of_accessions_without_budget]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] WHERE [~FILTER]",
                     "type": "MDX"
                 },
                 "stk" : {
-                    "mdx":"WITH SET [~FILTER] AS {[DataAvalable_ind22].[1]} MEMBER [Measures].[%_of_accessions_without_budget] AS ([Measures].[accessions_out_of_budget] / [Measures].[accessions_need_regeneration]) SET [~ROWS_Region_Region.iso3_code] AS {[Region.iso3_code].[ALB], [Region.iso3_code].[ARM]}  SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[%_of_accessions_without_budget]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] WHERE [~FILTER]",
+                    "mdx":"WITH SET [~FILTER] AS {[DataAvalable_ind22].[1]} MEMBER [Measures].[%_of_accessions_without_budget] AS IIf(([Measures].[accessions_need_regeneration] = 0), 0.0, ([Measures].[accessions_out_of_budget] / [Measures].[accessions_need_regeneration])) SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}}  SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[%_of_accessions_without_budget]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] WHERE [~FILTER]",
                     "type": "MDX"
                 }
             }
