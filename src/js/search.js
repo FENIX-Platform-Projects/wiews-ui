@@ -904,7 +904,10 @@ define([
                 "collecting_source",
                 "type_of_germplasm_storage",
                 "status_under_multilateral_system",
-                "year"
+                "year",
+                "biological_status_of_accession",
+                "genebank_holding_safety_duplication_id",
+                "genebank_holding_safety_duplication_name"
             ]
         };
         // Selected Elements - MUST BE [1]!!!

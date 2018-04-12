@@ -517,6 +517,8 @@ define([
             geo = coding.toUpperCase() + "_R",
             output = [];
 
+        console.log(coding, geo);
+
         output = this.icutils.callElastic(CL[geo],true).hits;
 
         _.each( output, function( element ) {
@@ -536,7 +538,7 @@ define([
         
         if (lab['geocode'] != "iso3") geocodes = self._getCodelist(lab['geocode']);
 
-        console.log(geocodes);
+        $.extend(geocodes, self.isos);
 
         _.each(structure, function(str_obj, str_idx){
             if (lab[str_obj] !== undefined) extendable[str_obj] = lab[str_obj];
@@ -550,7 +552,7 @@ define([
                    if (item.type == "DATA_CELL") {
                        var obj = $.extend({}, extendable);
                        obj['element'] = labels[self.lang.toLowerCase()][str_lab[idx].value];
-                       obj['wiews_region'] = (lab['geocode'] != "iso3") ?  geocodes[region_code] : self.isos[object[0].value];
+                       obj['wiews_region'] = geocodes[object[0].value]; //(lab['geocode'] != "iso3") ?  geocodes[region_code] : self.isos[object[0].value];
                        obj['value'] = item.value;
                        output.push(obj);
                    }
@@ -576,20 +578,20 @@ define([
                 _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_FAO_codes].[region_fao_code].["+elem+"]"+list) });
                 break;
             case "m49":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_M49].[1].[World].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_M49_codes].[region_m49_code].["+elem+"]"+list) });
                 break;
             case "sdg":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_SDG].[5000].[World].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_SDG_codes].[region_sdg_code].["+elem+"]"+list) });
                 break;
             case "mdg":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_MDG].[5000].[World].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_MDG_codes].[region_mdg_code].["+elem+"]"+list) });
                 break;
             // Special Groups
             case "itpgrfa":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_ITPGRFA].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_ITPGRFA_codes].["+elem+"]"+list) });
                 break;
             case "cgrfa":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_CGRFA].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_CGRFA_codes].["+elem+"]"+list) });
                 break;
         }
         return geo_array;
