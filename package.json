@@ -67,6 +67,7 @@
     "select2-bootstrap-theme": "0.1.0-beta.10",
     "swiper": "^3.4.1",
     "tableexport": "^4.0.11",
+    "tableexport.jquery.plugin": "^1.9.9",
     "typeahead.js": "^0.11.1",
     "underscore": "^1.8.3",
     "xlsx": "^0.11.19"

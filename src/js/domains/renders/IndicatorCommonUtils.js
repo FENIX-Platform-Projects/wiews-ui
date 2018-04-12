@@ -133,7 +133,7 @@ define([
         //console.log('we are geovalidators', paramsForGeoValidation);
         var newValues = paramsForGeoValidation.values.values[paramsForGeoValidation.geo_SelectedItem],
             codelist = paramsForGeoValidation.geo_SelectedCode,
-            listType = '',
+            listType = paramsForGeoValidation.geo_SelectedList,
             values = paramsForGeoValidation.values;
         var listTypeError = false;
         var regionFilterItem = paramsForGeoValidation.regionFilterItem, specialGroupFilterItem = paramsForGeoValidation.specialGroupFilterItem;
@@ -202,7 +202,7 @@ define([
 
         var updatedValues = {};
         updatedValues.values = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
-        updatedValues.listType = 'total';
+        updatedValues.listType = listType;
         updatedValues.listTypeError = listTypeError;
         updatedValues.codelist = codelist;
 

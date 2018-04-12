@@ -218,6 +218,7 @@ define([
         this.geoSelectedItem = "dd_filter_item_1";
         this.geoSelectedCode = "iso3";
         this.geoTreeItem = "dd_filter_item_2_1";
+        this.geoListType = 1;
     };
 
     IndicatorProcesses22.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
@@ -348,6 +349,7 @@ define([
         paramsForGeoValidation.geo_SelectedItem = this.geoSelectedItem;
         paramsForGeoValidation.geo_SelectedCode = this.geoSelectedCode;
         paramsForGeoValidation.geo_SelectedTree = this.geoTreeItem;
+        paramsForGeoValidation.geo_SelectedList = this.geoListType;
 
         var newValues = this.icUtils.geoItemSelectionValidation(paramsForGeoValidation);
 
@@ -551,6 +553,8 @@ define([
 
                     }
                     if (s.filter_available.includes(selectorId)) this.geoSelectedItem = selectorId;
+                    if (selectorId == "dd_filter_item_6") this.geoListType = filterResponse.values[0];
+
                     //console.log(s.filter_available.includes(selectorId));
                     //console.log(this.geoSelectedItem, selectorId);
                     //console.log(this.geoSelectedCode);

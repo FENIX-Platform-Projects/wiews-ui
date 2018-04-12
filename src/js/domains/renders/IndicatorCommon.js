@@ -12,8 +12,10 @@ define([
     "fenix-ui-reports",
     "../../../nls/labels",
     "fenix-ui-bridge",
-    "bootstrap-table"
-], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, CL, ICUtils, Report, labels, Bridge, bootstrapTable) {
+    'tableexport.jquery.plugin',
+    "bootstrap-table",
+    '../../../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
+], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, CL, ICUtils, Report, labels, Bridge, tableExport, bootstrapTable) {
 
     'use strict';
 
@@ -534,6 +536,8 @@ define([
         
         if (lab['geocode'] != "iso3") geocodes = self._getCodelist(lab['geocode']);
 
+        console.log(geocodes);
+
         _.each(structure, function(str_obj, str_idx){
             if (lab[str_obj] !== undefined) extendable[str_obj] = lab[str_obj];
         });
@@ -559,32 +563,33 @@ define([
         return output;
     };
 
-    IndicatorCommon.prototype._parseGEO = function (geovalues) {
-        var geo_array = [];
+    IndicatorCommon.prototype._parseGEO = function (geovalues, isList) {
+        var geo_array = [],
+            list = (isList == "2") ? ".children" : "" ;
         switch(geovalues.codelist) {
             // Country
             case "iso3":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.iso3_code].["+elem+"]") });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.iso3_code].["+elem+"]"+list) });
                 break;
             // Region
             case "fao":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_FAO].[5000].[World].["+elem+"]") });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_FAO_codes].[region_fao_code].["+elem+"]"+list) });
                 break;
             case "m49":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_M49].[1].[World].["+elem+"]") });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_M49].[1].[World].["+elem+"]"+list) });
                 break;
             case "sdg":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_SDG].[5000].[World].["+elem+"]") });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_SDG].[5000].[World].["+elem+"]"+list) });
                 break;
             case "mdg":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_MDG].[5000].[World].["+elem+"]") });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_MDG].[5000].[World].["+elem+"]"+list) });
                 break;
             // Special Groups
             case "itpgrfa":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_ITPGRFA].["+elem+"]") });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_ITPGRFA].["+elem+"]"+list) });
                 break;
             case "cgrfa":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_CGRFA].["+elem+"]") });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_CGRFA].["+elem+"]"+list) });
                 break;
         }
         return geo_array;
@@ -607,6 +612,8 @@ define([
 
         param.tableColumns = newDashboardConfig.tableColumns;
         dsd = param.tableColumns;
+
+        console.log(filterValues);
         
         select_array = filterValues.values.dd_filter_item_8;
         index = select_array.indexOf(this.indicatorProperties.indicator_id);
@@ -614,7 +621,7 @@ define([
         if (select_array.length == 1) { selection = select_array[0] } else { selection = this.indicatorProperties.indicator_id.toString() }
 
         // Building the Geo values
-        geo_array = this._parseGEO(filterValues.values.GEO);
+        geo_array = this._parseGEO(filterValues.values.GEO, filterValues.values.GEO.listType);
         // First, we fetch the NFP Rating
 
         // Building the labels
@@ -745,6 +752,7 @@ define([
                 return labels[self.lang.toLowerCase()]['bootstraptable_search_filter']
             },
             paginationVAlign: "top",
+            exportDataType: "CSV",
             sortable: true
         });
 
@@ -758,6 +766,12 @@ define([
 
         //Scroll to the table
         $('html, body').animate({scrollTop: $('[data-table = "dd-dashboard-table"]').offset().top}, 400,'linear');
+
+        $('[data-role=organizations_exportbutton]').on('click', function() {
+            $('[data-table = "dd-dashboard-table"]').tableExport({type:'csv'});
+        });
+
+
     }
 
     // IndicatorCommon.prototype.onClick_button2 = function (param) {

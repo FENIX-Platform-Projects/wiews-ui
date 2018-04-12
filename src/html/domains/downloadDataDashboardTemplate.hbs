@@ -2,7 +2,13 @@
 <div data-dashboardSection="1" data-dashboardContainer="dd-dashboard-container" id="dd-dashboard-container">
     <div class="row">
         <div class='col-xs-12'>
-            <table data-table="dd-dashboard-table">
+            <div id="toolbar" class="bootstrapTableExport">
+                <button data-role="organizations_exportbutton" alt="{{organizations_export_button_alt}}"
+                        class="btn btn-default"><span alt="{{organizations_export_button_alt}}" class="icojam icojam_download_1"></span> <span>Download Result</span></button>
+            </div>
+            <table data-table="dd-dashboard-table"
+                   data-toolbar="#toolbar"
+                   data-toolbar-align="right">
                 <thead>
                 <tr>
                     <th data-field="5" data-sortable="true"></th>
