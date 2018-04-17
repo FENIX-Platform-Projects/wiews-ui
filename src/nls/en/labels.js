@@ -8,6 +8,11 @@ define(function () {
 
         "cl_period_1" : "January 2012 - June 2014",
         "cl_indicator_22": "Percentage of ex situ accessions in need of regeneration for which a budget for regeneration does not exist",
+        "cl_indicator_2_1": "Number of species surveyed/inventoried",
+        "cl_indicator_2_2": "Number of varieties surveyed/inventoried",
+        "cl_indicator_3_1": "Percentage of species threatened out of those surveyed/inventoried",
+        "cl_indicator_3_2": "Percentage of varieties threatened out of those surveyed/inventoried",
+        "cl_indicator_10": "Percentage of national in situ conservation sites with management plans addressing crop wild relatives and wild food plants",
 
 
         "download_data": "DOWNLOAD DATA",
@@ -73,6 +78,38 @@ define(function () {
         "download_in_progress": "Your download request has been sent. Please wait.",
         "download_toomuch" : "Too many records please refine your query.<br>The maximum limit is 200,000 records",
         "download_in_error": "Error occurred during resource export. Please contact support.",
+
+        // Indicators
+        "err_selection_not_valid": "The selection is not valid. Please, select at least an item for each selector.",
+        "err_selection_not_valid_list": "The selection is not valid. Please, select list or total in the geographical selector.",
+        "geofilter_countries": "COUNTRIES",
+        "geofilter_regions": "REGIONS",
+        "geofilter_specialgroups": "SPECIAL GROUPS",
+        "filter_genus": "GENUS",
+        "filter_element" : "ELEMENT",
+        "filter_stakeholders": "STAKEHOLDERS",
+        "filter_stakeholders_include": "INCLUDE",
+        "filter_periods": "PERIODS",
+        "filter_hierarchy_fao": "FAO",
+        "filter_hierarchy_m49": "M49",
+        "filter_hierarchy_sdg": "SDG",
+        "filter_hierarchy_mdg": "MDG",
+        "filter_hierarchy_cgrfa": "CGRFA",
+        "filter_hierarchy_itpgrfa": "ITPGRFA",
+        "filter_radio_total": "Total",
+        "filter_radio_list": "List of country",
+        "filter_thousand" :"Thousand Separator in 'Show Data'",
+        "filter_thousand_option_none": "None",
+        "filter_thousand_option_comma": "Comma",
+        "filter_thousand_option_period": "Period",
+
+        "table_title_domain": "Domain",
+        "table_title_country": "Country",
+        "table_title_element": "Element",
+        "table_title_indicator": "Indicator and Rating",
+        "table_title_period": "Period",
+        "table_title_value": "Value",
+        "table_title_percentage": "Percentage",
 
         // Indicator 20
         "1_vd_filter_button_1_msg": "The selection is not valid. Please, select at least an item for each selector.",
@@ -738,6 +775,9 @@ define(function () {
         "varieties_avg" : "Varieties, annual average",
         "varieties" : "Varieties, total",
         "species_avg" : "Species, annual average",
-        "distinct_species" : "Species, total"
+        "distinct_species" : "Species, total",
+        "sites_with_management" : "Number of sites with management",
+        "sites_total" : "Number of sites, total",
+        "%_of_sites_with_mngmt" : "Percentage of sites with management"
     }
 });

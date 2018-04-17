@@ -1,125 +1,154 @@
-define(["jquery","highcharts", "../../../config/config", "../../../config/domains/visualizeDataDefaultValues", "../../../config/domains/downloadDataDefaultValues", "../../../nls/labels"],
-    function ($, Highcharts, C, VISUALIZE_DV, DOWNLOAD_DV, labels) {
+define([
+        "highcharts",
+        "../renders/IndicatorCommonUtils",
+        "../../../config/config",
+        "../../../config/domains/visualizeDataDefaultValues",
+        "../../../config/domains/downloadDataDefaultValues",
+        "../../../config/domains/codelistPayloads",
+        "../../../nls/labels"],
+    function (Highcharts, ICUtils, C, VISUALIZE_DV, DOWNLOAD_DV, CL, labels) {
 
         "use strict";
 
         var Clang = C.lang.toLowerCase();
         var ClangUp = C.lang.toUpperCase();
 
+        this.icUtils = new ICUtils();
+        var FAO_CL = this.icUtils.callElastic(CL['FAO'],false).hits,
+            CGRFA_CL = this.icUtils.callElastic(CL['CGRFA'],false).hits,
+            ITPGRFA_CL = this.icUtils.callElastic(CL['ITPGRFA'],false).hits,
+            M49 = this.icUtils.callElastic(CL['M49'],true).hits,
+            SDG = this.icUtils.callElastic(CL['SDG'],true).hits,
+            MDG = this.icUtils.callElastic(CL['MDG'],true).hits,
+            FAO_R = this.icUtils.callElastic(CL['FAO_R'],true).hits,
+            CGRFA_R = this.icUtils.callElastic(CL['CGRFA_R'],true).hits,
+            ITPGRFA_R = this.icUtils.callElastic(CL['ITPGRFA_R'],true).hits;
+
         return {
             downloadData: {
                 filter: {
                     hostConfig: {
                         geoSelector: {
-                            default: 'dd_filter_item_1'
+                            default: 'dd_filter_item_2_1'
                         }
                     },
                     items: [
                         {
                             id: 'dd_filter_item_1',
-                            type: 'tree',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_1"],
-                            title: labels[Clang]['4_filter-dd_filter_item_1_title'],
-                            clUid: "ISO3"
+                            type: 'radio',
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_2"],
+                            title: labels[Clang]['10_filter-dd_filter_item_1_title'],
+                            choicesTitle: [labels[Clang]["10_filter-dd_filter_item_2_choicesTitle1"], labels[Clang]["10_filter-dd_filter_item_5_choicesTitle1"], labels[Clang]["10_filter-dd_filter_item_5_choicesTitle2"]]
                         },
                         {
-                            id: 'dd_filter_item_2',
-                            type: 'radio',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_2"],
-                            choicesTitle: [labels[Clang]["4_filter-dd_filter_item_2_choicesTitle1"], labels[Clang]["4_filter-dd_filter_item_2_choicesTitle2"], labels[Clang]["4_filter-dd_filter_item_2_choicesTitle3"], labels[Clang]["4_filter-dd_filter_item_2_choicesTitle4"]]
+                            id: 'dd_filter_item_2_1',
+                            type: 'tree',
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_1"],
+                            title: labels[Clang]['10_filter-dd_filter_item_1_title'],
+                            //clUid: "ISO3"
+                            source : FAO_CL
+                        },
+                        {
+                            id: 'dd_filter_item_2_2',
+                            type: 'tree',
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_1"],
+                            title: labels[Clang]['10_filter-dd_filter_item_1_title'],
+                            //clUid: "ISO3"
+                            source : CGRFA_CL
+                        },
+                        {
+                            id: 'dd_filter_item_2_3',
+                            type: 'tree',
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_1"],
+                            title: labels[Clang]['10_filter-dd_filter_item_1_title'],
+                            //clUid: "ISO3"
+                            source : ITPGRFA_CL
                         },
                         {
                             id: 'dd_filter_item_3',
-                            type: 'checkbox',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_3"],
-                            choicesTitle: [labels[Clang]["4_filter-dd_filter_item_3_choicesTitle1"], labels[Clang]["4_filter-dd_filter_item_3_choicesTitle2"]]
+                            type: 'radio',
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_2"],
+                            choicesTitle: [labels[Clang]["10_filter-dd_filter_item_2_choicesTitle1"], labels[Clang]["10_filter-dd_filter_item_2_choicesTitle2"], labels[Clang]["10_filter-dd_filter_item_2_choicesTitle3"], labels[Clang]["10_filter-dd_filter_item_2_choicesTitle4"], labels[Clang]["10_filter-dd_filter_item_5_choicesTitle1"], labels[Clang]["10_filter-dd_filter_item_5_choicesTitle2"]]
                         },
                         {
                             id: 'dd_filter_item_4_1',
                             type: 'tree',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_4_1"],
-                            title: labels[Clang]['4_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_fao_region_only",
-                            clBlackList: ['WITC','WITC_t']
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_4_1"],
+                            title: labels[Clang]['10_filter-dd_filter_item_4_1_title'],
+                            source: FAO_R
+                            //clUid: "wiews_fao_region_only",
+                            //clBlackList: ['WITC','WITC_t']
                         },
                         {
                             id: 'dd_filter_item_4_2',
                             type: 'tree',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_4_2"],
-                            title: labels[Clang]['4_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_m49_region_only",
-                            clBlackList: ['WITC','WITC_t']
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_4_2"],
+                            title: labels[Clang]['10_filter-dd_filter_item_4_1_title'],
+                            source: M49
+                            //clUid: "wiews_m49_region_only",
+                            //clBlackList: ['WITC','WITC_t']
                         },
                         {
                             id: 'dd_filter_item_4_3',
                             type: 'tree',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_4_3"],
-                            title: labels[Clang]['4_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_sdg_region_only"
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_4_3"],
+                            title: labels[Clang]['10_filter-dd_filter_item_4_1_title'],
+                            //clUid: "wiews_sdg_region_only"
+                            source: SDG
                         },
                         {
                             id: 'dd_filter_item_4_4',
                             type: 'tree',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_4_4"],
-                            title: labels[Clang]['4_filter-dd_filter_item_4_1_title'],
-                            clUid: "wiews_mdg_region_only"
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_4_4"],
+                            title: labels[Clang]['10_filter-dd_filter_item_4_1_title'],
+                            source: MDG
+                            //clUid: "wiews_mdg_region_only"
                         },
                         {
-                            id: 'dd_filter_item_5',
-                            type: 'radio',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_5"],
-                            choicesTitle: [labels[Clang]["4_filter-dd_filter_item_5_choicesTitle1"], labels[Clang]["4_filter-dd_filter_item_5_choicesTitle2"]]
+                            id: 'dd_filter_item_4_5',
+                            type: 'tree',
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_7_1"],
+                            title: labels[Clang]['10_filter-dd_filter_item_7_title'],
+                            source: CGRFA_R
+                            //clUid: "wiews_cgrfa_region_only"
+                        },
+                        {
+                            id: 'dd_filter_item_4_6',
+                            type: 'tree',
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_7_2"],
+                            title: labels[Clang]['10_filter-dd_filter_item_7_title'],
+                            source: ITPGRFA_R
+                            //clUid: "wiews_itpgrfa_region_only",
+                            //clBlackList: ['WITC','WITC_t']
                         },
                         {
                             id: 'dd_filter_item_6',
-                            type: 'checkbox',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_6"],
-                            choicesTitle: [labels[Clang]["4_filter-dd_filter_item_6_choicesTitle1"], labels[Clang]["4_filter-dd_filter_item_6_choicesTitle2"]]
-                        },
-                        {
-                            id: 'dd_filter_item_7_1',
-                            type: 'tree',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_7_1"],
-                            title: labels[Clang]['4_filter-dd_filter_item_7_title'],
-                            clUid: "wiews_cgrfa_region_only"
-                        },
-                        {
-                            id: 'dd_filter_item_7_2',
-                            type: 'tree',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_7_2"],
-                            title: labels[Clang]['4_filter-dd_filter_item_7_title'],
-                            clUid: "wiews_itpgrfa_region_only",
-                            clBlackList: ['WITC','WITC_t']
+                            type: 'radio',
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_6"],
+                            choicesTitle: [labels[Clang]["10_filter-dd_filter_item_6_choicesTitle1"], labels[Clang]["10_filter-dd_filter_item_6_choicesTitle2"]]
                         },
                         {
                             id: 'dd_filter_item_8',
                             type: 'tree',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_8"],
-                            title: labels[Clang]['4_filter-dd_filter_item_8_title'],
-                            clUid: "wiews_output_indicators",
-                            clCodes : ["10"]
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_8"],
+                            title: labels[Clang]['10_filter-dd_filter_item_8_title'],
+                            source: [{value: "10", label: labels[Clang]['cl_indicator_10']}],
+                            //clUid: "wiews_output_indicators"
                         },
                         {
                             id: 'dd_filter_item_9',
                             type: 'tree',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_9"],
-                            title: labels[Clang]['4_filter-dd_filter_item_9_title'],
+                            default: DOWNLOAD_DV["10_filter-dd_filter_item_9"],
+                            title: labels[Clang]['10_filter-dd_filter_item_9_title'],
                             clUid: "wiews_iteration",
                             max: 1
                         },
                         {
-                            id: 'dd_filter_item_10',
-                            type: 'radio',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_10"],
-                            title: labels[Clang]['4_filter-dd_filter_item_10_title'],
-                            choicesTitle: [labels[Clang]["4_filter-dd_filter_item_10_choicesTitle1"], labels[Clang]["4_filter-dd_filter_item_10_choicesTitle2"], labels[Clang]["4_filter-dd_filter_item_10_choicesTitle3"]]
-                        },
-                        {
                             id: 'dd_filter_item_11',
-                            type: 'checkbox',
-                            default: DOWNLOAD_DV["4_filter-dd_filter_item_11"],
-                            title: labels[Clang]['4_filter-dd_filter_item_11_title'],
-                            choicesTitle: [labels[Clang]["4_filter-dd_filter_item_11_choicesTitle1"], labels[Clang]["4_filter-dd_filter_item_11_choicesTitle2"],labels[Clang]["4_filter-dd_filter_item_11_choicesTitle3"], labels[Clang]["4_filter-dd_filter_item_11_choicesTitle4"]]
+                            type: 'radio',
+                            default: DOWNLOAD_DV["2_filter-dd_filter_item_10"],
+                            title: labels[Clang]['2_filter-dd_filter_item_10_title'],
+                            choicesTitle: [labels[Clang]["2_filter-dd_filter_item_10_choicesTitle1"], labels[Clang]["2_filter-dd_filter_item_10_choicesTitle2"], labels[Clang]["2_filter-dd_filter_item_10_choicesTitle3"]]
                         }
                         ]
                 },

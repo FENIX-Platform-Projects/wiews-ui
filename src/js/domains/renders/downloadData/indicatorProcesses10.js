@@ -5,10 +5,11 @@ define([
     "../../../../config/config",
     "../../../../config/errors",
     "../../../../config/events",
+    "../../../../config/domains/codelistPayloads",
     "../../../../config/domains/config",
     "../IndicatorCommonUtils",
     "../../../../nls/labels"
-], function ($, log, _, C, ERR, EVT, DM, ICUtils, labels) {
+], function ($, log, _, C, ERR, EVT, CL, DM, ICUtils, labels) {
 
     'use strict';
 
@@ -89,26 +90,44 @@ define([
             cgrfa : 'cgrfa',
             itpgrfa : 'itpgrfa',
             position : {
-                regions : {
-                    1 : 'wiews_fao_region_only',
-                    2 : 'wiews_m49_region_only',
-                    3 : 'wiews_sdg_region_only',
-                    4 : 'wiews_mdg_region_only'
+                countries: {
+                    1 : 'iso3',
+                    2 : 'iso3',
+                    3 : 'iso3'
                 },
-                specialGroups : {
-                    1 : 'wiews_cgrfa_region_only',
-                    2 : 'wiews_itpgrfa_region_only'
+                regions : {
+                    1 : 'fao',
+                    2 : 'm49',
+                    3 : 'sdg',
+                    4 : 'mdg',
+                    5 : 'cgrfa',
+                    6 : 'itpgrfa'
+                }
+            },
+            groups: {
+                countries: {
+                    1 : "dd_filter_item_2_1",
+                    2 : "dd_filter_item_2_2",
+                    3 : "dd_filter_item_2_3"
+                },
+                regions : {
+                    1 : "dd_filter_item_4_1",
+                    2 : "dd_filter_item_4_2",
+                    3 : "dd_filter_item_4_3",
+                    4 : "dd_filter_item_4_4",
+                    5 : "dd_filter_item_4_5",
+                    6 : "dd_filter_item_4_6"
                 }
             }
         },
 
         buttonMsg : {
-            button_1 : "4_dd_filter_button_1_msg",
-            button_1_list : "4_dd_filter_button_1_list_msg",
-            button_2 : "4_dd_filter_button_2_msg",
-            button_2_list : "4_dd_filter_button_2_list_msg",
-            button_3 : "4_dd_filter_button_3_msg",
-            button_3_list : "4_dd_filter_button_3_list_msg"
+            button_1 : "1_dd_filter_button_1_msg",
+            button_1_list : "1_dd_filter_button_1_list_msg",
+            button_2 : "1_dd_filter_button_2_msg",
+            button_2_list : "1_dd_filter_button_2_list_msg",
+            button_3 : "1_dd_filter_button_3_msg",
+            button_3_list : "1_dd_filter_button_3_list_msg"
         },
 
         error_type : {
@@ -116,12 +135,25 @@ define([
         },
 
         dd_tab_active : {
-            geo_item : ''
+            geo_item : 'dd_filter_item_tab_1'
         },
+
+        filter_available: [
+            'dd_filter_item_2_1',
+            'dd_filter_item_2_2',
+            'dd_filter_item_2_3',
+            'dd_filter_item_4_1',
+            'dd_filter_item_4_2',
+            'dd_filter_item_4_3',
+            'dd_filter_item_4_4'
+        ],
 
         filter_items : {
             item_1 : "dd_filter_item_1",
             item_2 : "dd_filter_item_2",
+            item_2_1 : "dd_filter_item_2_1",
+            item_2_2 : "dd_filter_item_2_2",
+            item_2_3 : "dd_filter_item_2_3",
             item_3 : "dd_filter_item_3",
             item_4 : "dd_filter_item_4",
             item_4_1 : "dd_filter_item_4_1",
@@ -131,12 +163,13 @@ define([
             item_5 : "dd_filter_item_5",
             item_6 : "dd_filter_item_6",
             item_7 : "dd_filter_item_7",
-            item_7_1 : "dd_filter_item_7_1",
-            item_7_2 : "dd_filter_item_7_2",
+            item_7_1 : "dd_filter_item_4_5",
+            item_7_2 : "dd_filter_item_4_6",
             item_8 : "dd_filter_item_8",
             item_9 : "dd_filter_item_9",
             item_10 : "dd_filter_item_10",
             item_11 : "dd_filter_item_11",
+            item_12 : "dd_filter_item_12",
             tabItem_1 : "dd_filter_item_tab_1",
             tabItem_4 : "dd_filter_item_tab_4_1",
             tabItem_7 : "dd_filter_item_tab_7_1"
@@ -162,54 +195,59 @@ define([
         filterDivMsg1_text : ''
     }
 
-    function IndicatorProcesses4(o) {
+    function IndicatorProcesses10(o) {
 
         $.extend(true, this, defaultOptions, o);
 
         this.icUtils = new ICUtils();
 
-        this._renderTemplate(s.filter_items.item_4, 1, 4);
-        this._renderTemplate(s.filter_items.item_7, 1, 2);
+        this._renderTemplate(s.filter_items.item_2, 1, 4);
+        this._renderTemplate(s.filter_items.item_4, 1, 6);
+        //this._renderTemplate(s.filter_items.item_7, 1, 2);
+        //this._renderTemplate(s.filter_items.item_7_2, 1, 2);
 
         this._initVariables();
 
         return this;
     }
 
-    IndicatorProcesses4.prototype._initVariables = function () {
+    IndicatorProcesses10.prototype._initVariables = function () {
 
         s.filterDivMsg1 = this.filterDivMsg1;
+
+        this.geoSelectedItem = "dd_filter_item_1";
+        this.geoSelectedCode = "iso3";
+        this.geoTreeItem = "dd_filter_item_2_1";
+        this.geoListType = 1;
     };
 
-    IndicatorProcesses4.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
+    IndicatorProcesses10.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
         this._renderGeoSelection(item_to_show_prefix, item_to_show, codelistMaxIndex);
 
     }
 
-    IndicatorProcesses4.prototype.disable_element = function () {
+    IndicatorProcesses10.prototype.disable_element = function () {
 
         $('[data-selector = "'+s.filter_items.item_11+'"]').attr('disabled','disabled');
     };
 
-    IndicatorProcesses4.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
-
-        var index = 1;
-        for(index = 1; index<= codelistMaxIndex; index++) {
+    IndicatorProcesses10.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
+        for(var index = 1; index<= codelistMaxIndex; index++) {
             var indicatorFilterSection = this.el.find('[data-selector = "'+item_to_show_prefix+'_'+index+'"]');
+            indicatorFilterSection.hide();
             if((indicatorFilterSection!=null)&&(typeof indicatorFilterSection!='undefined')&&(index == item_to_show)){
                 this.geoCodelistSelector = item_to_show_prefix+'_'+index;
                 indicatorFilterSection.show();
             }
-            else{
-                indicatorFilterSection.hide();
-            }
         }
     }
 
-    IndicatorProcesses4.prototype._filterSelectionValidation = function (values, params, button_type) {
+    IndicatorProcesses10.prototype._filterSelectionValidation = function (values, params, button_type) {
 
         var valid = false, newValues = '', textMsg = '';
+
+
 
         if ((values != null) && (typeof values != 'undefined') && (s.filterDivMsg1 != null) && (typeof s.filterDivMsg1 != 'undefined') && (values.values != null) && (typeof values.values != 'undefined')) {
 
@@ -218,6 +256,12 @@ define([
 
             if((newValues!= null) && (typeof newValues!= 'undefined'))
             {
+
+                if (newValues.GEO.values.length > 0) valid = true;
+                // No Controls
+                //return newValues;
+                /*
+                console.log(newValues.GEO.values.length);
                 for(var key in newValues) {
                     if(key== s.geo_property)
                     {
@@ -225,7 +269,7 @@ define([
                     }
                     else if(button_type==3)
                     {
-                        if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_8)))
+                        if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_8)||(key==s.filter_items.item_10)))
                         {
                             valid = true;
                         }
@@ -234,7 +278,7 @@ define([
                             break;
                         }
                     }
-                    else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)))
+                    else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_10)))
                     {
                         valid = true;
                     }
@@ -243,6 +287,7 @@ define([
                         break;
                     }
                 }
+                */
             }
         }
 
@@ -271,21 +316,16 @@ define([
                     textMsg = labels[params.lang][s.buttonMsg.button_3];
                 }
             }
-            s.filterDivMsg1.html(this.icUtils.prepareWarning(textMsg))
+            s.filterDivMsg1.html(this.icUtils.prepareWarning(textMsg));
             s.filterDivMsg1.show();
         }
 
-        if(!valid){
-            newValues = '';
-        }
-        else{
-            console.log("true")
-        }
+        if(!valid) newValues = '';
 
         return newValues;
     }
 
-    IndicatorProcesses4.prototype._geoItemSelectionValidation = function (values) {
+    IndicatorProcesses10.prototype._geoItemSelectionValidation = function (values) {
 
         s.filterDivMsg1_text = '';
         var paramsForGeoValidation = {};
@@ -293,29 +333,35 @@ define([
         paramsForGeoValidation.specialGroupFilterItem = s.filter_items.item_5;
         paramsForGeoValidation.checkboxRegionItem = s.filter_items.item_3;
         paramsForGeoValidation.checkboxSpecialGroupItem = s.filter_items.item_6;
-        paramsForGeoValidation.toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_3, s.filter_items.item_4_1, s.filter_items.item_4_2, s.filter_items.item_4_3, s.filter_items.item_4_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7_1, s.filter_items.item_7_2];
+        paramsForGeoValidation.toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_2_1, s.filter_items.item_2_2, s.filter_items.item_2_3, s.filter_items.item_3, s.filter_items.item_4_1, s.filter_items.item_4_2, s.filter_items.item_4_3, s.filter_items.item_4_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7_1, s.filter_items.item_7_2];
         paramsForGeoValidation.tab_active_geo_item = s.dd_tab_active.geo_item;
         paramsForGeoValidation.filter_items_tabItem_first = s.filter_items.tabItem_1;
         paramsForGeoValidation.filter_items_tabItem_second = s.filter_items.tabItem_4;
         paramsForGeoValidation.filter_items_tabItem_third = s.filter_items.tabItem_7;
-        paramsForGeoValidation.filter_items_item_first = s.filter_items.item_1;
-        paramsForGeoValidation.filter_items_codelistItem_tabItem_second = s.filter_items.item_2;
+        paramsForGeoValidation.filter_items_item_first = s.filter_items.item_2_1;
+        paramsForGeoValidation.filter_items_codelistItem_tabItem_second = s.filter_items.item_1;
         paramsForGeoValidation.filter_items_listTypetItem_tabItem_second = s.filter_items.item_3;
         paramsForGeoValidation.filter_items_codelistItem_tabItem_third = s.filter_items.item_5;
         paramsForGeoValidation.filter_items_listTypetItem_tabItem_third = s.filter_items.item_6;
         paramsForGeoValidation.geoCodelistSelector = this.geoCodelistSelector;
         paramsForGeoValidation.values = values;
 
+        paramsForGeoValidation.geo_SelectedItem = this.geoSelectedItem;
+        paramsForGeoValidation.geo_SelectedCode = this.geoSelectedCode;
+        paramsForGeoValidation.geo_SelectedTree = this.geoTreeItem;
+        paramsForGeoValidation.geo_SelectedList = this.geoListType;
+
         var newValues = this.icUtils.geoItemSelectionValidation(paramsForGeoValidation);
 
-        if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.listTypeError)){
-            s.filterDivMsg1_text = s.error_type.list;
+        if(newValues.listTypeError){
+            //s.filterDivMsg1_text = s.error_type.list;
+            return;
         }
 
         return newValues.values;
     }
 
-    IndicatorProcesses4.prototype.onClickButton1 = function (values, dashboardConfig, params) {
+    IndicatorProcesses10.prototype.onClickButton1 = function (values, dashboardConfig, params) {
 
         $('[data-field = "1"]').attr('data-field', s.table_columns.domain);
         $('[data-field = "'+s.table_columns.domain+'"]').text(dashboardConfig.columntableName[0]);
@@ -331,10 +377,11 @@ define([
         $('[data-field = "'+s.table_columns.value+'"]').text(dashboardConfig.columntableName[5]);
 
 
-        var tableColumns = [s.table_columns.domain, s.table_columns.wiews_region, s.table_columns.indicator, s.table_columns.element, s.table_columns.iteration, s.table_columns.value];
+        var tableColumns = [s.table_columns.domain, s.table_columns.wiews_region, s.table_columns.indicator, s.table_columns.indicator_label, s.table_columns.iteration, s.table_columns.value];
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params, "1");
+
         if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
         {
             var self = this;
@@ -351,7 +398,7 @@ define([
 
     };
 
-    IndicatorProcesses4.prototype.onClickButton2 = function (values, dashboardConfig, params) {
+    IndicatorProcesses10.prototype.onClickButton2 = function (values, dashboardConfig, params) {
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params, "2");
@@ -370,7 +417,7 @@ define([
 
     };
 
-    IndicatorProcesses4.prototype.onClickButton3 = function (values, dashboardConfig, params) {
+    IndicatorProcesses10.prototype.onClickButton3 = function (values, dashboardConfig, params) {
 
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params, "3");
@@ -390,7 +437,7 @@ define([
     };
 
 
-        IndicatorProcesses4.prototype.bindEventListener = function () {
+        IndicatorProcesses10.prototype.bindEventListener = function () {
         var self = this;
         var anchor;
         $( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function( evt ) {
@@ -403,11 +450,14 @@ define([
                 switch (anchor){
                     case s.filter_items.tabItem_1:
                         s.dd_tab_active.geo_item = anchor;
+                        var obj = {};
+                        obj[s.filter_items.item_1] = ["1"];
+                        self.filter.setValues(obj);
                         break;
                     case s.filter_items.tabItem_4:
                         s.dd_tab_active.geo_item = anchor;
                         var obj = {};
-                        obj[s.filter_items.item_2] = ["1"];
+                        obj[s.filter_items.item_3] = ["1"];
                         self.filter.setValues(obj);
                         break;
                     case s.filter_items.tabItem_7:
@@ -425,7 +475,7 @@ define([
         });
     }
 
-    IndicatorProcesses4.prototype.tableDataCreation = function (param, columnsMap, data, filterValues) {
+    IndicatorProcesses10.prototype.tableDataCreation = function (param, columnsMap, data, filterValues) {
 
         var separatorValue = '';
         if((filterValues.values!= null)&&(typeof filterValues.values!= 'undefined')&&(filterValues.values[s.filter_items.item_10]!= null)&&(typeof filterValues.values[s.filter_items.item_10]!= 'undefined'))
@@ -450,8 +500,8 @@ define([
                     case s.table_columns.indicator :
                         row[s.table_columns.indicator] = data[iData][columnsMap[tableCol+'_text']]
                         break;
-                    case s.table_columns.element :
-                        row[s.table_columns.element] = data[iData][columnsMap[tableCol+'_text']]
+                    case s.table_columns.indicator_label :
+                        row[s.table_columns.indicator_label] = data[iData][columnsMap[tableCol+'_value']]
                         break;
                     case s.table_columns.iteration :
                         row[s.table_columns.iteration] = data[iData][columnsMap[tableCol+'_text']]
@@ -467,35 +517,46 @@ define([
         return tableData;
     }
 
-    IndicatorProcesses4.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
+    IndicatorProcesses10.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
         var filterDivMsg1 = hostParam.filterDivMsg_1;
-        if((filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined'))
-        {
-            filterDivMsg1.html('')
-            filterDivMsg1.hide()
+        if((filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined')) {
+            filterDivMsg1.html('');
+            filterDivMsg1.hide();
 
             //Refresh the geographical selector
             if((filterResponse!=null)&&(typeof filterResponse!='undefined')){
                 var selectorId = filterResponse.id;
                 if((selectorId!=null)&&(typeof selectorId!='undefined')){
                     switch (selectorId){
-                        case s.filter_items.item_2 :
+                        case s.filter_items.item_1 :
+                            var value = filterResponse.values[0];
+                            if((value!=null)&&(typeof value!='undefined')){
+                                var codelist = s.choices_code.position.countries[value];
+                                this.geoTreeItem = s.choices_code.groups.countries[value]
+                                commonParam.codelist = codelist;
+                                this.geoSelectedCode = codelist;
+                                this._renderGeoSelection(s.filter_items.item_2, value, 3);
+                            }
+                            break;
+                        case s.filter_items.item_3:
                             var value = filterResponse.values[0];
                             if((value!=null)&&(typeof value!='undefined')){
                                 var codelist = s.choices_code.position.regions[value];
+                                this.geoTreeItem = s.choices_code.groups.regions[value]
                                 commonParam.codelist = codelist;
-                                this._renderGeoSelection(s.filter_items.item_4, value, 4);
+                                this.geoSelectedCode = codelist;
+                                this._renderGeoSelection(s.filter_items.item_4, value, 6);
                             }
                             break;
-                        case s.filter_items.item_5 :
-                            var value = filterResponse.values[0];
-                            if((value!=null)&&(typeof value!='undefined')){
-                                var codelist = s.choices_code.position.specialGroups[value];
-                                commonParam.codelist = codelist;
-                                this._renderGeoSelection(s.filter_items.item_7, value, 2);
-                            }
-                            break;
+
                     }
+                    if (s.filter_available.includes(selectorId)) this.geoSelectedItem = selectorId;
+                    if (selectorId == "dd_filter_item_6") this.geoListType = filterResponse.values[0];
+
+                    //console.log(s.filter_available.includes(selectorId));
+                    //console.log(this.geoSelectedItem, selectorId);
+                    //console.log(this.geoSelectedCode);
+                    //console.log(selectorId, filterResponse.values[0]);
                 }
             }
         }
@@ -506,7 +567,7 @@ define([
         return true;
     }
 
-    IndicatorProcesses4.prototype.updateVariables = function (obj) {
+    IndicatorProcesses10.prototype.updateVariables = function (obj) {
 
         this.filter = obj.filter;
         this.filter_host_config = obj.filter_host_config;
@@ -536,7 +597,7 @@ define([
         }
     }
 
-    IndicatorProcesses4.prototype._table_element_configuration_update = function (dashboardConfig, values, params) {
+    IndicatorProcesses10.prototype._table_element_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
         dashboardConfig.tableProcess[0].parameters.filter = {};
@@ -554,7 +615,7 @@ define([
         return dashboardConfig;
     };
 
-    IndicatorProcesses4.prototype._download_element_table_element_configuration_update = function (dashboardConfig, values, params) {
+    IndicatorProcesses10.prototype._download_element_table_element_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
         dashboardConfig.downloadProcessTableData[0].parameters.filter = {};
@@ -572,7 +633,7 @@ define([
         return dashboardConfig;
     };
 
-    IndicatorProcesses4.prototype._download_element_raw_data_configuration_update = function (dashboardConfig, values, params) {
+    IndicatorProcesses10.prototype._download_element_raw_data_configuration_update = function (dashboardConfig, values, params) {
 
         var codelist = values[s.geo_property].codelist;
         dashboardConfig.downloadProcessRawData[0].parameters.filter = {};
@@ -587,7 +648,7 @@ define([
      * pub/sub
      * @return {Object} component instance
      */
-    IndicatorProcesses4.prototype.on = function (channel, fn, context) {
+    IndicatorProcesses10.prototype.on = function (channel, fn, context) {
         var _context = context || this;
         if (!this.channels[channel]) {
             this.channels[channel] = [];
@@ -596,7 +657,7 @@ define([
         return this;
     };
 
-    IndicatorProcesses4.prototype._trigger = function (channel) {
+    IndicatorProcesses10.prototype._trigger = function (channel) {
 
         if (!this.channels[channel]) {
             return false;
@@ -610,6 +671,6 @@ define([
         return this;
     };
 
-    return IndicatorProcesses4;
+    return IndicatorProcesses10;
 
 });

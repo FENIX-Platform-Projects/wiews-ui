@@ -4,24 +4,13 @@ define(function () {
     "use strict";
     return {
 
-        "20": {
-            //indicator_id : "1",
-            indicator_id : "20",
-            dd_filter_category : "1",
-            vd_filter_category : "1",
-            dd_dashboard_category : "1",
-            vd_dashboard_category : "1",
-            processType : "1",
-            noVisualize : true
-        },
-
         "2": {
             //indicator_id: "2",
             indicator_id: "2",
             dd_filter_category: "2",
             vd_filter_category: "1",
             dd_dashboard_category: "1",
-            vd_dashboard_category: "2",
+            vd_dashboard_category: "1",
             processType: "2",
             noVisualize : true
         },
@@ -29,10 +18,10 @@ define(function () {
         "3" : {
             //indicator_id : "3",
             indicator_id : "3",
-            dd_filter_category : "3",
-            vd_filter_category : "3",
+            dd_filter_category : "1",
+            vd_filter_category : "1",
             dd_dashboard_category : "1",
-            vd_dashboard_category : "3",
+            vd_dashboard_category : "1",
             processType : "3",
             noVisualize : true
         },
@@ -40,10 +29,10 @@ define(function () {
         "10": {
             //indicator_id: "4",
             indicator_id: "10",
-            dd_filter_category: "2",
-            vd_filter_category: "2",
-            dd_dashboard_category: "1",
-            vd_dashboard_category: "4",
+            dd_filter_category : "2",
+            vd_filter_category : "1",
+            dd_dashboard_category : "1",
+            vd_dashboard_category : "1",
             processType: "4",
             noVisualize : true
         },
@@ -70,10 +59,21 @@ define(function () {
             noVisualize : true
         },
 
+        "20": {
+            //indicator_id : "1",
+            indicator_id : "20",
+            dd_filter_category : "1",
+            vd_filter_category : "1",
+            dd_dashboard_category : "1",
+            vd_dashboard_category : "1",
+            processType : "1",
+            noVisualize : true
+        },
+
         "22": {
             //indicator_id: "7",
             indicator_id: "22",
-            dd_filter_category : "1",
+            dd_filter_category : "3",
             vd_filter_category : "1",
             dd_dashboard_category : "1",
             vd_dashboard_category : "1",

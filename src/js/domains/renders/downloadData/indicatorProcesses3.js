@@ -5,10 +5,11 @@ define([
     "../../../../config/config",
     "../../../../config/errors",
     "../../../../config/events",
+    "../../../../config/domains/codelistPayloads",
     "../../../../config/domains/config",
     "../IndicatorCommonUtils",
     "../../../../nls/labels"
-], function ($, log, _, C, ERR, EVT, DM, ICUtils, labels) {
+], function ($, log, _, C, ERR, EVT, CL, DM, ICUtils, labels) {
 
     'use strict';
 
@@ -89,15 +90,33 @@ define([
             cgrfa : 'cgrfa',
             itpgrfa : 'itpgrfa',
             position : {
-                regions : {
-                    1 : 'wiews_fao_region_only',
-                    2 : 'wiews_m49_region_only',
-                    3 : 'wiews_sdg_region_only',
-                    4 : 'wiews_mdg_region_only'
+                countries: {
+                    1 : 'iso3',
+                    2 : 'iso3',
+                    3 : 'iso3'
                 },
-                specialGroups : {
-                    1 : 'wiews_cgrfa_region_only',
-                    2 : 'wiews_itpgrfa_region_only'
+                regions : {
+                    1 : 'fao',
+                    2 : 'm49',
+                    3 : 'sdg',
+                    4 : 'mdg',
+                    5 : 'cgrfa',
+                    6 : 'itpgrfa'
+                }
+            },
+            groups: {
+                countries: {
+                    1 : "dd_filter_item_2_1",
+                    2 : "dd_filter_item_2_2",
+                    3 : "dd_filter_item_2_3"
+                },
+                regions : {
+                    1 : "dd_filter_item_4_1",
+                    2 : "dd_filter_item_4_2",
+                    3 : "dd_filter_item_4_3",
+                    4 : "dd_filter_item_4_4",
+                    5 : "dd_filter_item_4_5",
+                    6 : "dd_filter_item_4_6"
                 }
             }
         },
@@ -114,12 +133,25 @@ define([
         },
 
         dd_tab_active : {
-            geo_item : ''
+            geo_item : 'dd_filter_item_tab_1'
         },
+
+        filter_available: [
+            'dd_filter_item_2_1',
+            'dd_filter_item_2_2',
+            'dd_filter_item_2_3',
+            'dd_filter_item_4_1',
+            'dd_filter_item_4_2',
+            'dd_filter_item_4_3',
+            'dd_filter_item_4_4'
+        ],
 
         filter_items : {
             item_1 : "dd_filter_item_1",
             item_2 : "dd_filter_item_2",
+            item_2_1 : "dd_filter_item_2_1",
+            item_2_2 : "dd_filter_item_2_2",
+            item_2_3 : "dd_filter_item_2_3",
             item_3 : "dd_filter_item_3",
             item_4 : "dd_filter_item_4",
             item_4_1 : "dd_filter_item_4_1",
@@ -129,8 +161,8 @@ define([
             item_5 : "dd_filter_item_5",
             item_6 : "dd_filter_item_6",
             item_7 : "dd_filter_item_7",
-            item_7_1 : "dd_filter_item_7_1",
-            item_7_2 : "dd_filter_item_7_2",
+            item_7_1 : "dd_filter_item_4_5",
+            item_7_2 : "dd_filter_item_4_6",
             item_8 : "dd_filter_item_8",
             item_9 : "dd_filter_item_9",
             item_10 : "dd_filter_item_10",
@@ -144,9 +176,9 @@ define([
             domain : 'domain',
             wiews_region : 'wiews_region',
             indicator : 'indicator',
-            element : 'element',
+            element : 'indicator_label',
             iteration : 'iteration',
-            threatened_percentage : 'threatened_percentage'
+            threatened_percentage : 'value'
         },
 
         dashboard_items : {
@@ -166,8 +198,8 @@ define([
 
         this.icUtils = new ICUtils();
 
-        this._renderTemplate(s.filter_items.item_4, 1, 4);
-        this._renderTemplate(s.filter_items.item_7, 1, 2);
+        this._renderTemplate(s.filter_items.item_2, 1, 4);
+        this._renderTemplate(s.filter_items.item_4, 1, 6);
 
         this._initVariables();
 
@@ -177,6 +209,10 @@ define([
     IndicatorProcesses3.prototype._initVariables = function () {
 
         s.filterDivMsg1 = this.filterDivMsg1;
+        this.geoSelectedItem = "dd_filter_item_1";
+        this.geoSelectedCode = "iso3";
+        this.geoTreeItem = "dd_filter_item_2_1";
+        this.geoListType = 1;
     };
 
     IndicatorProcesses3.prototype._renderTemplate = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
@@ -187,15 +223,12 @@ define([
 
     IndicatorProcesses3.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
 
-        var index = 1;
-        for(index = 1; index<= codelistMaxIndex; index++) {
+        for(var index = 1; index<= codelistMaxIndex; index++) {
             var indicatorFilterSection = this.el.find('[data-selector = "'+item_to_show_prefix+'_'+index+'"]');
+            indicatorFilterSection.hide();
             if((indicatorFilterSection!=null)&&(typeof indicatorFilterSection!='undefined')&&(index == item_to_show)){
                 this.geoCodelistSelector = item_to_show_prefix+'_'+index;
                 indicatorFilterSection.show();
-            }
-            else{
-                indicatorFilterSection.hide();
             }
         }
     }
@@ -204,6 +237,8 @@ define([
 
         var valid = false, newValues = '', textMsg = '';
 
+
+
         if ((values != null) && (typeof values != 'undefined') && (s.filterDivMsg1 != null) && (typeof s.filterDivMsg1 != 'undefined') && (values.values != null) && (typeof values.values != 'undefined')) {
 
             //The geo element has been checked and updated
@@ -211,21 +246,40 @@ define([
 
             if((newValues!= null) && (typeof newValues!= 'undefined'))
             {
+
+                if (newValues.GEO.values.length > 0) valid = true;
+                // No Controls
+                //return newValues;
+                /*
+                console.log(newValues.GEO.values.length);
                 for(var key in newValues) {
-                    if(key== s.geo_property) {
+                    if(key== s.geo_property)
+                    {
                         valid = true;
                     }
-                    else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_10))) {
+                    else if(button_type==3)
+                    {
+                        if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_8)||(key==s.filter_items.item_10)))
+                        {
+                            valid = true;
+                        }
+                        else{
+                            valid = false;
+                            break;
+                        }
+                    }
+                    else if((newValues[key] != null) && (typeof newValues[key] != 'undefined') && ((newValues[key].length>0)||(key==s.filter_items.item_10)))
+                    {
                         valid = true;
-                    }  else{
+                    }
+                    else{
                         valid = false;
                         break;
                     }
                 }
+                */
             }
         }
-
-
 
         if(!valid){
             if(button_type == "1"){
@@ -244,16 +298,19 @@ define([
                     textMsg = labels[params.lang][s.buttonMsg.button_2];
                 }
             }
+            else if(button_type == "3"){
+                if(s.filterDivMsg1_text == s.error_type.list){
+                    textMsg = labels[params.lang][s.buttonMsg.button_3_list];
+                }
+                else{
+                    textMsg = labels[params.lang][s.buttonMsg.button_3];
+                }
+            }
             s.filterDivMsg1.html(this.icUtils.prepareWarning(textMsg));
             s.filterDivMsg1.show();
         }
 
-        if(!valid){
-            newValues = '';
-        }
-        else{
-            console.log("true")
-        }
+        if(!valid) newValues = '';
 
         return newValues;
     }
@@ -266,23 +323,29 @@ define([
         paramsForGeoValidation.specialGroupFilterItem = s.filter_items.item_5;
         paramsForGeoValidation.checkboxRegionItem = s.filter_items.item_3;
         paramsForGeoValidation.checkboxSpecialGroupItem = s.filter_items.item_6;
-        paramsForGeoValidation.toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_3, s.filter_items.item_4_1, s.filter_items.item_4_2, s.filter_items.item_4_3, s.filter_items.item_4_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7_1, s.filter_items.item_7_2];
+        paramsForGeoValidation.toDelete = [s.filter_items.item_1, s.filter_items.item_2, s.filter_items.item_2_1, s.filter_items.item_2_2, s.filter_items.item_2_3, s.filter_items.item_3, s.filter_items.item_4_1, s.filter_items.item_4_2, s.filter_items.item_4_3, s.filter_items.item_4_4, s.filter_items.item_5, s.filter_items.item_6, s.filter_items.item_7_1, s.filter_items.item_7_2];
         paramsForGeoValidation.tab_active_geo_item = s.dd_tab_active.geo_item;
         paramsForGeoValidation.filter_items_tabItem_first = s.filter_items.tabItem_1;
         paramsForGeoValidation.filter_items_tabItem_second = s.filter_items.tabItem_4;
         paramsForGeoValidation.filter_items_tabItem_third = s.filter_items.tabItem_7;
-        paramsForGeoValidation.filter_items_item_first = s.filter_items.item_1;
-        paramsForGeoValidation.filter_items_codelistItem_tabItem_second = s.filter_items.item_2;
+        paramsForGeoValidation.filter_items_item_first = s.filter_items.item_2_1;
+        paramsForGeoValidation.filter_items_codelistItem_tabItem_second = s.filter_items.item_1;
         paramsForGeoValidation.filter_items_listTypetItem_tabItem_second = s.filter_items.item_3;
         paramsForGeoValidation.filter_items_codelistItem_tabItem_third = s.filter_items.item_5;
         paramsForGeoValidation.filter_items_listTypetItem_tabItem_third = s.filter_items.item_6;
         paramsForGeoValidation.geoCodelistSelector = this.geoCodelistSelector;
         paramsForGeoValidation.values = values;
 
+        paramsForGeoValidation.geo_SelectedItem = this.geoSelectedItem;
+        paramsForGeoValidation.geo_SelectedCode = this.geoSelectedCode;
+        paramsForGeoValidation.geo_SelectedTree = this.geoTreeItem;
+        paramsForGeoValidation.geo_SelectedList = this.geoListType;
+
         var newValues = this.icUtils.geoItemSelectionValidation(paramsForGeoValidation);
 
-        if((newValues!=null)&&(typeof newValues!="undefined")&&(newValues.listTypeError)){
-            s.filterDivMsg1_text = s.error_type.list;
+        if(newValues.listTypeError){
+            //s.filterDivMsg1_text = s.error_type.list;
+            return;
         }
 
         return newValues.values;
@@ -376,11 +439,14 @@ define([
                 switch (anchor){
                     case s.filter_items.tabItem_1:
                         s.dd_tab_active.geo_item = anchor;
+                        var obj = {};
+                        obj[s.filter_items.item_1] = ["1"];
+                        self.filter.setValues(obj);
                         break;
                     case s.filter_items.tabItem_4:
                         s.dd_tab_active.geo_item = anchor;
                         var obj = {};
-                        obj[s.filter_items.item_2] = ["1"];
+                        obj[s.filter_items.item_3] = ["1"];
                         self.filter.setValues(obj);
                         break;
                     case s.filter_items.tabItem_7:
@@ -442,34 +508,47 @@ define([
     }
 
     IndicatorProcesses3.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
+        //console.log('chaanges', filterResponse)
+
         var filterDivMsg1 = hostParam.filterDivMsg_1;
-        if((filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined'))
-        {
-            filterDivMsg1.html('')
-            filterDivMsg1.hide()
+        if((filterDivMsg1 != null) && (typeof filterDivMsg1 != 'undefined')) {
+            filterDivMsg1.html('');
+            filterDivMsg1.hide();
 
             //Refresh the geographical selector
             if((filterResponse!=null)&&(typeof filterResponse!='undefined')){
                 var selectorId = filterResponse.id;
                 if((selectorId!=null)&&(typeof selectorId!='undefined')){
                     switch (selectorId){
-                        case s.filter_items.item_2 :
+                        case s.filter_items.item_1 :
+                            var value = filterResponse.values[0];
+                            if((value!=null)&&(typeof value!='undefined')){
+                                var codelist = s.choices_code.position.countries[value];
+                                this.geoTreeItem = s.choices_code.groups.countries[value]
+                                commonParam.codelist = codelist;
+                                this.geoSelectedCode = codelist;
+                                this._renderGeoSelection(s.filter_items.item_2, value, 3);
+                            }
+                            break;
+                        case s.filter_items.item_3:
                             var value = filterResponse.values[0];
                             if((value!=null)&&(typeof value!='undefined')){
                                 var codelist = s.choices_code.position.regions[value];
+                                this.geoTreeItem = s.choices_code.groups.regions[value]
                                 commonParam.codelist = codelist;
-                                this._renderGeoSelection(s.filter_items.item_4, value, 4);
+                                this.geoSelectedCode = codelist;
+                                this._renderGeoSelection(s.filter_items.item_4, value, 6);
                             }
                             break;
-                        case s.filter_items.item_5 :
-                            var value = filterResponse.values[0];
-                            if((value!=null)&&(typeof value!='undefined')){
-                                var codelist = s.choices_code.position.specialGroups[value];
-                                commonParam.codelist = codelist;
-                                this._renderGeoSelection(s.filter_items.item_7, value, 2);
-                            }
-                            break;
+
                     }
+                    if (s.filter_available.includes(selectorId)) this.geoSelectedItem = selectorId;
+                    if (selectorId == "dd_filter_item_6") this.geoListType = filterResponse.values[0];
+
+                    //console.log(s.filter_available.includes(selectorId));
+                    //console.log(this.geoSelectedItem, selectorId);
+                    //console.log(this.geoSelectedCode);
+                    //console.log(selectorId, filterResponse.values[0]);
                 }
             }
         }

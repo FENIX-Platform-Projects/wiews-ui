@@ -529,6 +529,7 @@ define([
     };
 
     IndicatorCommon.prototype._convert2TableData = function (input, structure, lab) {
+
         var self = this,
             str_lab = {},
             extendable = {},
@@ -560,7 +561,6 @@ define([
             }
 
         });
-
 
         return output;
     };
@@ -615,7 +615,7 @@ define([
         param.tableColumns = newDashboardConfig.tableColumns;
         dsd = param.tableColumns;
 
-        console.log(filterValues);
+        //console.log(filterValues);
         
         select_array = filterValues.values.dd_filter_item_8;
         index = select_array.indexOf(this.indicatorProperties.indicator_id);
@@ -647,7 +647,7 @@ define([
             data: mdx_query,
             success: function(res) {
                 table_output = self._convert2TableData(res, dsd, lab);
-                //console.log(table_output);
+                //console.log('table output: ', table_output);
             },
             error : function(res) {
                 console.log("error", res);
@@ -662,9 +662,10 @@ define([
         lab['indicator'] = DM[this.indicatorProperties.indicator_id].element_label[selection];
         lab['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
         lab['domain'] = DM[this.indicatorProperties.indicator_id].domain_label;
-        lab['indicator_label'] = "Indicator";
+        lab['indicator_label'] = DM[this.indicatorProperties.indicator_id].indicator_label;
 
-        if (filterValues.values.dd_filter_item_10[0] == "stk") selection = filterValues.values.dd_filter_item_10[0];
+        if (filterValues.values.dd_filter_item_10 != undefined)
+            if (filterValues.values.dd_filter_item_10[0] == "stk") selection = filterValues.values.dd_filter_item_10[0];
 
         mdx_query = JSON.stringify($.extend(DM[this.indicatorProperties.indicator_id].cube, DM[this.indicatorProperties.indicator_id].query[selection]));
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
