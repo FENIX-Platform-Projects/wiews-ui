@@ -565,9 +565,6 @@ define([
 
         });
 
-        console.log('inputs', input.cellset);
-        console.log('output', output);
-
         return output;
     };
 
