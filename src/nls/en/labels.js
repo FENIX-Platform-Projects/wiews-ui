@@ -725,7 +725,8 @@ define(function () {
         "exsitu_search_header": "Year",
         "exsitu_search_showadvanced": "Hide Advanced",
         "exsitu-search_omnisearch_placeholder" :  "Type here your search",
-        "exsitu-search_search_instcode" :  "Holding institute code",
+        "exsitu-search_search_instcode" :  "Holding institute",
+        "exsitu-search_search_selected_institute" :  "Current selected institute(s)",
         "exsitu-search_search_accessions" :  "Accession number",
         "exsitu-search_search_genus" :  "Genus",
         "exsitu-search_search_spieces" :  "Species",
@@ -746,7 +747,7 @@ define(function () {
         "exsitu-search_search_crop_wild_relatives_false" :  "Exclude",
         "exsitu-search_search_crop_wild_relatives_null" :  "Ignore",
 
-        "exsitu-search_search_added_element" : "Current selected elements",
+        "exsitu-search_search_added_element" : "Current selected element(s)",
         "exsitu-search_search_added_element_remove" : "Remove",
         "exsitu-search_search_added_element_clear" : "Clear Selection",
 
@@ -778,6 +779,7 @@ define(function () {
         "distinct_species" : "Species, total",
         "sites_with_management" : "Number of sites with management",
         "sites_total" : "Number of sites, total",
-        "%_of_sites_with_mngmt" : "Percentage of sites with management"
+        "%_of_sites_with_mngmt" : "Percentage of sites with management",
+        "%_of_accessions_without_budget" : "Percentage of accessions without a budget"
     }
 });

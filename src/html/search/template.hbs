@@ -7,6 +7,11 @@
                     <label for="search_country_institute">{{exsitu_search_header}}</label>
                 </div>
             </div>
+            <div class="col-md-5">
+                <div data-selector="search_country_institute" class="form-group">
+                    <label for="search_country_institute">{{exsitu-search_search_country_institute}}</label>
+                </div>
+            </div>
             <!--<div class="col-md-8"><a id="advanced" class="pull-right">{{exsitu_search_showadvanced}}</a></div>-->
         </div>
         <!--
@@ -23,15 +28,35 @@
         -->
         <div id="advanced-search">
             <div class="row">
-                <div class="col-md-5">
-                    <div data-selector="search_country_institute" class="form-group">
-                        <label for="search_country_institute">{{exsitu-search_search_country_institute}}</label>
-                    </div>
-                </div>
-                <div class="col-md-5">
+                <div class="col-md-10">
                     <div class="form-group">
                         <label for="search_instcode">{{exsitu-search_search_instcode}}</label>
                         <input type="text" class="form-control" id="search_instcode" placeholder="{{exsitu-search_search_instcode}}">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group pull-right">
+                        <div style="margin-top: 24px">
+                            <button id="btn_clearfrominst" title="{{exsitu-search_search_added_element_clear}}" type="button" class="btn btn-primary"><span class="fa fa-times"></span></button>
+                            <button id="btn_addfrominst" title="{{exsitu-search_add_button}}" type="button" class="btn btn-primary"><span class="fa fa-plus"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="selected_institute">{{exsitu-search_search_selected_institute}}</label>
+                        <div id="selected_institute_container"></div>
+                        <div id="selected_institute_container_empty">{{exsitu-search_search_is_empty}}</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group pull-right">
+                        <div style="margin-top: 24px">
+                            <button id="btn_clearfrominstselection" title="{{exsitu-search_search_added_element_clear}}" type="button" class="btn btn-primary"><span class="fa fa-times"></span></button>
+                            <button style="visibility:hidden; height: 34px;" type="button" class="btn btn-primary"><span class="fa fa-times"></span></button>
+                        </div>
                     </div>
                 </div>
             </div>

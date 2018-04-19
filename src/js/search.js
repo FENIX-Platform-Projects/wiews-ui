@@ -237,7 +237,7 @@ define([
         var isempty = true,
             fenixvalues = this.filter.getValues();
         if (
-            $('#search_instcode').val().length > 0 ||
+            // $('#search_instcode').val().length > 0 ||
             $('#search_accessions').val().length > 0 ||
             fenixvalues.values.search_country_institute.length > 0 ||
             fenixvalues.values.search_country_origin.length > 0 ||
@@ -248,7 +248,8 @@ define([
             $('#search_genus').val() == '' ||
             $('#search_spieces').val() == '' ||
             */
-            this.genus_species.length > 0
+            this.genus_species.length > 0 ||
+            this.institutes.length > 0
         ) isempty = false;
 
 
@@ -700,6 +701,7 @@ define([
         this.cwr = null;
         this.loaded_crop = [];
         this.genus_species = [];
+        this.institutes = [];
 
         this.tya_options = {
             hint: true,
@@ -769,10 +771,11 @@ define([
         var filter_values = this.filter.getValues(),
             filter_taxon = $('#search_taxon').val(),
             array_taxon = [],
-            filter_inst  = $('#search_instcode').val().substring(0,6),
+            //filter_inst  = $('#search_instcode').val().substring(0,6),
             array_inst = [],
             filter_acces = $('#search_accessions').val().toUpperCase(),
-            elastic_genus = [];
+            elastic_genus = [],
+            elastic_inst = [];
 
         // Remember that arrays means multiple selection
         if (filter_taxon.length > 0) array_taxon.push(filter_taxon);
@@ -781,6 +784,10 @@ define([
 
         _.each(this.genus_species, function(object){
             elastic_genus.push(String(object).split(" "));
+        });
+
+        _.each(this.institutes, function(object){
+            elastic_inst.push(String(object).split(" "));
         });
 
 
@@ -845,10 +852,11 @@ define([
         var filter_values = this.filter.getValues(),
             filter_taxon = $('#search_taxon').val(),
             array_taxon = [],
-            filter_inst  = $('#search_instcode').val().substring(0,6),
+            //filter_inst  = $('#search_instcode').val().substring(0,6),
             array_inst = [],
             filter_acces = $('#search_accessions').val().toUpperCase(),
             elastic_genus = [],
+            elastic_institutes = "",
             mlstatus = null,
             origin_country = "",
             biostat = "",
@@ -858,7 +866,7 @@ define([
 
         // Remember that arrays means multiple selection...
         if (filter_taxon.length > 0) array_taxon.push(filter_taxon);
-        if (filter_inst.length > 0)  array_inst.push(filter_inst);
+        //if (filter_inst.length > 0)  array_inst.push(filter_inst);
         if (filter_acces == "") filter_acces = null;
         // ... and boolean must be boolean.
         if (filter_values.values) {
@@ -874,8 +882,14 @@ define([
             //elastic_genus += object + " ";
         });
 
+        _.each(this.institutes, function(object){
+            //console.log(object);
+            //elastic_species.push(String(object).replace(/,/g, '').split(" "));
+            elastic_institutes += object + " ";
+        });
+
 //        console.log('len', this.genus_species.length);
-//        console.log('elastic_genus', elastic_genus);
+        console.log('elastic_institutes', elastic_institutes);
 
         var payload = {
             "query": {
@@ -910,6 +924,8 @@ define([
                 "genebank_holding_safety_duplication_name"
             ]
         };
+
+
         // Selected Elements - MUST BE [1]!!!
         if (this.genus_species.length) {
             payload.query.bool.must.push({"bool": {
@@ -936,11 +952,14 @@ define([
         // Country
         if (filter_values.values.search_country_institute.length) payload.query.bool.must.push({"match_phrase": {"country_iso3": filter_values.values.search_country_institute[0]}});
         // Stakeholder
-        if (array_inst.length) payload.query.bool.must.push({"match_phrase": {"stakeholder_id": array_inst[0]}});
+        // if (array_inst.length) payload.query.bool.must.push({"match_phrase": {"stakeholder_id": array_inst[0]}});
+        // Stakeholder Multiple
+        // FOR NOW!!!!
+        if (elastic_institutes != null) payload.query.bool.must.push({"match": {"stakeholder_id": elastic_institutes}});
         // Acc Number
         if (filter_acces != null) payload.query.bool.must.push({"match_phrase": {"accession_number": filter_acces}});
         // Multilateral
-            if (mlstatus != null) payload.query.bool.must.push({"match_phrase": {"status_under_multilateral_system": mlstatus}});
+        if (mlstatus != null) payload.query.bool.must.push({"match_phrase": {"status_under_multilateral_system": mlstatus}});
         // Array > Spaced
         // Country of Origin
         if (filter_values.values.search_country_origin.length) payload.query.bool.must.push({"match": {"orig_country_iso3": origin_country}});
@@ -1311,8 +1330,11 @@ define([
         $('#search_genus').val('');
         $('#search_spieces').val('');
         this.genus_species = [];
+        this.institutes = [];
         $('#combined_elements_container').empty();
         $('#combined_elements_container_empty').css('visibility','visible');
+        $('#selected_institute_container').empty();
+        $('#selected_institute_container_empty').css('visibility','visible');
         $('#search_taxon').val('');
         $('#search_instcode').val('');
         $('#search_accessions').val('');
@@ -1395,6 +1417,18 @@ define([
             }, 150);
         });
 
+        function appendInstitute(inst) {
+            if ($('#selected_institute_container').find('[data-value="'+inst.substring(0,6)+'"]').length > 0) return;
+            $('#selected_institute_container').prepend('<div data-value="'+inst.substring(0,6)+'" data-position="'+self.institutes.length+'" class="addedelement">'+inst+'<span title="'+labels[Clang]['exsitu-search_search_added_element_remove']+'" class="addedelement_remove"> × </span></div>');
+            $('[data-value="'+inst.substring(0,6)+'"]').click( function(){
+                self.institutes.splice($(this).data('position'),1);
+                this.remove();
+                if (self.institutes == 0) $('#selected_institute_container_empty').css("visibility","visible");
+            } );
+            if (self.institutes == 0) $('#selected_institute_container_empty').css('visibility','hidden');
+            self.institutes.push(inst.substring(0,6));
+        }
+
         function appendElement(genus, species) {
             var element = ((species.length > 0))? genus+' '+species : genus+' '+'[all]';
             if ($('#combined_elements_container').find('[data-value="'+element+'"]').length > 0) return;
@@ -1420,6 +1454,13 @@ define([
             self.genus_species.push(element);
         }
 
+        $('#btn_clearfrominstselection').on('click', function(){
+            $('[data-role=messages]').hide();
+            self.institutes = [];
+            $('#selected_institute_container').empty();
+            $('#selected_institute_container_empty').css('visibility','visible');
+        });
+
         $('#btn_clearserach').on('click', function(){
             $('[data-role=messages]').hide();
             self.genus_species = [];
@@ -1433,6 +1474,11 @@ define([
             if (genus.length> 0) appendElement(genus, species);
         });
 
+        $('#btn_addfrominst').on('click', function() {
+            appendInstitute($('#search_instcode').val());
+            $('#search_instcode').val('');
+        });
+
         $('#btn_addfromcrop').on('click', function() {
             var output = [],
                 filter_values = self.filter.getValues(),
@@ -1441,7 +1487,6 @@ define([
                 crops = text.charAt(0).toUpperCase() + text.slice(1),
                 wcr = (filter_values.values.search_search_crop_wild_relatives[0] == 'null'),
                 //year is avaiable in self.selected_year
-
                 result = self._callElastic({
                         "query": {
                             "bool": {
@@ -1562,6 +1607,14 @@ define([
 
         $('#btn_clearfromcrop').on('click', function(){
             $('#search_crop').val("");
+        });
+
+        $('#btn_clearfrominst').on('click', function(){
+            $('#search_instcode').val("");
+        });
+
+        $('#btn_clearfrominstselection').on('click', function(){
+
         });
 
         $('#btn_clearfromgenuspecies').on('click', function(){

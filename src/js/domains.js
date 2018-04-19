@@ -148,7 +148,7 @@ define([
     // Events
     Domains.prototype._bindEventListeners = function () {
 
-        $('#dropdownMenu2').dropdown();
+        //$('#dropdownMenu2').dropdown();
         // MANNAGGIA @#&%@!
 
         if(!s.noVisualize) {

@@ -9,13 +9,14 @@ define([
     "../../../config/domains/filterSelectors",
     "../../../config/domains/codelistPayloads",
     "../renders/IndicatorCommonUtils",
+    "../renders/downloadData/indicatorBase",
     "fenix-ui-reports",
     "../../../nls/labels",
     "fenix-ui-bridge",
     'tableexport.jquery.plugin',
     "bootstrap-table",
     '../../../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
-], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, CL, ICUtils, Report, labels, Bridge, tableExport, bootstrapTable) {
+], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, CL, ICUtils, IBase, Report, labels, Bridge, tableExport, bootstrapTable) {
 
     'use strict';
 
@@ -121,7 +122,8 @@ define([
     }
 
     IndicatorCommon.prototype._getIndicatorProcessesRender = function () {
-        return require(this._getIndicatorProcessesPath());
+        return IBase;
+        //return require(this._getIndicatorProcessesPath());
     };
 
     IndicatorCommon.prototype._getIndicatorProcessesPath = function () {
@@ -541,7 +543,7 @@ define([
 
         $.extend(geocodes, self.isos);
 
-        _.each(structure, function(str_obj, str_idx){
+        _.each(structure, function(str_obj){
             if (lab[str_obj] !== undefined) extendable[str_obj] = lab[str_obj];
         });
 
@@ -553,6 +555,7 @@ define([
                    if (item.type == "DATA_CELL") {
                        var obj = $.extend({}, extendable);
                        obj['element'] = labels[self.lang.toLowerCase()][str_lab[idx].value];
+                       obj['indicator_label'] = labels[self.lang.toLowerCase()][str_lab[idx].value];
                        obj['wiews_region'] = geocodes[object[0].value]; //(lab['geocode'] != "iso3") ?  geocodes[region_code] : self.isos[object[0].value];
                        obj['value'] = item.value;
                        output.push(obj);
@@ -561,6 +564,9 @@ define([
             }
 
         });
+
+        console.log('inputs', input.cellset);
+        console.log('output', output);
 
         return output;
     };
@@ -741,6 +747,7 @@ define([
 
         var self = this;
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
+        var downElem = $('[data-role="organizations_exportbutton"]');
         param.indicatorDashboardSection.show();
 
         $('[data-table = "dd-dashboard-table"]').bootstrapTable('destroy');
@@ -766,6 +773,8 @@ define([
             $('[data-dashboardContainer = "dd-dashboard-container"]').show();
         });
         $('[data-table = "dd-dashboard-table"]').bootstrapTable('load', {data: table});
+
+        if ( table.length == 0 ) { downElem.attr('disabled','disabled'); } else { downElem.removeAttr('disabled'); }
 
         //Scroll to the table
         $('html, body').animate({scrollTop: $('[data-table = "dd-dashboard-table"]').offset().top}, 400,'linear');
