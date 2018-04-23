@@ -197,6 +197,31 @@ define([
         });
     };
 
+    Search.prototype._exportElasticFile = function () {
+
+        var export_payload = this.elastic_export_file;
+
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'POST',
+            contentType: "text/plain; charset=utf-8",
+            url:  "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsExsituRawDownload",
+            data: JSON.stringify(export_payload),
+            success: function(res) {
+                window.open(res[0], '_blank');
+                $('div#exsitu-search-ux-loader').hide();
+                $('[data-page=exsitu-search]').css('opacity','1');
+            },
+            error : function(res) {
+                console.log(res);
+                return;
+            }
+
+        });
+
+    };
+
     Search.prototype._exportElastic = function () {
 
         this.elastic_export.size = 2500;
@@ -279,6 +304,7 @@ define([
             sortable: true
         });
         $(s.TABLE).on('page-change.bs.table', function (event, number, size) {
+            console.log('changing page', self.pageSize, self.offsetPage);
             self.pageSize = size;
             self.offsetPage = self.pageSize * (number - 1);
         });
@@ -302,6 +328,11 @@ define([
             paginationVAlign: "top",
             totalField: 'total',
             sortable: true
+        });
+        $(s.TABLE).on('page-change.bs.table', function (event, number, size) {
+            console.log('changing page', self.pageSize, self.offsetPage);
+            self.pageSize = size;
+            self.offsetPage = self.pageSize * (number - 1);
         });
 
         function parseOutput(input) {
@@ -418,11 +449,9 @@ define([
 
     Search.prototype._speciesTransform = function (arrayofspecies) {
         var output = [];
-
         _.each(arrayofspecies, function(element) {
             output.push(element.species);
         });
-
         return output;
     };
 
@@ -670,7 +699,7 @@ define([
             }
             */
             $('[data-GPAIndex='+row_name+']').html(content);
-            if (row_name == "mlsstat") $('[data-GPAIndex='+row_name+']').html((row_value)? 'Included' : 'Not included' );
+            //if (row_name == "mlsstat") $('[data-GPAIndex='+row_name+']').html((row_value)? 'Included' : 'Not included' );
         });
     };
 
@@ -849,7 +878,8 @@ define([
 
     Search.prototype._preparePayloadElastic = function (from) {
 
-        var filter_values = this.filter.getValues(),
+        var self = this,
+            filter_values = this.filter.getValues(),
             filter_taxon = $('#search_taxon').val(),
             array_taxon = [],
             //filter_inst  = $('#search_instcode').val().substring(0,6),
@@ -862,6 +892,13 @@ define([
             biostat = "",
             typeofstorage ="";
             //elastic_genus = "";
+
+        this.elastic_export_file = {
+            "separator":";",
+            "filters":{
+                "year": parseInt(filter_values.values.search_year[0])
+            }
+        };
 
 
         // Remember that arrays means multiple selection...
@@ -878,7 +915,7 @@ define([
 
         _.each(this.genus_species, function(object){
             //console.log(object);
-            elastic_genus.push(String(object).replace(/,/g, '').split(" "));
+            elastic_genus.push(String(object).replace(/,/g, ' ').split(" "));
             //elastic_genus += object + " ";
         });
 
@@ -887,9 +924,6 @@ define([
             //elastic_species.push(String(object).replace(/,/g, '').split(" "));
             elastic_institutes += object + " ";
         });
-
-//        console.log('len', this.genus_species.length);
-        console.log('elastic_institutes', elastic_institutes);
 
         var payload = {
             "query": {
@@ -925,48 +959,72 @@ define([
             ]
         };
 
-
         // Selected Elements - MUST BE [1]!!!
         if (this.genus_species.length) {
             payload.query.bool.must.push({"bool": {
                     "should": []
                 }}
             );
+            self.elastic_export_file.filters.genus_species = [];
             _.each(elastic_genus, function(selection) {
-                console.log(selection);
+                console.log('the selection is ',selection);
                 if(selection.length == 1) {
                     // We're in the "Genus only" section
                     payload.query.bool.must[1].bool.should.push({"match_phrase": {"genus_name": selection[0]}});
+                    self.elastic_export_file.filters.genus_species.push({"genus_name": selection[0], "species_name": null});
                 } else {
                     // Standard "Genus/Species" couple.
-                    console.log('payload is', payload);
+                    var genus_concat = selection[0];
+                    selection.shift();
+                    var species_concat = selection.join();
                     payload.query.bool.must[1].bool.should.push({"bool": {
                         "must": [
-                            {"match_phrase": {"genus_name": selection[0]}},
-                            {"match_phrase": {"species_name": selection[1]}}
+                            {"match_phrase": {"genus_name": genus_concat}},
+                            {"match_phrase": {"species_name": species_concat}}
                         ]
                     }});
+                    self.elastic_export_file.filters.genus_species.push({"genus_name": genus_concat, "species_name": species_concat});
                 }
             });
         }
         // Country
-        if (filter_values.values.search_country_institute.length) payload.query.bool.must.push({"match_phrase": {"country_iso3": filter_values.values.search_country_institute[0]}});
+        if (filter_values.values.search_country_institute.length) {
+            payload.query.bool.must.push({"match_phrase": {"country_iso3": filter_values.values.search_country_institute[0]}});
+            self.elastic_export_file.filters.country_iso3 = filter_values.values.search_country_institute[0];
+        }
         // Stakeholder
         // if (array_inst.length) payload.query.bool.must.push({"match_phrase": {"stakeholder_id": array_inst[0]}});
         // Stakeholder Multiple
-        // FOR NOW!!!!
-        if (elastic_institutes != null) payload.query.bool.must.push({"match": {"stakeholder_id": elastic_institutes}});
+        if (elastic_institutes != "") {
+            payload.query.bool.must.push({"match": {"stakeholder_id": elastic_institutes}});
+            self.elastic_export_file.filters.stakeholder_id = elastic_institutes;
+        }
         // Acc Number
-        if (filter_acces != null) payload.query.bool.must.push({"match_phrase": {"accession_number": filter_acces}});
+        if (filter_acces != null) {
+            payload.query.bool.must.push({"match_phrase": {"accession_number": filter_acces}});
+            self.elastic_export_file.filters.accession_number = filter_acces;
+        }
         // Multilateral
-        if (mlstatus != null) payload.query.bool.must.push({"match_phrase": {"status_under_multilateral_system": mlstatus}});
+        if (mlstatus != null) {
+            payload.query.bool.must.push({"match_phrase": {"status_under_multilateral_system": mlstatus}});
+            self.elastic_export_file.filters.status_under_multilateral_system = mlstatus;
+        }
         // Array > Spaced
         // Country of Origin
-        if (filter_values.values.search_country_origin.length) payload.query.bool.must.push({"match": {"orig_country_iso3": origin_country}});
+        if (filter_values.values.search_country_origin.length) {
+            payload.query.bool.must.push({"match": {"orig_country_iso3": origin_country}});
+            self.elastic_export_file.filters.orig_country_iso3 = origin_country.split(" ");
+        }
         // Biostat
-        if (filter_values.values.search_statusofaccession.length) payload.query.bool.must.push({"match": {"biological_status_of_accession_id": biostat}});
+        if (filter_values.values.search_statusofaccession.length) {
+            payload.query.bool.must.push({"match": {"biological_status_of_accession_id": biostat}});
+            self.elastic_export_file.filters.biological_status_of_accession_id = biostat.split(" ");
+        }
         // Storage
-        if (filter_values.values.search_storage.length) payload.query.bool.must.push({"match": {"type_of_germplasm_storage": typeofstorage}});
+        if (filter_values.values.search_storage.length) {
+            payload.query.bool.must.push({"match": {"type_of_germplasm_storage": typeofstorage}});
+            self.elastic_export_file.filters.type_of_germplasm_storage = typeofstorage.split(" ");
+        }
 
         this.flowmodel.flow = [
             {
@@ -1020,6 +1078,8 @@ define([
         ];
 
         this.elastic_export = payload;
+
+        // Doing the elastic export file
 
         return payload;
     };
@@ -1395,7 +1455,8 @@ define([
             $('div#exsitu-search-ux-loader').show();
             $('[data-page=exsitu-search]').css('opacity','0.5');
             setTimeout(function () {
-                var tabledata = self._exportElastic();
+                var tabledata = self._exportElasticFile();
+                /*
                 var json2csvCallback = function (err, csv) {
                     if (err) throw err;
                     var blob = new Blob([csv], {type: "text/csv;charset=utf-8"});
@@ -1414,6 +1475,7 @@ define([
                     sortHeader       : false
                     //keys             : []
                 });
+                */
             }, 150);
         });
 
@@ -1567,8 +1629,8 @@ define([
                         "result_set": {
                             "terms": {
                                 "field": "species_name.aggregator",
-                                "order": {"_key": "asc"},
-                                "size": 1000
+                                "size": 1000,
+                                "order": {"_key": "asc"}
                             }
                         }
                     }
@@ -1578,7 +1640,7 @@ define([
             var engine = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.whitespace,
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                local: self._speciesTransformElastic(result)
+                local: self._speciesTransformElastic(result.hits)
             });
 
             $('#search_spieces').typeahead({
@@ -1588,12 +1650,7 @@ define([
                 },
                 {
                   name: 'search_species',
-                  //display: 'species',
-                  source: engine,
-                    templates: {
-                      //suggestion: Handlebars.compile('<div>{{species}}</div>'),
-                      empty: Handlebars.compile('<div class="tya_notfound">'+labels[Clang]['organizations_search_not_found']+'</div>'),
-                  }
+                  source: engine
                 }
             );
         });
