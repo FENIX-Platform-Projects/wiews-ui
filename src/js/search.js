@@ -18,7 +18,7 @@ define([
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
-        page_url = "/wiews/ex-situ-sdg-251/search/",
+        page_url = "/wiews/data/ex-situ-sdg-251/search/",
         organization_url = "/wiews/data/organizations/",
         services_el = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchApi",
         services_ex = " https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchReport",
@@ -166,6 +166,11 @@ define([
                 $('[data-page=exsitu-search]').css('opacity','1');
             },
             error : function(res) {
+                if (res.responseText == "Record limit of 500000 exceeded.") {
+                    alert(res.responseText);
+                    $('div#exsitu-search-ux-loader').hide();
+                    $('[data-page=exsitu-search]').css('opacity','1');
+                }
                 console.log(res);
                 return;
             }

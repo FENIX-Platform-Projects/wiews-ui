@@ -434,3 +434,7 @@
 .filling-gap {
   margin: 5px;
 }
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+  color: white !important;
+}
