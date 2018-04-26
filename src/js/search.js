@@ -7,6 +7,7 @@ define([
     "fenix-ui-filter",
     "../config/config",
     "../html/search/template.hbs",
+    "../html/search/binomial.hbs",
     "../nls/labels",
     "json-2-csv",
     "file-saver",
@@ -14,7 +15,7 @@ define([
     "bootstrap",
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
-], function ($, log, _, Handlebars, Report, Filter, C, template, labels, converter, FileSaver, Bloodhound, bootstrap) {
+], function ($, log, _, Handlebars, Report, Filter, C, template, binomial, labels, converter, FileSaver, Bloodhound, bootstrap) {
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
@@ -347,13 +348,16 @@ define([
                     "accenumb" : process._source.accession_number,
                     "stakeholder_fullname" : process._source.stakeholder_id_fullname,
                     "taxon" : process._source.taxon_name,
+                    "genus" : process._source.genus_name,
+                    "species" : process._source.species_name,
                     "acqdate" : process._source.acquisition_date,
                     "storage" : process._source.type_of_germplasm_storage,
                     "country_en" : process._source.country_name,
                     "cropname" : process._source.crop_name,
                     "origcty" : process._source.orig_country_name,
                     "sampstat" : process._source.biological_status_of_accession,
-                    "genebanks" : process._source.genebank_holding_safety_duplication,
+                    "genebanks" : process._source.genebank_holding_safety_duplication_name,
+                    "collsrc" : process._source.collecting_source,
                     "declatitude" : process._source.latitud_of_collecting_site,
                     "declongitude" : process._source.longitud_of_collecting_site,
                     "mlsstat" : process._source.status_under_multilateral_system,
@@ -472,7 +476,7 @@ define([
             self._statesManagement('details');
             $('#backtosearch_fromomni').hide();
             $('#backtoresults').show();
-           // history.replaceState({ page : "details" }, null, "/wiews/data/organizations/"+self.lang.toLowerCase()+"/?instcode="+$element['instcode']+"#details");
+            history.replaceState({ page : "details" }, null, "/wiews/data/ex-situ-sdg-251/search/"+self.lang.toLowerCase()+"/?accenumb="+$element['accenumb']+"#details");
             self._fillResults($element);
         });
         $('[data-role=results]').hide();
@@ -655,7 +659,7 @@ define([
         this.filter = new Filter(fenixFilter);
         self.initial = {};
         if (this.instcode.length) $('#search_instcode').val(this.instcode);
-
+        if (this.accenumb.length) $('#search_accessions').val(this.accenumb);
 
     };
 
@@ -672,7 +676,6 @@ define([
                 _.each( res.data, function( element ) {
                     iso[element.code] = element.title.EN;
                 });
-                //console.log(iso);
             }
         });
 
@@ -681,6 +684,15 @@ define([
 
     Search.prototype._fillResults = function(content) {
         var self = this;
+        // Binomial
+        var binomial_name = content['genus']+' '+content['species'];
+
+        if (binomial_name != content['taxon']) {
+            $('[data-GPAStatus=taxon]').after(binomial)
+        } else {
+            if ($('[data-GPAStatus=binomial_name]').length > 0) $('[data-GPAStatus=binomial_name]').remove();
+        }
+
         _.each(content, function(row_value, row_name) {
             var content = row_value;
             if (typeof content == "string") if (content.indexOf('"') > -1) content = content.slice(1, -1);
@@ -706,6 +718,7 @@ define([
     Search.prototype._initVariables = function () {
 
         this.instcode = ((this._getParameterByName('instcode')) ? this._getParameterByName('instcode') : "");
+        this.accenumb = ((this._getParameterByName('accenumb')) ? this._getParameterByName('accenumb') : "");
         this.country_search = ((this._getParameterByName('country')) ? this._getParameterByName('country') : "");
 
         this.$el = $(s.EL);
@@ -900,7 +913,6 @@ define([
             }
         };
 
-
         // Remember that arrays means multiple selection...
         if (filter_taxon.length > 0) array_taxon.push(filter_taxon);
         //if (filter_inst.length > 0)  array_inst.push(filter_inst);
@@ -955,7 +967,9 @@ define([
                 "year",
                 "biological_status_of_accession",
                 "genebank_holding_safety_duplication_id",
-                "genebank_holding_safety_duplication_name"
+                "genebank_holding_safety_duplication_name",
+                "species_name",
+                "genus_name"
             ]
         };
 
@@ -967,8 +981,7 @@ define([
             );
             self.elastic_export_file.filters.genus_species = [];
             _.each(elastic_genus, function(selection) {
-                console.log('the selection is ',selection);
-                if(selection.length == 1) {
+                if(selection.length == 2 && selection[1] == "") {
                     // We're in the "Genus only" section
                     payload.query.bool.must[1].bool.should.push({"match_phrase": {"genus_name": selection[0]}});
                     self.elastic_export_file.filters.genus_species.push({"genus_name": selection[0], "species_name": null});
@@ -1001,13 +1014,13 @@ define([
         }
         // Acc Number
         if (filter_acces != null) {
-            payload.query.bool.must.push({"match_phrase": {"accession_number": filter_acces}});
+            payload.query.bool.must.push({"wildcard": {"accession_number.lowercase": "*"+filter_acces+"*"}});
             self.elastic_export_file.filters.accession_number = filter_acces;
         }
         // Multilateral
         if (mlstatus != null) {
-            payload.query.bool.must.push({"match_phrase": {"status_under_multilateral_system": mlstatus}});
-            self.elastic_export_file.filters.status_under_multilateral_system = mlstatus;
+            payload.query.bool.must.push({"match_phrase": {"status_under_multilateral_system": filter_values.labels.search_statusmultilateral[mlstatus]}});
+            self.elastic_export_file.filters.status_under_multilateral_system = filter_values.labels.search_statusmultilateral[mlstatus];
         }
         // Array > Spaced
         // Country of Origin
@@ -1423,6 +1436,7 @@ define([
             self._bindYearListener();
             if (self.instcode.length) self._executeSearch();
             if (self.country_search.length) self._executeSearch();
+            if (self.accenumb.length) self._executeSearch();
         });
 
         this.filter.on('select', function(evt) {
