@@ -3,7 +3,6 @@ define([
     "loglevel",
     "underscore",
     "handlebars",
-    "fenix-ui-reports",
     "fenix-ui-filter",
     "../config/config",
     "../html/search/template.hbs",
@@ -15,11 +14,12 @@ define([
     "bootstrap",
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
-], function ($, log, _, Handlebars, Report, Filter, C, template, binomial, labels, converter, FileSaver, Bloodhound, bootstrap) {
+], function ($, log, _, Handlebars, Filter, C, template, binomial, labels, converter, FileSaver, Bloodhound, bootstrap) {
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
-        services_url = "http://fenix.fao.org/d3s_wiews/processes",
+        page_url = "/wiews/ex-situ-sdg-251/search/",
+        organization_url = "/wiews/data/organizations/",
         services_el = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchApi",
         services_ex = " https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchReport",
         service_path = {
@@ -56,44 +56,6 @@ define([
 
     Search.prototype._validateConfig = function () {
         if (!C.lang) alert("Please specify a valid LANGUAGE in config/config.js");
-    };
-
-    Search.prototype._callServices = function (payload) {
-        var table_data = [];
-        $('[data-role=messages]').hide();
-        $.ajax({
-            async: false,
-            dataType: 'json',
-            method: 'POST',
-            contentType: "application/json; charset=utf-8",
-            url: services_url,
-            data: JSON.stringify(payload),
-            success: function(res) {
-                var dsd = [];
-                //console.log(res.metadata.dsd);
-                _.each ( res.metadata.dsd.columns , function ( column ) {
-                    if (column.id != "mlsstat") dsd.push(column.id)
-                } );
-                //console.log(dsd);
-                _.each( res.data, function( element ) {
-                    var item = {};
-                    _.each(dsd, function (col_name, col_index) {
-                        item[col_name] = element[col_index];
-                        if (typeof element[col_index] == "string") if (element[col_index].indexOf(',') > -1) item[col_name] = "\"" +element[col_index] + "\"";
-                    });
-                    table_data.push(item);
-                });
-                //console.log(table_data);
-            },
-            error : function(res) {
-                $('#orgalert_message').html(labels[Clang]['exsitu-search_search_error_416']);
-                $('[data-role=messages]').show();
-                return;
-            }
-        });
-
-        return table_data;
-
     };
 
     Search.prototype._callElastic = function (payload, path, full, service) {
@@ -187,17 +149,6 @@ define([
         return codelist;
     };
 
-    Search.prototype._exportList = function () {
-        var flow_model =  this.flowmodel;
-        flow_model.flow[2].rid = { "uid" : "exsitu_data" };
-        if (flow_model.flow[0].parameters.accenumb == null) delete flow_model.flow[0].parameters.accenumb;
-        flow_model.outConfig.config.fileName = "exsitu_"+this.selected_year;
-        this.report.export({
-            format: "flow",
-            config: flow_model
-        });
-    };
-
     Search.prototype._exportElasticFile = function () {
 
         var export_payload = this.elastic_export_file;
@@ -246,13 +197,6 @@ define([
             cycle--;
         }
         _.each(export_object, function(key){
-            /*
-            console.log(key._source);
-            var obj = [];
-            _.each(key._source, function(parser){
-                if (typeof parser == "string")  if (parser.indexOf(',') > -1) console.log('we have a comma') //item[col_name] = "\"" +element[col_index] + "\"";
-            });
-            */
             export_csv.push(key._source);
         });
 
@@ -269,11 +213,6 @@ define([
             fenixvalues.values.search_country_origin.length > 0 ||
             fenixvalues.values.search_statusofaccession.length > 0 ||
             fenixvalues.values.search_storage.length > 0 ||
-            /*
-            $('#search_crop').val() == '' ||
-            $('#search_genus').val() == '' ||
-            $('#search_spieces').val() == '' ||
-            */
             this.genus_species.length > 0 ||
             this.institutes.length > 0
         ) isempty = false;
@@ -380,45 +319,6 @@ define([
 
     };
 
-    Search.prototype._bloodHoundPrefetch = function (which) {
-        var self = this;
-        var rest_service = services_url;
-        return new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.whitespace,
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            identify: function(obj) { return obj.name; },
-            remote: {
-                url: rest_service,
-                prepare: function (query, settings) {
-                    settings.async = false;
-                    settings.type = "POST";
-                    settings.contentType = "application/json; charset=utf-8";
-                    settings.dataType = 'json';
-                    settings.data = JSON.stringify(self._prepareElasticPayload(which,query));
-                    return settings;
-                },
-                transform: function(response) {
-                    var response_data = [];
-                    var dsd = [];
-                    //console.log('response is ', response);
-                    _.each ( response.metadata.dsd.columns , function ( column ) {
-                        dsd.push(column.id)
-                    } );
-                    //console.log(dsd);
-                    _.each( response.data, function( element ) {
-                        var item = {};
-                        _.each(dsd, function (col_name, col_index) {
-                            item[col_name] = element[col_index];
-                        });
-                        response_data.push(item);
-                    });
-                    return response_data;
-                }
-
-            }
-        });
-    };
-
     Search.prototype._bloodHoundPrefetchElastic = function (which) {
         var self = this;
         var rest_service = services_el;
@@ -451,14 +351,6 @@ define([
         });
     };
 
-    Search.prototype._speciesTransform = function (arrayofspecies) {
-        var output = [];
-        _.each(arrayofspecies, function(element) {
-            output.push(element.species);
-        });
-        return output;
-    };
-
     Search.prototype._speciesTransformElastic = function (arrayofspecies) {
         var output = [];
         _.each(arrayofspecies, function(element) {
@@ -476,7 +368,7 @@ define([
             self._statesManagement('details');
             $('#backtosearch_fromomni').hide();
             $('#backtoresults').show();
-            history.replaceState({ page : "details" }, null, "/wiews/data/ex-situ-sdg-251/search/"+self.lang.toLowerCase()+"/?accenumb="+$element['accenumb']+"#details");
+            //history.replaceState({ page : "details" }, null, page_url+self.lang.toLowerCase()+"/?accenumb="+$element['accenumb']+"#details");
             self._fillResults($element);
         });
         $('[data-role=results]').hide();
@@ -485,7 +377,6 @@ define([
 
         var prefetchCrops = this._bloodHoundPrefetchElastic('wiews_exsitu_crops_filter');
         var prefetchInstitute = this._bloodHoundPrefetchElastic('wiews_exsitu_institute_filter');
-        var prefetchTaxon = this._bloodHoundPrefetch('wiews_exsitu_taxon_filter');
         var prefetchGenus = this._bloodHoundPrefetchElastic('wiews_exsitu_genus_filter');
         var codelist_ISO3 = this._getCodelists('countries');
         var codelist_BIOS = this._getCodelists('biostatus');
@@ -512,19 +403,6 @@ define([
                 source: prefetchInstitute,
                 templates: {
                     suggestion: Handlebars.compile('<div>{{key}}</div>'),
-                    empty: Handlebars.compile('<div class="tya_notfound">'+labels[Clang]['organizations_search_not_found']+'</div>'),
-                }
-            }
-        );
-
-        $('#search_taxon').typeahead(this.tya_options,
-            {
-                name: 'search_taxon',
-                display: 'taxon',
-                limit: 100,
-                source: prefetchTaxon,
-                templates: {
-                    suggestion: Handlebars.compile('<div>{{taxon}}</div>'),
                     empty: Handlebars.compile('<div class="tya_notfound">'+labels[Clang]['organizations_search_not_found']+'</div>'),
                 }
             }
@@ -663,25 +541,6 @@ define([
 
     };
 
-    Search.prototype._getISO = function () {
-        var iso = [];
-        var url = "http://fenix.fao.org/d3s_wiews/msd/resources/uid/ISO3";
-        $.ajax({
-            async: false,
-            dataType: 'json',
-            method: 'GET',
-            contentType: "application/json; charset=utf-8",
-            url: url,
-            success: function(res) {
-                _.each( res.data, function( element ) {
-                    iso[element.code] = element.title.EN;
-                });
-            }
-        });
-
-        return iso;
-    };
-
     Search.prototype._fillResults = function(content) {
         var self = this;
         // Binomial
@@ -699,19 +558,11 @@ define([
             if (row_value == "undefined" || row_value == null || row_value == "") content = " - ";
             //Special Case
             if (row_name == "w_instcode") {
-                $('[data-GPAIndex=' + row_name + ']').attr('href', '/wiews/data/organizations/' + self.lang.toLowerCase() + '/?instcode=' + row_value + '#details');
+                $('[data-GPAIndex=' + row_name + ']').attr('href', organization_url + self.lang.toLowerCase() + '/?instcode=' + row_value + '#details');
                 return;
             }
-            /*
-            if (row_name == "origcty") {
-                var iso = self._getISO(),
-                    output = iso[row_value];
-                $('[data-GPAIndex=' + row_name + ']').html((output != 'undefined')? output : row_value);
-                return;
-            }
-            */
-            $('[data-GPAIndex='+row_name+']').html(content);
             //if (row_name == "mlsstat") $('[data-GPAIndex='+row_name+']').html((row_value)? 'Included' : 'Not included' );
+            $('[data-GPAIndex='+row_name+']').html(content);
         });
     };
 
@@ -726,13 +577,6 @@ define([
         this.environment = C.ENVIRONMENT;
         this.cache = C.cache;
 
-        if (this.report && $.isFunction(this.report.dispose)) this.report.dispose();
-
-        this.report = new Report({
-            environment: this.environment,
-            cache: this.cache,
-            silent: true
-        });
 
         this.pageSize = defaultPageSize;
         this.offsetPage = 0;
@@ -752,20 +596,6 @@ define([
         };
 
         this.elastic_export = {};
-
-        this.flowmodel = {
-            "outConfig": {
-                "plugin": "wiewsOutputCSV",
-                "config" :{ "fileName" : "wiews_2020.csv" }
-            },
-            "flow": [],
-            "options": {
-                "params" : {
-                    "maxSize" : 200000,
-                    "language": this.lang.toUpperCase()
-                }
-            }
-        };
 
     };
 
@@ -796,7 +626,7 @@ define([
             break;
 
             case 'details' :
-                var details_url = "/wiews/data/search/"+this.lang.toLowerCase()+"/#details" ;
+                var details_url = page_url+this.lang.toLowerCase()+"/#details" ;
                 if (!frombutton) history.pushState({ page : "details" }, "Details", details_url);
                 $('[data-role=filters]').hide();
                 $('[data-role=results]').hide();
@@ -805,88 +635,6 @@ define([
 
         }
 
-    };
-
-    Search.prototype._preparePayload = function (freetext) {
-        if (freetext) alert('Check configuration');
-
-        var filter_values = this.filter.getValues(),
-            filter_taxon = $('#search_taxon').val(),
-            array_taxon = [],
-            //filter_inst  = $('#search_instcode').val().substring(0,6),
-            array_inst = [],
-            filter_acces = $('#search_accessions').val().toUpperCase(),
-            elastic_genus = [],
-            elastic_inst = [];
-
-        // Remember that arrays means multiple selection
-        if (filter_taxon.length > 0) array_taxon.push(filter_taxon);
-        if (filter_inst.length > 0)  array_inst.push(filter_inst);
-        if (filter_acces == "") filter_acces = null;
-
-        _.each(this.genus_species, function(object){
-            elastic_genus.push(String(object).split(" "));
-        });
-
-        _.each(this.institutes, function(object){
-            elastic_inst.push(String(object).split(" "));
-        });
-
-
-        var payload = [
-            {
-                "name": "wiews_exsitu_filter",
-                "sid": [ { "uid": "wiews_2014" },{ "uid": "wiews_2016" },{ "uid": "ref_sdg_institutes" },{ "uid": "ref_iso3_countries" } ],
-                "parameters": {
-                    "year" : filter_values.values.search_year[0],
-                    "countries" : filter_values.values.search_country_institute,
-                    "institutes" : array_inst,
-                    "genus_species" : elastic_genus,
-                    "taxons" : array_taxon,
-                    "sampstat" : filter_values.values.search_statusofaccession,
-                    "accenumb" : filter_acces,
-                    "originCountries" : filter_values.values.search_country_origin,
-                    "mlsstat" : filter_values.values.search_statusmultilateral[0]
-                }
-            },
-            {
-                "name": "order",
-                "parameters": {
-                    "country_en": "ASC",
-                    "w_institute_en": "ASC",
-                    "cropname": "ASC",
-                    "taxon": "ASC"
-                }
-            },
-            {
-                "name" : "columns",
-                "parameters" : {
-                    "columns": [
-                        "nicode",
-                        "country_en",
-                        "w_instcode",
-                        "w_institute_en",
-                        "accenumb",
-                        "cropname",
-                        "genus",
-                        "species",
-                        "taxon",
-                        "acqdate",
-                        "origcty",
-                        "sampstat",
-                        "declatitude",
-                        "declongitude",
-                        "collsrc",
-                        "storage",
-                        "mlsstat"
-                    ]
-                }
-            }
-        ];
-
-        this.flowmodel.flow = payload;
-
-        return payload;
     };
 
     Search.prototype._preparePayloadElastic = function (from) {
@@ -1039,165 +787,11 @@ define([
             self.elastic_export_file.filters.type_of_germplasm_storage = typeofstorage.split(" ");
         }
 
-        this.flowmodel.flow = [
-            {
-                "name": "wiews_exsitu_filter",
-                "sid": [ { "uid": "wiews_2014" },{ "uid": "wiews_2016" },{ "uid": "ref_sdg_institutes" },{ "uid": "ref_iso3_countries" } ],
-                "parameters": {
-                    "year" : filter_values.values.search_year[0],
-                    "countries" : filter_values.values.search_country_institute,
-                    "institutes" : array_inst,
-                    "genus_species" : elastic_genus,
-                    "taxons" : array_taxon,
-                    "sampstat" : filter_values.values.search_statusofaccession,
-                    "accenumb" : filter_acces,
-                    "originCountries" : filter_values.values.search_country_origin,
-                    "mlsstat" : filter_values.values.search_statusmultilateral[0]
-                }
-            },
-            {
-                "name": "order",
-                "parameters": {
-                    "country_en": "ASC",
-                    "w_institute_en": "ASC",
-                    "cropname": "ASC",
-                    "taxon": "ASC"
-                }
-            },
-            {
-                "name" : "columns",
-                "parameters" : {
-                    "columns": [
-                        "nicode",
-                        "country_en",
-                        "w_instcode",
-                        "w_institute_en",
-                        "accenumb",
-                        "cropname",
-                        "genus",
-                        "species",
-                        "taxon",
-                        "acqdate",
-                        "origcty",
-                        "sampstat",
-                        "declatitude",
-                        "declongitude",
-                        "collsrc",
-                        "storage",
-                        "mlsstat"
-                    ]
-                }
-            }
-        ];
-
         this.elastic_export = payload;
 
         // Doing the elastic export file
 
         return payload;
-    };
-
-    Search.prototype._prepareFilterPayload = function (which, text) {
-        var selected_year, selected_wcr,
-            filter_values = this.filter.getValues();
-
-        if (filter_values.valid = true) {
-            selected_year = filter_values.values.search_year[0];
-            selected_wcr  = filter_values.values.search_search_crop_wild_relatives[0];
-        }
-
-        this.selected_year = filter_values.values.search_year[0];
-        this.cwr = (filter_values.values.search_search_crop_wild_relatives[0] == 'true');
-
-        var inst_payload = [
-            {
-                "name": "wiews_exsitu_institute_filter",
-                "sid": [ { "uid": "ref_sdg_institutes" } ],
-                "parameters": {
-                    "year" : selected_year,
-                    "institute" : text
-                }
-            },
-            {
-                "name":"order",
-                "parameters":{
-                    "w_institute_en":"ASC"
-                }
-            }
-        ];
-        var crop_payload = [
-            {
-                "name": "wiews_exsitu_crops_filter",
-                "sid": [ { "uid": "crop_genus" } ],
-                "parameters": {
-                    "year" : selected_year,
-                    "crop" : text,
-                    "cwr" : selected_wcr
-                }
-            },
-            {
-                "name":"order",
-                "parameters":{
-                    "crop_en":"ASC"
-                }
-            }
-        ];
-
-        var taxon_payload = [
-            {
-                "name": "wiews_exsitu_taxon_filter",
-                "sid": [ { "uid": "ref_sdg_taxon" } ],
-                "parameters": {
-                    "year" : selected_year,
-                    "taxon" : text
-                }
-            },
-            {
-                "name":"order",
-                "parameters":{
-                    "taxon":"ASC"
-                }
-            }
-        ];
-        var genus_payload = [
-            {
-                "name": "wiews_exsitu_genus_filter",
-                "sid": [ { "uid": "ref_sdg_species" } ],
-                "parameters": {
-                    "year" : selected_year,
-                    "genus" : text
-                }
-            },
-            {
-                "name":"order",
-                "parameters":{
-                    "genus":"ASC"
-                }
-            }
-        ];
-        var species_payload = [
-            {
-                "name": "wiews_exsitu_species_filter",
-                "sid": [ { "uid": "ref_sdg_species" } ],
-                "parameters": {
-                    "year" : selected_year,
-                    "genus" : this.genus
-                }
-            },
-            {
-                "name":"order",
-                "parameters":{
-                    "species":"ASC"
-                }
-            }
-        ];
-
-        if (which == "wiews_exsitu_crops_filter") return crop_payload;
-        if (which == "wiews_exsitu_institute_filter") return inst_payload;
-        if (which == "wiews_exsitu_taxon_filter") return taxon_payload;
-        if (which == "wiews_exsitu_genus_filter") return genus_payload;
-        if (which == "wiews_exsitu_species_filter") return species_payload;
-
     };
 
     Search.prototype._prepareElasticPayload = function (which, text) {
@@ -1356,11 +950,6 @@ define([
         if (which == "wiews_exsitu_genus_filter") return genus_payload;
         if (which == "wiews_exsitu_species_filter") return species_payload;
 
-    };
-
-    Search.prototype._searchfromkeyboard = function (freetext) {
-        freetext ? this._initTablePaginated(this._callServices(this._preparePayload($('#search_omnibox').val()))) : this._initTable(this._callServices(this._preparePayload()));
-        self._statesManagement('results');
     };
 
     Search.prototype._executeSearch = function () {
