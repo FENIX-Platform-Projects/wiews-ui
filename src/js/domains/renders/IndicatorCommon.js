@@ -137,7 +137,7 @@ define([
             indicatorSection = this.el.find('[data-dashboardsection = "'+this.indicatorProperties.vd_dashboard_category+'"]');
         }
         else {
-            indicatorSection = this.el.find('[data-dashboardsection = "'+this.indicatorProperties.dd_dashboard_category+'"]');
+            indicatorSection = this.el.find('[data-dashboardsection = 1]');
         }
 
         if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')&&(dashboardConfig.items!=null)&&(typeof dashboardConfig.items != 'undefined')){
@@ -239,9 +239,7 @@ define([
                 id = item.id;
                 title = item.title;
                 var itemElem = self.el.find('[data-tabLabel = "' + id + '_tab"]');
-                if ((itemElem != null) && (typeof itemElem != 'undefined')) {
-                    itemElem.html(title)
-                }
+                if ((itemElem != null) && (typeof itemElem != 'undefined')) itemElem.html(title)
 
             });
         }
@@ -429,7 +427,7 @@ define([
         if(this.mainTabName == s.mainTabNames.visualizeData){
             indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.vd_dashboard_category+'"]');
         } else {
-            indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dd_dashboard_category+'"]');
+            indicatorDashboardSection = this.el.find('[data-dashboardSection = 1]');
         }
 
         if((filter_button_1!=null)&&(typeof filter_button_1!='undefined')&&(filter_div_msg_1!=null)&&(typeof filter_div_msg_1!='undefined')){
@@ -470,6 +468,7 @@ define([
 
         $('[data-dashboardContainer = "dd-dashboard-container"]').hide();
         var values = this.filter.getValues();
+        
         var newDashboardConfig = this.indicatorProcesses.onClickButton1(values, this.dashboard_config, param);
 
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig))) {
@@ -492,8 +491,10 @@ define([
     //Download  Tab Button 3
     IndicatorCommon.prototype._DD_onClick_button3 = function (param) {
 
-        var values = this.filter.getValues();
-        var newDashboardConfig = this.indicatorProcesses.onClickButton3(values, this.dashboard_config, param);
+        var values = this.filter.getValues(),
+            expand_param = $.extend({},param, this.indicatorProperties);
+
+        var newDashboardConfig = this.indicatorProcesses.onClickButton3(values, this.dashboard_config, expand_param);
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
         {
             this._downloadTableData(newDashboardConfig.downloadProcessRawData);
@@ -569,6 +570,7 @@ define([
     };
 
     IndicatorCommon.prototype._parseGEO = function (geovalues, isList) {
+
         var geo_array = [],
             list = (isList == "2") ? ".children" : "" ;
         switch(geovalues.codelist) {
@@ -638,7 +640,6 @@ define([
 
         mdx_query = JSON.stringify($.extend(DM[0].cube, DM[0].query["0"]));
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
-
 
         $.ajax({
             async: false,

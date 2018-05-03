@@ -21,7 +21,8 @@ define([
         page_url = "/wiews/data/ex-situ-sdg-251/search/",
         organization_url = "/wiews/data/organizations/",
         services_el = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchApi",
-        services_ex = " https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchReport",
+        services_ex = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchReport",
+        services_ef = "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsExsituRawDownload",
         service_path = {
             "wiews_results" : "?index=exsitu&multiSearch=false",
             "countries" : "?index=countries&multiSearch=false",
@@ -158,7 +159,7 @@ define([
             dataType: 'json',
             method: 'POST',
             contentType: "text/plain; charset=utf-8",
-            url:  "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsExsituRawDownload",
+            url:  services_ef,
             data: JSON.stringify(export_payload),
             success: function(res) {
                 window.open(res[0], '_blank');

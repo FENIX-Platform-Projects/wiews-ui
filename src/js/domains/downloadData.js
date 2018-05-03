@@ -71,7 +71,7 @@ define([
         var indicatorFilterSection = this.el.find('[data-section = "'+this.indicatorProperties.dd_filter_category+'"]');
         //dashboardSection
         $(this.el).append(dashboardTemplate(labels[this.lang]));
-        var indicatorDashboardSection = this.el.find('[data-dashboardSection = "'+this.indicatorProperties.dd_dashboard_category+'"]');
+        var indicatorDashboardSection = this.el.find('[data-dashboardSection = 1]');
         var showDashboardSection = this.el.find('[data-section = "'+s.showDashboardSection+'"]');
         $(this.el).html(indicatorFilterSection);
         $(indicatorFilterSection).append(showDashboardSection);
@@ -85,9 +85,36 @@ define([
         this.$el = $(s.EL);
         this.indicatorConfig = this._getIndicatorConfig();
         this.config = this.indicatorConfig[mainTabName];
+        
+        this.indicatorConfig.downloadData.filter.items[12] = this._buildConfig(this.indicatorConfig.downloadData.filter.items[12]);
 
         this.channels = {};
         //this.models = {};
+    };
+
+    DownloadData.prototype._buildConfig = function (object) {
+
+        var self = this,
+            obj = object,
+            ind = this.indicatorProperties.indicator_id,
+            source = [];
+
+        $.each(PAGC[ind].element_label, function (item) {
+            var the_label = labels[self.lang.toLowerCase()]['cl_indicator_'+item];
+            if (the_label != undefined) source.push({value: item, label: the_label});
+        });
+
+        //source: [{value: "2_1", label: labels[Clang]['cl_indicator_2_1']},{value: "2_2", label: labels[Clang]['cl_indicator_2_2']}],
+
+        $.extend(obj,
+            { source: source },
+            { clCodes : [ind] },
+            { default: [ind] }
+        );
+
+        console.log(obj)
+
+        return obj;
     };
 
     DownloadData.prototype.render = function () {
@@ -176,7 +203,9 @@ define([
 
     DownloadData.prototype._getIndicatorConfigPath = function () {
 
-        return s.indicator_config_path + this.indicatorProperties.indicator_id+'.js';
+        return s.indicator_config_path +'.js';
+
+        //return s.indicator_config_path + this.indicatorProperties.indicator_id+'.js';
     };
 
     //The istance for the specific indicator is created when the FILTER has been rendered

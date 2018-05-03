@@ -254,7 +254,8 @@ define([
             if((newValues!= null) && (typeof newValues!= 'undefined'))
             {
 
-                if (newValues.GEO.values.length > 0) valid = true;
+                if (newValues.GEO.values.length > 0 && newValues.dd_filter_item_8.length > 0) valid = true;
+
                 // No Controls
                 //return newValues;
                 /*
@@ -418,6 +419,52 @@ define([
 
     IndicatorBase.prototype.onClickButton3 = function (values, dashboardConfig, params) {
 
+        var self = this,
+            $feedback = $('[data-buttonmsg="dd_filter_button_1_msg"]');
+
+        $feedback.html('<div class="alert alert-info" role="alert"><center>'+labels[params.lang]['download_in_progress']+'</center></div>');
+        $feedback.show();
+
+        setTimeout(function() {
+            $.ajax({
+                async: false,
+                dataType: 'json',
+                method: 'POST',
+                contentType: "text/plain; charset=utf-8",
+                url: "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsIndicatorsRawDownload",
+                data: JSON.stringify({
+                        "indicator": parseInt(params.indicator_id),
+                        "separator": ",",
+                        "filters": {
+                            "region": {
+                                "type": self.geoSelectedCode.toUpperCase(),
+                                "values": values.values[self.geoSelectedItem]
+                            },
+                            "iteration": values.values['dd_filter_item_9']
+                        }
+                    }
+                ),
+                success: function (res) {
+                    setTimeout(function () {
+                        $feedback.hide();
+                    }, 100);
+                    window.open(res[0], '_blank');
+                },
+                error: function (res) {
+                    if (res.responseText == "Record limit of 500000 exceeded.") {
+                        //alert(res.responseText);
+                        $feedback.html('<div class="alert alert-danger" role="alert"><center>' + res.responseText + '</center></div>');
+                        $feedback.show();
+                    }
+                    console.log(res);
+                    return;
+                }
+
+            });
+        }, 500);
+
+        /*
+
         var newDashboardConfig =null;
         var newValues = this._filterSelectionValidation(values, params, "3");
         if((newValues!= null)&&(typeof newValues != 'undefined')&&(!$.isEmptyObject(newValues)))
@@ -432,6 +479,8 @@ define([
         }
 
         return newDashboardConfig;
+
+        */
 
     };
 

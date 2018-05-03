@@ -145,8 +145,9 @@ define([
         //console.log('the value(s) I want is', newValues, 'from', codelist, 'using', paramsForGeoValidation.geo_SelectedTree, 'with values', paramsForGeoValidation.values.values[paramsForGeoValidation.geo_SelectedTree]);
 
         if((paramsForGeoValidation.tab_active_geo_item!=null)&&(typeof paramsForGeoValidation.tab_active_geo_item != 'undefined')) {
-
-            if (paramsForGeoValidation.values.values[paramsForGeoValidation.geo_SelectedTree].length < 1) listTypeError = true;
+            
+            if (typeof paramsForGeoValidation.values.values[paramsForGeoValidation.geo_SelectedTree] != 'undefined')
+                if (paramsForGeoValidation.values.values[paramsForGeoValidation.geo_SelectedTree].length < 1) listTypeError = true;
             /*
             //if (newValues.length < 1) listTypeError = true; // DA QUA
             //console.log('the value(s) I want is', newValues, 'from', codelist);
@@ -274,7 +275,7 @@ define([
 
     //To Update the selection done in the geo selector
     IndicatorCommonUtils.prototype._geoSelector_valuesUpdate = function (values, newValues, toDelete, codelist, listType) {
-        
+
         toDelete.forEach(function (item) {
             delete values[item];
         });

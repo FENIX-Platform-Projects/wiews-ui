@@ -34,6 +34,7 @@ define(function () {
                 "2_1" : "Number of species surveyed/inventoried",
                 "2_2" : "Number of varieties surveyed/inventoried"
             },
+            dd_filter_category : "2",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -92,6 +93,7 @@ define(function () {
                 "3_1" : "Percentage of species threatened out of those surveyed/inventoried",
                 "3_2" : "Percentage of varieties threatened out of those surveyed/inventoried"
             },
+            dd_filter_category : "1",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -142,12 +144,179 @@ define(function () {
             }
 
         },
+        5: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "5" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[on_farm_management_improvement_04]",
+                    "name": "on_farm_management_improvement_04",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "5" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvailable_ind5].[1]} MEMBER [Measures].[Percentage] AS (([Measures].[Cultivated Area] * 100) / [Measures].[Total Area]) \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[Percentage]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM  [on_farm_management_improvement_05] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        6: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "6" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[on_farm_management_improvement_06]",
+                    "name": "on_farm_management_improvement_04",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "6" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvailable_ind6].[1]} MEMBER [Measures].[Annual Average] AS ([Measures].[Unique Farmers] / [Measures].[Period]) \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[Unique Farmers], [Measures].[Annual Average]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [on_farm_management_improvement_06] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        7: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "7" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[disaster_recovery_07]",
+                    "name": "disaster_recovery",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "7" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvailable_ind7].[1]} MEMBER [Measures].[amount_of_seeds_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[households_benefited], [Measures].[amount_of_seeds_ann_avg]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        8: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "8" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[disaster_recovery_08]",
+                    "name": "disaster_recovery",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "8" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvailable_ind8].[1]} MEMBER [Measures].[%_seeds_prod_local_level] AS ([Measures].[seeds_prod_local_level] / [Measures].[amount_of_seeds_converted]) \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[amount_of_seeds], [Measures].[seeds_prod_local_level], [Measures].[amount_of_seeds_converted], [Measures].[%_seeds_prod_local_level]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        9: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "9" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[disaster_recovery_09]",
+                    "name": "disaster_recovery_09",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "9" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvailable_ind9].[1]} \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SET [~ROWS_ExistenceOfPolicy_ExistenceOfPolicy.ExistenceOfPolicy] AS {[ExistenceOfPolicy].[ExistenceOfPolicy].Members} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[NumberOfCountries]} ON COLUMNS, \n" +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_ExistenceOfPolicy_ExistenceOfPolicy.ExistenceOfPolicy]) ON ROWS FROM [disaster_recovery_09] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
         10: {
             domain_label : "In situ conservation sites managing crop wild relatives and wild food plantss",
             indicator_label: "Percentage",
             element_label : {
                 "10" : "Percentage of national in situ conservation sites with management plans addressing crop wild relatives and wild food plants"
             },
+            dd_filter_category : "1",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -175,12 +344,243 @@ define(function () {
             }
 
         },
+        12: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "12" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[crop_wild_relatives_wild_food_plants_12]",
+                    "name": "crop_wild_relatives_wild_food_plants_12",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "12" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvailable_ind12].[1]} \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[estimated_number_of_species]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants_12] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        13: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "13" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[targeting_collecting_ind_13]",
+                    "name": "targeting_collecting_ind_13_14",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "13" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvailable_Ind13].[1]} \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[exist_of_strategy], [Measures].[strategy_count], [Measures].[total_count], [Measures].[country_count]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [targeting_collecting_ind_13_14] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        14: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "14" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[targeting_collecting_ind_14]",
+                    "name": "targeting_collecting_ind_13_14",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "14" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvailable_Ind14].[1]} \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[crops_req_targeted_collecting]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [targeting_collecting_ind_13_14] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        15: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "15" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[targeted_collecting_15]",
+                    "name": "targeted_collecting",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "15" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvalable_ind15].[1]} MEMBER [Measures].[targeted_collecting_mission_ann_avg] AS ([Measures].[targeted_collecting_missions] / [Measures].[period]) \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[targeted_collecting_missions], [Measures].[targeted_collecting_mission_ann_avg]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [targeted_collecting] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        16: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "16" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[targeted_collecting_16]",
+                    "name": "targeted_collecting",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "16" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvalable_ind16].[1]} MEMBER [Measures].[accessions_number_ann_avg] AS ([Measures].[accessions_number] / [Measures].[period]) \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[accessions_number], [Measures].[accessions_number_ann_avg], [Measures].[Distinct Crop], [Measures].[Distinct Taxon], [Measures].[Distinct Crop + Taxon], [Measures].[Distinct Genera]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [targeted_collecting] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        17: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "17" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[germplasm_collections_ind_17]",
+                    "name": "germplasm_collections_ind_17",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "17" : {
+                    "mdx": "WITH \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[Year], [Measures].[Human Resources Capacity], [Measures].[Financial Resources], [Measures].[Infraestructure]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [germplasm_collections_ind_17] \n" +
+                    "WHERE CrossJoin({[Last_Year_Boolean.last_year_boolean].[1]}, {[DataAvailable_ind17].[1]})",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        20: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "20" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[targeted_collecting_16]",
+                    "name": "targeted_collecting",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "20" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvalable_ind16].[1]} MEMBER [Measures].[accessions_number_ann_avg] AS ([Measures].[accessions_number] / [Measures].[period]) \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[accessions_number], [Measures].[accessions_number_ann_avg], [Measures].[Distinct Crop], [Measures].[Distinct Taxon], [Measures].[Distinct Crop + Taxon], [Measures].[Distinct Genera]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [targeted_collecting] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
         22: {
             domain_label : "Accessions at risk",
             indicator_label: "Percentage",
             element_label : {
                 "22" : "Percentage of ex situ accessions in need of regeneration for which a budget for regeneration does not exist"
             },
+            dd_filter_category : "3",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -220,7 +620,140 @@ define(function () {
                 }
             }
 
-        }
+        },
+        23: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "23" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[regenerations_of_accessions_23]",
+                    "name": "regenerations_of_accessions",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "23" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvalable_ind23].[1]} MEMBER [Measures].[accessions_regenerated_ann_avg] AS ([Measures].[accessions_regenerated] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\"  \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures] .[accessions_regenerated], [Measures].[accessions_regenerated_ann_avg]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        24: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "24" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[regenerations_of_accessions_24]",
+                    "name": "regenerations_of_accessions",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "24" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvalable_ind24].[1]} \n" +
+                    "MEMBER [Measures].[%_of_accessions_need_regeneration] AS ([Measures].[accessions_need_regeneration] / [Measures].[accessions_num]), FORMAT_STRING = \"##.##%\" \n" +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[%_of_accessions_need_regeneration]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        25: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "25" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[characterization_and_evaluation_25]",
+                    "name": "characterization_and_evaluation_25",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "25" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvailable_Ind25].[DataAvailable_Ind25].Members} \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT \n" +
+                    "NON EMPTY {[Measures].[AvgOfMorphologicalTraits]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_25] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        26: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "26" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[characterization_and_evaluation_26]",
+                    "name": "characterization_and_evaluation_26",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "26" : {
+                    "mdx": "WITH \n" +
+                    "SET [~FILTER] AS {[DataAvailable_ind26].[1]} MEMBER [Measures].[number_of_pubs_ann_avg] AS ([Measures].[number_of_pubs_total] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" \n" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[number_of_pubs_total], [Measures].[number_of_pubs_ann_avg]} ON COLUMNS, \n" +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_26] \n" +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
 
     };
 });

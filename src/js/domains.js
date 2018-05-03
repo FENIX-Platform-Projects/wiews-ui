@@ -5,24 +5,17 @@ define([
     "handlebars",
     "../config/config",
     "../config/domains/config",
-    "../config/domains/indicatorsProperties",
     "../html/domains/template.hbs",
     "./domains/downloadData",
     "./domains/visualizeData",
     "../nls/labels"
-], function ($, log, _, Handlebars, C, PAGC, CATEG, template, DownloadData, VisualizeData, labels) {
+], function ($, log, _, Handlebars, C, PAGC, template, DownloadData, VisualizeData, labels) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
 
     //This code has to be passed by Typo3
-     var selected = {code: "20"};
-    // var selected = {code: "2"};
-    // var selected = {code: "10"};
-    // var selected = {code: "15"};
-    // var selected = {code: "22"};
-    // var selected = {code: "24"};
-    // var selected = {code: "3"};
+    var selected = 0;
 
     var s = {
         noVisualize : false,
@@ -90,16 +83,20 @@ define([
 
         this.selected_indicator = ((fromQS) ? {code: this._getParameterByName('code')} : selected);
 
-        if ((CATEG[this.selected_indicator.code]) == undefined) alert("Code " + this.selected_indicator.code + " doesn't have a proper configuration. Please check.");
+        if (this.selected_indicator.code == 0) alert("Code " + this.selected_indicator.code + " is not the code you are looking for 👋");
+        if ((PAGC[this.selected_indicator.code]) == undefined) alert("Code " + this.selected_indicator.code + " doesn't have a proper configuration. Please check.");
 
-        this.selected_indicator_category = CATEG[this.selected_indicator.code].category;
-        this.indicatorProperties = CATEG[this.selected_indicator.code];
+        this.selected_indicator_category = PAGC[this.selected_indicator.code].category;
+        this.indicatorProperties = PAGC[this.selected_indicator.code];
+        this.indicatorProperties.indicator_id = this.selected_indicator.code;
 
-        if(this.indicatorProperties.noVisualize){
+        console.log(this.indicatorProperties);
+
+//        if(this.indicatorProperties.noVisualize){
             $('[data-tab="'+s.VISUALIZE_DATA_TAB+'"]').removeAttr('data-toggle');
             $('[data-tab="'+s.VISUALIZE_DATA_TAB+'"]').removeAttr('href');
             s.noVisualize = true;
-        }
+//        }
 
         this.$tabs = this.$el.find(s.TABS_A);
 
@@ -129,7 +126,7 @@ define([
               environment: this.environment,
               indicator: this.selected_indicator_category,
               indicatorProperties: this.indicatorProperties,
-              conversion: CATEG[this.selected_indicator.code].downloadConversion
+              conversion: PAGC[this.selected_indicator.code].downloadConversion
         });
 
         if(!s.noVisualize){
