@@ -29,7 +29,7 @@ define(function () {
         "cl_indicator_17": "Empty Indicator",
         "cl_indicator_18": "Empty Indicator",
         "cl_indicator_19": "Empty Indicator",
-        "cl_indicator_20": "Empty Indicator",
+        "cl_indicator_20": "Number of accessions conserved ex situ under medium or long-term conditions",
         "cl_indicator_21": "Empty Indicator",
         "cl_indicator_22": "Percentage of ex situ accessions in need of regeneration for which a budget for regeneration does not exist",
         "cl_indicator_23": "Empty Indicator",
@@ -239,6 +239,15 @@ define(function () {
         "sites_with_management" : "Number of sites with management",
         "sites_total" : "Number of sites, total",
         "%_of_sites_with_mngmt" : "Percentage of sites with management",
-        "%_of_accessions_without_budget" : "Percentage of accessions without a budget"
+        "%_of_accessions_without_budget" : "Percentage of accessions without a budget",
+        "% of varieties thr out" : "Percentage of varieties threatened out",
+        "% of species thr out" : "Percentage of spiecies threatened out",
+        "crops_req_targeted_collecting" : "Crops requiring targeted collecting",
+        "accessions_number" : "Accession Number",
+        "accessions_number_ann_avg" : "Accession Number (Annual Average)",
+        "Distinct Crop" : "Distinct Crop",
+        "Distinct Taxon" : "Distinct Taxon",
+        "Distinct Crop + Taxon" : "Crop + Taxon",
+        "Distinct Genera" : "Distinct Genera"
     }
 });

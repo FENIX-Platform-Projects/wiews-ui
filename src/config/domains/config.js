@@ -411,10 +411,10 @@ define(function () {
 
         },
         14: {
-            domain_label : "Domain Label",
+            domain_label : "Crops requiring targeted collecting",
             indicator_label: "Indicator Label",
             element_label : {
-                "14" : "Element Label"
+                "14" : "Number of crops conserved in the national genebank(s) that require targeted collecting"
             },
             dd_filter_category : "3",
             cube : {
@@ -477,10 +477,10 @@ define(function () {
 
         },
         16: {
-            domain_label : "Domain Label",
+            domain_label : "Samples collected",
             indicator_label: "Indicator Label",
             element_label : {
-                "16" : "Element Label"
+                "16" : "Number of accessions resulting from targeted collecting missions in the country"
             },
             dd_filter_category : "3",
             cube : {
@@ -542,10 +542,10 @@ define(function () {
 
         },
         20: {
-            domain_label : "Domain Label",
+            domain_label : "Accessions conserved",
             indicator_label: "Indicator Label",
             element_label : {
-                "20" : "Element Label"
+                "20" : "Number of accessions conserved ex situ under medium or long-term conditions"
             },
             dd_filter_category : "3",
             cube : {
@@ -562,13 +562,7 @@ define(function () {
             },
             query : {
                 "20" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvalable_ind16].[1]} MEMBER [Measures].[accessions_number_ann_avg] AS ([Measures].[accessions_number] / [Measures].[period]) \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[accessions_number], [Measures].[accessions_number_ann_avg], [Measures].[Distinct Crop], [Measures].[Distinct Taxon], [Measures].[Distinct Crop + Taxon], [Measures].[Distinct Genera]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [targeted_collecting] \n" +
-                    "WHERE [~FILTER]",
+                    "mdx": "",
                     "type": "MDX"
                 }
             }
@@ -753,7 +747,34 @@ define(function () {
                 }
             }
 
-        }
+        },
+        28: {
+            domain_label : "Accessions distributed",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "28" : " Number of accessions distributed by genebanks to users of germplasm"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[targeted_collecting_16]",
+                    "name": "targeted_collecting",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "28" : {
+                    "mdx": "",
+                    "type": "MDX"
+                }
+            }
+
+        },
 
     };
 });
