@@ -86,33 +86,56 @@ define([
         this.indicatorConfig = this._getIndicatorConfig();
         this.config = this.indicatorConfig[mainTabName];
         
-        this.indicatorConfig.downloadData.filter.items[12] = this._buildConfig(this.indicatorConfig.downloadData.filter.items[12]);
+        this.indicatorConfig.downloadData.filter.items[12] = this._buildConfig(this.indicatorConfig.downloadData.filter.items[12], "element");
+        this.indicatorConfig.downloadData.filter.items[13] = this._buildConfig(this.indicatorConfig.downloadData.filter.items[13], "time");
 
         this.channels = {};
         //this.models = {};
     };
 
-    DownloadData.prototype._buildConfig = function (object) {
+    DownloadData.prototype._buildConfig = function (object, selection) {
 
         var self = this,
             obj = object,
+            title = "",
+            type = "tree",
+            def = 1,
             ind = this.indicatorProperties.indicator_id,
             source = [];
 
-        $.each(PAGC[ind].element_label, function (item) {
-            var the_label = labels[self.lang.toLowerCase()]['cl_indicator_'+item];
-            if (the_label != undefined) source.push({value: item, label: the_label});
-        });
+        switch(selection) {
+            case "element":
+                // Element
+                $.each(PAGC[ind].element_label, function (item) {
+                    var the_label = labels[self.lang.toLowerCase()]['cl_indicator_'+item];
+                    if (the_label != undefined) source.push({value: item, label: the_label});
+                });
+                $.extend(obj,
+                    { source: source },
+                    { clCodes : [ind] },
+                    { default: [ind] }
+                );
+            break;
+            case "time":
+                // Time
+                if (PAGC[ind].time == "years") {
+                    title = labels[self.lang.toLowerCase()]['filter_years'];
+                    source.push({value: 2014, label: "2014"},{value: 2015, label: "2015"},{value: 2016, label: "2016"},{value: 2017, label: "2017"});
+                    type = "radio";
+                    def = [2017];
+                } else {
+                    title = labels[self.lang.toLowerCase()]['filter_period'];
+                    source.push({value: "1", label: labels[self.lang.toLowerCase()]['cl_period_1']});
+                }
+                $.extend(obj,
+                    { source: source },
+                    { title : title },
+                    { type : type },
+                    { default : [def] }
+                );
+                break;
+        }
 
-        //source: [{value: "2_1", label: labels[Clang]['cl_indicator_2_1']},{value: "2_2", label: labels[Clang]['cl_indicator_2_2']}],
-
-        $.extend(obj,
-            { source: source },
-            { clCodes : [ind] },
-            { default: [ind] }
-        );
-
-        console.log(obj)
 
         return obj;
     };

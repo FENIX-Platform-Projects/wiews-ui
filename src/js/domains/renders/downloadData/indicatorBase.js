@@ -361,8 +361,6 @@ define([
 
     IndicatorBase.prototype.onClickButton1 = function (values, dashboardConfig, params) {
 
-//        console.log (values, dashboardConfig, params)
-
         $('[data-field = "1"]').attr('data-field', s.table_columns.domain);
         $('[data-field = "'+s.table_columns.domain+'"]').text(dashboardConfig.columntableName[0]);
         $('[data-field = "2"]').attr('data-field', s.table_columns.wiews_region);
@@ -376,6 +374,10 @@ define([
         $('[data-field = "6"]').attr('data-field', s.table_columns.value);
         $('[data-field = "'+s.table_columns.value+'"]').text(dashboardConfig.columntableName[5]);
 
+        if (params.time_label != undefined) {
+            $('[data-field = "5"]').attr('data-field', s.table_columns.iteration);
+            $('[data-field = "'+s.table_columns.iteration+'"]').text(params.time_label);
+        }
 
         var tableColumns = [s.table_columns.domain, s.table_columns.wiews_region, s.table_columns.indicator, s.table_columns.element, s.table_columns.iteration, s.table_columns.value];
 
@@ -420,10 +422,26 @@ define([
     IndicatorBase.prototype.onClickButton3 = function (values, dashboardConfig, params) {
 
         var self = this,
+            data = {
+                "indicator": parseInt(params.indicator_id),
+                "separator": ",",
+                "filters": {
+                    "region": {
+                        "type": self.geoSelectedCode.toUpperCase(),
+                        "values": values.values[self.geoSelectedItem]
+                    }
+                }
+            },
             $feedback = $('[data-buttonmsg="dd_filter_button_1_msg"]');
 
         $feedback.html('<div class="alert alert-info" role="alert"><center>'+labels[params.lang]['download_in_progress']+'</center></div>');
         $feedback.show();
+
+        if (params.time == "years") {
+            data.filters.year =  values.values['dd_filter_item_9'];
+        } else {
+            data.filters.iteration =  values.values['dd_filter_item_9'];
+        }
 
         setTimeout(function() {
             $.ajax({
@@ -432,18 +450,7 @@ define([
                 method: 'POST',
                 contentType: "text/plain; charset=utf-8",
                 url: "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsIndicatorsRawDownload",
-                data: JSON.stringify({
-                        "indicator": parseInt(params.indicator_id),
-                        "separator": ",",
-                        "filters": {
-                            "region": {
-                                "type": self.geoSelectedCode.toUpperCase(),
-                                "values": values.values[self.geoSelectedItem]
-                            },
-                            "iteration": values.values['dd_filter_item_9']
-                        }
-                    }
-                ),
+                data: JSON.stringify(data),
                 success: function (res) {
                     setTimeout(function () {
                         $feedback.hide();
@@ -562,7 +569,7 @@ define([
 
             tableData.push(row);
         }
-        console.log(tableData);
+        //console.log(tableData);
         return tableData;
     }
 

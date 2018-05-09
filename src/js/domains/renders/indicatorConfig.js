@@ -121,10 +121,9 @@ define([
                         },
                         {
                             id: 'dd_filter_item_9',
-                            type: 'tree',
+                            type: 'radio',
                             default: DOWNLOAD_DV["filter-dd_filter_item_9"],
                             title: labels[Clang]['filter_periods'],
-                            source: [{value: "1", label: labels[Clang]['cl_period_1']}],
                             max: 1
                         },
                         {

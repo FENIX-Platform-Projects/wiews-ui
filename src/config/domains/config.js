@@ -542,17 +542,19 @@ define(function () {
 
         },
         20: {
+            period_label : "Year",
             domain_label : "Accessions conserved",
             indicator_label: "Indicator Label",
             element_label : {
                 "20" : "Number of accessions conserved ex situ under medium or long-term conditions"
             },
+            time: "years",
             dd_filter_category : "3",
             cube : {
                 "queryModel": {},
                 "cube": {
-                    "uniqueName": "[wiews_indicators].[targeted_collecting_16]",
-                    "name": "targeted_collecting",
+                    "uniqueName": "[wiews_indicators].[wiews_indicators].[germplasm_collections_ind20]",
+                    "name": "germplasm_collections",
                     "connection": "wiews_indicators",
                     "catalog": "wiews_indicators",
                     "schema": "wiews_indicators",
@@ -562,7 +564,7 @@ define(function () {
             },
             query : {
                 "20" : {
-                    "mdx": "",
+                    "mdx": "WITH SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[accessions]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [germplasm_collections] WHERE [~FILTER]",
                     "type": "MDX"
                 }
             }
@@ -578,7 +580,7 @@ define(function () {
             cube : {
                 "queryModel": {},
                 "cube": {
-                    "uniqueName": "[regenerations_of_accessions_22]",
+                    "uniqueName": "[regenerations_of_accessions_ind22]",
                     "name": "regenerations_of_accessions",
                     "connection": "wiews_indicators",
                     "catalog": "wiews_indicators",
@@ -600,16 +602,7 @@ define(function () {
                     "type": "MDX"
                 },
                 "stk" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvalable_ind22].[1]} \n" +
-                    "MEMBER [Measures].[%_of_accessions_without_budget] AS IIf(([Measures].[accessions_need_regeneration] = 0), 0.0, ([Measures].[accessions_out_of_budget] / [Measures].[accessions_need_regeneration])) \n" +
-                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}}  \n" +
-                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[%_of_accessions_without_budget]} ON COLUMNS, \n" +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) \n" +
-                    "ON ROWS FROM [regenerations_of_accessions] \n" +
-                    "WHERE [~FILTER]",
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvalable_ind22].[1]} MEMBER [Measures].[%_of_accessions_without_budget] AS IIf(([Measures].[accessions_need_regeneration] = 0), 0.0, ([Measures].[accessions_out_of_budget] / [Measures].[accessions_need_regeneration])) SET [~ROWS_Region_Region.iso3_code] AS {[Region.iso3_code].[ALB], [Region.iso3_code].[ARG]} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[%_of_accessions_without_budget]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] WHERE [~FILTER]",
                     "type": "MDX"
                 }
             }

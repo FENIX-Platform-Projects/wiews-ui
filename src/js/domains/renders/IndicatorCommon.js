@@ -468,6 +468,8 @@ define([
 
         $('[data-dashboardContainer = "dd-dashboard-container"]').hide();
         var values = this.filter.getValues();
+
+        $.extend(param, {indicator_id : this.indicatorProperties.indicator_id}, {time_label : this.indicatorProperties.period_label} );
         
         var newDashboardConfig = this.indicatorProcesses.onClickButton1(values, this.dashboard_config, param);
 
@@ -673,6 +675,7 @@ define([
 
         mdx_query = JSON.stringify($.extend(DM[this.indicatorProperties.indicator_id].cube, DM[this.indicatorProperties.indicator_id].query[selection]));
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
+        mdx_query = mdx_query.replace("{{**TIME_PLACEHOLDER**}}", "[Year.year].["+filterValues.values.dd_filter_item_9+"]");
 
         $.ajax({
             async: false,

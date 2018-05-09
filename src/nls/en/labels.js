@@ -117,6 +117,7 @@ define(function () {
         "filter_stakeholders": "STAKEHOLDERS",
         "filter_stakeholders_include": "Include",
         "filter_periods": "PERIODS",
+        "filter_years": "YEARS",
         "filter_hierarchy_fao": "FAO",
         "filter_hierarchy_m49": "M49",
         "filter_hierarchy_sdg": "SDG",
@@ -131,7 +132,7 @@ define(function () {
         "filter_thousand_option_period": "Period",
 
         "table_title_domain": "Domain",
-        "table_title_country": "Country",
+        "table_title_country": "Country or Region",
         "table_title_element": "Element",
         "table_title_indicator": "Indicator and Rating",
         "table_title_period": "Period",
@@ -248,6 +249,7 @@ define(function () {
         "Distinct Crop" : "Distinct Crop",
         "Distinct Taxon" : "Distinct Taxon",
         "Distinct Crop + Taxon" : "Crop + Taxon",
-        "Distinct Genera" : "Distinct Genera"
+        "Distinct Genera" : "Distinct Genera",
+        "accessions" : "Number of accessions"
     }
 });

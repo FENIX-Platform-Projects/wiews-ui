@@ -21,14 +21,14 @@ define([
     var Clang = C.lang.toLowerCase();
 
     var s = {
-        EL: "#maps",
-        TABLE : "#table"
+            EL: "#maps",
+            TABLE : "#table"
         },
-        exsitu_search_url = "http://www.fao.org/wiews/data/search/",
+        exsitu_search_url = "http://www.fao.org/wiews/data/ex-situ-sdg-251/search/",
         organization_url = "http://www.fao.org/wiews/data/organizations/",
-        services_url = "http://hqlprfenixapp2.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/{{YEAR}}.saiku",
-        //google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
-        google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
+        services_url = "http://hqlprfenixapp2.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/wiews_map_agg_{{YEAR}}.saiku",
+        google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
+    //google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
 
     function Maps() {
         console.clear();
@@ -54,12 +54,12 @@ define([
         _.each(input, function(object, index) {
             var obj = {
                 "year" : year,
-                "instcode": object[0].value,
-                "name": object[1].value,
-                "country": object[4].value,
-                "accessions" : Number(object[5].value.split('.').join("")),
-                "genus" : Number(object[6].value.split('.').join("")),
-                "species" : Number(object[7].value.split('.').join(""))
+                "instcode": object[3].value,
+                "name": object[4].value,
+                "country": object[2].value,
+                "accessions" : Number(object[7].value.split(',').join("")),
+                "genus" : Number(object[8].value.split(',').join("")),
+                "species" : Number(object[9].value.split(',').join(""))
             };
             if (index>0) output.push(obj);
         });
@@ -70,8 +70,8 @@ define([
 
     Maps.prototype._convert2GEOJson = function (input) {
         var geoJSON = {
-            "type": "FeatureCollection",
-            "features" : []
+                "type": "FeatureCollection",
+                "features" : []
             },
             output = [];
 
@@ -80,20 +80,21 @@ define([
                 "type": "Feature",
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [ Number(object[3].value), Number(object[2].value) ]
+                    "coordinates": [ Number(object[6].value), Number(object[5].value) ]
                 },
                 "properties": {
-                    "instcode" : object[0].value,
-                    "name": object[1].value,
-                    "country" : object[4].value,
-                    "accessions" : Number(object[5].value.split('.').join("")),
-                    "genus" : Number(object[6].value.split('.').join("")),
-                    "species" : Number(object[7].value.split('.').join(""))
+                    "year" : object[0].value,
+                    "country" : object[2].value,
+                    "instcode" : object[3].value,
+                    "name": object[4].value,
+                    "accessions" : Number(object[7].value.split(',').join("")),
+                    "genus" : Number(object[8].value.split(',').join("")),
+                    "species" : Number(object[9].value.split(',').join(""))
                 },
-                "id" : object[0].value
+                "id" : object[3].value
             };
 
-            if (index > 0 && object[2].value.length > 0) {
+            if (index > 0 && object[6].value.length > 0) {
                 //console.log(obj);
                 output.push(obj);
             }
@@ -108,11 +109,27 @@ define([
 
         //return exsituC.dev_wiews_2016_map_saiku;
 
-        return exsituC[year];
+        //return exsituC[year];
 
-        $.get(services_url, function(data){
-            return data;
+        var data,
+            url = services_url.replace("{{YEAR}}", year);
+
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'GET',
+            contentType: "text/plain; charset=utf-8",
+            url:  url,
+            success: function(res) {
+                //console.log('res is ',res);
+                data = res;
+            },
+            error : function(res) {
+                console.log(res);
+            }
         });
+
+        return data;
 
     };
 
@@ -122,6 +139,7 @@ define([
 
         var data = this._getData($('#year').val());
         if (data == undefined) {
+            console.log(data);
             alert('Data not available');
             return;
         }
@@ -292,7 +310,7 @@ define([
             self._processMap($('#data_showed').val());
         });
 
-       $('#data_filter').on('change', function () {
+        $('#data_filter').on('change', function () {
             self._processMap($('#data_showed').val());
         });
 

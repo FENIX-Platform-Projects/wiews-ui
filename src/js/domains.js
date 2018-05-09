@@ -90,7 +90,7 @@ define([
         this.indicatorProperties = PAGC[this.selected_indicator.code];
         this.indicatorProperties.indicator_id = this.selected_indicator.code;
 
-        console.log(this.indicatorProperties);
+        //console.log(this.indicatorProperties);
 
 //        if(this.indicatorProperties.noVisualize){
             $('[data-tab="'+s.VISUALIZE_DATA_TAB+'"]').removeAttr('data-toggle');
