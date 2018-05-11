@@ -1029,7 +1029,10 @@ define([
         this.filter.on('ready', function(){
             self.initial = self.filter.getValues();
             self._bindYearListener();
-            if (self.instcode.length) self._executeSearch();
+            if (self.instcode.length) {
+                appendInstitute(self.instcode);
+                self._executeSearch();
+            }
             if (self.country_search.length) self._executeSearch();
             if (self.accenumb.length) self._executeSearch();
         });

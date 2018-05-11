@@ -480,8 +480,6 @@ define([
 
     //Download  Tab Button 2
     IndicatorCommon.prototype._DD_onClick_button2 = function (param) {
-        console.log('export client side');
-
         var values = this.filter.getValues();
         var newDashboardConfig = this.indicatorProcesses.onClickButton2(values, this.dashboard_config, param);
         if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
@@ -522,8 +520,6 @@ define([
             geo = coding.toUpperCase() + "_R",
             output = [];
 
-        console.log(coding, geo);
-
         output = this.icutils.callElastic(CL[geo],true).hits;
 
         _.each( output, function( element ) {
@@ -538,9 +534,12 @@ define([
         var self = this,
             str_lab = {},
             extendable = {},
+            stakeholder = "",
             output = [],
             region_code = 0,
             geocodes = [];
+
+        //console.log(input, structure, lab)
         
         if (lab['geocode'] != "iso3") geocodes = self._getCodelist(lab['geocode']);
 
@@ -554,11 +553,14 @@ define([
             if (index == 0) str_lab = object;
             if (object[0].type != "ROW_HEADER_HEADER") {
                 _.each(object, function(item, idx){
-                   if (item.type == "ROW_HEADER") region_code = Number(item.value);
+                   if (item.type == "ROW_HEADER") {
+                       region_code = Number(item.value);
+                       if (item.properties.dimension == "Organization") stakeholder = " - " + item.value;
+                   }
                    if (item.type == "DATA_CELL") {
                        var obj = $.extend({}, extendable);
-                       obj['element'] = labels[self.lang.toLowerCase()][str_lab[idx].value];
-                       obj['indicator_label'] = labels[self.lang.toLowerCase()][str_lab[idx].value];
+                       //obj['element'] = labels[self.lang.toLowerCase()][str_lab[idx].value] + stakeholder + " *** ";
+                       obj['indicator_label'] = labels[self.lang.toLowerCase()][str_lab[idx].value] + stakeholder;
                        obj['wiews_region'] = geocodes[object[0].value]; //(lab['geocode'] != "iso3") ?  geocodes[region_code] : self.isos[object[0].value];
                        obj['value'] = item.value;
                        output.push(obj);
@@ -613,6 +615,7 @@ define([
             selection = "0",
             select_array = [],
             index,
+            stakeholder = "",
             dsd = {},
             lab = {},
             geo_array = [],
@@ -671,9 +674,9 @@ define([
         lab['indicator_label'] = DM[this.indicatorProperties.indicator_id].indicator_label;
 
         if (filterValues.values.dd_filter_item_10 != undefined)
-            if (filterValues.values.dd_filter_item_10[0] == "stk") selection = filterValues.values.dd_filter_item_10[0];
+            if (filterValues.values.dd_filter_item_10[0] == "stk") stakeholder = "_stk" ; //selection = filterValues.values.dd_filter_item_10[0];
 
-        mdx_query = JSON.stringify($.extend(DM[this.indicatorProperties.indicator_id].cube, DM[this.indicatorProperties.indicator_id].query[selection]));
+        mdx_query = JSON.stringify($.extend(DM[this.indicatorProperties.indicator_id].cube, DM[this.indicatorProperties.indicator_id].query[selection+stakeholder]));
         mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
         mdx_query = mdx_query.replace("{{**TIME_PLACEHOLDER**}}", "[Year.year].["+filterValues.values.dd_filter_item_9+"]");
 

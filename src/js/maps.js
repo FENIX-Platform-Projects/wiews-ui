@@ -27,8 +27,8 @@ define([
         exsitu_search_url = "http://www.fao.org/wiews/data/ex-situ-sdg-251/search/",
         organization_url = "http://www.fao.org/wiews/data/organizations/",
         services_url = "http://hqlprfenixapp2.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/wiews_map_agg_{{YEAR}}.saiku",
-        google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
-    //google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
+        //google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
+        google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
 
     function Maps() {
         console.clear();

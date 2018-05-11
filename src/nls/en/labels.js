@@ -250,6 +250,9 @@ define(function () {
         "Distinct Taxon" : "Distinct Taxon",
         "Distinct Crop + Taxon" : "Crop + Taxon",
         "Distinct Genera" : "Distinct Genera",
-        "accessions" : "Number of accessions"
+        "accessions" : "Number of accessions",
+        "%_of_accessions_need_regeneration" : "Percentage of accessions in need of regeneration",
+        "accessions_distributed" : "Accessions distributed in total",
+        "accessions_distributed_ann_avg" : "Accessions distributed by annual average",
     }
 });
