@@ -16,7 +16,7 @@ define([
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
-        services_url = "http://fenix.fao.org/d3s_wiews/processes",
+        services_url = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchGetData?index=organizations",
         fromFreetext = false;
 
     var s = {
@@ -42,18 +42,54 @@ define([
 
     };
 
+    Organizations.prototype._parseOutput = function (input) {
+        var output = {
+            total : 0,
+            rows : []
+        };
+        //console.log(input);
+        _.each(input.hits, function(process){
+            output.rows.push({
+                "w_instcode" : process._source.stakeholder_id,
+                "accenumb" : process._source.accession_number,
+                "stakeholder_fullname" : process._source.stakeholder_id_fullname,
+                "taxon" : process._source.taxon_name,
+                "genus" : process._source.genus_name,
+                "species" : process._source.species_name,
+                "acqdate" : process._source.acquisition_date,
+                "storage" : process._source.type_of_germplasm_storage,
+                "country_en" : process._source.country_name,
+                "cropname" : process._source.crop_name,
+                "origcty" : process._source.orig_country_name,
+                "sampstat" : process._source.biological_status_of_accession,
+                "genebanks" : process._source.genebank_holding_safety_duplication_name,
+                "collsrc" : process._source.collecting_source,
+                "declatitude" : process._source.latitud_of_collecting_site,
+                "declongitude" : process._source.longitud_of_collecting_site,
+                "mlsstat" : process._source.status_under_multilateral_system,
+                "dataowner" : process._source.stakeholder_id_fullname,
+            });
+        });
+        output.total = input.total;
+        console.log('output is' ,output);
+        return output;
+    };
+
 
 
     Organizations.prototype._callServices = function (payload) {
-        var table_data = [];
+        var self = this,
+            table_data = [];
         $.ajax({
             async: false,
             dataType: 'json',
             method: 'POST',
-            contentType: "application/json; charset=utf-8",
+            contentType: "text/plain; charset=utf-8",
             url: services_url,
             data: JSON.stringify(payload),
             success: function(res) {
+                table_data = self._consumeResponse(res);
+                /*
                 var dsd = [];
                 //console.log(res.metadata.dsd);
                 _.each ( res.metadata.dsd.columns , function ( column ) {
@@ -67,13 +103,13 @@ define([
                     });
                     table_data.push(item);
                 });
-
+                */
                //console.log(table_data);
             }
 
         });
 
-        return table_data;
+        return self._parseOutput(table_data);
 
     };
 
@@ -186,7 +222,12 @@ define([
             sortable: true,
             paginationVAlign: "top"
         });
-    }
+    };
+
+    Organizations.prototype._consumeResponse = function (response) {
+        //console.log('response',response);
+        return response.hits.hits;
+    };
 
     Organizations.prototype._attach = function () {
         var self = this;
@@ -214,29 +255,14 @@ define([
                 prepare: function (query, settings) {
                     settings.async = false;
                     settings.type = "POST";
-                    settings.contentType = "application/json; charset=utf-8";
+                    settings.contentType = "text/plain; charset=utf-8";
                     settings.dataType = 'json';
                     settings.data = JSON.stringify(self._preparePayload(query));
 
                     return settings;
                 },
-                transform: function(response) {
-                    var response_data = [];
-                    var dsd = [];
-                    //console.log('response is ', response);
-                    _.each ( response.metadata.dsd.columns , function ( column ) {
-                        dsd.push(column.id)
-                    } );
-                    //console.log(dsd);
-                    _.each( response.data, function( element ) {
-                        var item = {};
-                        _.each(dsd, function (col_name, col_index) {
-                            item[col_name] = element[col_index];
-                        });
-                        response_data.push(item);
-                    });
-
-                    return response_data;
+                transform: function (response) {
+                    return self._consumeResponse(response);
                 }
 
             }
@@ -328,28 +354,12 @@ define([
         });
 
         if (this.instcode.length) {
-            var result = this._callServices([
-                {
-                    "name": "wiews_organization_filter",
-                    "sid": [ { "uid": "wiews_organizations" } ],
-                    "parameters": {
-                        "instcode" : this.instcode.toUpperCase()
-                    }
-                },
-                {
-                    "name":"order",
-                    "parameters":{
-                        "search_rank":"ASC",
-                        "name":"ASC",
-                        "acronym":"ASC",
-                        "instcode":"ASC",
-                        "parent_name":"ASC",
-                        "address":"ASC",
-                        "city":"ASC",
-                        "country":"ASC"
-                    }
-                }
-            ]);
+            var result = this._callServices({
+                    "query": {
+                        "wildcard": {"search_key": "*alb*"}
+                    },
+                    "size": 100
+                });
             if (result.length) {
                 this._initTable(result);
                 self._statesManagement('querystring');
@@ -461,6 +471,14 @@ define([
     };
 
     Organizations.prototype._preparePayload = function (freetext) {
+        console.log ('payload prepared');
+        return {
+            "query": {
+                "wildcard": {"search_key": "*alb*"}
+            },
+            "size": 100
+        } ;
+
         fromFreetext = false;
         if (freetext){
             fromFreetext = true;
@@ -599,6 +617,7 @@ define([
         });
 
         $('#adv_search_button').on('click', function(){
+            //self._initTable(self._callServices(self._preparePayload()));
             self._initTable(self._callServices(self._preparePayload()));
             self._statesManagement('results');
         });
