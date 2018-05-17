@@ -8,15 +8,24 @@ define([
     "../config/config",
     "../html/organizations/template.hbs",
     "../nls/labels",
+    "json-2-csv",
+    "file-saver",
     'typeahead.js',
     "bootstrap",
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
-], function ($, log, _, Handlebars, Report, Filter, C, template, labels, Bloodhound, bootstrap) {
+], function ($, log, _, Handlebars, Report, Filter, C, template, labels, converter, FileSaver, Bloodhound, bootstrap) {
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
         services_url = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchGetData?index=organizations",
+        services_el = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchApi",
+        service_path = {
+            "countries" : "?index=countries&multiSearch=false",
+            "biostatus" : "?index=biostatofacc&multiSearch=false",
+            "germplasm_storage" : "?index=germplasm_storage&multiSearch=false",
+            "organization_roles" : "?index=organization_roles"
+        },
         fromFreetext = false;
 
     var s = {
@@ -47,31 +56,46 @@ define([
             total : 0,
             rows : []
         };
-        //console.log(input);
+        //console.log('input is ',input);
         _.each(input.hits, function(process){
             output.rows.push({
-                "w_instcode" : process._source.stakeholder_id,
-                "accenumb" : process._source.accession_number,
-                "stakeholder_fullname" : process._source.stakeholder_id_fullname,
-                "taxon" : process._source.taxon_name,
-                "genus" : process._source.genus_name,
-                "species" : process._source.species_name,
-                "acqdate" : process._source.acquisition_date,
-                "storage" : process._source.type_of_germplasm_storage,
-                "country_en" : process._source.country_name,
-                "cropname" : process._source.crop_name,
-                "origcty" : process._source.orig_country_name,
-                "sampstat" : process._source.biological_status_of_accession,
-                "genebanks" : process._source.genebank_holding_safety_duplication_name,
-                "collsrc" : process._source.collecting_source,
-                "declatitude" : process._source.latitud_of_collecting_site,
-                "declongitude" : process._source.longitud_of_collecting_site,
-                "mlsstat" : process._source.status_under_multilateral_system,
-                "dataowner" : process._source.stakeholder_id_fullname,
+                "name" : process._source.name,
+                "acronym" : process._source.acronym,
+                "instcode" : process._source.instcode,
+                "parent_instcode" : process._source.parent_instcode,
+                "parent_name" : process._source.parent_name,
+                "address" : process._source.address,
+                "zip_code" : process._source.zip_code,
+                "city" : process._source.city,
+                "country" : process._source.country,
+                "telephone" : process._source.telephone,
+                "fax" : process._source.fax,
+                "email" : process._source.email,
+                "website" : process._source.website,
+                "status" : process._source.status,
+                "role_f646" : process._source.accession_number,
+                "role_f647" : process._source.accession_number,
+                "role_f648" : process._source.accession_number,
+                "role_f649" : process._source.accession_number,
+                "role_f650" : process._source.accession_number,
+                "role_f651" : process._source.accession_number,
+                "role_f652" : process._source.accession_number,
+                "role_f653" : process._source.accession_number,
+                "role_f654" : process._source.accession_number,
+                "role_f655" : process._source.accession_number,
+                "role_f656" : process._source.accession_number,
+                "role_f657" : process._source.accession_number,
+                "role_f658" : process._source.accession_number,
+                "role_f869" : process._source.accession_number,
+                "role_f874" : process._source.accession_number,
+                "role_f875" : process._source.accession_number,
+                "longitude" : process._source.longitude,
+                "latitude" : process._source.latitude,
+                "holdings" : 0
             });
         });
         output.total = input.total;
-        console.log('output is' ,output);
+        //console.log('output is' ,output);
         return output;
     };
 
@@ -88,32 +112,39 @@ define([
             url: services_url,
             data: JSON.stringify(payload),
             success: function(res) {
-                table_data = self._consumeResponse(res);
-                /*
-                var dsd = [];
-                //console.log(res.metadata.dsd);
-                _.each ( res.metadata.dsd.columns , function ( column ) {
-                    dsd.push(column.id)
-                } );
-                //console.log(dsd);
-                _.each( res.data, function( element ) {
-                    var item = {};
-                    _.each(dsd, function (col_name, col_index) {
-                        item[col_name] = element[col_index];
-                    });
-                    table_data.push(item);
-                });
-                */
-               //console.log(table_data);
+                table_data = self._parseOutput(self._consumeResponse(res));
             }
 
         });
 
-        return self._parseOutput(table_data);
+        return table_data;
 
     };
 
     Organizations.prototype._exportList = function (freetext) {
+
+
+        var json2csvCallback = function (err, csv) {
+            if (err) throw err;
+            var blob = new Blob([csv], {type: "text/csv;charset=utf-8"});
+            FileSaver.saveAs(blob, "organizations.txt");
+            //$('div#exsitu-search-ux-loader').hide();
+            //$('[data-page=exsitu-search]').css('opacity','1');
+        };
+        converter.json2csv(this.table_data, json2csvCallback, {
+            delimiter : {
+                wrap  : '"',
+                field : ',',
+                array : ';',
+                eol   : '\n'
+            },
+            prependHeader    : true,
+            sortHeader       : false
+            //keys             : []
+        });
+
+        return;
+
         var flow_model = {
             "outConfig": {
                 "plugin": "wiewsOutputCSV"
@@ -208,10 +239,11 @@ define([
     };
 
     Organizations.prototype._initTable = function(data) {
+        this.table_data = data.rows;
         if (this.instcode.length) this._fillResults(data[0]);
         $(s.TABLE).bootstrapTable('destroy');
         $(s.TABLE).bootstrapTable({
-            data : data,
+            data : data.rows,
             pagination: true,
             pageSize: 25,
             pageList: [10, 25, 50, 100, 200],
@@ -226,7 +258,7 @@ define([
 
     Organizations.prototype._consumeResponse = function (response) {
         //console.log('response',response);
-        return response.hits.hits;
+        return response.hits;
     };
 
     Organizations.prototype._attach = function () {
@@ -235,6 +267,10 @@ define([
         $(s.EL).html(template(labels[Clang]));
         this._initTable([]);
 
+        var codelist_ISO3 = this._getCodelists('countries');
+        var codelist_OrgR = this._getCodelists('organization_roles');
+
+        console.log(codelist_OrgR);
 
         $('#table').on('click-row.bs.table', function(row, $element, field){
             self._statesManagement('details');
@@ -262,7 +298,7 @@ define([
                     return settings;
                 },
                 transform: function (response) {
-                    return self._consumeResponse(response);
+                    return self._parseOutput(self._consumeResponse(response)).rows;
                 }
 
             }
@@ -298,9 +334,10 @@ define([
             el: s.FENIX_FILTER,
             selectors: {
                 "country": {
-                    "cl": { uid: "ISO3" },
+                    //"cl": { uid: "ISO3" },
                     "selector": {
                         "id": "dropdown",
+                        "source" : codelist_ISO3,
                         "config": {
                         //    "maxItems": 1,
                             "placeholder" : labels[Clang]['organizations_searchform_search_country'],
@@ -312,9 +349,10 @@ define([
                     }
                 },
                 "organizations_role": {
-                    "cl": { uid: "organizations_role" },
+                    //"cl": { uid: "organizations_role" },
                     "selector": {
                         "id": "dropdown",
+                        "source" : codelist_OrgR,
                         "config" : {
                             "placeholder": labels[Clang]['organizations_searchform_search_organizationrole'],
                             plugins: ['remove_button']
@@ -356,7 +394,7 @@ define([
         if (this.instcode.length) {
             var result = this._callServices({
                     "query": {
-                        "wildcard": {"search_key": "*alb*"}
+                        "wildcard": {"search_key": "*"+this.instcode+"*"}
                     },
                     "size": 100
                 });
@@ -471,13 +509,13 @@ define([
     };
 
     Organizations.prototype._preparePayload = function (freetext) {
-        console.log ('payload prepared');
+        //console.log ('payload prepared');
         return {
             "query": {
-                "wildcard": {"search_key": "*alb*"}
+                "wildcard": {"search_key": "*"+freetext+"*"}
             },
             "size": 100
-        } ;
+        };
 
         fromFreetext = false;
         if (freetext){
@@ -655,6 +693,53 @@ define([
 
     };
 
+    Organizations.prototype._getCodelists = function (payload_selection, format) {
+        var codelist = [];
+        var payload = {
+            "countries": {
+                query: {
+                    "size": 1000, "_source": ["country_code_iso3","country_name_en"]
+                }
+            },
+            "organization_roles": {
+                query: {
+                    "query":{"match_all": {}}, "size":100, "_source": ["code","title"]
+                },
+                lang: this.lang.toUpperCase()
+            }
+        };
+        // _source here is not from the query, needs to be used for below.
+
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'POST',
+            data: JSON.stringify(payload[payload_selection].query),
+            contentType: "text/plain; charset=utf-8",
+            url: services_el + service_path[payload_selection],
+            success: function(res) {
+                _.each( res.hits.hits, function( element ) {
+                    //console.log("element:", element._source);
+                    //console.log(element._source[payload[payload_selection].query._source[1]])
+                    if (format) {
+                        // plain
+                        codelist[element._source[payload[payload_selection].query._source[0]]] = element._source[payload[payload_selection].query._source[1]];
+                    } else {
+                        // fenix
+                        codelist.push({
+                            value: element._source[payload[payload_selection].query._source[0]],
+                            label: (payload[payload_selection].lang)
+                                ? element._source[payload[payload_selection].query._source[1]][payload[payload_selection].lang]
+                                : element._source[payload[payload_selection].query._source[1]]
+                        });
+                    }
+                });
+            }
+        });
+
+        return codelist;
+    };
+
     Organizations.prototype._RemoveParameterFromUrl = function(url, parameter) {
         return url
             .replace(new RegExp('[?&]' + parameter + '=[^&#]*(#.*)?$'), '$1')
@@ -662,6 +747,8 @@ define([
     };
 
     Organizations.prototype._checkforHoldings = function(payload) {
+        console.log('TODO');
+        return;
         var pay_16 = [{"name":"wiews_exsitu_filter","sid":[{"uid":"wiews_2014"},{"uid":"wiews_2016"},{"uid":"ref_sdg_institutes"},{"uid":"ref_iso3_countries"}],"parameters":{"year":"2016","countries":[],"institutes":[payload],"genus_species":[],"taxons":[],"sampstat":[],"accenumb":null,"originCountries":[]}},{"name":"order","parameters":{"country_en":"ASC","w_institute_en":"ASC","cropname":"ASC","taxon":"ASC"}},{"name":"columns","parameters":{"columns":["nicode","country_en","w_instcode","w_institute_en","accenumb","cropname","genus","species","taxon","acqdate","origcty","sampstat","declatitude","declongitude","collsrc","storage","mlsstat"]}}],
             out_16 = this._callServices(pay_16);
         $('[data-gpaindex=exsitu_search]').html(out_16.length+' (for 2016)');

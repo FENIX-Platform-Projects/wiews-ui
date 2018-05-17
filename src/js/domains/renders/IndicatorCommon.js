@@ -652,7 +652,7 @@ define([
             method: 'POST',
             contentType: "application/json; charset=utf-8",
             accept: "application/json, text/javascript, */*; q=0.01",
-            url: "http://hqlqawiews1.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/query/execute",
+            url: "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/query/execute",
             data: mdx_query,
             success: function(res) {
                 table_output = self._convert2TableData(res, dsd, lab);
@@ -686,7 +686,7 @@ define([
             method: 'POST',
             contentType: "application/json; charset=utf-8",
             accept: "application/json, text/javascript, */*; q=0.01",
-            url: "http://hqlqawiews1.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/query/execute",
+            url: "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/query/execute",
             data: mdx_query,
             success: function(res) {
                 table_tobootstrap = table_output.concat(self._convert2TableData(res, dsd, lab));

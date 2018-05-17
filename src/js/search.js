@@ -687,7 +687,7 @@ define([
 
         _.each(this.institutes, function(object){
             //console.log(object);
-            //elastic_species.push(String(object).replace(/,/g, '').split(" "));
+            //elastic_export_institutes.push(String(object).replace(/,/g, '').split(" "));
             elastic_institutes += object + " ";
         });
 

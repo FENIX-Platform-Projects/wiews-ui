@@ -26,7 +26,7 @@ define([
         },
         exsitu_search_url = "http://www.fao.org/wiews/data/ex-situ-sdg-251/search/",
         organization_url = "http://www.fao.org/wiews/data/organizations/",
-        services_url = "http://hqlprfenixapp2.hq.un.fao.org:10380/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/wiews_map_agg_{{YEAR}}.saiku",
+        services_url = "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/WIEWS/wiews_map_agg_{{YEAR}}.saiku",
         //google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
         google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
 
@@ -57,9 +57,9 @@ define([
                 "instcode": object[3].value,
                 "name": object[4].value,
                 "country": object[2].value,
-                "accessions" : Number(object[7].value.split(',').join("")),
-                "genus" : Number(object[8].value.split(',').join("")),
-                "species" : Number(object[9].value.split(',').join(""))
+                "accessions" : Number(object[7].value.split('.').join("")),
+                "genus" : Number(object[8].value.split('.').join("")),
+                "species" : Number(object[9].value.split('.').join(""))
             };
             if (index>0) output.push(obj);
         });
@@ -87,9 +87,9 @@ define([
                     "country" : object[2].value,
                     "instcode" : object[3].value,
                     "name": object[4].value,
-                    "accessions" : Number(object[7].value.split(',').join("")),
-                    "genus" : Number(object[8].value.split(',').join("")),
-                    "species" : Number(object[9].value.split(',').join(""))
+                    "accessions" : Number(object[7].value.split('.').join("")),
+                    "genus" : Number(object[8].value.split('.').join("")),
+                    "species" : Number(object[9].value.split('.').join(""))
                 },
                 "id" : object[3].value
             };
@@ -180,17 +180,19 @@ define([
 
             map.data.addGeoJson(geodata);
 
+
             map.data.addListener('click', function(event) {
                 //console.log(event.feature);
+                console.log(typeof event.feature.getProperty('accessions'));
                 infowindow.close();
                 var opening = new googleMaps.LatLng(event.feature.b.b.lat(), event.feature.b.b.lng());
                 infowindow.setPosition(opening);
                 infowindow.setContent(
                     "<span><b><a target='_blank' href='"+organization_url+self.lang.toLowerCase()+"/?instcode="+event.feature.getProperty('instcode')+"'>"+event.feature.getProperty('instcode')+"</a></b>" +
                     " - <i>"+event.feature.getProperty('name')+"</i> </span><br>" +
-                    "<br><span> <b>Accessions:</b> "+event.feature.getProperty('accessions')+"</span><br>" +
-                    "<span> <b>Genera:</b> "+event.feature.getProperty('genus')+"</span><br>" +
-                    "<span> <b>Species:</b> "+event.feature.getProperty('species')+"</span><br>" +
+                    "<br><span> <b>Accessions:</b> "+event.feature.getProperty('accessions').toLocaleString()+"</span><br>" +
+                    "<span> <b>Genera:</b> "+event.feature.getProperty('genus').toLocaleString()+"</span><br>" +
+                    "<span> <b>Species:</b> "+event.feature.getProperty('species').toLocaleString()+"</span><br>" +
                     "<br><b><a href='"+exsitu_search_url+self.lang.toLowerCase()+"/?instcode="+event.feature.getProperty('instcode')+"'>To the <i>ex situ</i> collection </a></b>"
                 );
                 infowindow.open(map);
