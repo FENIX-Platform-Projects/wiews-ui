@@ -26,6 +26,33 @@ define(function () {
                 }
             }
         },
+        1: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "1" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[wiews_indicators].[survies_inventories_ind_01]",
+                    "name": "survies_inventories_ind_01",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "1" : {
+                    "mdx": "WITH MEMBER [Measures].[Annual Avg] AS ([Measures].[surveys carries out] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[surveys carries out], [Measures].[Annual Avg]} ON COLUMNS,NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories_ind_01]",
+                    "type": "MDX"
+                }
+            }
+
+        },
         2: {
             domain_label : "Surveyed species/varieties",
             indicator_label: "Indicator",
@@ -144,6 +171,44 @@ define(function () {
             }
 
         },
+        4: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "4" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[on_farm_management_improvement_04]",
+                    "name": "on_farm_management_improvement_04",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "4" : {
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind4].[1]} MEMBER [Measures].[Annual Avg] AS ([Measures].[Number of Farming Communities] / [Measures].[Period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number of Farming Communities], [Measures].[Annual Avg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [on_farm_management_improvement_04] WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "4_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind4].[1]} MEMBER [Measures].[Annual Avg] AS ([Measures].[Number of Farming Communities] / [Measures].[Period]) " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[Number of Farming Communities], [Measures].[Annual Avg]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [on_farm_management_improvement_04] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
         5: {
             domain_label : "Domain Label",
             indicator_label: "Indicator Label",
@@ -231,12 +296,23 @@ define(function () {
             },
             query : {
                 "7" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvailable_ind7].[1]} MEMBER [Measures].[amount_of_seeds_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[households_benefited], [Measures].[amount_of_seeds_ann_avg]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind7].[1]} MEMBER [Measures].[amount_of_seeds_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[households_benefited], [Measures].[amount_of_seeds_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "7_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind7].[1]} MEMBER [Measures].[amount_of_seeds_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[households_benefited], [Measures].[amount_of_seeds_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [disaster_recovery] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -264,12 +340,23 @@ define(function () {
             },
             query : {
                 "8" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvailable_ind8].[1]} MEMBER [Measures].[%_seeds_prod_local_level] AS ([Measures].[seeds_prod_local_level] / [Measures].[amount_of_seeds_converted]) \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[amount_of_seeds], [Measures].[seeds_prod_local_level], [Measures].[amount_of_seeds_converted], [Measures].[%_seeds_prod_local_level]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind8].[1]} MEMBER [Measures].[%_seeds_prod_local_level] AS ([Measures].[seeds_prod_local_level] / [Measures].[amount_of_seeds_converted]) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[amount_of_seeds], [Measures].[seeds_prod_local_level], [Measures].[amount_of_seeds_converted], [Measures].[%_seeds_prod_local_level]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "7_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind8].[1]} MEMBER [Measures].[%_seeds_prod_local_level] AS ([Measures].[seeds_prod_local_level] / [Measures].[amount_of_seeds_converted]) " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[amount_of_seeds], [Measures].[seeds_prod_local_level], [Measures].[amount_of_seeds_converted], [Measures].[%_seeds_prod_local_level]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [disaster_recovery] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -344,6 +431,50 @@ define(function () {
             }
 
         },
+        11: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "11" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[wiews_indicators].[crop_wild_relatives_wild_food_plants_11]",
+                    "name": "crop_wild_relatives_wild_food_plants_11",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "11" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind11].[1]} MEMBER [Measures].[NumberOfActions_AnnAvg] AS ([Measures].[NumberOfActions] / [Measures].[period]) " +
+                    "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfActions], [Measures].[NumberOfActions_AnnAvg]} ON COLUMNS," +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants_11] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "11_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind11].[1]} MEMBER [Measures].[NumberOfActions_AnnAvg] AS ([Measures].[NumberOfActions] / [Measures].[period]) " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfActions], [Measures].[NumberOfActions_AnnAvg]} ON COLUMNS," +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [crop_wild_relatives_wild_food_plants_11] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
         12: {
             domain_label : "Domain Label",
             indicator_label: "Indicator Label",
@@ -398,12 +529,23 @@ define(function () {
             },
             query : {
                 "13" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvailable_Ind13].[1]} \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[exist_of_strategy], [Measures].[strategy_count], [Measures].[total_count], [Measures].[country_count]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [targeting_collecting_ind_13_14] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind13].[1]} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[exist_of_strategy], [Measures].[strategy_count], [Measures].[total_count], [Measures].[country_count]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [targeting_collecting_ind_13_14] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "13_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind13].[1]} " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[exist_of_strategy], [Measures].[strategy_count], [Measures].[total_count], [Measures].[country_count]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [targeting_collecting_ind_13_14] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -475,12 +617,23 @@ define(function () {
             },
             query : {
                 "15" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvalable_ind15].[1]} MEMBER [Measures].[targeted_collecting_mission_ann_avg] AS ([Measures].[targeted_collecting_missions] / [Measures].[period]) \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[targeted_collecting_missions], [Measures].[targeted_collecting_mission_ann_avg]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [targeted_collecting] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvalable_ind15].[1]} MEMBER [Measures].[targeted_collecting_mission_ann_avg] AS ([Measures].[targeted_collecting_missions] / [Measures].[period]) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[targeted_collecting_missions], [Measures].[targeted_collecting_mission_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [targeted_collecting] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "15_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvalable_ind15].[1]} MEMBER [Measures].[targeted_collecting_mission_ann_avg] AS ([Measures].[targeted_collecting_missions] / [Measures].[period]) " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[targeted_collecting_missions], [Measures].[targeted_collecting_mission_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [targeted_collecting] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -563,6 +716,100 @@ define(function () {
             }
 
         },
+        18: {
+            period_label : "Year",
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "18" : "Element Label"
+            },
+            time: "years",
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[wiews_indicators].[germplasm_collections_ind18]",
+                    "name": "germplasm_collections",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "18" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[crops]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [germplasm_collections] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "18_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[crops]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS " +
+                    "FROM [germplasm_collections] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        19: {
+            period_label : "Year",
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "19" : "Element Label"
+            },
+            time: "years",
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[wiews_indicators].[germplasm_collections_ind18]",
+                    "name": "germplasm_collections",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "19" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[species]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [germplasm_collections] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "19_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[species]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS " +
+                    "FROM [germplasm_collections] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
         20: {
             period_label : "Year",
             domain_label : "Accessions conserved",
@@ -603,6 +850,56 @@ define(function () {
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     "SELECT " +
                     "NON EMPTY {[Measures].[accessions]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS " +
+                    "FROM [germplasm_collections] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        21: {
+            period_label : "Year",
+            domain_label : "Domain label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "21" : "Element Label"
+            },
+            time: "years",
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[wiews_indicators].[germplasm_collections_ind21]",
+                    "name": "germplasm_collections",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "21" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
+                    "MEMBER [Measures].[%_of_accessions_duplicated] AS IIf(([Measures].[accessions] <> 0), (([Measures].[accessions_duplicated] / [Measures].[accessions]) * 100), 0)" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[%_of_accessions_duplicated]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS " +
+                    "FROM [germplasm_collections] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "21_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
+                    "MEMBER [Measures].[%_of_accessions_duplicated] AS IIf(([Measures].[accessions] <> 0), (([Measures].[accessions_duplicated] / [Measures].[accessions]) * 100), 0)" +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[%_of_accessions_duplicated]} ON COLUMNS, " +
                     "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS " +
                     "FROM [germplasm_collections] " +
                     "WHERE [~FILTER]",
@@ -678,12 +975,23 @@ define(function () {
             },
             query : {
                 "23" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvalable_ind23].[1]} MEMBER [Measures].[accessions_regenerated_ann_avg] AS ([Measures].[accessions_regenerated] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\"  \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures] .[accessions_regenerated], [Measures].[accessions_regenerated_ann_avg]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvalable_ind23].[1]} MEMBER [Measures].[accessions_regenerated_ann_avg] AS ([Measures].[accessions_regenerated] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\"  " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures] .[accessions_regenerated], [Measures].[accessions_regenerated_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "23_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvalable_ind23].[1]} MEMBER [Measures].[accessions_regenerated_ann_avg] AS ([Measures].[accessions_regenerated] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\"  " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures] .[accessions_regenerated], [Measures].[accessions_regenerated_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -757,12 +1065,23 @@ define(function () {
             },
             query : {
                 "25" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvailable_Ind25].[DataAvailable_Ind25].Members} \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[AvgOfMorphologicalTraits]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_25] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind25].[DataAvailable_Ind25].Members} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[AvgOfMorphologicalTraits]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_25] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "25_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind25].[DataAvailable_Ind25].Members} " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[AvgOfMorphologicalTraits]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_25] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -790,12 +1109,67 @@ define(function () {
             },
             query : {
                 "26" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvailable_ind26].[1]} MEMBER [Measures].[number_of_pubs_ann_avg] AS ([Measures].[number_of_pubs_total] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind26].[1]} MEMBER [Measures].[number_of_pubs_ann_avg] AS ([Measures].[number_of_pubs_total] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SELECT " +
-                    "NON EMPTY {[Measures].[number_of_pubs_total], [Measures].[number_of_pubs_ann_avg]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_26] \n" +
+                    "NON EMPTY {[Measures].[number_of_pubs_total], [Measures].[number_of_pubs_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_26] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "26_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind26].[1]} MEMBER [Measures].[number_of_pubs_ann_avg] AS ([Measures].[number_of_pubs_total] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[number_of_pubs_total], [Measures].[number_of_pubs_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_26] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        27: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "27" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[wiews_indicators].[characterization_and_evaluation_27]",
+                    "name": "characterization_and_evaluation_27",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "27" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind27].[1]} MEMBER [Measures].[number_of_trait_ann_avg] AS ([Measures].[number_of_trait_specific_collection_subset_published] / [Measures].[period]) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[number_of_trait_specific_collection_subset_published], [Measures].[number_of_trait_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_27] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "27_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind27].[1]} MEMBER [Measures].[number_of_trait_ann_avg] AS ([Measures].[number_of_trait_specific_collection_subset_published] / [Measures].[period]) " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[number_of_trait_specific_collection_subset_published], [Measures].[number_of_trait_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_27] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -848,6 +1222,842 @@ define(function () {
             }
 
         },
+        29: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "29" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[characterization_and_evaluation_26]",
+                    "name": "characterization_and_evaluation_26",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "29" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind29.DataAvailable_ind28].[1]} MEMBER [Measures].[samples_distributed_ann_avg] AS ([Measures].[samples_distributed] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[samples_distributed], [Measures].[samples_distributed_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "29_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind29.DataAvailable_ind28].[1]} MEMBER [Measures].[samples_distributed_ann_avg] AS ([Measures].[samples_distributed] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[samples_distributed], [Measures].[samples_distributed_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
 
+        },
+        30: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "30" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[plant_breeding_30]",
+                    "name": "plant_breeding",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "30" : {
+                    "mdx": "WITH " +
+                    "MEMBER [Measures].[num_of_crops_public_ann_avg] AS ([Measures].[distinct_crop_taxon] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[distinct_crops], [Measures].[num_of_crops_public_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] " +
+                    "WHERE CrossJoin(Except({[Sector].[sector].Members}, {[Sector].[Private]}), {[DataAvailable_ind30].[1]})",
+                    "type": "MDX"
+                },
+                "30_stk" : {
+                    "mdx": "WITH " +
+                    "MEMBER [Measures].[num_of_crops_public_ann_avg] AS ([Measures].[distinct_crop_taxon] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[distinct_crops], [Measures].[num_of_crops_public_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] " +
+                    "WHERE CrossJoin(Except({[Sector].[sector].Members}, {[Sector].[Private]}), {[DataAvailable_ind30].[1]})",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        31: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "31" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[plant_breeding_31]",
+                    "name": "plant_breeding",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                },
+            },
+            query : {
+                "31" : {
+                    "mdx": "WITH " +
+                    "MEMBER [Measures].[num_of_crops_public_ann_avg] AS ([Measures].[distinct_crop_taxon] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[distinct_crops], [Measures].[num_of_crops_public_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] " +
+                    "WHERE CrossJoin(Except({[Sector].[sector].Members}, {[Sector].[Public]}), {[DataAvailable_ind31].[1]})",
+                    "type": "MDX"
+                },
+                "31_stk" : {
+                    "mdx": "WITH " +
+                    "MEMBER [Measures].[num_of_crops_public_ann_avg] AS ([Measures].[distinct_crop_taxon] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[distinct_crops], [Measures].[num_of_crops_public_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] " +
+                    "WHERE CrossJoin(Except({[Sector].[sector].Members}, {[Sector].[Public]}), {[DataAvailable_ind31].[1]})",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        32: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "32" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[plant_breeding_32]",
+                    "name": "plant_breeding",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                },
+            },
+            query : {
+                "32" : {
+                    "mdx": "WITH " +
+                    "MEMBER [Measures].[num_activities_farmers_villages_ann_avg] AS ([Measures].[distinct_programs] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] " +
+                    "WHERE CrossJoin({[OrientedTo].[Small scale farmers], [OrientedTo].[Small scale farmers; Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces; Small scale farmers]}, {[DataAvailable_ind32].[1]})",
+                    "type": "MDX"
+                },
+                "32_stk" : {
+                    "mdx": "WITH " +
+                    "MEMBER [Measures].[num_activities_farmers_villages_ann_avg] AS ([Measures].[distinct_programs] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] " +
+                    "WHERE CrossJoin({[OrientedTo].[Small scale farmers], [OrientedTo].[Small scale farmers; Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces; Small scale farmers]}, {[DataAvailable_ind32].[1]})",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        // 33 is missing
+        // 34 is missing
+        35: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "35" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[crop_diversification_35]",
+                    "name": "crop_diversification_35",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                },
+            },
+            query : {
+                "35" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind35].[1]} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfPrograms]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_diversification_35] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "35_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind35].[1]} " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfPrograms]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [crop_diversification_35] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        36: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "36" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[crop_diversification_35]",
+                    "name": "crop_diversification_35",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "36" : {
+                    "mdx" : "WITH SET [~FILTER] AS {[DataAvailable_ind36].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfNewCrops]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [crop_diversification_36] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        37: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "37" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[dev_and_comm_of_varieties_37]",
+                    "name": "dev_and_comm_of_varieties_37",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                },
+            },
+            query : {
+                "37" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind37].[1]} " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_ExistenceOfPolicy_ExistenceOfPolicy.ExistenceOfPolicy] AS {[ExistenceOfPolicy].[ExistenceOfPolicy].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfPolicies]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_ExistenceOfPolicy_ExistenceOfPolicy.ExistenceOfPolicy]) ON ROWS FROM [dev_and_comm_of_varieties_37] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        38: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "38" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[dev_and_comm_of_varieties_38]",
+                    "name": "dev_and_comm_of_varieties_38",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                },
+            },
+            query : {
+                "38" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind38].[1]} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfPrograms]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [dev_and_comm_of_varieties_38] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "38_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind38].[1]} " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfPrograms]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [dev_and_comm_of_varieties_38] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        39: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "39" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[dev_and_comm_of_varieties_39]",
+                    "name": "dev_and_comm_of_varieties_39",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                },
+            },
+            query : {
+                "39" : {
+                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_Ind39].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfLandraces], [Measures].[CountOfTaxonCrop]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [dev_and_comm_of_varieties_39] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        40: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "40" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[seed_production_and_distribution_40]",
+                    "name": "seed_production_and_distribution_40",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "40" : {
+                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_Ind40].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfNewVarieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_40] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        41: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "41" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[seed_production_and_distribution_41]",
+                    "name": "seed_production_and_distribution_41",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "41" : {
+                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind41].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfRegisteredSeedEnterprises]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_41] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        42: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "42" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[seed_production_and_distribution_42]",
+                    "name": "seed_production_and_distribution_42",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "42" : {
+                    "mdx": "WITH MEMBER [Measures].[NumberOfVarieties] AS ([Measures].[NumberOfVaretiesXTotalCropArea] / [Measures].[TotalCropArea]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfVarieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_42] WHERE CrossJoin({[Last_Year_Boolean.last_year_boolean].[1]}, {[DataAvailable_ind42].[1]})",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        43: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "43" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[seed_production_and_distribution_43]",
+                    "name": "seed_production_and_distribution_43",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "43" : {
+                    "mdx": "WITH MEMBER [Measures].[area_supplied_with_seed] AS ([Measures].[CalcPerCrop_x_TotalCropHarv] / [Measures].[TotalCropHarvestedArea]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[area_supplied_with_seed]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_43] WHERE CrossJoin({[DataAvailable_ind43].[1]}, {[Last Year Bool].[1]})",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        44: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "44" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[seed_production_and_distribution_44]",
+                    "name": "seed_production_and_distribution_44",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "44" : {
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind44].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[ExistenceOfPolicy]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_44] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        45: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "45" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[national_programme_45]",
+                    "name": "national_programme_45",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "45" : {
+                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind45].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Existence National Entity]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_45] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        46: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "46" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[national_programme_46]",
+                    "name": "national_programme_46",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "46" : {
+                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind46].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Existence NFP]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_46] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        47: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "47" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[national_programme_47]",
+                    "name": "national_programme_47",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "47" : {
+                    "mdx": "WITH SET [~FILTER] AS    {[DataAvailable_ind47].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Existence Gov Policy]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_47] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        48: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "48" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[national_programme_48]",
+                    "name": "national_programme_48",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "48" : {
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind48].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Existence National Info Sharing]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_48] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        49: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "49" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[networks_49]",
+                    "name": "networks_49",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "49" : {
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_Ind49].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[MemberOfPgrfaNetwork]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [networks_49] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        50: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "50" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[networks_49]",
+                    "name": "networks_49",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "50" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind50].[1]} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfNetworks]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [networks_50] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "50_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind50].[1]} " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfNetworks]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [networks_50] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        51: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "51" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[networks_51]",
+                    "name": "networks_51",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "51" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind51].[1]} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfPublications]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [networks_51] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "51_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind51].[1]} " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfPublications]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [networks_51] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        52: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "52" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[information_systems_52]",
+                    "name": "information_systems_52",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "52" : {
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind52].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number of Crops]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_52] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        53: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "53" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[information_systems_53]",
+                    "name": "information_systems_53",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "53" : {
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind53].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Farmers Varieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_53] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        54: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "54" : "Element Label"
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[information_systems_54]",
+                    "name": "information_systems_54",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "54" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind54].[1]} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[Accessions ex situ documented]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [information_systems_54] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "54_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind54].[1]} " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[Accessions ex situ documented]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [information_systems_54] " +
+                    "WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        55: {
+            domain_label : "Domain Label",
+            indicator_label: "Indicator Label",
+            element_label : {
+                "55" : "Element Label"
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[information_systems_55]",
+                    "name": "information_systems_55",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "55" : {
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind55].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number Released Varieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_55] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        }
     };
 });

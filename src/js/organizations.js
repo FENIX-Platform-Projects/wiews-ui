@@ -270,8 +270,6 @@ define([
         var codelist_ISO3 = this._getCodelists('countries');
         var codelist_OrgR = this._getCodelists('organization_roles');
 
-        console.log(codelist_OrgR);
-
         $('#table').on('click-row.bs.table', function(row, $element, field){
             self._statesManagement('details');
             $('#backtosearch_fromomni').hide();
@@ -510,74 +508,41 @@ define([
 
     Organizations.prototype._preparePayload = function (freetext) {
         //console.log ('payload prepared');
-        return {
-            "query": {
-                "wildcard": {"search_key": "*"+freetext+"*"}
-            },
-            "size": 100
-        };
 
         fromFreetext = false;
         if (freetext){
             fromFreetext = true;
-            return [
-                {
-                    "name": "wiews_organization_filter",
-                    "sid": [ { "uid": "wiews_organizations" } ],
-                    "parameters": {
-                        "freetext" : freetext,
-                        "valid" : true
-                    }
+            return {
+                "query": {
+                    "wildcard": {"search_key": "*"+freetext+"*"}
                 },
-                {
-                    "name":"order",
-                    "parameters":{
-                        "search_rank":"ASC",
-                        "name":"ASC",
-                        "acronym":"ASC",
-                        "instcode":"ASC",
-                        "parent_name":"ASC",
-                        "address":"ASC",
-                        "city":"ASC",
-                        "country":"ASC"
-                    }
-                }
-            ];
+                "size": 100
+            };
         }
 
-        var filter_values = this.filter.getValues(),
-            isValid = (filter_values.values.valid == 'true');
+        var filter_values = this.filter.getValues();
 
-        var payload = [
-            {
-                "name": "wiews_organization_filter",
-                "sid": [ { "uid": "wiews_organizations" } ],
-                "parameters": {
-                    //"freetext" :  $('#search_omnibox').val(),
-                    "name" : $('#search_name').val(),
-                    "acronym" : $('#search_organization').val(),
-                    "instcode" : $('#search_instcode').val(),
-                    "city" : $('#search_city').val()
+        var payload = {
+            "query":{
+                "bool":{
+                    "must":[
+                        { "match":{ "valid": filter_values.values.valid[0] } }
+                    ]
                 }
             },
-            {
-                "name":"order",
-                "parameters":{
-                    "search_rank":"ASC",
-                    "name":"ASC",
-                    "acronym":"ASC",
-                    "instcode":"ASC",
-                    "parent_name":"ASC",
-                    "address":"ASC",
-                    "city":"ASC",
-                    "country":"ASC"
-                }
-            }
-        ];
+            "size": 100
+        };
 
-        if (filter_values.values.valid != 'null') payload[0].parameters.valid = isValid;
-        if (filter_values.values.country.length > 0 ) payload[0].parameters.country_iso3 = filter_values.values.country;
-        if (filter_values.values.organizations_role.length > 0 ) payload[0].parameters.roles = filter_values.values.organizations_role;
+        if (filter_values.values.country.length > 0 ) payload.query.bool.must.push({ "match":{ "country_iso3": filter_values.values.country.join(" ")} });
+        if ($('#search_city').val()) payload.query.bool.must.push({ "wildcard":{ "city.keyword":"*"+$('#search_city').val()+"*" } })
+        if ($('#search_name').val()) payload.query.bool.must.push({ "wildcard":{ "name.keyword":"*"+$('#search_name').val()+"*" } })
+        if ($('#search_organization').val()) payload.query.bool.must.push({ "wildcard":{ "acronym.keyword":"*"+$('#search_organization').val()+"*" } })
+
+        $.each(filter_values.values.organizations_role, function (index,obj) {
+            var item = { "match":{ } };
+            item.match["role_"+obj] = true;
+            payload.query.bool.must.push(item);
+        });
 
         return payload;
     }
