@@ -38,7 +38,7 @@ define([
 
     function Domains() {
 
-        console.clear();
+        // console.clear();
 
         // silent trace
 

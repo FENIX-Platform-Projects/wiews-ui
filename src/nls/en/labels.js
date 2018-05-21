@@ -17,7 +17,7 @@ define(function () {
         "cl_indicator_5": "Empty Indicator",
         "cl_indicator_6": "Empty Indicator",
         "cl_indicator_7": "Empty Indicator",
-        "cl_indicator_8": "Empty Indicator",
+//        "cl_indicator_8": "Empty Indicator",
         "cl_indicator_9": "Empty Indicator",
         "cl_indicator_10": "Percentage of national in situ conservation sites with management plans addressing crop wild relatives and wild food plants",
         "cl_indicator_11": "Empty Indicator",
@@ -228,31 +228,6 @@ define(function () {
         // Other stuff
 
         "bootstraptable_search_filter" : "Filter",
-        "exsitu-search_add_button" : "Add",
-
-        // Saiku Labels
-
-        "nfp" : "National Focal Point rating",
-        "varieties_avg" : "Varieties, annual average",
-        "varieties" : "Varieties, total",
-        "species_avg" : "Species, annual average",
-        "distinct_species" : "Species, total",
-        "sites_with_management" : "Number of sites with management",
-        "sites_total" : "Number of sites, total",
-        "%_of_sites_with_mngmt" : "Percentage of sites with management",
-        "%_of_accessions_without_budget" : "Percentage of accessions without a budget",
-        "% of varieties thr out" : "Percentage of varieties threatened out",
-        "% of species thr out" : "Percentage of spiecies threatened out",
-        "crops_req_targeted_collecting" : "Crops requiring targeted collecting",
-        "accessions_number" : "Accession Number",
-        "accessions_number_ann_avg" : "Accession Number (Annual Average)",
-        "Distinct Crop" : "Distinct Crop",
-        "Distinct Taxon" : "Distinct Taxon",
-        "Distinct Crop + Taxon" : "Crop + Taxon",
-        "Distinct Genera" : "Distinct Genera",
-        "accessions" : "Number of accessions",
-        "%_of_accessions_need_regeneration" : "Percentage of accessions in need of regeneration",
-        "accessions_distributed" : "Accessions distributed in total",
-        "accessions_distributed_ann_avg" : "Accessions distributed by annual average",
+        "exsitu-search_add_button" : "Add"
     }
 });

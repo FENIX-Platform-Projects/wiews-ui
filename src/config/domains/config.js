@@ -1,7 +1,11 @@
 /*global define*/
-define(function () {
+define(
+    ["../../nls/labels"],
+    function (labels) {
 
     'use strict';
+
+    console.log(labels['en']['element_label1']);
 
     return {
 
@@ -27,10 +31,10 @@ define(function () {
             }
         },
         1: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "1" : "Element Label"
+                "1" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -54,12 +58,12 @@ define(function () {
 
         },
         2: {
-            domain_label : "Surveyed species/varieties",
-            indicator_label: "Indicator",
+            domain_label : labels['en']['domain_label'],
+            indicator_label: "Indicator Label",
             element_label : {
-                "2" : "Number of PGRFA surveyed/inventoried",
-                "2_1" : "Number of species surveyed/inventoried",
-                "2_2" : "Number of varieties surveyed/inventoried"
+                "2" : labels['en']['element_label1'],
+                "2_1" : labels['en']['element_label2'],
+                "2_2" : labels['en']['element_label3']
             },
             dd_filter_category : "2",
             cube : {
@@ -113,12 +117,12 @@ define(function () {
 
         },
         3: {
-            domain_label : "Threatened species/varieties",
-            indicator_label: "Percentage",
+            domain_label : labels['en']['domain_label'],
+            indicator_label: "Indicator Label",
             element_label : {
-                "3" : "Percentage of PGRFA threatened out of those surveyed/inventoried",
-                "3_1" : "Percentage of species threatened out of those surveyed/inventoried",
-                "3_2" : "Percentage of varieties threatened out of those surveyed/inventoried"
+                "3" : labels['en']['element_label1'],
+                "3_1" : labels['en']['element_label2'],
+                "3_2" : labels['en']['element_label3']
             },
             dd_filter_category : "1",
             cube : {
@@ -172,10 +176,10 @@ define(function () {
 
         },
         4: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "4" : "Element Label"
+                "4" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -210,10 +214,10 @@ define(function () {
 
         },
         5: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "5" : "Element Label"
+                "5" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -243,10 +247,10 @@ define(function () {
 
         },
         6: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "6" : "Element Label"
+                "6" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -276,10 +280,10 @@ define(function () {
 
         },
         7: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "7" : "Element Label"
+                "7" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -320,10 +324,10 @@ define(function () {
 
         },
         8: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "8" : "Element Label"
+                "8" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -364,10 +368,10 @@ define(function () {
 
         },
         9: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "9" : "Element Label"
+                "9" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -398,10 +402,10 @@ define(function () {
 
         },
         10: {
-            domain_label : "In situ conservation sites managing crop wild relatives and wild food plantss",
-            indicator_label: "Percentage",
+            domain_label : labels['en']['domain_label'],
+            indicator_label: "Indicator Label",
             element_label : {
-                "10" : "Percentage of national in situ conservation sites with management plans addressing crop wild relatives and wild food plants"
+                "10" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -432,10 +436,10 @@ define(function () {
 
         },
         11: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "11" : "Element Label"
+                "11" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -476,10 +480,10 @@ define(function () {
 
         },
         12: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "12" : "Element Label"
+                "12" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -509,10 +513,10 @@ define(function () {
 
         },
         13: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "13" : "Element Label"
+                "13" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -553,10 +557,10 @@ define(function () {
 
         },
         14: {
-            domain_label : "Crops requiring targeted collecting",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "14" : "Number of crops conserved in the national genebank(s) that require targeted collecting"
+                "14" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -597,10 +601,10 @@ define(function () {
 
         },
         15: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "15" : "Element Label"
+                "15" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -641,10 +645,10 @@ define(function () {
 
         },
         16: {
-            domain_label : "Samples collected",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "16" : "Number of accessions resulting from targeted collecting missions in the country"
+                "16" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -685,10 +689,10 @@ define(function () {
 
         },
         17: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "17" : "Element Label"
+                "17" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -718,10 +722,10 @@ define(function () {
         },
         18: {
             period_label : "Year",
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "18" : "Element Label"
+                "18" : labels['en']['element_label1']
             },
             time: "years",
             dd_filter_category : "3",
@@ -765,10 +769,10 @@ define(function () {
         },
         19: {
             period_label : "Year",
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "19" : "Element Label"
+                "19" : labels['en']['element_label1']
             },
             time: "years",
             dd_filter_category : "3",
@@ -812,10 +816,10 @@ define(function () {
         },
         20: {
             period_label : "Year",
-            domain_label : "Accessions conserved",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "20" : "Number of accessions conserved ex situ under medium or long-term conditions"
+                "20" : labels['en']['element_label1']
             },
             time: "years",
             dd_filter_category : "3",
@@ -860,10 +864,10 @@ define(function () {
         },
         21: {
             period_label : "Year",
-            domain_label : "Domain label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "21" : "Element Label"
+                "21" : labels['en']['element_label1']
             },
             time: "years",
             dd_filter_category : "3",
@@ -909,10 +913,10 @@ define(function () {
 
         },
         22: {
-            domain_label : "Accessions at risk",
-            indicator_label: "Percentage",
+            domain_label : labels['en']['domain_label'],
+            indicator_label: "Indicator Label",
             element_label : {
-                "22" : "Percentage of ex situ accessions in need of regeneration for which a budget for regeneration does not exist"
+                "22" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -955,10 +959,10 @@ define(function () {
 
         },
         23: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "23" : "Element Label"
+                "23" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -999,10 +1003,10 @@ define(function () {
 
         },
         24: {
-            domain_label : "Accessions at risk",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "24" : "Percentage of ex situ accessions in need of regeneration"
+                "24" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -1045,10 +1049,10 @@ define(function () {
 
         },
         25: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "25" : "Element Label"
+                "25" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -1089,10 +1093,10 @@ define(function () {
 
         },
         26: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "26" : "Element Label"
+                "26" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -1133,10 +1137,10 @@ define(function () {
 
         },
         27: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "27" : "Element Label"
+                "27" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -1177,10 +1181,10 @@ define(function () {
 
         },
         28: {
-            domain_label : "Accessions distributed",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "28" : " Number of accessions distributed by genebanks to users of germplasm"
+                "28" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -1223,10 +1227,10 @@ define(function () {
 
         },
         29: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "29" : "Element Label"
+                "29" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -1267,10 +1271,10 @@ define(function () {
 
         },
         30: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "30" : "Element Label"
+                "30" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -1311,10 +1315,10 @@ define(function () {
 
         },
         31: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "31" : "Element Label"
+                "31" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -1355,10 +1359,10 @@ define(function () {
 
         },
         32: {
-            domain_label : "Domain Label",
+            domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-                "32" : "Element Label"
+                "32" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
