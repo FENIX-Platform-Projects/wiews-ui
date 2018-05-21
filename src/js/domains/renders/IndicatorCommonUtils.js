@@ -34,14 +34,14 @@ define([
             total : -1,
             hits : []
             },
-            endpoint = (isRegion === true) ? "regions/_msearch" : "regions/regions/_search";
+            endpoint = (isRegion === true) ? "yes" : "no";
 
         $.ajax({
             async: false,
             dataType: 'json',
             method: 'POST',
-            contentType: "application/json; charset=utf-8",
-            url: "http://hqlqawiews1.hq.un.fao.org:9200/"+endpoint,
+            contentType: "text/plain; charset=utf-8",
+            url: "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchGetData?index=regions&multiSearch="+endpoint,
             data: (isRegion === true) ? payload : JSON.stringify(payload),
             success: function(res) {
                 if (isRegion === true) {

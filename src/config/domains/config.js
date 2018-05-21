@@ -80,36 +80,36 @@ define(
             },
             query : {
                 "2" : {
-                    "mdx":  "WITH \n" +
-                    "SET [~FILTER] AS{[available_ind2].[1]}\n" +
-                    "MEMBER [Measures].[varieties_avg] AS ([Measures].[varieties] / [Measures].[period])\n" +
-                    "MEMBER [Measures].[species_avg] AS ([Measures].[distinct_species] / [Measures].[period])\n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}\n" +
-                    "SELECT\n" +
-                    "NON EMPTY {[Measures].[varieties_avg], [Measures].[varieties], [Measures].[species_avg], [Measures].[distinct_species]} ON COLUMNS,\n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]\n" +
+                    "mdx":  "WITH " +
+                    "SET [~FILTER] AS{[available_ind2].[1]}" +
+                    "MEMBER [Measures].[varieties_avg] AS ([Measures].[varieties] / [Measures].[period])" +
+                    "MEMBER [Measures].[species_avg] AS ([Measures].[distinct_species] / [Measures].[period])" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}" +
+                    "SELECT" +
+                    "NON EMPTY {[Measures].[varieties_avg], [Measures].[varieties], [Measures].[species_avg], [Measures].[distinct_species]} ON COLUMNS," +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]" +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 },
                 "2_1" : {
-                    "mdx":  "WITH \n" +
-                    "SET [~FILTER] AS{[available_ind2].[1]}\n" +
-                    "MEMBER [Measures].[species_avg] AS ([Measures].[distinct_species] / [Measures].[period])\n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}\n" +
-                    "SELECT\n" +
-                    "NON EMPTY {[Measures].[species_avg], [Measures].[distinct_species]} ON COLUMNS,\n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]\n" +
+                    "mdx":  "WITH " +
+                    "SET [~FILTER] AS{[available_ind2].[1]}" +
+                    "MEMBER [Measures].[species_avg] AS ([Measures].[distinct_species] / [Measures].[period])" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}" +
+                    "SELECT" +
+                    "NON EMPTY {[Measures].[species_avg], [Measures].[distinct_species]} ON COLUMNS," +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]" +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 },
                 "2_2" : {
-                    "mdx":  "WITH \n" +
-                    "SET [~FILTER] AS{[available_ind2].[1]}\n" +
-                    "MEMBER [Measures].[varieties_avg] AS ([Measures].[varieties] / [Measures].[period])\n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}\n" +
-                    "SELECT\n" +
-                    "NON EMPTY {[Measures].[varieties_avg], [Measures].[varieties]} ON COLUMNS,\n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]\n" +
+                    "mdx":  "WITH " +
+                    "SET [~FILTER] AS{[available_ind2].[1]}" +
+                    "MEMBER [Measures].[varieties_avg] AS ([Measures].[varieties] / [Measures].[period])" +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}" +
+                    "SELECT" +
+                    "NON EMPTY {[Measures].[varieties_avg], [Measures].[varieties]} ON COLUMNS," +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]" +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -139,36 +139,36 @@ define(
             },
             query : {
                 "3" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[available_ind3.available_ind2].[1]} \n" +
-                    "MEMBER [Measures].[% of varieties thr out] AS ([Measures].[threathened_varieties] / [Measures].[varieties]) \n" +
-                    "MEMBER [Measures].[% of species thr out] AS ([Measures].[threathened_species] / [Measures].[distinct_species]) \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[available_ind3.available_ind2].[1]} " +
+                    "MEMBER [Measures].[% of varieties thr out] AS ([Measures].[threathened_varieties] / [Measures].[varieties]) " +
+                    "MEMBER [Measures].[% of species thr out] AS ([Measures].[threathened_species] / [Measures].[distinct_species]) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SELECT " +
-                    "NON EMPTY {[Measures].[% of varieties thr out], [Measures].[% of species thr out]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] \n" +
+                    "NON EMPTY {[Measures].[% of varieties thr out], [Measures].[% of species thr out]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 },
                 "3_1" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[available_ind3.available_ind2].[1]} \n" +
-                    "MEMBER [Measures].[% of species thr out] AS ([Measures].[threathened_species] / [Measures].[distinct_species]) \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[available_ind3.available_ind2].[1]} " +
+                    "MEMBER [Measures].[% of species thr out] AS ([Measures].[threathened_species] / [Measures].[distinct_species]) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SELECT " +
-                    "NON EMPTY {[Measures].[% of species thr out]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] \n" +
+                    "NON EMPTY {[Measures].[% of species thr out]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 },
                 "3_2" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[available_ind3.available_ind2].[1]} \n" +
-                    "MEMBER [Measures].[% of varieties thr out] AS ([Measures].[threathened_varieties] / [Measures].[varieties]) \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[available_ind3.available_ind2].[1]} " +
+                    "MEMBER [Measures].[% of varieties thr out] AS ([Measures].[threathened_varieties] / [Measures].[varieties]) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SELECT " +
-                    "NON EMPTY {[Measures].[% of varieties thr out]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] \n" +
+                    "NON EMPTY {[Measures].[% of varieties thr out]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -234,12 +234,12 @@ define(
             },
             query : {
                 "5" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvailable_ind5].[1]} MEMBER [Measures].[Percentage] AS (([Measures].[Cultivated Area] * 100) / [Measures].[Total Area]) \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[Percentage]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM  [on_farm_management_improvement_05] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind5].[1]} MEMBER [Measures].[Percentage] AS (([Measures].[Cultivated Area] * 100) / [Measures].[Total Area]) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[Percentage]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM  [on_farm_management_improvement_05] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -267,12 +267,12 @@ define(
             },
             query : {
                 "6" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvailable_ind6].[1]} MEMBER [Measures].[Annual Average] AS ([Measures].[Unique Farmers] / [Measures].[Period]) \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[Unique Farmers], [Measures].[Annual Average]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [on_farm_management_improvement_06] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind6].[1]} MEMBER [Measures].[Annual Average] AS ([Measures].[Unique Farmers] / [Measures].[Period]) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[Unique Farmers], [Measures].[Annual Average]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [on_farm_management_improvement_06] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -388,13 +388,13 @@ define(
             },
             query : {
                 "9" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvailable_ind9].[1]} \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SET [~ROWS_ExistenceOfPolicy_ExistenceOfPolicy.ExistenceOfPolicy] AS {[ExistenceOfPolicy].[ExistenceOfPolicy].Members} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[NumberOfCountries]} ON COLUMNS, \n" +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_ExistenceOfPolicy_ExistenceOfPolicy.ExistenceOfPolicy]) ON ROWS FROM [disaster_recovery_09] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind9].[1]} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_ExistenceOfPolicy_ExistenceOfPolicy.ExistenceOfPolicy] AS {[ExistenceOfPolicy].[ExistenceOfPolicy].Members} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfCountries]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS], [~ROWS_ExistenceOfPolicy_ExistenceOfPolicy.ExistenceOfPolicy]) ON ROWS FROM [disaster_recovery_09] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -422,13 +422,13 @@ define(
             },
             query : {
                 "10" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvalable_ind10].[1]} \n" +
-                    "MEMBER [Measures].[%_of_sites_with_mngmt] AS IIf(([Measures].[sites_total] = 0), NULL, ([Measures].[sites_with_management] / [Measures].[sites_total])) \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[sites_with_management], [Measures].[sites_total], [Measures].[%_of_sites_with_mngmt]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvalable_ind10].[1]} " +
+                    "MEMBER [Measures].[%_of_sites_with_mngmt] AS IIf(([Measures].[sites_total] = 0), NULL, ([Measures].[sites_with_management] / [Measures].[sites_total])) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[sites_with_management], [Measures].[sites_total], [Measures].[%_of_sites_with_mngmt]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -500,12 +500,12 @@ define(
             },
             query : {
                 "12" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvailable_ind12].[1]} \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[estimated_number_of_species]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants_12] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind12].[1]} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[estimated_number_of_species]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants_12] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 }
@@ -577,12 +577,12 @@ define(
             },
             query : {
                 "14" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvailable_Ind14].[1]} \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[crops_req_targeted_collecting]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [targeting_collecting_ind_13_14] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind14].[1]} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[crops_req_targeted_collecting]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [targeting_collecting_ind_13_14] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 },
@@ -665,12 +665,12 @@ define(
             },
             query : {
                 "16" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvalable_ind16].[1]} MEMBER [Measures].[accessions_number_ann_avg] AS ([Measures].[accessions_number] / [Measures].[period]) \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[accessions_number], [Measures].[accessions_number_ann_avg], [Measures].[Distinct Crop], [Measures].[Distinct Taxon], [Measures].[Distinct Crop + Taxon], [Measures].[Distinct Genera]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [targeted_collecting] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvalable_ind16].[1]} MEMBER [Measures].[accessions_number_ann_avg] AS ([Measures].[accessions_number] / [Measures].[period]) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[accessions_number], [Measures].[accessions_number_ann_avg], [Measures].[Distinct Crop], [Measures].[Distinct Taxon], [Measures].[Distinct Crop + Taxon], [Measures].[Distinct Genera]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [targeted_collecting] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 },
@@ -709,11 +709,11 @@ define(
             },
             query : {
                 "17" : {
-                    "mdx": "WITH \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[Year], [Measures].[Human Resources Capacity], [Measures].[Financial Resources], [Measures].[Infraestructure]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [germplasm_collections_ind_17] \n" +
+                    "mdx": "WITH " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[Year], [Measures].[Human Resources Capacity], [Measures].[Financial Resources], [Measures].[Infraestructure]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [germplasm_collections_ind_17] " +
                     "WHERE CrossJoin({[Last_Year_Boolean.last_year_boolean].[1]}, {[DataAvailable_ind17].[1]})",
                     "type": "MDX"
                 }
@@ -933,13 +933,13 @@ define(
             },
             query : {
                 "22" : {
-                    "mdx": "WITH \n" +
-                    "SET [~FILTER] AS {[DataAvalable_ind22].[1]} \n" +
-                    "MEMBER [Measures].[%_of_accessions_without_budget] AS IIf(([Measures].[accessions_need_regeneration] = 0), 0.0, ([Measures].[accessions_out_of_budget] / [Measures].[accessions_need_regeneration])) \n" +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} \n" +
-                    "SELECT \n" +
-                    "NON EMPTY {[Measures].[%_of_accessions_without_budget]} ON COLUMNS, \n" +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] \n" +
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvalable_ind22].[1]} " +
+                    "MEMBER [Measures].[%_of_accessions_without_budget] AS IIf(([Measures].[accessions_need_regeneration] = 0), 0.0, ([Measures].[accessions_out_of_budget] / [Measures].[accessions_need_regeneration])) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SELECT " +
+                    "NON EMPTY {[Measures].[%_of_accessions_without_budget]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] " +
                     "WHERE [~FILTER]",
                     "type": "MDX"
                 },

@@ -9,20 +9,22 @@ define([
            url = "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsIndicatorLabels",
            element = [
                //"indicator_field_label",
-               "frontend_label", "saiku_label", "prority_activity_label"],
+               "frontend_label", "saiku_label"
+               //, "prority_activity_label"
+               ],
            bodies = [
                //{ "action": "getWebLabels", "lang":"EN", "indicator":"15" },
                { "action": "getFrontendLabels", "lang": "EN" },
                { "action": "getSaikuLabels", "lang":"EN" },
-               { "action": "getWebPriorityActivitiesLabels", "lang":"EN" }
+               //{ "action": "getWebPriorityActivitiesLabels", "lang":"EN" }
            ];
 
-            function getParameterByName(name) {
-                var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-                return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-            };
+       function getParameterByName(name) {
+           var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+           return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+       };
 
-               $.ajax({
+       $.ajax({
                    async: false,
                    dataType: 'json',
                    method: 'POST',
@@ -31,7 +33,7 @@ define([
                    url:  url,
                    success: function(res) {
 
-                       console.log(res);
+                       //console.log(res);
 
                        data['domain_label'] = res[0]['indicator_field_label_en'];
                        data['element_label1'] = res[1]['indicator_field_label_en'];
@@ -52,6 +54,28 @@ define([
                        console.log(res);
                    }
                });
+
+
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'POST',
+            contentType: "text/plain; charset=utf-8",
+            data : JSON.stringify({ "action": "getWebPriorityActivitiesLabels", "lang":"EN", "indicator":getParameterByName('code') }),
+            url:  url,
+            success: function(res) {
+                //console.log("Here I have the priority labels", res[0]);
+
+                data['domain_'+getParameterByName('code')] = res[0].pa_labels[0].f2;
+                data['activity1_'+getParameterByName('code')] = res[0].pa_labels[1].f2+" - ";
+                data['activity2_'+getParameterByName('code')] = res[0].pa_labels[2].f2;
+                data['indicator_'+getParameterByName('code')] = "Indicator "+getParameterByName('code')+": "+res[0].description;
+            },
+            error : function(res) {
+                console.log(res);
+            }
+        });
+
 
            $.each(bodies, function(idx, obj){
                $.ajax({
@@ -75,8 +99,8 @@ define([
                });
            });
 
+           data["title_"+getParameterByName('code')] = data['domain_label']+" - ";
            console.log(data);
-
            $.extend(label,i18nEn,data);
 
            return {

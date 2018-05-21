@@ -27,8 +27,8 @@ define([
         exsitu_search_url = "http://www.fao.org/wiews/data/ex-situ-sdg-251/search/",
         organization_url = "http://www.fao.org/wiews/data/organizations/",
         services_url = "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/WIEWS/wiews_map_agg_{{YEAR}}.saiku",
-        //google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
-        google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
+        google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
+        // google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
 
     function Maps() {
         console.clear();
@@ -57,9 +57,9 @@ define([
                 "instcode": object[3].value,
                 "name": object[4].value,
                 "country": object[2].value,
-                "accessions" : Number(object[7].value.split('.').join("")),
-                "genus" : Number(object[8].value.split('.').join("")),
-                "species" : Number(object[9].value.split('.').join(""))
+                "accessions" : Number(object[7].value.split(',').join("")),
+                "genus" : Number(object[8].value.split(',').join("")),
+                "species" : Number(object[9].value.split(',').join(""))
             };
             if (index>0) output.push(obj);
         });
@@ -87,9 +87,9 @@ define([
                     "country" : object[2].value,
                     "instcode" : object[3].value,
                     "name": object[4].value,
-                    "accessions" : Number(object[7].value.split('.').join("")),
-                    "genus" : Number(object[8].value.split('.').join("")),
-                    "species" : Number(object[9].value.split('.').join(""))
+                    "accessions" : Number(object[7].value.split(',').join("")),
+                    "genus" : Number(object[8].value.split(',').join("")),
+                    "species" : Number(object[9].value.split(',').join(""))
                 },
                 "id" : object[3].value
             };
@@ -264,7 +264,25 @@ define([
 
         $('#year').select2({ width: '100%',  theme: "bootstrap" });
         $('#data_showed').select2({ width: '100%' , theme: "bootstrap" });
+        this._updateFilter();
+
+    };
+
+    Maps.prototype._updateFilter = function (selection) {
+
+        $('#data_filter').empty();
+        $('#data_filter').append('<option value="0">All</option>');
+
+        if (selection == "genus" || selection == "species") {
+            $('#data_filter').append('<option value="10">Above 10</option>');
+            $('#data_filter').append('<option value="100">Above 100</option>');
+        } else {
+            $('#data_filter').append('<option value="5000">Above 5 000</option>');
+            $('#data_filter').append('<option value="10000">Above 10 000</option>');
+            $('#data_filter').append('<option value="50000">Above 50 000</option>');
+        }
         $('#data_filter').select2({ width: '100%',  theme: "bootstrap" });
+
 
     };
 
@@ -309,6 +327,7 @@ define([
         });
 
         $('#data_showed').on('change', function () {
+            self._updateFilter($('#data_showed').val());
             self._processMap($('#data_showed').val());
         });
 
