@@ -7,8 +7,12 @@ define(function () {
         // Ex Codelist from FENIX
 
         "cl_period_1" : "January 2012 - June 2014",
+
         "download_data": "DOWNLOAD DATA",
         "visualize_data": "VISUALIZE DATA",
+        "meta_data": "METADATA",
+
+        // From WEB
         "loading_in_progress": "Loading in progress",
         "completed": "Completed",
         "filter-vd_filter_button_1_title": "Show",

@@ -575,6 +575,8 @@ define([
 
     IndicatorCommon.prototype._parseGEO = function (geovalues, isList) {
 
+        console.log('parsing ',geovalues)
+
         var geo_array = [],
             list = (isList == "2") ? ".children" : "" ;
         switch(geovalues.codelist) {
@@ -597,10 +599,10 @@ define([
                 break;
             // Special Groups
             case "itpgrfa":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_ITPGRFA_codes].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_ITPGRFA_codes].[region_itpgrfa_code].["+elem+"]"+list) });
                 break;
             case "cgrfa":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_CGRFA_codes].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_CGRFA_codes].[region_cgrfa_code].["+elem+"]"+list) });
                 break;
         }
         return geo_array;

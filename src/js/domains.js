@@ -22,8 +22,10 @@ define([
         EL: "#domains",
         DOWNLOAD_DATA_TAB_EL: "#downloadDataTab",
         VISUALIZE_DATA_TAB_EL: "#visualizeDataTab",
+        META_DATA_TAB_EL: "#metaDataTab",
         DOWNLOAD_DATA_TAB: "downloadData",
         VISUALIZE_DATA_TAB: "visualizeData",
+        META_DATA_TAB: "metaData",
         TABS: "#domainsTab",
         TABS_A: "#domainsTab > li > a",
         visualizeDataTab_created : false,
@@ -95,6 +97,8 @@ define([
 //        if(this.indicatorProperties.noVisualize){
             $('[data-tab="'+s.VISUALIZE_DATA_TAB+'"]').removeAttr('data-toggle');
             $('[data-tab="'+s.VISUALIZE_DATA_TAB+'"]').removeAttr('href');
+            $('[data-tab="'+s.META_DATA_TAB+'"]').removeAttr('data-toggle');
+            $('[data-tab="'+s.META_DATA_TAB+'"]').removeAttr('href');
             s.noVisualize = true;
 //        }
 

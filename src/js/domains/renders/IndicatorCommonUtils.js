@@ -131,6 +131,7 @@ define([
     IndicatorCommonUtils.prototype.geoItemSelectionValidation = function (paramsForGeoValidation) {
 
         //console.log('we are geovalidators', paramsForGeoValidation);
+        console.log('the selected item is ',paramsForGeoValidation.geo_SelectedItem);
         var newValues = paramsForGeoValidation.values.values[paramsForGeoValidation.geo_SelectedItem],
             codelist = paramsForGeoValidation.geo_SelectedCode,
             listType = paramsForGeoValidation.geo_SelectedList,
@@ -202,10 +203,12 @@ define([
         //console.log('we will say that listTypeError is ', listTypeError)
 
         var updatedValues = {};
-        updatedValues.values = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType);
+        updatedValues.values = this._geoSelector_valuesUpdate(values.values, newValues, toDelete, codelist, listType, checkboxRegionItem);
         updatedValues.listType = listType;
         updatedValues.listTypeError = listTypeError;
         updatedValues.codelist = codelist;
+
+        console.log('updval', updatedValues);
 
         return updatedValues;
     }
@@ -274,7 +277,7 @@ define([
     }
 
     //To Update the selection done in the geo selector
-    IndicatorCommonUtils.prototype._geoSelector_valuesUpdate = function (values, newValues, toDelete, codelist, listType) {
+    IndicatorCommonUtils.prototype._geoSelector_valuesUpdate = function (values, newValues, toDelete, codelist, listType, checkboxRegionItem) {
 
         toDelete.forEach(function (item) {
             delete values[item];

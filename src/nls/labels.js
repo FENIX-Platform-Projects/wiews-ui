@@ -9,13 +9,14 @@ define([
            url = "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsIndicatorLabels",
            element = [
                //"indicator_field_label",
-               "frontend_label", "saiku_label"
+               "frontend_label"
+               //, "saiku_label"
                //, "prority_activity_label"
                ],
            bodies = [
                //{ "action": "getWebLabels", "lang":"EN", "indicator":"15" },
                { "action": "getFrontendLabels", "lang": "EN" },
-               { "action": "getSaikuLabels", "lang":"EN" },
+               //{ "action": "getSaikuLabels", "lang":"EN" },
                //{ "action": "getWebPriorityActivitiesLabels", "lang":"EN" }
            ];
 
@@ -99,8 +100,21 @@ define([
                });
            });
 
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'GET',
+            contentType: "text/plain; charset=utf-8",
+            url:  "https://storage.googleapis.com/wiews-lang-bucket/saikulabels_EN.json",
+            success: function(res) {
+                console.log('res for ',res);
+            },
+            error : function(res) {
+                console.log(res);
+            }
+        });
+
            data["title_"+getParameterByName('code')] = data['domain_label']+" - ";
-           console.log(data);
            $.extend(label,i18nEn,data);
 
            return {

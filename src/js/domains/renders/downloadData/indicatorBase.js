@@ -146,7 +146,10 @@ define([
             'dd_filter_item_4_1',
             'dd_filter_item_4_2',
             'dd_filter_item_4_3',
-            'dd_filter_item_4_4'
+            'dd_filter_item_4_4',
+            'dd_filter_item_4_5',
+            'dd_filter_item_4_6',
+
         ],
 
         filter_items : {
@@ -496,7 +499,7 @@ define([
         var self = this;
         var anchor;
         $( 'a[data-toggle="tab"]' ).on( 'shown.bs.tab', function( evt ) {
-
+            console.log('the geo active is ', s.dd_tab_active.geo_item);
             // Read the a href of the anchor that was clicked
             anchor = $( evt.target ).attr( 'href' );
             // Trim the leading '#' from the href attribute

@@ -5,8 +5,6 @@ define(
 
     'use strict';
 
-    console.log(labels['en']['element_label1']);
-
     return {
 
         0: {
@@ -85,7 +83,7 @@ define(
                     "MEMBER [Measures].[varieties_avg] AS ([Measures].[varieties] / [Measures].[period])" +
                     "MEMBER [Measures].[species_avg] AS ([Measures].[distinct_species] / [Measures].[period])" +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}" +
-                    "SELECT" +
+                    "SELECT " +
                     "NON EMPTY {[Measures].[varieties_avg], [Measures].[varieties], [Measures].[species_avg], [Measures].[distinct_species]} ON COLUMNS," +
                     "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]" +
                     "WHERE [~FILTER]",
@@ -96,7 +94,7 @@ define(
                     "SET [~FILTER] AS{[available_ind2].[1]}" +
                     "MEMBER [Measures].[species_avg] AS ([Measures].[distinct_species] / [Measures].[period])" +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}" +
-                    "SELECT" +
+                    "SELECT " +
                     "NON EMPTY {[Measures].[species_avg], [Measures].[distinct_species]} ON COLUMNS," +
                     "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]" +
                     "WHERE [~FILTER]",
@@ -107,7 +105,7 @@ define(
                     "SET [~FILTER] AS{[available_ind2].[1]}" +
                     "MEMBER [Measures].[varieties_avg] AS ([Measures].[varieties] / [Measures].[period])" +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}" +
-                    "SELECT" +
+                    "SELECT " +
                     "NON EMPTY {[Measures].[varieties_avg], [Measures].[varieties]} ON COLUMNS," +
                     "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]" +
                     "WHERE [~FILTER]",
