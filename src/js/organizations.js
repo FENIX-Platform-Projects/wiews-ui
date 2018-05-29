@@ -18,7 +18,7 @@ define([
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
-        services_url = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchGetData?index=organizations",
+        services_url = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchGetData?index=organizations&multiSearch=no",
         services_el = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchApi",
         service_path = {
             "countries" : "?index=countries&multiSearch=false",
@@ -99,7 +99,53 @@ define([
         return output;
     };
 
+    Organizations.prototype._callGoogle = function (filename) {
+        var self = this,
+            response_data = {
+                total : -1,
+                hits : []
+            },
+            staticurl = "https://storage.googleapis.com/wiews-lang-bucket/";
 
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'GET',
+            contentType: "text/plain; charset=utf-8",
+            url:  staticurl+filename,
+            success: function(res) {
+                // console.log('success is ',res);
+                response_data.total = res.hits.total;
+                // first we check for aggregations
+                if (res.aggregations) {
+                    //res.aggregations.result_set.buckets.length && res.aggregations.result_set.length
+                    //console.log('aggregations');
+                    _.each( res.aggregations.result_set.buckets, function ( element ) {
+                        var item =  {
+                            label : element.childs_set.buckets[0].key,
+                            value : element.key
+                        };
+                        response_data.hits.push(item);
+                    });
+                }
+                if (res.hits.hits.length) {
+                    //console.log('hits');
+                    _.each( res.hits.hits, function ( element ) {
+                        var item =  {
+                            label : element._source.title[self.lang.toUpperCase()],
+                            value : element._source.code
+                        };
+                        response_data.hits.push(item);
+                    });
+                }
+            },
+            error : function(res) {
+                console.log(res);
+            }
+        });
+
+        return response_data;
+    };
 
     Organizations.prototype._callServices = function (payload) {
         var self = this,
@@ -240,7 +286,7 @@ define([
 
     Organizations.prototype._initTable = function(data) {
         this.table_data = data.rows;
-        if (this.instcode.length) this._fillResults(data[0]);
+        if (this.instcode.length) if (data.rows) this._fillResults(data.rows[0]);
         $(s.TABLE).bootstrapTable('destroy');
         $(s.TABLE).bootstrapTable({
             data : data.rows,
@@ -266,9 +312,14 @@ define([
 
         $(s.EL).html(template(labels[Clang]));
         this._initTable([]);
-
+        /*
         var codelist_ISO3 = this._getCodelists('countries');
         var codelist_OrgR = this._getCodelists('organization_roles');
+        */
+
+        var codelist_ISO3 = this._callGoogle('iso3_country_codes.json').hits;
+        var codelist_OrgR = this._callGoogle('organization_roles.json').hits;
+
 
         $('#table').on('click-row.bs.table', function(row, $element, field){
             self._statesManagement('details');
@@ -297,7 +348,8 @@ define([
                 },
                 transform: function (response) {
                     return self._parseOutput(self._consumeResponse(response)).rows;
-                }
+                },
+                rateLimitWait: 1000
 
             }
         });
@@ -392,11 +444,11 @@ define([
         if (this.instcode.length) {
             var result = this._callServices({
                     "query": {
-                        "wildcard": {"search_key": "*"+this.instcode+"*"}
+                        "wildcard": {"instcode.keyword": "*"+this.instcode.toUpperCase()+"*"}
                     },
-                    "size": 100
+                    "size": 2000
                 });
-            if (result.length) {
+            if (result.rows.length) {
                 this._initTable(result);
                 self._statesManagement('querystring');
                 $('#backtosearch_fromomni').show();
@@ -514,29 +566,31 @@ define([
             fromFreetext = true;
             return {
                 "query": {
-                    "wildcard": {"search_key": "*"+freetext+"*"}
+                    "wildcard": {"search_key": "*"+freetext.toLowerCase()+"*"}
                 },
-                "size": 100
+                "size": 2000
             };
         }
 
         var filter_values = this.filter.getValues();
+        var isValid = (filter_values.values.valid == 'true');
 
         var payload = {
             "query":{
                 "bool":{
                     "must":[
-                        { "match":{ "valid": filter_values.values.valid[0] } }
+                        { "match":{ "valid": isValid } }
                     ]
                 }
             },
-            "size": 100
+            "size": 2000
         };
 
         if (filter_values.values.country.length > 0 ) payload.query.bool.must.push({ "match":{ "country_iso3": filter_values.values.country.join(" ")} });
-        if ($('#search_city').val()) payload.query.bool.must.push({ "wildcard":{ "city.keyword":"*"+$('#search_city').val()+"*" } })
-        if ($('#search_name').val()) payload.query.bool.must.push({ "wildcard":{ "name.keyword":"*"+$('#search_name').val()+"*" } })
-        if ($('#search_organization').val()) payload.query.bool.must.push({ "wildcard":{ "acronym.keyword":"*"+$('#search_organization').val()+"*" } })
+        if ($('#search_city').val()) payload.query.bool.must.push({ "wildcard":{ "city":"*"+$('#search_city').val().toLowerCase()+"*" } });
+        if ($('#search_name').val()) payload.query.bool.must.push({ "wildcard":{ "name":"*"+$('#search_name').val().toLowerCase()+"*" } });
+        if ($('#search_organization').val()) payload.query.bool.must.push({ "wildcard":{ "acronym":"*"+$('#search_organization').val().toLowerCase()+"*" } });
+        if ($('#search_instcode').val()) payload.query.bool.must.push({ "wildcard":{ "instcode.keyword":"*"+$('#search_instcode').val().toUpperCase()+"*" } });
 
         $.each(filter_values.values.organizations_role, function (index,obj) {
             var item = { "match":{ } };
@@ -712,7 +766,7 @@ define([
     };
 
     Organizations.prototype._checkforHoldings = function(payload) {
-        console.log('TODO');
+        //console.log('TODO');
         return;
         var pay_16 = [{"name":"wiews_exsitu_filter","sid":[{"uid":"wiews_2014"},{"uid":"wiews_2016"},{"uid":"ref_sdg_institutes"},{"uid":"ref_iso3_countries"}],"parameters":{"year":"2016","countries":[],"institutes":[payload],"genus_species":[],"taxons":[],"sampstat":[],"accenumb":null,"originCountries":[]}},{"name":"order","parameters":{"country_en":"ASC","w_institute_en":"ASC","cropname":"ASC","taxon":"ASC"}},{"name":"columns","parameters":{"columns":["nicode","country_en","w_instcode","w_institute_en","accenumb","cropname","genus","species","taxon","acqdate","origcty","sampstat","declatitude","declongitude","collsrc","storage","mlsstat"]}}],
             out_16 = this._callServices(pay_16);

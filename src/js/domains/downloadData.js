@@ -85,7 +85,7 @@ define([
         this.$el = $(s.EL);
         this.indicatorConfig = this._getIndicatorConfig();
         this.config = this.indicatorConfig[mainTabName];
-        
+
         this.indicatorConfig.downloadData.filter.items[12] = this._buildConfig(this.indicatorConfig.downloadData.filter.items[12], "element");
         this.indicatorConfig.downloadData.filter.items[13] = this._buildConfig(this.indicatorConfig.downloadData.filter.items[13], "time");
 
@@ -155,7 +155,8 @@ define([
             lang : this.lang,
             environment : this.environment,
             cache : this.cache,
-            mainTabName : mainTabName
+            mainTabName : mainTabName,
+            codelists : this.indicatorConfig.downloadData.codelists
         });
 
         indicatorCommon.indicatorSectionInit(dashboardConf);

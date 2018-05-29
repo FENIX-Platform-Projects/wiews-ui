@@ -29,6 +29,62 @@ define([
         return this;
     }
 
+    IndicatorCommonUtils.prototype.callGoogle = function (filename, isRegion) {
+        var response_data = {
+                total : -1,
+                hits : []
+            },
+            staticurl = "https://storage.googleapis.com/wiews-lang-bucket/";
+
+            $.ajax({
+                async: false,
+                dataType: 'json',
+                method: 'GET',
+                contentType: "text/plain; charset=utf-8",
+                url:  staticurl+filename,
+                success: function(res) {
+                    //console.log('success is ',res);
+                    if (isRegion === true) {
+                        _.each( res.responses, function(response, index) {
+                            response_data.total = response.hits.total;
+                            // first we check for aggregations
+                            if (response.aggregations) {
+                                //res.aggregations.result_set.buckets.length && res.aggregations.result_set.length
+                                //console.log('aggregations');
+                                _.each( response.aggregations.result_set.buckets, function ( element ) {
+                                    var item =  {
+                                        label : element.childs_set.buckets[0].key,
+                                        value : element.key,
+                                        index : index
+                                    };
+                                    response_data.hits.push(item);
+                                });
+                            }
+                        });
+                    } else {
+                        response_data.total = res.hits.total;
+                        // first we check for aggregations
+                        if (res.aggregations) {
+                            //res.aggregations.result_set.buckets.length && res.aggregations.result_set.length
+                            //console.log('aggregations');
+                            _.each( res.aggregations.result_set.buckets, function ( element ) {
+                                var item =  {
+                                    label : element.childs_set.buckets[0].key,
+                                    value : element.key
+                                };
+                                response_data.hits.push(item);
+                            });
+                        }
+                    }
+                },
+                error : function(res) {
+                    console.log(res);
+                }
+            });
+            
+            return response_data;
+    };
+
     IndicatorCommonUtils.prototype.callElastic = function (payload, isRegion) {
         var response_data = {
             total : -1,
@@ -59,6 +115,7 @@ define([
                                 response_data.hits.push(item);
                             });
                         }
+
                     });
                 } else {
                     response_data.total = res.hits.total;
@@ -130,8 +187,11 @@ define([
     //Validation of the selector
     IndicatorCommonUtils.prototype.geoItemSelectionValidation = function (paramsForGeoValidation) {
 
-        //console.log('we are geovalidators', paramsForGeoValidation);
+        /*
+        console.log('we are geovalidators', paramsForGeoValidation);
+        console.log('having ', this);
         console.log('the selected item is ',paramsForGeoValidation.geo_SelectedItem);
+        */
         var newValues = paramsForGeoValidation.values.values[paramsForGeoValidation.geo_SelectedItem],
             codelist = paramsForGeoValidation.geo_SelectedCode,
             listType = paramsForGeoValidation.geo_SelectedList,
@@ -208,7 +268,7 @@ define([
         updatedValues.listTypeError = listTypeError;
         updatedValues.codelist = codelist;
 
-        console.log('updval', updatedValues);
+        //console.log('updval', updatedValues);
 
         return updatedValues;
     }

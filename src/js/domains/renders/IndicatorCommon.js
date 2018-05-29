@@ -505,7 +505,7 @@ define([
         var iso = [],
             output = [];
 
-        output = this.icutils.callElastic(CL['FAO'],false).hits;
+        output = this.icutils.callGoogle('iso3_country_codes.json',false).hits;
 
         _.each( output, function( element ) {
             iso[element.value] = element.label;
@@ -575,34 +575,65 @@ define([
 
     IndicatorCommon.prototype._parseGEO = function (geovalues, isList) {
 
-        console.log('parsing ',geovalues)
-
-        var geo_array = [],
+        var self = this,
+            geo_array = [],
             list = (isList == "2") ? ".children" : "" ;
+
         switch(geovalues.codelist) {
             // Country
             case "iso3":
+                list = "";
                 _.each(geovalues.values, function(elem){ geo_array.push("[Region.iso3_code].["+elem+"]"+list) });
                 break;
             // Region
             case "fao":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_FAO_codes].[region_fao_code].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){
+                    // Check it if is a subregion or not
+                    var testing = _.filter(self.codelists['FAO_R'],function(code){ return code.value == elem });
+                    var subregion = (testing[0].index > 1) ? "sub" : "";
+                    var region = (testing[0].index == 0) ? "world" : "region";
+                //    if (isList == "2" && subregion == "") list = ".children.children"; //subregion = "";
+                    geo_array.push("[Region.Region_FAO_codes].["+subregion+region+"_fao_code].["+elem+"]"+list)
+                });
                 break;
             case "m49":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_M49_codes].[region_m49_code].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){
+                    // Check it if is a subregion or not
+                    var testing = _.filter(self.codelists['M49'],function(code){ return code.value == elem });
+                    var subregion = (testing[0].index > 1) ? "sub" : "";
+                    var region = (testing[0].index == 0) ? "world" : "region";
+                //   if (isList == "2" && subregion == "sub") list = ".children.children"; //subregion = "";
+                    geo_array.push("[Region.Region_M49_codes].["+subregion+region+"_m49_code].["+elem+"]"+list)
+                });
                 break;
             case "sdg":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_SDG_codes].[region_sdg_code].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){
+                    var testing = _.filter(self.codelists['SDG'],function(code){ return code.value == elem });
+                    var region = (testing[0].index == 0) ? "world" : "region";
+                    geo_array.push("[Region.Region_SDG_codes].["+region+"_sdg_code].["+elem+"]"+list)
+                });
                 break;
             case "mdg":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Region_MDG_codes].[region_mdg_code].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){
+                    var testing = _.filter(self.codelists['MDG'],function(code){ return code.value == elem });
+                    var region = (testing[0].index == 0) ? "world" : "region";
+                    geo_array.push("[Region.Region_MDG_codes].["+region+"_mdg_code].["+elem+"]"+list)
+                });
                 break;
             // Special Groups
             case "itpgrfa":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_ITPGRFA_codes].[region_itpgrfa_code].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){
+                    var testing = _.filter(self.codelists['ITPGRFA_R'],function(code){ return code.value == elem });
+                    var region = (testing[0].index == 0) ? "world" : "region";
+                    geo_array.push("[Region.Special_ITPGRFA_codes].["+region+"_itpgrfa_code].["+elem+"]"+list)
+                });
                 break;
             case "cgrfa":
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.Special_CGRFA_codes].[region_cgrfa_code].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){
+                    var testing = _.filter(self.codelists['CGRFA_R'],function(code){ return code.value == elem });
+                    var region = (testing[0].index == 0) ? "world" : "region";
+                    geo_array.push("[Region.Special_CGRFA_codes].["+region+"_cgrfa_code].["+elem+"]"+list)
+                });
                 break;
         }
         return geo_array;

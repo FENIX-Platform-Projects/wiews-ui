@@ -111,6 +111,8 @@ define([
 
         //return exsituC[year];
 
+        if (this.currentYear == year) return this.data;
+
         var data,
             url = services_url.replace("{{YEAR}}", year);
 
@@ -128,6 +130,9 @@ define([
                 console.log(res);
             }
         });
+
+        this.currentYear = year;
+        this.data = data;
 
         return data;
 
@@ -183,7 +188,6 @@ define([
 
             map.data.addListener('click', function(event) {
                 //console.log(event.feature);
-                console.log(typeof event.feature.getProperty('accessions'));
                 infowindow.close();
                 var opening = new googleMaps.LatLng(event.feature.b.b.lat(), event.feature.b.b.lng());
                 infowindow.setPosition(opening);
@@ -198,6 +202,8 @@ define([
                 infowindow.open(map);
 
             });
+
+            self._toggleLoading();
 
             function getCircle(size) {
                 var value = $('#data_filter').val(),
@@ -248,7 +254,21 @@ define([
         });
     };
 
+    Maps.prototype._toggleLoading = function () {
+        setTimeout(function(){
+            if( $("[data-page=maps]").css('opacity') == '1') {
+                $('div[data-page="loaded"]').show();
+                $('div[data-page="maps"]').css('opacity','0.5');
+            } else {
+                $('div[data-page="loaded"]').hide();
+                $('div[data-page="maps"]').css('opacity','1');
+            }
+        }, 150);
+
+    }
+
     Maps.prototype._attach = function () {
+
         $(s.EL).html(template(labels[Clang]));
 
         $('[data-role=details]').hide();
@@ -264,6 +284,7 @@ define([
 
         $('#year').select2({ width: '100%',  theme: "bootstrap" });
         $('#data_showed').select2({ width: '100%' , theme: "bootstrap" });
+        this._toggleLoading();
         this._updateFilter();
 
     };
@@ -284,7 +305,7 @@ define([
         $('#data_filter').select2({ width: '100%',  theme: "bootstrap" });
 
 
-    };
+    }
 
     Maps.prototype._convert2CSV = function (data) {
         _.each(data, function(object) {
@@ -301,6 +322,7 @@ define([
         this.environment = C.ENVIRONMENT;
         this.cache = C.cache;
         this.zoomlevel = 2;
+        this.currentYear = $('#year').val();
 
     };
 
@@ -314,6 +336,7 @@ define([
             $('[data-role = filters]').toggle();
 
             if ($('#map').is(":visible")) {
+                self._toggleLoading();
                 self._processMap($('#data_showed').val());
                 $('#btn_text').html('Table')
             } else {
@@ -323,16 +346,19 @@ define([
         });
 
         $('#year').on('change', function () {
-            self._processMap($('#data_showed').val());
+            self._toggleLoading();
+            setTimeout(function(){ self._processMap($('#data_showed').val()); }, 200);
         });
 
         $('#data_showed').on('change', function () {
             self._updateFilter($('#data_showed').val());
-            self._processMap($('#data_showed').val());
+            self._toggleLoading();
+            setTimeout(function(){ self._processMap($('#data_showed').val()); }, 200);
         });
 
         $('#data_filter').on('change', function () {
-            self._processMap($('#data_showed').val());
+            self._toggleLoading();
+            setTimeout(function(){ self._processMap($('#data_showed').val()); }, 200);
         });
 
         $('[data-role=exsitu_exportbutton]').on('click', function() {

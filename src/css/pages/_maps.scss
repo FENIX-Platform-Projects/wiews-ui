@@ -1,6 +1,6 @@
 /* Ex Situ */
 
-[data-page='exsitu'] {
+[data-page='maps'] {
 
   max-width: 920px;
 
@@ -325,4 +325,12 @@ select#data_filter { display:  block !important }
 li.select2-results__option--highlighted[aria-selected] {
   color: black !important;
   background-color:  white !important;
+}
+
+[data-page='loaded'] {
+  position: absolute;
+  top: 50%;
+  left: 43%;
+  z-index: 100;
+  display: none;
 }

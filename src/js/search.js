@@ -106,6 +106,57 @@ define([
 
     };
 
+    Search.prototype._callGoogle = function (filename, keyname) {
+        var response_data = {
+                total : -1,
+                hits : []
+            },
+            staticurl = "https://storage.googleapis.com/wiews-lang-bucket/";
+
+
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'GET',
+            contentType: "text/plain; charset=utf-8",
+            url:  staticurl+filename,
+            success: function(res) {
+                //console.log('success is ',res);
+                response_data.total = res.hits.total;
+                // first we check for aggregations
+                if (res.aggregations) {
+                    //res.aggregations.result_set.buckets.length && res.aggregations.result_set.length
+                    //console.log('aggregations');
+                    _.each( res.aggregations.result_set.buckets, function ( element ) {
+                        var item =  {
+                            label : element.childs_set.buckets[0].key,
+                            value : element.key
+                        };
+                        response_data.hits.push(item);
+                    });
+                }
+                if (res.hits.hits.length) {
+                    console.log('hits');
+                    _.each( res.hits.hits, function ( element ) {
+                        console.log(element._source);
+                        var item =  {
+                            label : element._source[keyname+"_name"],
+                            value : element._source[keyname+"_id"]
+                        };
+                        response_data.hits.push(item);
+                    });
+                }
+            },
+            error : function(res) {
+                console.log(res);
+            }
+        });
+
+        console.log(response_data);
+
+        return response_data;
+    };
+
     Search.prototype._getCodelists = function (payload_selection, format) {
         var codelist = [];
         var payload = {
@@ -233,6 +284,7 @@ define([
     };
 
     Search.prototype._initTable = function(data) {
+        // !!!! DEPRECATED
         var self = this;
         self.offsetPage = 0;
         if (this.instcode.length) this._fillResults(data[0]);
@@ -242,23 +294,31 @@ define([
             pagination: true,
             pageSize: self.pageSize,
             pageList: [10, 25, 50, 100, 200],
-            search: true,
             formatSearch: function() {
                 return labels[Clang]['organizations_search_filter']
+            },
+            onAll : function(name, args) {
+                console.log(name, 'is firing', args);
             },
             paginationVAlign: "top",
             sortable: true
         });
         $(s.TABLE).on('page-change.bs.table', function (event, number, size) {
-            console.log('changing page', self.pageSize, self.offsetPage);
+            //console.log('changing page', self.pageSize, self.offsetPage);
             self.pageSize = size;
             self.offsetPage = self.pageSize * (number - 1);
         });
+
+        $(s.TABLE).on('all.bs.table', function(name, args) {
+            console.log(name, 'is firing', args);
+        });
+
         this.tabledata = data;
     };
 
     Search.prototype._initTablePaginated = function(data) {
-        var self = this;
+        var self = this,
+            filter = "";
         self.offsetPage = 0;
         $(s.TABLE).bootstrapTable('destroy');
         $(s.TABLE).bootstrapTable({
@@ -267,16 +327,20 @@ define([
             pagination: true,
             pageSize: self.pageSize,
             pageList: [10, 25, 50, 100, 200],
-            search: true,
+            search: false,
             formatSearch: function() {
                 return labels[Clang]['organizations_search_filter']
+            },
+            onSearch : function (text) {
+                console.log(_.contains(this.data, text));
+                filter = text;
             },
             paginationVAlign: "top",
             totalField: 'total',
             sortable: true
         });
         $(s.TABLE).on('page-change.bs.table', function (event, number, size) {
-            console.log('changing page', self.pageSize, self.offsetPage);
+            //console.log('changing page', self.pageSize, self.offsetPage);
             self.pageSize = size;
             self.offsetPage = self.pageSize * (number - 1);
         });
@@ -351,7 +415,8 @@ define([
                         });
                     }
                     return response_data;
-                }
+                },
+                rateLimitWait: 750
 
             }
         });
@@ -384,9 +449,17 @@ define([
         var prefetchCrops = this._bloodHoundPrefetchElastic('wiews_exsitu_crops_filter');
         var prefetchInstitute = this._bloodHoundPrefetchElastic('wiews_exsitu_institute_filter');
         var prefetchGenus = this._bloodHoundPrefetchElastic('wiews_exsitu_genus_filter');
+        /*
         var codelist_ISO3 = this._getCodelists('countries');
         var codelist_BIOS = this._getCodelists('biostatus');
         var codelist_Stor = this._getCodelists('germplasm_storage');
+        */
+        var codelist_ISO3 = this._callGoogle('iso3_country_codes.json').hits;
+        var codelist_BIOS = this._callGoogle('biostatofacc_codelist.json', "bio_stat_of_accesion").hits;
+        var codelist_Stor = this._callGoogle('germplasm_storage.json',"germplasm_storage").hits;
+
+        console.log(codelist_BIOS);
+        console.log(codelist_Stor);
 
         $('#search_crop').typeahead(this.tya_options,
             {

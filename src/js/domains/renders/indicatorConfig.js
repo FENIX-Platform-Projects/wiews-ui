@@ -13,6 +13,7 @@ define([
         var Clang = C.lang.toLowerCase();
 
         this.icUtils = new ICUtils();
+        /*
         var FAO_CL = this.icUtils.callElastic(CL['FAO'],false).hits,
             CGRFA_CL = this.icUtils.callElastic(CL['CGRFA'],false).hits,
             ITPGRFA_CL = this.icUtils.callElastic(CL['ITPGRFA'],false).hits,
@@ -22,6 +23,17 @@ define([
             FAO_R = this.icUtils.callElastic(CL['FAO_R'],true).hits,
             CGRFA_R = this.icUtils.callElastic(CL['CGRFA_R'],true).hits,
             ITPGRFA_R = this.icUtils.callElastic(CL['ITPGRFA_R'],true).hits;
+        */
+        var FAO_CL = this.icUtils.callGoogle('iso3_country_codes.json',false).hits,
+            CGRFA_CL = this.icUtils.callGoogle('cgrfa_country_codes.json',false).hits,
+            ITPGRFA_CL = this.icUtils.callGoogle('itpgrfa_country_codes.json',false).hits,
+            M49 = this.icUtils.callGoogle('m49_region_hierarchy.json',true).hits,
+            SDG = this.icUtils.callGoogle('sdg_region_hierarchy.json',true).hits,
+            MDG = this.icUtils.callGoogle('mdg_region_hierarchy.json',true).hits,
+            FAO_R = this.icUtils.callGoogle('fao_region_hierarchy.json',true).hits,
+            CGRFA_R = this.icUtils.callGoogle('cgrfa_region_hierarchy.json',true).hits,
+            ITPGRFA_R = this.icUtils.callGoogle('itpgrfa_region_hierarchy.json',true).hits;
+
 
         return {
             downloadData: {
@@ -145,6 +157,14 @@ define([
                 dashboard: {
                     uid: "DownloadDataDashboard",
                     columntableName : [labels[Clang]['table_title_domain'], labels[Clang]['table_title_country'], labels[Clang]['table_title_element'], labels[Clang]['table_title_indicator'], labels[Clang]['table_title_period'], labels[Clang]['table_title_value']]
+                },
+                codelists : {
+                    M49 : M49,
+                    SDG : SDG,
+                    MDG : MDG,
+                    CGRFA_R : CGRFA_R,
+                    ITPGRFA_R : ITPGRFA_R,
+                    FAO_R : FAO_R
                 }
             }
         }
