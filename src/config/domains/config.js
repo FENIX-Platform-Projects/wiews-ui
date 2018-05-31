@@ -52,7 +52,8 @@ define(
                     "mdx": "WITH MEMBER [Measures].[Annual Avg] AS ([Measures].[surveys carries out] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[surveys carries out], [Measures].[Annual Avg]} ON COLUMNS,NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories_ind_01]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91243"
 
         },
         2: {

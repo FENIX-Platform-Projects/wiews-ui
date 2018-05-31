@@ -579,6 +579,8 @@ define([
             geo_array = [],
             list = (isList == "2") ? ".children" : "" ;
 
+        console.log(geovalues);
+
         switch(geovalues.codelist) {
             // Country
             case "iso3":

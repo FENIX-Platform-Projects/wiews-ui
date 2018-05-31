@@ -75,7 +75,8 @@ define([
 
     Domains.prototype._initVariables = function () {
 
-        var fromQS = (this._getParameterByName('code') != null);
+        var self = this,
+            fromQS = (this._getParameterByName('code') != null);
 
         this.$el = $(s.EL);
 
@@ -92,13 +93,15 @@ define([
         this.indicatorProperties = PAGC[this.selected_indicator.code];
         this.indicatorProperties.indicator_id = this.selected_indicator.code;
 
-        //console.log(this.indicatorProperties);
+        console.log(this.indicatorProperties.metadata)
 
 //        if(this.indicatorProperties.noVisualize){
             $('[data-tab="'+s.VISUALIZE_DATA_TAB+'"]').removeAttr('data-toggle');
             $('[data-tab="'+s.VISUALIZE_DATA_TAB+'"]').removeAttr('href');
             $('[data-tab="'+s.META_DATA_TAB+'"]').removeAttr('data-toggle');
             $('[data-tab="'+s.META_DATA_TAB+'"]').removeAttr('href');
+            $('[data-tab="'+s.META_DATA_TAB+'"]').attr('href', "http://www.fao.org/index.php?id="+this.indicatorProperties.metadata);
+            //$('[data-tab="'+s.META_DATA_TAB+'"]').attr('target', "_blank");
             s.noVisualize = true;
 //        }
 
