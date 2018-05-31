@@ -2,6 +2,8 @@
 
 [data-page='domains'] {
 
+  #domains { width:920px; }
+
   body {
     font-family: inherit;
   }
@@ -26,7 +28,7 @@
 
   .icojam_arrow_left {color:#000000; font-size:1.5em; position: relative; top:11px; left: -4px;  margin-right: 0px;}
 
-  .icojam_download_1 {font-size: 1.6em; position: relative; top: 12px; left: 25px;}
+  .icojam_download_1 {font-size: 1.6em; position: relative; top: 12px; left: 15px;}
   .icojam_search {font-size: 1.5em; position: relative; top: 12px; left: 35px;}
 
   .nav-tabs {border-bottom: 1px solid #ddd;}
