@@ -233,13 +233,7 @@ define(
             },
             query : {
                 "5" : {
-                    "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind5].[1]} MEMBER [Measures].[Percentage] AS (([Measures].[Cultivated Area] * 100) / [Measures].[Total Area]) " +
-                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                    " SELECT " +
-                    "NON EMPTY {[Measures].[Percentage]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM  [on_farm_management_improvement_05] " +
-                    " WHERE [~FILTER]",
+                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind5].[1]} MEMBER [Measures].[Percentage] AS     (([Measures].[Cultivated Area] * 100) / [Measures].[Total Area]), FORMAT_STRING = \"##.##%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Percentage]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM  [on_farm_management_improvement_05] WHERE [~FILTER]",
                     "type": "MDX"
                 }
             }
@@ -457,11 +451,11 @@ define(
                 "11" : {
                     "mdx": "WITH " +
                     "SET [~FILTER] AS {[DataAvailable_ind11].[1]} MEMBER [Measures].[NumberOfActions_AnnAvg] AS ([Measures].[NumberOfActions] / [Measures].[period]) " +
-                    "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[NumberOfActions], [Measures].[NumberOfActions_AnnAvg]} ON COLUMNS," +
+                    "NON EMPTY {[Measures].[NumberOfActions], [Measures].[NumberOfActions_AnnAvg]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants_11] " +
-                    " WHERE [~FILTER]",
+                    "WHERE [~FILTER]",
                     "type": "MDX"
                 },
                 "11_stk" : {
@@ -693,7 +687,7 @@ define(
             element_label : {
                 "17" : labels['en']['element_label1']
             },
-            dd_filter_category : "3",
+            dd_filter_category : "2",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -708,9 +702,9 @@ define(
             },
             query : {
                 "17" : {
-                    "mdx": "WITH" +
+                    "mdx": "WITH " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                    " SELECT " +
+                    "SELECT " +
                     "NON EMPTY {[Measures].[Human Resources Capacity], [Measures].[Financial Resources], [Measures].[Infraestructure]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [germplasm_collections_ind_17] " +
                     "WHERE CrossJoin({[DataAvailable_ind17].[1]}, {[Last_Year_Boolean.last_year_boolean].[1]})",
@@ -1435,7 +1429,6 @@ define(
         },
         34: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "34" : labels['en']['element_label1']
             },
@@ -1465,12 +1458,10 @@ define(
             }
 
         },
-        /*
         35: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "35" : "Element Label"
+                "35" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -1511,12 +1502,11 @@ define(
 
         },
         36: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "36" : "Element Label"
+                "36" : labels['en']['element_label1']
             },
-            dd_filter_category : "3",
+            dd_filter_category : "2",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1538,12 +1528,11 @@ define(
 
         },
         37: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "37" : "Element Label"
+                "37" : labels['en']['element_label1']
             },
-            dd_filter_category : "3",
+            dd_filter_category : "2",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1572,10 +1561,9 @@ define(
 
         },
         38: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "38" : "Element Label"
+                "38" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -1616,10 +1604,9 @@ define(
 
         },
         39: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "39" : "Element Label"
+                "39" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -1643,10 +1630,9 @@ define(
 
         },
         40: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "40" : "Element Label"
+                "40" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -1670,10 +1656,9 @@ define(
 
         },
         41: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "41" : "Element Label"
+                "41" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -1697,10 +1682,9 @@ define(
 
         },
         42: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "42" : "Element Label"
+                "42" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -1717,17 +1701,16 @@ define(
             },
             query : {
                 "42" : {
-                    "mdx": "WITH MEMBER [Measures].[NumberOfVarieties] AS ([Measures].[NumberOfVaretiesXTotalCropArea] / [Measures].[TotalCropArea]), FORMAT_STRING = "#0.0#%" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfVarieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_42] WHERE CrossJoin({[Last_Year_Boolean.last_year_boolean].[1]}, {[DataAvailable_ind42].[1]})",
+                    "mdx": "WITH MEMBER [Measures].[NumberOfVarieties] AS ([Measures].[NumberOfVaretiesXTotalCropArea] / [Measures].[TotalCropArea]), FORMAT_STRING = \"#0.0#%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfVarieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_42] WHERE CrossJoin({[Last_Year_Boolean.last_year_boolean].[1]}, {[DataAvailable_ind42].[1]})",
                     "type": "MDX"
                 }
             }
 
         },
         43: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "43" : "Element Label"
+                "43" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -1751,10 +1734,9 @@ define(
 
         },
         44: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "44" : "Element Label"
+                "44" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -1778,10 +1760,9 @@ define(
 
         },
         45: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "45" : "Element Label"
+                "45" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -1805,10 +1786,9 @@ define(
 
         },
         46: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "46" : "Element Label"
+                "46" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -1832,10 +1812,9 @@ define(
 
         },
         47: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "47" : "Element Label"
+                "47" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -1859,10 +1838,9 @@ define(
 
         },
         48: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "48" : "Element Label"
+                "48" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -1886,10 +1864,9 @@ define(
 
         },
         49: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "49" : "Element Label"
+                "49" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -1913,10 +1890,9 @@ define(
 
         },
         50: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "50" : "Element Label"
+                "50" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -1957,10 +1933,9 @@ define(
 
         },
         51: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "51" : "Element Label"
+                "51" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -2001,10 +1976,9 @@ define(
 
         },
         52: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "52" : "Element Label"
+                "52" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -2028,10 +2002,9 @@ define(
 
         },
         53: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "53" : "Element Label"
+                "53" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -2055,10 +2028,9 @@ define(
 
         },
         54: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "54" : "Element Label"
+                "54" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
             cube : {
@@ -2099,10 +2071,9 @@ define(
 
         },
         55: {
-            domain_label : "Domain Label",
-            indicator_label: "Indicator Label",
+            domain_label : labels['en']['domain_label'],
             element_label : {
-                "55" : "Element Label"
+                "55" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
             cube : {
@@ -2124,7 +2095,238 @@ define(
                 }
             }
 
+        },
+        56: {
+            domain_label : labels['en']['domain_label'],
+            element_label : {
+                "56" : labels['en']['element_label1']
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[information_systems_54]",
+                    "name": "information_systems_54",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "56" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind56].[1]} " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    " SELECT " +
+                    "NON EMPTY {[Measures].[Int/ Reg Information Systems]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [information_systems_56] " +
+                    " WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "56_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_ind56].[1]} " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    " SELECT " +
+                    "NON EMPTY {[Measures].[Int/ Reg Information Systems]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [information_systems_56] " +
+                    " WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        57: {
+            domain_label : labels['en']['domain_label'],
+            element_label : {
+                "57" : labels['en']['element_label1']
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[information_systems_55]",
+                    "name": "information_systems_55",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "57" : {
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_Ind57].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[ExistenceOfNationalSystemReference]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [monitoring_and_safeguarding_genetic_diversity_57] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        //58: to be removed
+        59: {
+            domain_label : labels['en']['domain_label'],
+            element_label : {
+                "59" : labels['en']['element_label1']
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[information_systems_55]",
+                    "name": "information_systems_55",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "59" : {
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_Ind59].[1]}SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[ExistanceOfEducationAndTrainingPrograms]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [human_resource_capacity_59] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        60: {
+            domain_label : labels['en']['domain_label'],
+            element_label : {
+                "60" : labels['en']['element_label1']
+            },
+            dd_filter_category : "3",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[information_systems_54]",
+                    "name": "information_systems_54",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "60" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind60].[1]} " +
+                    "MEMBER [Measures].[%_of_staff_with_skills_upgraded] AS iif((((([Measures].[NumberOfProfessionalsWithPHD] + [Measures].[NumberOfProfessionalsWithMSC]) + [Measures].[NumberOfProfessionalsAttendedCourses]) / [Measures].[NumberOfProfessionals]) > 1), 1, ((([Measures].[NumberOfProfessionalsWithPHD] + [Measures].[NumberOfProfessionalsWithMSC]) + [Measures].[NumberOfProfessionalsAttendedCourses]) / [Measures].[NumberOfProfessionals])), FORMAT_STRING = \"#0.0#%\" " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    " SELECT " +
+                    "NON EMPTY {[Measures].[%_of_staff_with_skills_upgraded]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [human_resource_capacity_60] " +
+                    " WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "60_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind60].[1]} " +
+                    "MEMBER [Measures].[%_of_staff_with_skills_upgraded] AS iif((((([Measures].[NumberOfProfessionalsWithPHD] + [Measures].[NumberOfProfessionalsWithMSC]) + [Measures].[NumberOfProfessionalsAttendedCourses]) / [Measures].[NumberOfProfessionals]) > 1), 1, ((([Measures].[NumberOfProfessionalsWithPHD] + [Measures].[NumberOfProfessionalsWithMSC]) + [Measures].[NumberOfProfessionalsAttendedCourses]) / [Measures].[NumberOfProfessionals])), FORMAT_STRING = \"#0.0#%\" " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    " SELECT " +
+                    "NON EMPTY {[Measures].[%_of_staff_with_skills_upgraded]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [human_resource_capacity_60] " +
+                    " WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        61: {
+            domain_label : labels['en']['domain_label'],
+            element_label : {
+                "61" : labels['en']['element_label1']
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[information_systems_55]",
+                    "name": "information_systems_55",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "61" : {
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_Ind61].[1]} MEMBER [Measures].[Existence_Programme] AS [Existence_Programme].CurrentMember.NAME SET [~ROWS_Region_Region.Region_FAO_codes] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Existence_Programme_Existence_Programme.Existence_Programme] AS {[Existence_Programme].[Existence_Programme].Members} SELECT NON EMPTY {[Measures].[Existence_Programme]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.Region_FAO_codes], [~ROWS_Existence_Programme_Existence_Programme.Existence_Programme]) ON ROWS FROM [public_awareness_61] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        62: {
+            domain_label : labels['en']['domain_label'],
+            element_label : {
+                "62" : labels['en']['element_label1']
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[information_systems_55]",
+                    "name": "information_systems_55",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "62" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind61].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfStakeholdingGroups]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [public_awareness_61] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
+        },
+        63: {
+            domain_label : labels['en']['domain_label'],
+            element_label : {
+                "63" : labels['en']['element_label1']
+            },
+            dd_filter_category : "1",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[information_systems_55]",
+                    "name": "information_systems_55",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "63" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind63].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfProductsDeveloped]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [public_awareness_63] WHERE [~FILTER]",
+                    "type": "MDX"
+                },
+                "63_stk" : {
+                    "mdx": "WITH " +
+                    "SET [~FILTER] AS {[DataAvailable_Ind63].[1]} " +
+                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    " SELECT " +
+                    "NON EMPTY {[Measures].[NumberOfProductsDeveloped]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [public_awareness_63] " +
+                    " WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            }
+
         }
-        */
     };
 });

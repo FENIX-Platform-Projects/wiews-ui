@@ -43,6 +43,32 @@ define([
         });
         // Dynamic
         if (getParameterByName('code') != null) {
+            // But static.
+            // https://storage.googleapis.com/wiews-lang-bucket/indicator_web_label_en_1.json
+            /*
+            $.ajax({
+                async: false,
+                dataType: 'json',
+                method: 'GET',
+                contentType: "text/plain; charset=utf-8",
+                url:  staticurl+"indicator_web_label_en_"+getParameterByName('code')+".json",
+                success: function(res) {
+
+                    data['domain_label'] = res[0]['indicator_field_label_en'];
+                    data['element_label1'] = res[1]['indicator_field_label_en'];
+                    data['element_label2'] = res[2]['indicator_field_label_en'];
+                    data['element_label3'] = res[3]['indicator_field_label_en'];
+                    data['cl_indicator_'+getParameterByName('code')] = res[1]['indicator_field_label_en'];
+                    data['cl_indicator_'+getParameterByName('code')+'_1'] = res[2]['indicator_field_label_en'];
+                    data['cl_indicator_'+getParameterByName('code')+'_2'] = res[3]['indicator_field_label_en'];
+
+                },
+                error : function(res) {
+                    console.log(res);
+                }
+            });
+            */
+
             $.ajax({
                 async: false,
                 dataType: 'json',

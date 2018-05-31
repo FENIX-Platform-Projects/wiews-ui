@@ -576,7 +576,11 @@ define([
     IndicatorCommon.prototype._parseGEO = function (geovalues, isList) {
 
         var self = this,
-            geo_array = [],
+            geo_array = {
+                "world" : [],
+                "subregion" : [],
+                "region" : []
+            },
             list = (isList == "2") ? ".children" : "" ;
 
         console.log(geovalues);
@@ -585,7 +589,7 @@ define([
             // Country
             case "iso3":
                 list = "";
-                _.each(geovalues.values, function(elem){ geo_array.push("[Region.iso3_code].["+elem+"]"+list) });
+                _.each(geovalues.values, function(elem){ geo_array['region'].push("[Region.iso3_code].["+elem+"]"+list) });
                 break;
             // Region
             case "fao":
@@ -595,7 +599,7 @@ define([
                     var subregion = (testing[0].index > 1) ? "sub" : "";
                     var region = (testing[0].index == 0) ? "world" : "region";
                 //    if (isList == "2" && subregion == "") list = ".children.children"; //subregion = "";
-                    geo_array.push("[Region.Region_FAO_codes].["+subregion+region+"_fao_code].["+elem+"]"+list)
+                    geo_array[subregion+region].push("[Region.Region_FAO_codes].["+subregion+region+"_fao_code].["+elem+"]"+list)
                 });
                 break;
             case "m49":
@@ -605,36 +609,40 @@ define([
                     var subregion = (testing[0].index > 1) ? "sub" : "";
                     var region = (testing[0].index == 0) ? "world" : "region";
                 //   if (isList == "2" && subregion == "sub") list = ".children.children"; //subregion = "";
-                    geo_array.push("[Region.Region_M49_codes].["+subregion+region+"_m49_code].["+elem+"]"+list)
+                    geo_array[subregion+region].push("[Region.Region_M49_codes].["+subregion+region+"_m49_code].["+elem+"]"+list)
                 });
                 break;
             case "sdg":
                 _.each(geovalues.values, function(elem){
                     var testing = _.filter(self.codelists['SDG'],function(code){ return code.value == elem });
+                    var subregion = (testing[0].index > 1) ? "sub" : "";
                     var region = (testing[0].index == 0) ? "world" : "region";
-                    geo_array.push("[Region.Region_SDG_codes].["+region+"_sdg_code].["+elem+"]"+list)
+                    geo_array[subregion+region].push("[Region.Region_SDG_codes].["+region+"_sdg_code].["+elem+"]"+list)
                 });
                 break;
             case "mdg":
                 _.each(geovalues.values, function(elem){
                     var testing = _.filter(self.codelists['MDG'],function(code){ return code.value == elem });
+                    var subregion = (testing[0].index > 1) ? "sub" : "";
                     var region = (testing[0].index == 0) ? "world" : "region";
-                    geo_array.push("[Region.Region_MDG_codes].["+region+"_mdg_code].["+elem+"]"+list)
+                    geo_array[subregion+region].push("[Region.Region_MDG_codes].["+region+"_mdg_code].["+elem+"]"+list)
                 });
                 break;
             // Special Groups
             case "itpgrfa":
                 _.each(geovalues.values, function(elem){
                     var testing = _.filter(self.codelists['ITPGRFA_R'],function(code){ return code.value == elem });
+                    var subregion = (testing[0].index > 1) ? "sub" : "";
                     var region = (testing[0].index == 0) ? "world" : "region";
-                    geo_array.push("[Region.Special_ITPGRFA_codes].["+region+"_itpgrfa_code].["+elem+"]"+list)
+                    geo_array[subregion+region].push("[Region.Special_ITPGRFA_codes].["+region+"_itpgrfa_code].["+elem+"]"+list)
                 });
                 break;
             case "cgrfa":
                 _.each(geovalues.values, function(elem){
                     var testing = _.filter(self.codelists['CGRFA_R'],function(code){ return code.value == elem });
+                    var subregion = (testing[0].index > 1) ? "sub" : "";
                     var region = (testing[0].index == 0) ? "world" : "region";
-                    geo_array.push("[Region.Special_CGRFA_codes].["+region+"_cgrfa_code].["+elem+"]"+list)
+                    geo_array[subregion+region].push("[Region.Special_CGRFA_codes].["+region+"_cgrfa_code].["+elem+"]"+list)
                 });
                 break;
         }
@@ -669,69 +677,80 @@ define([
 
         // Building the Geo values
         geo_array = this._parseGEO(filterValues.values.GEO, filterValues.values.GEO.listType);
-        // First, we fetch the NFP Rating
 
-        // Building the labels
-        lab['indicator'] = DM[this.indicatorProperties.indicator_id].element_label[this.indicatorProperties.indicator_id];
-        lab['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
-        lab['domain'] = DM[this.indicatorProperties.indicator_id].domain_label;
-        lab['indicator_label'] = DM[0].domain_label;
-        lab['geocode'] = filterValues.values.GEO.codelist;
+        //Doing the multiple search
+        $.each(geo_array, function(elem,index) {
+            if(index.toString().length){
 
-        mdx_query = JSON.stringify($.extend(DM[0].cube, DM[0].query["0"]));
-        mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
+                // First, we fetch the NFP Rating
 
-        $.ajax({
-            async: false,
-            dataType: 'json',
-            method: 'POST',
-            contentType: "application/json; charset=utf-8",
-            accept: "application/json, text/javascript, */*; q=0.01",
-            url: "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/query/execute",
-            data: mdx_query,
-            success: function(res) {
-                table_output = self._convert2TableData(res, dsd, lab);
-                //console.log('table output: ', table_output);
-            },
-            error : function(res) {
-                console.log("error", res);
-                return;
+                // Building the labels
+                lab['indicator'] = DM[self.indicatorProperties.indicator_id].element_label[self.indicatorProperties.indicator_id];
+                lab['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
+                lab['domain'] = DM[self.indicatorProperties.indicator_id].domain_label;
+                lab['indicator_label'] = DM[0].domain_label;
+                lab['geocode'] = filterValues.values.GEO.codelist;
+
+                mdx_query = JSON.stringify($.extend(DM[0].cube, DM[0].query["0"]));
+                mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", index.toString());
+
+                $.ajax({
+                    async: false,
+                    dataType: 'json',
+                    method: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    accept: "application/json, text/javascript, */*; q=0.01",
+                    url: "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/query/execute",
+                    data: mdx_query,
+                    success: function(res) {
+                        table_output = self._convert2TableData(res, dsd, lab);
+                        //console.log('table output: ', table_output);
+                    },
+                    error : function(res) {
+                        console.log("error", res);
+                        return;
+                    }
+                });
+
+                // Then we fetch the current indicator
+
+
+                // Building the labels
+                lab['indicator'] = DM[self.indicatorProperties.indicator_id].element_label[selection];
+                lab['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
+                lab['domain'] = DM[self.indicatorProperties.indicator_id].domain_label;
+                lab['indicator_label'] = DM[self.indicatorProperties.indicator_id].indicator_label;
+
+                if (filterValues.values.dd_filter_item_10 != undefined)
+                    if (filterValues.values.dd_filter_item_10[0] == "stk") stakeholder = "_stk" ; //selection = filterValues.values.dd_filter_item_10[0];
+
+                mdx_query = JSON.stringify($.extend(DM[self.indicatorProperties.indicator_id].cube, DM[self.indicatorProperties.indicator_id].query[selection+stakeholder]));
+                mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", index.toString());
+                mdx_query = mdx_query.replace("{{**TIME_PLACEHOLDER**}}", "[Year.year].["+filterValues.values.dd_filter_item_9+"]");
+
+                 $.ajax({
+                    async: false,
+                    dataType: 'json',
+                    method: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    accept: "application/json, text/javascript, */*; q=0.01",
+                    url: "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/query/execute",
+                    data: mdx_query,
+                    success: function(res) {
+                        table_tobootstrap = table_tobootstrap.concat(table_output,self._convert2TableData(res, dsd, lab));
+                        //console.log(table_output);
+                    },
+                    error : function(res) {
+                        console.log("error", res);
+                        return;
+                    }
+                });
+
             }
         });
 
-        // Then we fetch the current indicator
 
 
-        // Building the labels
-        lab['indicator'] = DM[this.indicatorProperties.indicator_id].element_label[selection];
-        lab['iteration'] = filterValues.labels.dd_filter_item_9[Object.keys(filterValues.labels.dd_filter_item_9)[0]];
-        lab['domain'] = DM[this.indicatorProperties.indicator_id].domain_label;
-        lab['indicator_label'] = DM[this.indicatorProperties.indicator_id].indicator_label;
-
-        if (filterValues.values.dd_filter_item_10 != undefined)
-            if (filterValues.values.dd_filter_item_10[0] == "stk") stakeholder = "_stk" ; //selection = filterValues.values.dd_filter_item_10[0];
-
-        mdx_query = JSON.stringify($.extend(DM[this.indicatorProperties.indicator_id].cube, DM[this.indicatorProperties.indicator_id].query[selection+stakeholder]));
-        mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", geo_array.toString());
-        mdx_query = mdx_query.replace("{{**TIME_PLACEHOLDER**}}", "[Year.year].["+filterValues.values.dd_filter_item_9+"]");
-
-        $.ajax({
-            async: false,
-            dataType: 'json',
-            method: 'POST',
-            contentType: "application/json; charset=utf-8",
-            accept: "application/json, text/javascript, */*; q=0.01",
-            url: "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/query/execute",
-            data: mdx_query,
-            success: function(res) {
-                table_tobootstrap = table_output.concat(self._convert2TableData(res, dsd, lab));
-                //console.log(table_output);
-            },
-            error : function(res) {
-                console.log("error", res);
-                return;
-            }
-        });
 
         // Finally, we generate the table
 
