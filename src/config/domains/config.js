@@ -30,7 +30,6 @@ define(
         },
         1: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "1" : labels['en']['element_label1']
             },
@@ -58,7 +57,6 @@ define(
         },
         2: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "2" : labels['en']['element_label1'],
                 "2_1" : labels['en']['element_label2'],
@@ -112,12 +110,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91251"
 
         },
         3: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "3" : labels['en']['element_label1'],
                 "3_1" : labels['en']['element_label2'],
@@ -171,12 +169,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91252"
 
         },
         4: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "4" : labels['en']['element_label1']
             },
@@ -209,12 +207,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91253"
 
         },
         5: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "5" : labels['en']['element_label1']
             },
@@ -236,12 +234,12 @@ define(
                     "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind5].[1]} MEMBER [Measures].[Percentage] AS     (([Measures].[Cultivated Area] * 100) / [Measures].[Total Area]), FORMAT_STRING = \"##.##%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Percentage]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM  [on_farm_management_improvement_05] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91254"
 
         },
         6: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "6" : labels['en']['element_label1']
             },
@@ -269,12 +267,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91255"
 
         },
         7: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "7" : labels['en']['element_label1']
             },
@@ -313,12 +311,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91256"
 
         },
         8: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "8" : labels['en']['element_label1']
             },
@@ -357,12 +355,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91259"
 
         },
         9: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "9" : labels['en']['element_label1']
             },
@@ -391,12 +389,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91260"
 
         },
         10: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "10" : labels['en']['element_label1']
             },
@@ -425,12 +423,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91261"
 
         },
         11: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "11" : labels['en']['element_label1']
             },
@@ -469,12 +467,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91262"
 
         },
         12: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "12" : labels['en']['element_label1']
             },
@@ -502,12 +500,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91263"
 
         },
         13: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "13" : labels['en']['element_label1']
             },
@@ -546,12 +544,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91264"
 
         },
         14: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "14" : labels['en']['element_label1']
             },
@@ -590,12 +588,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91265"
 
         },
         15: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "15" : labels['en']['element_label1']
             },
@@ -634,12 +632,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91267"
 
         },
         16: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "16" : labels['en']['element_label1']
             },
@@ -678,12 +676,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91268"
 
         },
         17: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "17" : labels['en']['element_label1']
             },
@@ -710,13 +708,13 @@ define(
                     "WHERE CrossJoin({[DataAvailable_ind17].[1]}, {[Last_Year_Boolean.last_year_boolean].[1]})",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91269"
 
         },
         18: {
             period_label : "Year",
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "18" : labels['en']['element_label1']
             },
@@ -757,13 +755,13 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91270"
 
         },
         19: {
             period_label : "Year",
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "19" : labels['en']['element_label1']
             },
@@ -804,13 +802,13 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91271"
 
         },
         20: {
             period_label : "Year",
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "20" : labels['en']['element_label1']
             },
@@ -852,7 +850,8 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91272"
 
         },
         21: {
@@ -902,12 +901,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91274"
 
         },
         22: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "22" : labels['en']['element_label1']
             },
@@ -948,12 +947,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91275"
 
         },
         23: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "23" : labels['en']['element_label1']
             },
@@ -992,12 +991,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91276"
 
         },
         24: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "24" : labels['en']['element_label1']
             },
@@ -1038,12 +1037,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91277"
 
         },
         25: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "25" : labels['en']['element_label1']
             },
@@ -1082,12 +1081,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91278"
 
         },
         26: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "26" : labels['en']['element_label1']
             },
@@ -1126,12 +1125,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91279"
 
         },
         27: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "27" : labels['en']['element_label1']
             },
@@ -1170,12 +1169,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91280"
 
         },
         28: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "28" : labels['en']['element_label1']
             },
@@ -1216,12 +1215,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91281"
 
         },
         29: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "29" : labels['en']['element_label1']
             },
@@ -1260,12 +1259,12 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91282"
 
         },
         30: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "30" : labels['en']['element_label1']
             },
@@ -1304,12 +1303,12 @@ define(
                     "WHERE CrossJoin(Except({[Sector].[sector].Members}, {[Sector].[Private]}), {[DataAvailable_ind30].[1]})",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91283"
 
         },
         31: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "31" : labels['en']['element_label1']
             },
@@ -1348,12 +1347,12 @@ define(
                     "WHERE CrossJoin(Except({[Sector].[sector].Members}, {[Sector].[Public]}), {[DataAvailable_ind31].[1]})",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91284"
 
         },
         32: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "32" : labels['en']['element_label1']
             },
@@ -1392,12 +1391,12 @@ define(
                     "WHERE CrossJoin({[OrientedTo].[Small scale farmers], [OrientedTo].[Small scale farmers; Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces; Small scale farmers]}, {[DataAvailable_ind32].[1]})",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91285"
 
         },
         33: {
             domain_label : labels['en']['domain_label'],
-            indicator_label: "Indicator Label",
             element_label : {
                 "33" : labels['en']['element_label1']
             },
@@ -1424,7 +1423,8 @@ define(
                     "WHERE CrossJoin({[DataAvailable_ind34].[1]}, {[Last_Year_Crop].[1]})",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91286"
 
         },
         34: {
@@ -1455,7 +1455,8 @@ define(
                     "WHERE CrossJoin({[DataAvailable_ind34].[1]}, {[Last_Year_Crop].[1]})",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91287"
 
         },
         35: {
@@ -1474,7 +1475,7 @@ define(
                     "schema": "wiews_indicators",
                     "caption": null,
                     "visible": false
-                },
+                }
             },
             query : {
                 "35" : {
@@ -1498,7 +1499,8 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91288"
 
         },
         36: {
@@ -1524,7 +1526,8 @@ define(
                     "mdx" : "WITH SET [~FILTER] AS {[DataAvailable_ind36].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfNewCrops]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [crop_diversification_36] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91289"
 
         },
         37: {
@@ -1557,7 +1560,8 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91290"
 
         },
         38: {
@@ -1576,7 +1580,7 @@ define(
                     "schema": "wiews_indicators",
                     "caption": null,
                     "visible": false
-                },
+                }
             },
             query : {
                 "38" : {
@@ -1600,7 +1604,8 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91291"
 
         },
         39: {
@@ -1619,14 +1624,15 @@ define(
                     "schema": "wiews_indicators",
                     "caption": null,
                     "visible": false
-                },
+                }
             },
             query : {
                 "39" : {
                     "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_Ind39].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfLandraces], [Measures].[CountOfTaxonCrop]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [dev_and_comm_of_varieties_39] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91292"
 
         },
         40: {
@@ -1652,7 +1658,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_Ind40].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfNewVarieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_40] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91293"
 
         },
         41: {
@@ -1678,7 +1685,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind41].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfRegisteredSeedEnterprises]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_41] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91294"
 
         },
         42: {
@@ -1704,7 +1712,8 @@ define(
                     "mdx": "WITH MEMBER [Measures].[NumberOfVarieties] AS ([Measures].[NumberOfVaretiesXTotalCropArea] / [Measures].[TotalCropArea]), FORMAT_STRING = \"#0.0#%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfVarieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_42] WHERE CrossJoin({[Last_Year_Boolean.last_year_boolean].[1]}, {[DataAvailable_ind42].[1]})",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91295"
 
         },
         43: {
@@ -1730,7 +1739,8 @@ define(
                     "mdx": "WITH MEMBER [Measures].[area_supplied_with_seed] AS ([Measures].[CalcPerCrop_x_TotalCropHarv] / [Measures].[TotalCropHarvestedArea]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[area_supplied_with_seed]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_43] WHERE CrossJoin({[DataAvailable_ind43].[1]}, {[Last Year Bool].[1]})",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91296"
 
         },
         44: {
@@ -1756,7 +1766,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind44].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[ExistenceOfPolicy]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_44] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91297"
 
         },
         45: {
@@ -1782,7 +1793,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind45].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Existence National Entity]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_45] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91298"
 
         },
         46: {
@@ -1808,7 +1820,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind46].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Existence NFP]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_46] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91299"
 
         },
         47: {
@@ -1834,7 +1847,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS    {[DataAvailable_ind47].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Existence Gov Policy]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_47] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91300"
 
         },
         48: {
@@ -1860,7 +1874,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind48].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Existence National Info Sharing]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_48] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91301"
 
         },
         49: {
@@ -1886,7 +1901,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS {[DataAvailable_Ind49].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[MemberOfPgrfaNetwork]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [networks_49] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91302"
 
         },
         50: {
@@ -1929,7 +1945,8 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91303"
 
         },
         51: {
@@ -1972,7 +1989,8 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91304"
 
         },
         52: {
@@ -1998,7 +2016,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind52].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number of Crops]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_52] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91305"
 
         },
         53: {
@@ -2024,7 +2043,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind53].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Farmers Varieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_53] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91306"
 
         },
         54: {
@@ -2067,7 +2087,8 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91307"
 
         },
         55: {
@@ -2093,7 +2114,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind55].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number Released Varieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_55] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91308"
 
         },
         56: {
@@ -2136,7 +2158,8 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91309"
 
         },
         57: {
@@ -2162,7 +2185,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS {[DataAvailable_Ind57].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[ExistenceOfNationalSystemReference]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [monitoring_and_safeguarding_genetic_diversity_57] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91310"
 
         },
         //58: to be removed
@@ -2189,7 +2213,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS {[DataAvailable_Ind59].[1]}SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[ExistanceOfEducationAndTrainingPrograms]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [human_resource_capacity_59] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91312"
 
         },
         60: {
@@ -2234,7 +2259,8 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91313"
 
         },
         61: {
@@ -2260,7 +2286,8 @@ define(
                     "mdx": "WITH SET [~FILTER] AS {[DataAvailable_Ind61].[1]} MEMBER [Measures].[Existence_Programme] AS [Existence_Programme].CurrentMember.NAME SET [~ROWS_Region_Region.Region_FAO_codes] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Existence_Programme_Existence_Programme.Existence_Programme] AS {[Existence_Programme].[Existence_Programme].Members} SELECT NON EMPTY {[Measures].[Existence_Programme]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.Region_FAO_codes], [~ROWS_Existence_Programme_Existence_Programme.Existence_Programme]) ON ROWS FROM [public_awareness_61] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91314"
 
         },
         62: {
@@ -2287,7 +2314,8 @@ define(
                     "SET [~FILTER] AS {[DataAvailable_Ind61].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfStakeholdingGroups]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [public_awareness_61] WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91315"
 
         },
         63: {
@@ -2325,7 +2353,8 @@ define(
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 }
-            }
+            },
+            metadata : "91316"
 
         }
     };

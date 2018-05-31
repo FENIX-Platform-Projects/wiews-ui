@@ -44,8 +44,6 @@ define([
         // Dynamic
         if (getParameterByName('code') != null) {
             // But static.
-            // https://storage.googleapis.com/wiews-lang-bucket/indicator_web_label_en_1.json
-            /*
             $.ajax({
                 async: false,
                 dataType: 'json',
@@ -67,8 +65,7 @@ define([
                     console.log(res);
                 }
             });
-            */
-
+            /*
             $.ajax({
                 async: false,
                 dataType: 'json',
@@ -99,8 +96,26 @@ define([
                     console.log(res);
                 }
             });
+            */
+            $.ajax({
+                async: false,
+                dataType: 'json',
+                method: 'GET',
+                contentType: "text/plain; charset=utf-8",
+                url:  staticurl+"priority_activity_web_label_en_"+getParameterByName('code')+".json",
+                success: function(res) {
 
+                    data['domain_'+getParameterByName('code')] = res[0].pa_labels[0].f2;
+                    data['activity1_'+getParameterByName('code')] = res[0].pa_labels[1].f2+" - ";
+                    data['activity2_'+getParameterByName('code')] = res[0].pa_labels[2].f2;
+                    data['indicator_'+getParameterByName('code')] = "Indicator "+getParameterByName('code')+": "+res[0].description;
 
+                },
+                error : function(res) {
+                    console.log(res);
+                }
+            });
+            /*
             $.ajax({
                 async: false,
                 dataType: 'json',
@@ -120,6 +135,7 @@ define([
                     console.log(res);
                 }
             });
+            */
 
             data["title_" + getParameterByName('code')] = data['domain_label'] + " - ";
         }
