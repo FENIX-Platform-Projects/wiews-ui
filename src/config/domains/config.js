@@ -2189,7 +2189,33 @@ define(
             metadata : "91310"
 
         },
-        //58: to be removed
+        58: {
+        domain_label : labels['en']['domain_label'],
+        element_label : {
+            "58" : labels['en']['element_label1']
+        },
+        dd_filter_category : "1",
+        cube : {
+            "queryModel": {},
+            "cube": {
+                "uniqueName": "[wiews_indicators].[information_systems_55]",
+                "name": "information_systems_55",
+                "connection": "wiews_indicators",
+                "catalog": "wiews_indicators",
+                "schema": "wiews_indicators",
+                "caption": null,
+                "visible": false
+            }
+        },
+        query : {
+            "58" : {
+                "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind58].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Remedial Action]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [monitoring_and_safeguarding_genetic_diversity_58] WHERE [~FILTER]",
+                "type": "MDX"
+            }
+        },
+        metadata : "91310"
+
+    },
         59: {
             domain_label : labels['en']['domain_label'],
             element_label : {
