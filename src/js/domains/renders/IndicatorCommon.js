@@ -598,8 +598,14 @@ define([
                     var testing = _.filter(self.codelists['FAO_R'],function(code){ return code.value == elem });
                     var subregion = (testing[0].index > 1) ? "sub" : "";
                     var region = (testing[0].index == 0) ? "world" : "region";
-                //    if (isList == "2" && subregion == "") list = ".children.children"; //subregion = "";
-                    geo_array[subregion+region].push("[Region.Region_FAO_codes].["+subregion+region+"_fao_code].["+elem+"]"+list)
+                    if(isList==2){
+                        //List of counrties
+                        geo_array[subregion+region].push("DESCENDANTS([Region.Region_FAO_codes].["+subregion+region+"_fao_code].["+elem+"]" +", , LEAVES)")
+                    }
+                    else {
+                        //Total
+                        geo_array[subregion+region].push("[Region.Region_FAO_codes].["+subregion+region+"_fao_code].["+elem+"]")
+                    }
                 });
                 break;
             case "m49":
@@ -608,8 +614,15 @@ define([
                     var testing = _.filter(self.codelists['M49'],function(code){ return code.value == elem });
                     var subregion = (testing[0].index > 1) ? "sub" : "";
                     var region = (testing[0].index == 0) ? "world" : "region";
-                //   if (isList == "2" && subregion == "sub") list = ".children.children"; //subregion = "";
-                    geo_array[subregion+region].push("[Region.Region_M49_codes].["+subregion+region+"_m49_code].["+elem+"]"+list)
+
+                    if(isList==2){
+                        //List of counrties
+                        geo_array[subregion+region].push("DESCENDANTS([Region.Region_M49_codes].["+subregion+region+"_m49_code].["+elem+"]" +", , LEAVES)")
+                    }
+                    else {
+                        //Total
+                        geo_array[subregion+region].push("[Region.Region_M49_codes].["+subregion+region+"_m49_code].["+elem+"]")
+                    }
                 });
                 break;
             case "sdg":
@@ -634,7 +647,14 @@ define([
                     var testing = _.filter(self.codelists['ITPGRFA_R'],function(code){ return code.value == elem });
                     var subregion = (testing[0].index > 1) ? "sub" : "";
                     var region = (testing[0].index == 0) ? "world" : "region";
-                    geo_array[subregion+region].push("[Region.Special_ITPGRFA_codes].["+region+"_itpgrfa_code].["+elem+"]"+list)
+                    if(isList==2){
+                        //List of counrties
+                        geo_array[subregion+region].push("DESCENDANTS([Region.Special_ITPGRFA_codes].["+subregion+region+"_itpgrfa_code].["+elem+"]" +", , LEAVES)")
+                    }
+                    else {
+                        //Total
+                        geo_array[subregion+region].push("[Region.Special_ITPGRFA_codes].["+subregion+region+"_itpgrfa_code].["+elem+"]")
+                    }
                 });
                 break;
             case "cgrfa":
@@ -642,9 +662,17 @@ define([
                     var testing = _.filter(self.codelists['CGRFA_R'],function(code){ return code.value == elem });
                     var subregion = (testing[0].index > 1) ? "sub" : "";
                     var region = (testing[0].index == 0) ? "world" : "region";
-                    geo_array[subregion+region].push("[Region.Special_CGRFA_codes].["+region+"_cgrfa_code].["+elem+"]"+list)
+                    if(isList==2){
+                        //List of counrties
+                        geo_array[subregion+region].push("DESCENDANTS([Region.Special_CGRFA_codes].["+subregion+region+"_cgrfa_code].["+elem+"]" +", , LEAVES)")
+                    }
+                    else {
+                        //Total
+                        geo_array[subregion+region].push("[Region.Special_CGRFA_codes].["+subregion+region+"_cgrfa_code].["+elem+"]")
+                    }
                 });
                 break;
+
         }
         return geo_array;
     };
