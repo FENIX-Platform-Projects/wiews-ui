@@ -2,6 +2,8 @@
 
 [data-page='domains'] {
 
+  input[type='radio'][name='thousandsep'] { display: inline-block; margin-left: 5px; }
+
   #domains { width:920px; }
 
   body {

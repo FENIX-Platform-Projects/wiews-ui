@@ -156,17 +156,17 @@ define([
         // value.toLocaleString('en-US')/('de-DE')
         var separator = ",";
         var decimal = ".";
-        // var formatted = String(value);
-        var formatted = String(value.toFixed(2));
+        var formatted = String(value);
+        //var formatted = String(value.toFixed(2));
         switch(option) {
             case '1':
                 return formatted;
                 break;
-            case '2':
+            case ',':
                 separator = ",";
                 decimal = ".";
                 break;
-            case '3':
+            case '.':
                 formatted = formatted.replace(".", ",");
                 separator = ".";
                 decimal = ",";

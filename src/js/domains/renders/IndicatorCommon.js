@@ -13,10 +13,11 @@ define([
     "fenix-ui-reports",
     "../../../nls/labels",
     "fenix-ui-bridge",
-    'tableexport.jquery.plugin',
+    "json-2-csv",
+    "file-saver",
     "bootstrap-table",
     '../../../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
-], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, CL, ICUtils, IBase, Report, labels, Bridge, tableExport, bootstrapTable) {
+], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, CL, ICUtils, IBase, Report, labels, Bridge, converter, FileSaver, bootstrapTable) {
 
     'use strict';
 
@@ -583,8 +584,6 @@ define([
             },
             list = (isList == "2") ? ".children" : "" ;
 
-        console.log(geovalues);
-
         switch(geovalues.codelist) {
             // Country
             case "iso3":
@@ -598,11 +597,10 @@ define([
                     var testing = _.filter(self.codelists['FAO_R'],function(code){ return code.value == elem });
                     var subregion = (testing[0].index > 1) ? "sub" : "";
                     var region = (testing[0].index == 0) ? "world" : "region";
-                    if(isList==2){
+                    if(isList==2) {
                         //List of counrties
                         geo_array[subregion+region].push("DESCENDANTS([Region.Region_FAO_codes].["+subregion+region+"_fao_code].["+elem+"]" +", , LEAVES)")
-                    }
-                    else {
+                    } else {
                         //Total
                         geo_array[subregion+region].push("[Region.Region_FAO_codes].["+subregion+region+"_fao_code].["+elem+"]")
                     }
@@ -858,6 +856,7 @@ define([
             $('.dropdown-toggle').dropdown();
             $('[data-dashboardContainer = "dd-dashboard-container"]').show();
         });
+
         $('[data-table = "dd-dashboard-table"]').bootstrapTable('load', {data: table});
 
         if ( table.length == 0 ) { downElem.attr('disabled','disabled'); } else { downElem.removeAttr('disabled'); }
@@ -865,8 +864,35 @@ define([
         //Scroll to the table
         $('html, body').animate({scrollTop: $('[data-table = "dd-dashboard-table"]').offset().top}, 400,'linear');
 
+        $('input[name=thousandsep]').on('click', function () {
+            var opt = $('input[name=thousandsep]:checked').val();
+            _.each(table, function(item){
+                console.log(item.value, ' >>> ', self.icutils.valuesFormatter(opt, item.value));
+            });
+            $('[data-table = "dd-dashboard-table"]').bootstrapTable('load', {data: table});
+        });
+
         $('[data-role=organizations_exportbutton]').on('click', function() {
-            $('[data-table = "dd-dashboard-table"]').tableExport({type:'csv'});
+            var json2csvCallback = function (err, csv) {
+                if (err) throw err;
+                var blob = new Blob([csv], {type: "text/csv;charset=utf-8"});
+                FileSaver.saveAs(blob, "tableExport.csv");
+                //$('div#exsitu-search-ux-loader').hide();
+                //$('[data-page=exsitu-search]').css('opacity','1');
+            };
+            converter.json2csv(table, json2csvCallback, {
+                delimiter : {
+                    wrap  : '"',
+                    field : ',',
+                    array : ';',
+                    eol   : '\n'
+                },
+                prependHeader    : true,
+                sortHeader       : false
+                //keys             : []
+            });
+
+            //$('[data-table = "dd-dashboard-table"]').tableExport({type:'csv'});
         });
 
 

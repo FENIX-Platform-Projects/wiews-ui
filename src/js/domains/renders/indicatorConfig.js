@@ -144,14 +144,14 @@ define([
                             default: DOWNLOAD_DV["filter-dd_filter_item_10"],
                             title: labels[Clang]["filter_stakeholders"],
                             source: [{value: "stk", label: labels[Clang]['filter_stakeholders_include']}]
-                        },
+                        }/*,
                         {
                             id: 'dd_filter_item_11',
                             type: 'radio',
                             default: DOWNLOAD_DV["filter-dd_filter_item_11"],
                             title: labels[Clang]['filter_thousand'],
                             choicesTitle: [labels[Clang]["filter_thousand_option_none"], labels[Clang]["filter_thousand_option_comma"], labels[Clang]["filter_thousand_option_period"]]
-                        }
+                        }*/
                         ]
                 },
                 dashboard: {
