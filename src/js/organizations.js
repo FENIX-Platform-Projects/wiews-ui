@@ -73,6 +73,8 @@ define([
                 "email" : process._source.email,
                 "website" : process._source.website,
                 "status" : process._source.status,
+                "valid_flag" : process._source.valid,
+                "valid_instcode" : process._source.valid_instcode,
                 "role_f646" : process._source.accession_number,
                 "role_f647" : process._source.accession_number,
                 "role_f648" : process._source.accession_number,

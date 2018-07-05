@@ -136,9 +136,8 @@ define([
                     });
                 }
                 if (res.hits.hits.length) {
-                    console.log('hits');
+                    //console.log('hits');
                     _.each( res.hits.hits, function ( element ) {
-                        console.log(element._source);
                         var item =  {
                             label : element._source[keyname+"_name"],
                             value : element._source[keyname+"_id"]
@@ -151,8 +150,6 @@ define([
                 console.log(res);
             }
         });
-
-        console.log(response_data);
 
         return response_data;
     };
@@ -458,8 +455,8 @@ define([
         var codelist_BIOS = this._callGoogle('biostatofacc_codelist.json', "bio_stat_of_accesion").hits;
         var codelist_Stor = this._callGoogle('germplasm_storage.json',"germplasm_storage").hits;
 
-        console.log(codelist_BIOS);
-        console.log(codelist_Stor);
+        //console.log(codelist_BIOS);
+        //console.log(codelist_Stor);
 
         $('#search_crop').typeahead(this.tya_options,
             {
