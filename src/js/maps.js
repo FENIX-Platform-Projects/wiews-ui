@@ -13,7 +13,8 @@ define([
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export',
     'typeahead.js',
-    'select2'
+    'select2',
+
 
 ], function ($, log, _, GoogleMaps, C, exsituC, template, labels, converter, FileSaver, bootstrap) {
 

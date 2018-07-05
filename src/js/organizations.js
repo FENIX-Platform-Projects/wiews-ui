@@ -13,7 +13,8 @@ define([
     'typeahead.js',
     "bootstrap",
     "bootstrap-table",
-    '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
+    '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export',
+    "string.prototype.startswith"
 ], function ($, log, _, Handlebars, Report, Filter, C, template, labels, converter, FileSaver, Bloodhound, bootstrap) {
 
     "use strict";
