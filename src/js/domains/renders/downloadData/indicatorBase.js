@@ -413,12 +413,14 @@ define([
             newDashboardConfig ={};
             $.extend(true, newDashboardConfig, dashboardConfig);
 
+            /*
             if((dashboardConfig!=null)&&(typeof dashboardConfig != 'undefined')){
                 newDashboardConfig = self._download_element_table_element_configuration_update(newDashboardConfig, newValues, params);
             }
+            */
         }
 
-        return newDashboardConfig;
+        return newValues.GEO;
 
     };
 

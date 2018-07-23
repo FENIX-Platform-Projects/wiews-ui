@@ -10,6 +10,7 @@ define([
     "../../../config/domains/codelistPayloads",
     "../renders/IndicatorCommonUtils",
     "../renders/downloadData/indicatorBase",
+    "../../../html/domains/visualizeDataDashboardTemplate.hbs",
     "fenix-ui-reports",
     "../../../nls/labels",
     "fenix-ui-bridge",
@@ -17,7 +18,7 @@ define([
     "file-saver",
     "bootstrap-table",
     '../../../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
-], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, CL, ICUtils, IBase, Report, labels, Bridge, converter, FileSaver, bootstrapTable) {
+], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, CL, ICUtils, IBase, DashboardTemplate, Report, labels, Bridge, converter, FileSaver, bootstrapTable) {
 
     'use strict';
 
@@ -438,7 +439,15 @@ define([
         var filter_button_2 = this.el.find('[data-button = "'+s.filter_button.dd_button_2+'"]');
         var filter_div_msg_2 = this.el.find('[data-buttonMsg = "'+s.filter_button.dd_buttonMsg_1+'"]');
         if((filter_button_2!=null)&&(typeof filter_button_2!='undefined')&&(filter_div_msg_2!=null)&&(typeof filter_div_msg_2!='undefined')){
-            filter_button_2.on(s.event.BUTTON_CLICK, _.bind(self._DD_onClick_button2, this, {lang: this.lang, indicatorDashboardSection: indicatorDashboardSection}));
+            if (this.indicatorProperties.vd_code !== undefined) {
+                filter_button_2.on(s.event.BUTTON_CLICK, _.bind(self._DD_onClick_button2, this, {
+                    lang: this.lang,
+                    indicatorDashboardSection: indicatorDashboardSection
+                }));
+            } else {
+                filter_button_2.off(s.event.BUTTON_CLICK);
+                $('[data-button = "'+s.filter_button.dd_button_2+'"]').attr('disabled','disabled');
+            }
         }
 
         var filter_button_3 = this.el.find('[data-button = "'+s.filter_button.dd_button_3+'"]');
@@ -481,13 +490,184 @@ define([
 
     //Download  Tab Button 2
     IndicatorCommon.prototype._DD_onClick_button2 = function (param) {
+        $('div.tableauPlaceholder').remove();
         var values = this.filter.getValues();
         var newDashboardConfig = this.indicatorProcesses.onClickButton2(values, this.dashboard_config, param);
-        if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig)))
-        {
-            this._downloadTableData(newDashboardConfig.downloadProcessTableData);
+        if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig))) {
+            this._initiateDashboard(newDashboardConfig);
         }
     }
+
+    IndicatorCommon.prototype._initiateDashboard = function (config) {
+        //console.log(config.codelist);
+        //console.log(config.values);
+
+        var filtertext = "",
+            isovalues = [],
+            vd_code = this.indicatorProperties.vd_code,
+            codes = {
+                "mdg" : "mdg_region",
+                "sdg" : "sdg_region",
+                "itpgrfa" : "itpgrfa_region",
+                "cgrfa" : "cgrfa_region"
+            };
+
+        var isWorld = {
+                "fao" : ["5000"],
+                "m49" : ["1"],
+                "mdg" : ["5000"],
+                "sdg" : ["5000"],
+                "itpgrfa" : ["5000"],
+                "cgrfa" : ["5000"]
+            },
+            isRegion = {
+                "fao": ["5100", "5200", "5300", "5400", "5500"],
+                "m49" : ["9","21","142","15","419","150", "202"]
+            },
+            fromSubRegion = {
+                "fao": {
+                    // Africa
+                    "5101": ["BDI", "COM", "DJI", "ERI", "ETH", "KEN", "MDG", "MWI", "MUS", "MYT", "MOZ", "REU", "RWA", "SYC", "SOM", "SSD", "UGA", "TZA", "ZMB", "ZWE"],
+                    "5102": ["AGO", "CMR", "CAF", "TCD", "COG", "COD", "GNQ", "GAB", "STP"],
+                    "5103": ["DZA", "EGY", "LBY", "MAR", "SDN", "TUN", "ESH"],
+                    "5104": ["BWA", "LSO", "NAM", "ZAF", "SWZ"],
+                    "5105": ["BEN", "BFA", "CIV", "CPV", "GMB", "GHA", "GIN", "GNB", "LBR", "MLI", "MRT", "NER", "NGA", "SHN", "SEN", "SLE", "TGO"],
+                    // America
+                    "5203": ["BMU", "CAN", "GRL", "SPM", "USA"],
+                    "5204": ["BLZ", "CRI", "SLV", "GTM", "HND", "MEX", "NIC", "PAN"],
+                    "5206": ["AIA", "ATG", "ABW", "BHS", "BRB", "VGB", "CYM", "CUB", "DMA", "DOM", "GRD", "GLP", "HTI", "JAM", "MTQ", "MSR", "PRI", "KNA", "LCA", "VCT", "TTO", "TCA", "VIR"],
+                    "5207": ["ARG", "BOL", "BRA", "CHL", "COL", "ECU", "FLK", "GUF", "GUY", "PRY", "PER", "SUR", "URY", "VEN"],
+                    // Asia
+                    "5301": ["KAZ", "KGZ", "TJK", "TKM", "UZB"],
+                    "5302": ["HKG", "MAC", "PRK", "JPN", "MNG", "KOR"],
+                    "5303": ["AFG", "BGD", "BTN", "IND", "IRN", "MDV", "NPL", "PAK", "LKA"],
+                    "5304": ["BRN", "KHM", "IDN", "LAO", "MYS", "MMR", "PHL", "SGP", "THA", "TLS", "VNM"],
+                    "5305": ["ARM", "AZE", "BHR", "CYP", "GEO", "IRQ", "ISR", "JOR", "KWT", "LBN", "OMN", "QAT", "SAU", "PSE", "YEM", "SYR", "TUR", "ARE"],
+                    // Europe
+                    "5401": ["BLR", "BGR", "CZE", "HUN", "POL", "MDA", "ROU", "RUS", "SVK", "UKR"],
+                    "5402": ["CHI", "DNK", "EST", "FRO", "FIN", "ISL", "IRL", "IMN", "LVA", "LTU", "NOR", "SJM", "SWE", "GBR"],
+                    "5403": ["ALB", "AND", "BIH", "HRV", "GIB", "GRC", "VAT", "ITA", "MLT", "MNE", "PRT", "SMR", "SRB", "SVN", "ESP", "MKD"],
+                    "5404": ["AUT", "BEL", "FRA", "DEU", "LIE", "LUX", "MCO", "NLD", "CHE"],
+                    // Oceania
+                    "5501": ["AUS", "NZL", "NFK"],
+                    "5502": ["FJI", "NCL", "PNG", "SLB", "VUT"],
+                    "5503": ["GUM", "KIR", "MHL", "FSM", "NUR", "PLW"],
+                    "5504": ["ASM", "COK", "PYF", "NIU", "PCN", "WSM", "TKL", "TON", "TUV", "WLF"]
+                },
+                "m49" : {
+                    "14" : ["BDI", "COM", "DJI", "ERI", "ETH", "KEN", "MDG", "MWI", "MUS", "MYT", "MOZ", "REU", "RWA", "SYC", "SOM", "SSD", "UGA", "TZA", "ZMB", "ZWE"],
+                    "17" : ["AGO", "CMR", "CAF", "TCD", "COG", "COD", "GNQ", "GAB", "STP"],
+                    "18" : ["BWA", "LSO", "NAM", "ZAF", "SWZ"],
+                    "11" : ["BEN", "BFA", "CIV", "CPV", "GMB", "GHA", "GIN", "GNB", "LBR", "MLI", "MRT", "NER", "NGA", "SHN", "SEN", "SLE", "TGO"],
+                    "15" : ["DZA", "EGY", "LBY", "MAR", "SDN", "TUN", "ESH"],
+
+                    "21" : ["BMU", "CAN", "GRL", "SPM", "USA"],
+                    "13" : ["BLZ", "CRI", "SLV", "GTM", "HND", "MEX", "NIC", "PAN"],
+                    "29" : ["AIA", "ATG", "ABW", "BHS", "BRB", "VGB", "CYM", "CUB", "DMA", "DOM", "GRD", "GLP", "HTI", "JAM", "MTQ", "MSR", "PRI", "KNA", "LCA", "VCT", "TTO", "TCA", "VIR"],
+                    "5" : ["ARG", "BOL", "BRA", "CHL", "COL", "ECU", "FLK", "GUF", "GUY", "PRY", "PER", "SUR", "URY", "VEN"],
+
+                    "143" : ["KAZ", "KGZ", "TJK", "TKM", "UZB"],
+                    "30" : ["HKG", "MAC", "PRK", "JPN", "MNG", "KOR"],
+                    "34" : ["AFG", "BGD", "BTN", "IND", "IRN", "MDV", "NPL", "PAK", "LKA"],
+                    "35" : ["BRN", "KHM", "IDN", "LAO", "MYS", "MMR", "PHL", "SGP", "THA", "TLS", "VNM"],
+                    "145" : ["ARM", "AZE", "BHR", "CYP", "GEO", "IRQ", "ISR", "JOR", "KWT", "LBN", "OMN", "QAT", "SAU", "PSE", "YEM", "SYR", "TUR", "ARE"],
+
+                    "151" : ["BLR", "BGR", "CZE", "HUN", "POL", "MDA", "ROU", "RUS", "SVK", "UKR"],
+                    "154" : ["CHI", "DNK", "EST", "FRO", "FIN", "ISL", "IRL", "IMN", "LVA", "LTU", "NOR", "SJM", "SWE", "GBR"],
+                    "39" : ["ALB", "AND", "BIH", "HRV", "GIB", "GRC", "VAT", "ITA", "MLT", "MNE", "PRT", "SMR", "SRB", "SVN", "ESP", "MKD"],
+                    "155" : ["AUT", "BEL", "FRA", "DEU", "LIE", "LUX", "MCO", "NLD", "CHE"],
+
+                    "53" : ["AUS", "NZL", "NFK"],
+                    "54" : ["FJI", "NCL", "PNG", "SLB", "VUT"],
+                    "57" : ["GUM", "KIR", "MHL", "FSM", "NUR", "PLW"],
+                    "61" : ["ASM", "COK", "PYF", "NIU", "PCN", "WSM", "TKL", "TON", "TUV", "WLF"]
+                }
+            },
+            fromRegion = {
+                "fao": {
+                    "5100": ["5101", "5102", "5103", "5104", "5105"],
+                    "5200": ["5203", "5204", "5206", "5207"],
+                    "5300": ["5301", "5302", "5303", "5304", "5305"],
+                    "5400": ["5401", "5402", "5403", "5404"],
+                    "5500": ["5501", "5502", "5503", "5504"]
+                },
+                "m49": {
+                    "202" : ["14","17","18","11"],
+                    "15" : ["15"],
+                    "21" : ["21"],
+                    "419" : ["13","29","5"],
+                    "142" : ["143","30","34","35","145"],
+                    "150" : ["151","154","39","155"],
+                    "9" : ["53","54","57","61"]
+                },
+                "sdg" : {
+                    "738" : [],
+                    "746" : [],
+                    "514" : [],
+                    "419" : [],
+                },
+                /*
+                "9998" : ["INT"],
+                "9999" : ["REG"]
+                */
+            }
+
+
+        if (config.codelist != "iso3" && config.codelist != "m49" && config.codelist != "fao") {
+            filtertext = codes[config.codelist]+"="+config.values;
+        } else {
+            if (config.codelist == "iso3" ) {
+                filtertext = "iso3_country_code=" + config.values;
+            } else {
+                if (Boolean( _.intersection(isWorld[config.codelist], config.values).length)) filtertext = "";
+                if (Boolean( _.intersection(isRegion[config.codelist], config.values).length)) {
+                    var thecode = _.intersection(isRegion[config.codelist], config.values);
+                    var subreg = [];
+                    /*
+                    console.log("region: ",_.difference( config.values, _.intersection(isRegion[config.codelist], config.values) ));
+                    console.log("intersection: ",  _.intersection(isRegion[config.codelist], config.values));
+                    console.log("total: ", config.values );
+                    */
+                    // We read the region and put every subregion
+                    _.each( thecode, function( element ) {
+                        subreg = subreg.concat(fromRegion[config.codelist][element]);
+                    });
+                    // convert the region to isocode
+                    _.each( subreg, function( item ) {
+                        isovalues = isovalues.concat(fromSubRegion[config.codelist][item]);
+                    });
+                    // profit!
+                    filtertext = "iso3_country_code="+isovalues;
+                    /* Good Old Ways
+                    filtertext += codes[config.codelist]+"region="+_.intersection(isRegion[config.codelist], config.values);
+                    if (Boolean(_.difference( config.values, _.intersection(isRegion[config.codelist], config.values) ).length))
+                        filtertext += "&"+codes[config.codelist]+"subregion="+_.difference( config.values, _.intersection(isRegion[config.codelist], config.values) );
+                    */
+                }
+                if (Boolean(_.difference( config.values, _.intersection(isRegion[config.codelist], config.values) ).length)) {
+                    // We're in the sub region
+                    var thecode = _.difference( config.values, _.intersection(isRegion[config.codelist], config.values) );
+                    _.each( thecode, function( item ) {
+                        isovalues = isovalues.concat(fromSubRegion[config.codelist][item]);
+                    });
+                    filtertext = "iso3_country_code="+isovalues;
+                }
+            }
+        }
+
+        //console.log( "filtertext:", filtertext );
+        //console.log( "vd_code: ", vd_code);
+
+        $('[data-dashboardcontainer="dd-dashboard-container"]').hide();
+        $('div.tableauPlaceholder').remove();
+        $('[data-section="showDashboard"]').after(DashboardTemplate({
+            filterparams : filtertext,
+            vd_code : vd_code
+        }));
+
+        $('html, body').animate({scrollTop: $('[data-section = "showDashboard"]').offset().top}, 400,'linear');
+
+    };
 
     //Download  Tab Button 3
     IndicatorCommon.prototype._DD_onClick_button3 = function (param) {
@@ -832,6 +1012,7 @@ define([
         var self = this;
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
         var downElem = $('[data-role="organizations_exportbutton"]');
+        $('div.tableauPlaceholder').remove();
         param.indicatorDashboardSection.show();
 
         $('[data-table = "dd-dashboard-table"]').bootstrapTable('destroy');

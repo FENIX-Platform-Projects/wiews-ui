@@ -1,315 +1,37 @@
-<div data-dashboardSection = "1" id = "vd-dashboard-container">
-   <div class="row">
-        <div class='col-xs-12'>
-            <div data-itemContainer="vd_dashboard_item_container_1">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_1">
-                        <div class="pull-right flip">
-                            <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_1"><i class="material-icons">file_download</i> </a>
-                        </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_1"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_1">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_1"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_1">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_1"></i></p>
-                </div>
-            </div>
+<div class="row">
+    <div class='col-lg-10 col-lg-offset-2'>
+        <div class='tableauPlaceholder' id='WIEWSDashboardTableau' style='position: relative'>
+            <noscript><a href='#'><img alt='WIEWS Dashboard'
+                                       src='https://public.tableau.com/static/images/wi/{{vd_code}}/1_rss.png'
+                                       style='border: none'/></a></noscript>
+            <object class='tableauViz' style='display:none;'>
+                <param name='host_url' value='https://public.tableau.com/'/>
+                <param name='embed_code_version' value='3'/>
+                <param name='site_root' value=''/>
+                <param name='name' value='{{vd_code}}'/>
+                <param name='tabs' value='no'/>
+                <param name='toolbar' value='yes'/>
+                <param name='static_image'
+                       value='https://public.tableau.com/static/images/wi/{{vd_code}}/1.png'/>
+                <param name='animate_transition' value='yes'/>
+                <param name='display_static_image' value='yes'/>
+                <param name='display_spinner' value='yes'/>
+                <param name='display_overlay' value='yes'/>
+                <param name='display_count' value='yes'/>
+                {{#if filterparams}}
+                    <param name='filter' value='{{filterparams}}'/>
+                {{/if}}
+            </object>
         </div>
-   </div>
-   <br>
-   <div class="row">
-       <div class='col-xs-12'>
-           <div data-itemContainer="vd_dashboard_item_container_2">
-               <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_2">
-                       <div class="pull-right flip">
-                           <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_2"><i class="material-icons">file_download</i> </a>
-                       </div>
-                   <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_2"></h5>
-                   <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_2">&nbsp;</h6>
-               </div>
-               <div class="panel-body">
-                   <div data-item="vd_dashboard_item_2"> </div>
-               </div>
-               <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_2">
-                   <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_2"></i></p>
-               </div>
-           </div>
-       </div>
-   </div>
-   <br>
-  <div class="row">
-        <div class='col-xs-6'>
-            <div data-itemContainer="vd_dashboard_item_container_3">
-               <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_3">
-                       <div class="pull-right flip">
-                           <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_3"><i class="material-icons">file_download</i> </a>
-                       </div>
-                   <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_3"></h5>
-                   <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_3">&nbsp;</h6>
-               </div>
-               <div class="panel-body">
-                   <div data-item="vd_dashboard_item_3"> </div>
-               </div>
-               <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_3">
-                   <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_3"></i></p>
-               </div>
-           </div>
-        </div>
-        <div class='col-xs-6'>
-            <div data-itemContainer="vd_dashboard_item_container_4">
-               <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_4">
-                       <div class="pull-right flip">
-                           <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_4"><i class="material-icons">file_download</i> </a>
-                       </div>
-                   <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_4"></h5>
-                   <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_4">&nbsp;</h6>
-               </div>
-               <div class="panel-body">
-                   <div data-item="vd_dashboard_item_4"> </div>
-               </div>
-               <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_4">
-                   <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_4"></i></p>
-               </div>
-           </div>
-        </div>
-  </div>
-</div>
-
-<div data-dashboardSection = "2" id = "vd-dashboard-container">
-    <div class="row">
-        <div class='col-xs-12'>
-            <div data-itemContainer="vd_dashboard_item_container_1">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_1">
-                    <div class="pull-right flip">
-                        <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_1"><i class="material-icons">file_download</i> </a>
-                    </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_1"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_1">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_1"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_1">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_1"></i></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class='col-xs-12'>
-            <div data-itemContainer="vd_dashboard_item_container_2">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_2">
-                    <div class="pull-right flip">
-                        <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_2"><i class="material-icons">file_download</i> </a>
-                    </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_2"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_2">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_2"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_2">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_2"></i></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class='col-xs-6'>
-            <div data-itemContainer="vd_dashboard_item_container_3">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_3">
-                    <div class="pull-right flip">
-                        <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_3"><i class="material-icons">file_download</i> </a>
-                    </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_3"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_3">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_3"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_3">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_3"></i></p>
-                </div>
-            </div>
-        </div>
-        <div class='col-xs-6'>
-            <div data-itemContainer="vd_dashboard_item_container_4">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_4">
-                    <div class="pull-right flip">
-                        <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_4"><i class="material-icons">file_download</i> </a>
-                    </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_4"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_4">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_4"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_4">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_4"></i></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div data-dashboardSection = "3" id = "vd-dashboard-container">
-    <div class="row">
-        <div class='col-xs-12'>
-            <div data-itemContainer="vd_dashboard_item_container_1">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_1">
-                    <div class="pull-right flip">
-                        <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_1"><i class="material-icons">file_download</i> </a>
-                    </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_1"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_1">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_1"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_1">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_1"></i></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class='col-xs-12'>
-            <div data-itemContainer="vd_dashboard_item_container_2">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_2">
-                    <div class="pull-right flip">
-                        <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_2"><i class="material-icons">file_download</i> </a>
-                    </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_2"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_2">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_2"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_2">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_2"></i></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class='col-xs-6'>
-            <div data-itemContainer="vd_dashboard_item_container_3">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_3">
-                    <div class="pull-right flip">
-                        <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_3"><i class="material-icons">file_download</i> </a>
-                    </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_3"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_3">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_3"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_3">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_3"></i></p>
-                </div>
-            </div>
-        </div>
-        <div class='col-xs-6'>
-            <div data-itemContainer="vd_dashboard_item_container_4">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_4">
-                    <div class="pull-right flip">
-                        <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_4"><i class="material-icons">file_download</i> </a>
-                    </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_4"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_4">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_4"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_4">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_4"></i></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class='col-xs-6'>
-            <div data-itemContainer="vd_dashboard_item_container_5">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_5">
-                    <div class="pull-right flip">
-                        <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_5"><i class="material-icons">file_download</i> </a>
-                    </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_5"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_5">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_5"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_5">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_5"></i></p>
-                </div>
-            </div>
-        </div>
-        <div class='col-xs-6'>
-            <div data-itemContainer="vd_dashboard_item_container_6">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_6">
-                    <div class="pull-right flip">
-                        <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_6"><i class="material-icons">file_download</i> </a>
-                    </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_6"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_6">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_6"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_6">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_6"></i></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div data-dashboardSection = "4" id = "vd-dashboard-container">
-    <div class="row">
-        <div class='col-xs-12'>
-            <div data-itemContainer="vd_dashboard_item_container_1">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_1">
-                    <div class="pull-right flip">
-                        <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_1"><i class="material-icons">file_download</i> </a>
-                    </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_1"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_1">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_1"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_1">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_1"></i></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class='col-xs-12'>
-            <div data-itemContainer="vd_dashboard_item_container_2">
-                <div class="panel-heading" data-itemExport="vd_dashboard_itemExport_2">
-                    <div class="pull-right flip">
-                        <a class="btn-floating waves-effect waves-light btn-default" data-role="export" data-button="vd_dashboard_button_export_2"><i class="material-icons">file_download</i> </a>
-                    </div>
-                    <h5 class="truncate" data-itemContainerTitle="vd_dashboard_item_container_title_2"></h5>
-                    <h6 data-itemContainerSubtitle="vd_dashboard_item_container_subtitle_2">&nbsp;</h6>
-                </div>
-                <div class="panel-body">
-                    <div data-item="vd_dashboard_item_2"> </div>
-                </div>
-                <div class="panel-footer" data-itemContainerFooter="vd_dashboard_item_container_footer_2">
-                    <p><i data-itemContainerFooterContent="vd_dashboard_item_container_footerContent_2"></i></p>
-                </div>
-            </div>
-        </div>
+        <script type='text/javascript'>
+            var divElement = document.getElementById('WIEWSDashboardTableau');
+            var vizElement = divElement.getElementsByTagName('object')[0];
+            vizElement.style.width = '800px';
+            vizElement.style.minHeight = '600px';
+            vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+            var scriptElement = document.createElement('script');
+            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);
+        </script>
     </div>
 </div>
