@@ -962,6 +962,7 @@ define(
                 "23" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_22/WorldPieDashBoard",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1006,6 +1007,7 @@ define(
                 "24" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_22/WorldPieDashBoard",
             cube : {
                 "queryModel": {},
                 "cube": {

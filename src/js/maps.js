@@ -50,26 +50,28 @@ define([
 
     Maps.prototype._convert2TableData = function (input) {
         var output = [];
+        var selection = $('#data_international').val();
         var year = $('#year').val().split(/[^0-9]/).join("");
 
         _.each(input, function(object, index) {
             var obj = {
                 "year" : year,
-                "instcode": object[3].value,
-                "name": object[4].value,
-                "country": object[2].value,
-                "accessions" : Number(object[7].value.split(',').join("")),
-                "genus" : Number(object[8].value.split(',').join("")),
-                "species" : Number(object[9].value.split(',').join(""))
+                "instcode": object[4].value,
+                "name": object[5].value,
+                "country": object[3].value,
+                "type": object[2].value,
+                "accessions" : Number(object[8].value.split(',').join("")),
+                "genus" : Number(object[9].value.split(',').join("")),
+                "species" : Number(object[10].value.split(',').join(""))
             };
-            if (index>0) output.push(obj);
+            console.log(selection.includes(object[2].value))
+            if (index>0 && selection.includes(object[2].value)) output.push(obj);
         });
-
-
+        //console.log(output);
         return output;
     };
 
-    Maps.prototype._convert2GEOJson = function (input) {
+    Maps.prototype._convert2GEOJson = function (input, selection) {
         var geoJSON = {
                 "type": "FeatureCollection",
                 "features" : []
@@ -77,26 +79,28 @@ define([
             output = [];
 
         _.each(input, function (object, index) {
+
             var obj = {
                 "type": "Feature",
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [ Number(object[6].value), Number(object[5].value) ]
+                    "coordinates": [ Number(object[7].value), Number(object[6].value) ]
                 },
                 "properties": {
                     "year" : object[0].value,
-                    "country" : object[2].value,
-                    "instcode" : object[3].value,
-                    "name": object[4].value,
-                    "accessions" : Number(object[7].value.split(',').join("")),
-                    "genus" : Number(object[8].value.split(',').join("")),
-                    "species" : Number(object[9].value.split(',').join(""))
+                    "country" : object[3].value,
+                    "instcode" : object[4].value,
+                    "name": object[5].value,
+                    "type": object[2].value,
+                    "accessions" : Number(object[8].value.split(',').join("")),
+                    "genus" : Number(object[9].value.split(',').join("")),
+                    "species" : Number(object[10].value.split(',').join(""))
                 },
-                "id" : object[3].value
+                "id" : object[4].value
             };
 
-            if (index > 0 && object[6].value.length > 0) {
-                //console.log(obj);
+            if (index > 0 && object[6].value.length > 0 && selection.includes(object[2].value)) {
+               // console.log(obj);
                 output.push(obj);
             }
         });
@@ -144,13 +148,15 @@ define([
         var self = this;
 
         var data = this._getData($('#year').val());
+        var selection = $('#data_international').val();
+
         if (data == undefined) {
             console.log(data);
             alert('Data not available');
             return;
         }
 
-        var geodata = this._convert2GEOJson(data.cellset);
+        var geodata = this._convert2GEOJson(data.cellset, selection);
 
         GoogleMaps().then(function (googleMaps) {
             //console.log(googleMaps);
@@ -165,8 +171,9 @@ define([
 
             map.data.setStyle(function(feature) {
                 var size = feature.getProperty(data_toshow);
+                var color = feature.getProperty('type');
                 return {
-                    icon: getCircle(size),
+                    icon: getCircle(size, color),
                     title: feature.getProperty('name')
                 };
             });
@@ -175,10 +182,12 @@ define([
 
             map.addListener('zoom_changed', function(event) {
                 self.zoomlevel = map.getZoom();
+
                 map.data.setStyle(function(feature) {
                     var size = feature.getProperty(data_toshow);
+                    var color = feature.getProperty('type');
                     return {
-                        icon: getCircle(size),
+                        icon: getCircle(size, color),
                         title: feature.getProperty('name')
                     };
                 });
@@ -206,17 +215,21 @@ define([
 
             self._toggleLoading();
 
-            function getCircle(size) {
+            function getCircle(size, color) {
                 var value = $('#data_filter').val(),
+                    true_color = 'red',
                     kind = $('#data_showed').val(),
                     mag = Math.pow(Number(size), 1/4),
                     divisor = (kind === "accessions") ? 3 : 8,
                     multi = 1; //self.zoomlevel /2;
 
+                //if (color == "OTHER") {}
+                if (color == "INT") true_color = 'blue';
+                if (color == "REG") true_color = 'green';
 
                 return {
                     path: googleMaps.SymbolPath.CIRCLE,
-                    fillColor: 'red',
+                    fillColor: true_color,
                     fillOpacity: .2,
                     scale:  (size > value) ? ((mag/4)*divisor)*multi : 0,
                     strokeColor: 'white',
@@ -285,6 +298,7 @@ define([
 
         $('#year').select2({ width: '100%',  theme: "bootstrap" });
         $('#data_showed').select2({ width: '100%' , theme: "bootstrap" });
+        $('#data_international').select2({ width: '100%' , theme: "bootstrap" });
         this._toggleLoading();
         this._updateFilter();
 
@@ -347,6 +361,11 @@ define([
         });
 
         $('#year').on('change', function () {
+            self._toggleLoading();
+            setTimeout(function(){ self._processMap($('#data_showed').val()); }, 200);
+        });
+
+        $('#data_international').on('change', function () {
             self._toggleLoading();
             setTimeout(function(){ self._processMap($('#data_showed').val()); }, 200);
         });
