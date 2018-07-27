@@ -366,6 +366,7 @@ define(
                 "9" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_09/DashInd09",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -512,6 +513,7 @@ define(
                 "13" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_13/DashInd13",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1320,6 +1322,7 @@ define(
                 "31" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_37/DashInd37",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1543,6 +1546,7 @@ define(
                 "37" : labels['en']['element_label1']
             },
             dd_filter_category : "2",
+            vd_code : "wiews_indicator_37/DashInd37",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1756,6 +1760,7 @@ define(
                 "44" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_44/DashInd44",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1783,6 +1788,7 @@ define(
                 "45" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_45/DashInd45",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1810,6 +1816,7 @@ define(
                 "46" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_46/DashInd46",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1837,6 +1844,7 @@ define(
                 "47" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_47/WorldChart",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1864,6 +1872,7 @@ define(
                 "48" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_48/DashInd48",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -2175,6 +2184,7 @@ define(
                 "57" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_57/DashInd1",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -2302,6 +2312,7 @@ define(
                 "61" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_61/DashInd61",
             cube : {
                 "queryModel": {},
                 "cube": {
