@@ -63,6 +63,7 @@ define(
                 "2_2" : labels['en']['element_label3']
             },
             dd_filter_category : "2",
+            vd_code : "wiews_indicator_02/DashInd02",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -180,6 +181,7 @@ define(
                 "4" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_04/DashInd04",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -218,6 +220,7 @@ define(
                 "5" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_05/DashInd05",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -232,7 +235,7 @@ define(
             },
             query : {
                 "5" : {
-                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind5].[1]} MEMBER [Measures].[Percentage] AS     (([Measures].[Cultivated Area] * 100) / [Measures].[Total Area]), FORMAT_STRING = \"##.##%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Percentage]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM  [on_farm_management_improvement_05] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind5].[1]} MEMBER [Measures].[Percentage] AS     (([Measures].[Cultivated Area]) / [Measures].[Total Area]), FORMAT_STRING = \"##.##%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Percentage]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM  [on_farm_management_improvement_05] WHERE [~FILTER]",
                     "type": "MDX"
                 }
             },
@@ -245,6 +248,7 @@ define(
                 "6" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_06/DashInd06",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -278,6 +282,7 @@ define(
                 "7" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_07/DashInd07",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -322,6 +327,7 @@ define(
                 "8" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_08/DashInd08",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -436,6 +442,7 @@ define(
                 "11" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_11/DashInd11",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -480,6 +487,7 @@ define(
                 "12" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_12/DashInd12",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -648,6 +656,7 @@ define(
                 "16" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_16/DashInd16",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -885,7 +894,7 @@ define(
                 "21" : {
                     "mdx": "WITH " +
                     "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
-                    "MEMBER [Measures].[%_of_accessions_duplicated] AS IIf(([Measures].[accessions] <> 0), (([Measures].[accessions_duplicated] / [Measures].[accessions]) * 100), 0), FORMAT_STRING = \"#0.0#%\" " +
+                    "MEMBER [Measures].[%_of_accessions_duplicated] AS IIf(([Measures].[accessions] <> 0), (([Measures].[accessions_duplicated] / [Measures].[accessions])), 0), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[%_of_accessions_duplicated]} ON COLUMNS, " +
@@ -897,7 +906,7 @@ define(
                 "21_stk" : {
                     "mdx": "WITH " +
                     "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
-                    "MEMBER [Measures].[%_of_accessions_duplicated] AS IIf(([Measures].[accessions] <> 0), (([Measures].[accessions_duplicated] / [Measures].[accessions]) * 100), 0), FORMAT_STRING = \"#0.0#%\" " +
+                    "MEMBER [Measures].[%_of_accessions_duplicated] AS IIf(([Measures].[accessions] <> 0), (([Measures].[accessions_duplicated] / [Measures].[accessions])), 0), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
