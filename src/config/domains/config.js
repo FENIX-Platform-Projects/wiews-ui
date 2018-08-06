@@ -701,6 +701,7 @@ define(
                 "17" : labels['en']['element_label1']
             },
             dd_filter_category : "2",
+            vd_code : "wiews_indicator_17/DashInd17",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1065,6 +1066,7 @@ define(
                 "25" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_25/DashInd25",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1109,6 +1111,7 @@ define(
                 "26" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_26/DashInd26",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1153,6 +1156,7 @@ define(
                 "27" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_27/DashInd27",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1197,6 +1201,7 @@ define(
                 "28" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_28/DashInd28",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1243,6 +1248,7 @@ define(
                 "29" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_29/DashInd29",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1287,6 +1293,7 @@ define(
                 "30" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_30/DashInd30",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -2051,6 +2058,7 @@ define(
                 "53" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_53/DashInd53",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -2078,6 +2086,7 @@ define(
                 "54" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_54/DashInd54",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -2122,6 +2131,7 @@ define(
                 "55" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_55/DashInd55",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -2149,6 +2159,7 @@ define(
                 "56" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_56/DashInd56",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -2216,38 +2227,40 @@ define(
 
         },
         58: {
-        domain_label : labels['en']['domain_label'],
-        element_label : {
-            "58" : labels['en']['element_label1']
-        },
-        dd_filter_category : "1",
-        cube : {
-            "queryModel": {},
-            "cube": {
-                "uniqueName": "[wiews_indicators].[information_systems_55]",
-                "name": "information_systems_55",
-                "connection": "wiews_indicators",
-                "catalog": "wiews_indicators",
-                "schema": "wiews_indicators",
-                "caption": null,
-                "visible": false
-            }
-        },
-        query : {
-            "58" : {
-                "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind58].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Remedial Action]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [monitoring_and_safeguarding_genetic_diversity_58] WHERE [~FILTER]",
-                "type": "MDX"
-            }
-        },
-        metadata : "91310"
+            domain_label : labels['en']['domain_label'],
+            element_label : {
+                "58" : labels['en']['element_label1']
+            },
+            dd_filter_category : "1",
+            vd_code : "wiews_indicator_58/DashInd58",
+            cube : {
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[information_systems_55]",
+                    "name": "information_systems_55",
+                    "connection": "wiews_indicators",
+                    "catalog": "wiews_indicators",
+                    "schema": "wiews_indicators",
+                    "caption": null,
+                    "visible": false
+                }
+            },
+            query : {
+                "58" : {
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind58].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Remedial Action]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [monitoring_and_safeguarding_genetic_diversity_58] WHERE [~FILTER]",
+                    "type": "MDX"
+                }
+            },
+            metadata : "91310"
 
-    },
+        },
         59: {
             domain_label : labels['en']['domain_label'],
             element_label : {
                 "59" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_59/DashInd59",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -2275,6 +2288,7 @@ define(
                 "60" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_60/Dashboard1",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -2349,6 +2363,7 @@ define(
                 "62" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_62/DashInd62",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -2377,6 +2392,7 @@ define(
                 "63" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_63/DashInd63",
             cube : {
                 "queryModel": {},
                 "cube": {
