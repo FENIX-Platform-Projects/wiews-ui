@@ -502,9 +502,12 @@ define([
         //console.log(config.codelist);
         //console.log(config.values);
 
+
         var filtertext = "",
             isovalues = [],
             vd_code = this.indicatorProperties.vd_code,
+            time = this.filter.getValues(),
+            year = (this.indicatorProperties.time == "years") ? time.values['dd_filter_item_9'] : null,
             codes = {
                 "mdg" : "mdg_region",
                 "sdg" : "sdg_region",
@@ -653,6 +656,10 @@ define([
                     filtertext = "iso3_country_code="+isovalues;
                 }
             }
+        }
+
+        if (year != null) {
+            filtertext = filtertext + "&year="+year[0];
         }
 
         //console.log( "filtertext:", filtertext );

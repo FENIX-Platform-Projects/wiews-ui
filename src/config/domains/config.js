@@ -737,6 +737,7 @@ define(
             },
             time: "years",
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_18/DashInd18",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -784,6 +785,7 @@ define(
             },
             time: "years",
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_19/DashInd19",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -831,6 +833,7 @@ define(
             },
             time: "years",
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_20/DashInd20",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -880,6 +883,7 @@ define(
             },
             time: "years",
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_21/DashInd21",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1384,6 +1388,7 @@ define(
                 "32" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
+            vd_code : "wiews_indicator_32/DashInd32",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1759,6 +1764,7 @@ define(
                 "43" : labels['en']['element_label1']
             },
             dd_filter_category : "1",
+            vd_code : "wiews_indicator_43/DashInd43",
             cube : {
                 "queryModel": {},
                 "cube": {
