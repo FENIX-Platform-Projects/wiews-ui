@@ -344,23 +344,21 @@ define(
             query : {
                 "8" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind8].[1]} MEMBER [Measures].[%_seeds_prod_local_level] AS ([Measures].[seeds_prod_local_level] / [Measures].[amount_of_seeds_converted]), FORMAT_STRING = \"#0.0#%\" " +
+                    "MEMBER [Measures].[%_seeds_prod_local_level] AS ([Measures].[seeds_prod_local_level] / [Measures].[amount_of_seeds_converted]), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[amount_of_seeds], [Measures].[seeds_prod_local_level], [Measures].[amount_of_seeds_converted], [Measures].[%_seeds_prod_local_level]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY {[Measures].[seeds_prod_local_level], [Measures].[amount_of_seeds_converted], [Measures].[%_seeds_prod_local_level]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery]",
                     "type": "MDX"
                 },
-                "7_stk" : {
+                "8_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind8].[1]} MEMBER [Measures].[%_seeds_prod_local_level] AS ([Measures].[seeds_prod_local_level] / [Measures].[amount_of_seeds_converted]), FORMAT_STRING = \"#0.0#%\" " +
+                    "MEMBER [Measures].[%_seeds_prod_local_level] AS ([Measures].[seeds_prod_local_level] / [Measures].[amount_of_seeds_converted]), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[amount_of_seeds], [Measures].[seeds_prod_local_level], [Measures].[amount_of_seeds_converted], [Measures].[%_seeds_prod_local_level]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [disaster_recovery] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY {[Measures].[seeds_prod_local_level], [Measures].[amount_of_seeds_converted], [Measures].[%_seeds_prod_local_level]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [disaster_recovery]",
                     "type": "MDX"
                 }
             },
@@ -459,23 +457,21 @@ define(
             query : {
                 "11" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind11].[1]} MEMBER [Measures].[NumberOfActions_AnnAvg] AS ([Measures].[NumberOfActions] / [Measures].[period]) " +
+                    "MEMBER [Measures].[NumberOfActions_AnnAvg] AS ([Measures].[NumberOfActions] / [Measures].[period]) " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[NumberOfActions], [Measures].[NumberOfActions_AnnAvg]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants_11] " +
-                    "WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants_11]",
                     "type": "MDX"
                 },
                 "11_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind11].[1]} MEMBER [Measures].[NumberOfActions_AnnAvg] AS ([Measures].[NumberOfActions] / [Measures].[period]) " +
+                    "MEMBER [Measures].[NumberOfActions_AnnAvg] AS ([Measures].[NumberOfActions] / [Measures].[period]) " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[NumberOfActions], [Measures].[NumberOfActions_AnnAvg]} ON COLUMNS," +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [crop_wild_relatives_wild_food_plants_11] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [crop_wild_relatives_wild_food_plants_11]",
                     "type": "MDX"
                 }
             },
@@ -538,23 +534,21 @@ define(
             query : {
                 "13" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind13].[1]} " +
+                    "MEMBER [Measures].[total_crop_strategy_count] AS ([Measures].[total_count]) " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[exist_of_strategy], [Measures].[strategy_count], [Measures].[total_count], [Measures].[country_count]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [targeting_collecting_ind_13_14] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY {[Measures].[strategy_count], [Measures].[total_crop_strategy_count]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [targeting_collecting_ind_13_14] ",
                     "type": "MDX"
                 },
                 "13_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind13].[1]} " +
+                    "MEMBER [Measures].[total_crop_strategy_count] AS ([Measures].[total_count]) " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[exist_of_strategy], [Measures].[strategy_count], [Measures].[total_count], [Measures].[country_count]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [targeting_collecting_ind_13_14] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY {[Measures].[strategy_count], [Measures].[total_crop_strategy_count]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [targeting_collecting_ind_13_14] ",
                     "type": "MDX"
                 }
             },
