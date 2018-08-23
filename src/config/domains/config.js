@@ -299,21 +299,21 @@ define(
             query : {
                 "7" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind7].[1]} MEMBER [Measures].[amount_of_seeds_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) " +
+                    "SET [~FILTER] AS {[DataAvailable_ind7].[1]} MEMBER [Measures].[households_benefited_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[households_benefited], [Measures].[amount_of_seeds_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[households_benefited], [Measures].[households_benefited_ann_avg]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery] " +
                     " WHERE [~FILTER]",
                     "type": "MDX"
                 },
                 "7_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind7].[1]} MEMBER [Measures].[amount_of_seeds_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) " +
+                    "SET [~FILTER] AS {[DataAvailable_ind7].[1]} MEMBER [Measures].[households_benefited_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[households_benefited], [Measures].[amount_of_seeds_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[households_benefited], [Measures].[households_benefited_ann_avg]} ON COLUMNS, " +
                     "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [disaster_recovery] " +
                     " WHERE [~FILTER]",
                     "type": "MDX"

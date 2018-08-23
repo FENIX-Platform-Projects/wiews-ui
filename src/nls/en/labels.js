@@ -55,6 +55,8 @@ define(function () {
         // Other stuff
 
         "bootstraptable_search_filter" : "Filter",
-        "exsitu-search_add_button" : "Add"
+        "exsitu-search_add_button" : "Add",
+        "domains_button_backtosecond" : "Back to the Second GPA",
+        "loading_text" : "Loading..."
     }
 });

@@ -473,29 +473,49 @@ define([
         }
     }
 
+    IndicatorCommon.prototype._toggleLoading = function () {
+        console.log('toggle');
+        //setTimeout(function(){
+            if( $("[data-page=content_container]").css('opacity') == '1') {
+                //console.log('bobble')
+                $('div[data-page="loading"]').show();
+                $('div[data-page="content_container"]').css('opacity','0.5');
+            } else {
+                //console.log('goggle')
+                $('div[data-page="loading"]').hide();
+                $('div[data-page="content_container"]').css('opacity','1');
+            }
+        //}, 1);
+
+    };
+
     //Download  Tab Button 1
     IndicatorCommon.prototype._DD_onClick_button1 = function (param) {
-
-        $('[data-dashboardContainer = "dd-dashboard-container"]').hide();
-        var values = this.filter.getValues();
-
-        $.extend(param, {indicator_id : this.indicatorProperties.indicator_id}, {time_label : this.indicatorProperties.period_label} );
-        
-        var newDashboardConfig = this.indicatorProcesses.onClickButton1(values, this.dashboard_config, param);
-
-        if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig))) {
-            this._DD_getTableData(param, newDashboardConfig, values)
-        }
+        var self = this;
+        this._toggleLoading();
+        setTimeout(function() {
+            $('[data-dashboardContainer = "dd-dashboard-container"]').hide();
+            var values = self.filter.getValues();
+            $.extend(param, {indicator_id: self.indicatorProperties.indicator_id}, {time_label: self.indicatorProperties.period_label});
+            var newDashboardConfig = self.indicatorProcesses.onClickButton1(values, self.dashboard_config, param);
+            if ((newDashboardConfig != null) && (typeof newDashboardConfig != 'undefined') && (!$.isEmptyObject(newDashboardConfig))) {
+                self._DD_getTableData(param, newDashboardConfig, values)
+            }
+        }, 150);
     }
 
     //Download  Tab Button 2
     IndicatorCommon.prototype._DD_onClick_button2 = function (param) {
-        $('div.tableauPlaceholder').remove();
-        var values = this.filter.getValues();
-        var newDashboardConfig = this.indicatorProcesses.onClickButton2(values, this.dashboard_config, param);
-        if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig))) {
-            this._initiateDashboard(newDashboardConfig);
-        }
+        var self = this;
+        this._toggleLoading();
+        setTimeout(function() {
+            $('div.tableauPlaceholder').remove();
+            var values = self.filter.getValues();
+            var newDashboardConfig = self.indicatorProcesses.onClickButton2(values, self.dashboard_config, param);
+            if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig))) {
+                self._initiateDashboard(newDashboardConfig);
+            }
+        }, 150);
     }
 
     IndicatorCommon.prototype._initiateDashboard = function (config) {
@@ -671,7 +691,7 @@ define([
             filterparams : filtertext,
             vd_code : vd_code
         }));
-
+        this._toggleLoading();
         $('html, body').animate({scrollTop: $('[data-section = "showDashboard"]').offset().top}, 400,'linear');
 
     };
@@ -1015,7 +1035,7 @@ define([
 
     //Render of the bootstrap table
     IndicatorCommon.prototype._tableRender = function (table, param) {
-
+        this._toggleLoading();
         var self = this;
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
         var downElem = $('[data-role="organizations_exportbutton"]');
@@ -1060,7 +1080,9 @@ define([
             $('[data-table = "dd-dashboard-table"]').bootstrapTable('load', {data: table});
         });
 
+        $('[data-role=organizations_exportbutton]').off('click');
         $('[data-role=organizations_exportbutton]').on('click', function() {
+
             var json2csvCallback = function (err, csv) {
                 if (err) throw err;
                 var blob = new Blob([csv], {type: "text/csv;charset=utf-8"});

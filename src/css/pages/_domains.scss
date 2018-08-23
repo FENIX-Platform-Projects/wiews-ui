@@ -569,3 +569,11 @@
 .spacing-row {
   margin-bottom: 20px;
 }
+
+[data-page='loading'] {
+  position: absolute;
+  top: 50%;
+  left: 43%;
+  z-index: 100;
+  display: none;
+}

@@ -10,7 +10,7 @@
                 <a href="http://www.fao.org/wiews/data/domains/domains-list/" type="button" class="btn btn-link pull-right fs-section-back waves-effect truncate" id="fs-browse-by-country-profile-back" target="_self">
                     <!-- <span class="icojam icojam_site_back"></span> -->
                     <span class="icojam icojam_arrow_left"></span>
-                    <span class="hidden-xs">Back to the Second GPA</span>
+                    <span class="hidden-xs">{{domains_button_backtosecond}}</span>
                 </a>
             </div>
         </div>
@@ -43,10 +43,10 @@
         <div class='col-md-12 fs-data-padding-top'>
 
             <div class="panel panel-default hoverable">
-                <div data-page="loaded" class="row">
-                    <h1> Loading... <i class="fa fa-spinner" aria-hidden="true"></i> </h1>
+                <div data-page="loading" class="row">
+                    <h1> {{loading_text}} <i class="fa fa-spinner" aria-hidden="true"></i> </h1>
                 </div>
-                <div class="panel-body">
+                <div data-page="content_container" class="panel-body">
                     <!-- Container tab-panels -->
                     <div class="tab-content">
                         <div class="tab-pane active" id="downloadDataTab"></div>
