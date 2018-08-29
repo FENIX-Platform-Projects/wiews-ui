@@ -474,7 +474,7 @@ define([
     }
 
     IndicatorCommon.prototype._toggleLoading = function () {
-        console.log('toggle');
+
         //setTimeout(function(){
             if( $("[data-page=content_container]").css('opacity') == '1') {
                 //console.log('bobble')

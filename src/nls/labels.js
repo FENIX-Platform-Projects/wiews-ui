@@ -9,12 +9,10 @@ define([
             staticurl = "https://storage.googleapis.com/wiews-lang-bucket/",
             url = "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsIndicatorLabels",
             element = [
-                "frontendlabels_EN.json",
-                "saikulabels_EN.json"
+                "frontendlabels_EN.json"
             ],
             bodies = [
-                "frontend_label",
-                "saiku_label"
+                "frontend_label"
             ];
 
         function getParameterByName(name) {
@@ -44,6 +42,38 @@ define([
         // Dynamic
         if (getParameterByName('code') != null) {
             // But static.
+            $.ajax({
+                async: false,
+                dataType: 'json',
+                method: 'GET',
+                contentType: "text/plain; charset=utf-8",
+                url:  staticurl+"saikulabels_en_0.json",
+                success: function(res) {
+                    console.log(res)
+                    $.each(res['saikulabels'], function(indice, element){
+                        data[element['saiku_label_id']] = element['saiku_label_en'];
+                    });
+                },
+                error : function(res) {
+                    console.log(res);
+                }
+            });
+            $.ajax({
+                async: false,
+                dataType: 'json',
+                method: 'GET',
+                contentType: "text/plain; charset=utf-8",
+                url:  staticurl+"saikulabels_en_"+getParameterByName('code')+".json",
+                success: function(res) {
+                    console.log(res)
+                    $.each(res['saikulabels'], function(indice, element){
+                        data[element['saiku_label_id']] = element['saiku_label_en'];
+                    });
+                },
+                error : function(res) {
+                    console.log(res);
+                }
+            });
             $.ajax({
                 async: false,
                 dataType: 'json',
@@ -234,7 +264,6 @@ define([
          });
 
          */
-
         //
         $.extend(label, i18nEn, data);
 

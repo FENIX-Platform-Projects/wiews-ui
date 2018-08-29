@@ -197,16 +197,16 @@ define(
             },
             query : {
                 "4" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind4].[1]} MEMBER [Measures].[Annual Avg] AS ([Measures].[Number of Farming Communities] / [Measures].[Period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number of Farming Communities], [Measures].[Annual Avg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [on_farm_management_improvement_04] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind4].[1]}  SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number of Farming Communities]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [on_farm_management_improvement_04] WHERE [~FILTER]",
                     "type": "MDX"
                 },
                 "4_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind4].[1]} MEMBER [Measures].[Annual Avg] AS ([Measures].[Number of Farming Communities] / [Measures].[Period]) " +
+                    "SET [~FILTER] AS {[DataAvailable_ind4].[1]}  " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[Number of Farming Communities], [Measures].[Annual Avg]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[Number of Farming Communities]} ON COLUMNS, " +
                     "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [on_farm_management_improvement_04] " +
                     " WHERE [~FILTER]",
                     "type": "MDX"
@@ -387,13 +387,8 @@ define(
             query : {
                 "9" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind9].[1]} " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                    "SET [~ROWS_ExistenceOfPolicy_ExistenceOfPolicy.ExistenceOfPolicy] AS {[ExistenceOfPolicy].[ExistenceOfPolicy].Members} " +
-                    " SELECT " +
-                    "NON EMPTY {[Measures].[NumberOfCountries]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS], [~ROWS_ExistenceOfPolicy_ExistenceOfPolicy.ExistenceOfPolicy]) ON ROWS FROM [disaster_recovery_09] " +
-                    " WHERE [~FILTER]",
+                    " SELECT NON EMPTY {[Measures].[NumberOfCountriesWithPolicy],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery_09]",
                     "type": "MDX"
                 }
             },
@@ -670,7 +665,7 @@ define(
                     "SET [~FILTER] AS {[DataAvalable_ind16].[1]} MEMBER [Measures].[accessions_number_ann_avg] AS ([Measures].[accessions_number] / [Measures].[period]) " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[accessions_number], [Measures].[accessions_number_ann_avg], [Measures].[Distinct Crop], [Measures].[Distinct Taxon], [Measures].[Distinct Crop + Taxon], [Measures].[Distinct Genera]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[accessions_number], [Measures].[accessions_number_ann_avg], [Measures].[Distinct Taxon], [Measures].[Distinct Genera]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [targeted_collecting] " +
                     " WHERE [~FILTER]",
                     "type": "MDX"
@@ -681,7 +676,7 @@ define(
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[accessions_number], [Measures].[accessions_number_ann_avg], [Measures].[Distinct Crop], [Measures].[Distinct Taxon], [Measures].[Distinct Crop + Taxon], [Measures].[Distinct Genera]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[accessions_number], [Measures].[accessions_number_ann_avg], [Measures].[Distinct Taxon], [Measures].[Distinct Genera]} ON COLUMNS, " +
                     "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [targeted_collecting] " +
                     " WHERE [~FILTER]",
                     "type": "MDX"
@@ -1337,7 +1332,7 @@ define(
                 "31" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
-            vd_code : "wiews_indicator_37/DashInd37",
+            vd_code : "wiews_indicator_31/DashInd31",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1460,7 +1455,7 @@ define(
                 "34" : labels['en']['element_label1']
             },
             dd_filter_category : "3",
-            vd_code : "wiews_indicator_33/DashInd33",
+            vd_code : "wiews_indicator_34/DashInd34",
             cube : {
                 "queryModel": {},
                 "cube": {
@@ -1582,13 +1577,8 @@ define(
             query : {
                 "37" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind37].[1]} " +
-                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                    "SET [~ROWS_ExistenceOfPolicy_ExistenceOfPolicy.ExistenceOfPolicy] AS {[ExistenceOfPolicy].[ExistenceOfPolicy].Members} " +
-                    " SELECT " +
-                    "NON EMPTY {[Measures].[NumberOfPolicies]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_ExistenceOfPolicy_ExistenceOfPolicy.ExistenceOfPolicy]) ON ROWS FROM [dev_and_comm_of_varieties_37] " +
-                    " WHERE [~FILTER]",
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    " SELECT NON EMPTY {[Measures].[NumberOfCountriesWithPolicy],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [dev_and_comm_of_varieties_37]",
                     "type": "MDX"
                 }
             },
@@ -1801,7 +1791,7 @@ define(
             },
             query : {
                 "44" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind44].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[ExistenceOfPolicy]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_44] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind44].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountries],[Measures].[NumberOfCountriesWithPolicy]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_44] WHERE [~FILTER]",
                     "type": "MDX"
                 }
             },
@@ -1829,7 +1819,7 @@ define(
             },
             query : {
                 "45" : {
-                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind45].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Existence National Entity]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_45] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithExistence],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_45]",
                     "type": "MDX"
                 }
             },
@@ -1857,7 +1847,7 @@ define(
             },
             query : {
                 "46" : {
-                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind46].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Existence NFP]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_46] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithNPF],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_46]",
                     "type": "MDX"
                 }
             },
@@ -1885,7 +1875,7 @@ define(
             },
             query : {
                 "47" : {
-                    "mdx": "WITH SET [~FILTER] AS    {[DataAvailable_ind47].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Existence Gov Policy]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_47] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithPolicy],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_47]",
                     "type": "MDX"
                 }
             },
@@ -1913,7 +1903,7 @@ define(
             },
             query : {
                 "48" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind48].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Existence National Info Sharing]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_48] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithExistence],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_48]",
                     "type": "MDX"
                 }
             },
@@ -1941,7 +1931,7 @@ define(
             },
             query : {
                 "49" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_Ind49].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[MemberOfPgrfaNetwork]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [networks_49] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithNetwork],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [networks_49]",
                     "type": "MDX"
                 }
             },
@@ -2233,7 +2223,7 @@ define(
             },
             query : {
                 "57" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_Ind57].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[ExistenceOfNationalSystemReference]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [monitoring_and_safeguarding_genetic_diversity_57] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithExistence],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [monitoring_and_safeguarding_genetic_diversity_57]",
                     "type": "MDX"
                 }
             },
@@ -2289,7 +2279,7 @@ define(
             },
             query : {
                 "59" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_Ind59].[1]}SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[ExistanceOfEducationAndTrainingPrograms]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [human_resource_capacity_59] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithExistence],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [human_resource_capacity_59]",
                     "type": "MDX"
                 }
             },
@@ -2364,7 +2354,7 @@ define(
             },
             query : {
                 "61" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_Ind61].[1]} MEMBER [Measures].[Existence_Programme] AS [Existence_Programme].CurrentMember.NAME SET [~ROWS_Region_Region.Region_FAO_codes] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Existence_Programme_Existence_Programme.Existence_Programme] AS {[Existence_Programme].[Existence_Programme].Members} SELECT NON EMPTY {[Measures].[Existence_Programme]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.Region_FAO_codes], [~ROWS_Existence_Programme_Existence_Programme.Existence_Programme]) ON ROWS FROM [public_awareness_61] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithExistence],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [public_awareness_61]",
                     "type": "MDX"
                 }
             },
@@ -2393,7 +2383,7 @@ define(
             query : {
                 "62" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind61].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfStakeholdingGroups]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [public_awareness_61] WHERE [~FILTER]",
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfStakeholdingGroups]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [public_awareness_61]",
                     "type": "MDX"
                 }
             },
