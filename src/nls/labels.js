@@ -49,7 +49,6 @@ define([
                 contentType: "text/plain; charset=utf-8",
                 url:  staticurl+"saikulabels_en_0.json",
                 success: function(res) {
-                    console.log(res)
                     $.each(res['saikulabels'], function(indice, element){
                         data[element['saiku_label_id']] = element['saiku_label_en'];
                     });
@@ -65,7 +64,6 @@ define([
                 contentType: "text/plain; charset=utf-8",
                 url:  staticurl+"saikulabels_en_"+getParameterByName('code')+".json",
                 success: function(res) {
-                    console.log(res)
                     $.each(res['saikulabels'], function(indice, element){
                         data[element['saiku_label_id']] = element['saiku_label_en'];
                     });

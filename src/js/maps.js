@@ -28,8 +28,8 @@ define([
         exsitu_search_url = "http://www.fao.org/wiews/data/ex-situ-sdg-251/search/",
         organization_url = "http://www.fao.org/wiews/data/organizations/",
         services_url = "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/WIEWS/wiews_map_agg_{{YEAR}}.saiku",
-        google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
-        // google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
+        //google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
+        google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
 
     function Maps() {
         console.clear();
@@ -45,7 +45,7 @@ define([
     Maps.prototype._validateConfig = function () {
         if (!C.lang) alert("Please specify a valid LANGUAGE in config/config.js");
         GoogleMaps.key = google_apikey;
-        GoogleMaps.language = 'en';
+        GoogleMaps.language = Clang.toLowerCase();
     };
 
     Maps.prototype._convert2TableData = function (input) {
@@ -64,7 +64,7 @@ define([
                 "genus" : Number(object[9].value.split(',').join("")),
                 "species" : Number(object[10].value.split(',').join(""))
             };
-            console.log(selection.includes(object[2].value))
+            //console.log(selection.includes(object[2].value))
             if (index>0 && selection.includes(object[2].value)) output.push(obj);
         });
         //console.log(output);
@@ -152,7 +152,7 @@ define([
 
         if (data == undefined) {
             console.log(data);
-            alert('Data not available');
+            alert(labels[Clang]['maps_error']);
             return;
         }
 
@@ -204,10 +204,10 @@ define([
                 infowindow.setContent(
                     "<span><b><a target='_blank' href='"+organization_url+self.lang.toLowerCase()+"/?instcode="+event.feature.getProperty('instcode')+"'>"+event.feature.getProperty('instcode')+"</a></b>" +
                     " - <i>"+event.feature.getProperty('name')+"</i> </span><br>" +
-                    "<br><span> <b>Accessions:</b> "+event.feature.getProperty('accessions').toLocaleString()+"</span><br>" +
-                    "<span> <b>Genera:</b> "+event.feature.getProperty('genus').toLocaleString()+"</span><br>" +
-                    "<span> <b>Species:</b> "+event.feature.getProperty('species').toLocaleString()+"</span><br>" +
-                    "<br><b><a href='"+exsitu_search_url+self.lang.toLowerCase()+"/?instcode="+event.feature.getProperty('instcode')+"'>To the <i>ex situ</i> collection </a></b>"
+                    "<br><span> <b>"+labels[Clang]['maps_accessions']+":</b> "+event.feature.getProperty('accessions').toLocaleString()+"</span><br>" +
+                    "<span> <b>"+labels[Clang]['maps_genera']+":</b> "+event.feature.getProperty('genus').toLocaleString()+"</span><br>" +
+                    "<span> <b>"+labels[Clang]['maps_species']+":</b> "+event.feature.getProperty('species').toLocaleString()+"</span><br>" +
+                    "<br><b><a href='"+exsitu_search_url+self.lang.toLowerCase()+"/?instcode="+event.feature.getProperty('instcode')+"'>"+labels[Clang]['maps_toexitu']+"</a></b>"
                 );
                 infowindow.open(map);
 
@@ -353,9 +353,9 @@ define([
             if ($('#map').is(":visible")) {
                 self._toggleLoading();
                 self._processMap($('#data_showed').val());
-                $('#btn_text').html('Table')
+                $('#btn_text').html(labels[Clang]['maps_showas_table'])
             } else {
-                $('#btn_text').html('Map')
+                $('#btn_text').html(labels[Clang]['maps_showas_map'])
             }
 
         });

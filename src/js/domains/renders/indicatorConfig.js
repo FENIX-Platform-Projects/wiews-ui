@@ -40,7 +40,7 @@ define([
                 filter: {
                     hostConfig: {
                         geoSelector: {
-                            default: 'dd_filter_item_2_1'
+                            default: 'dd_filter_item_tab_4_1'
                         }
                     },
                     items: [

@@ -120,7 +120,7 @@ define([
                 // Time
                 if (PAGC[ind].time == "years") {
                     title = labels[self.lang.toLowerCase()]['filter_years'];
-                    source.push({value: 2014, label: "2014"},{value: 2015, label: "2015"},{value: 2016, label: "2016"},{value: 2017, label: "2017"});
+                    source.push({value: 2014, label: "2014"},/*{value: 2015, label: "2015"},*/{value: 2016, label: "2016"},{value: 2017, label: "2017"});
                     type = "radio";
                     def = [2017];
                 } else {

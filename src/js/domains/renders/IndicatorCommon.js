@@ -474,7 +474,7 @@ define([
     }
 
     IndicatorCommon.prototype._toggleLoading = function () {
-
+        console.log('toggle');
         //setTimeout(function(){
             if( $("[data-page=content_container]").css('opacity') == '1') {
                 //console.log('bobble')
@@ -782,6 +782,8 @@ define([
     };
 
     IndicatorCommon.prototype._parseGEO = function (geovalues, isList) {
+        
+        console.log(geovalues);
 
         var self = this,
             geo_array = {
@@ -886,6 +888,8 @@ define([
 
     //Creation of data for the Bootstrap Table of the Download Tab
     IndicatorCommon.prototype._DD_getTableData = function (param, newDashboardConfig, filterValues) {
+
+
         var self = this,
             mdx_query = "",
             selection = "0",

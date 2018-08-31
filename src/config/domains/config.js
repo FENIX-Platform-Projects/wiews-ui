@@ -2179,12 +2179,10 @@ define(
             query : {
                 "56" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind56].[1]} " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[Int/ Reg Information Systems]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [information_systems_56] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY {[Measures].[NumberOfStakeholdersWithParticipation],[Measures].[NumberOfStakeholders]} ON COLUMNS, " +
+                    "NON EMPTY [~ROWS] ON ROWS FROM [information_systems_56]",
                     "type": "MDX"
                 },
                 "56_stk" : {

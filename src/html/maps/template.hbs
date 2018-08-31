@@ -11,9 +11,9 @@
             </div>
             <div class="col-md-6">
                 <select id="data_showed">
-                    <option value="accessions">Accessions</option>
-                    <option value="genus">Genera</option>
-                    <option value="species">Species</option>
+                    <option value="accessions">{{maps_accessions}}</option>
+                    <option value="genus">{{maps_genera}}</option>
+                    <option value="species">{{maps_species}}</option>
                 </select>
             </div>
         </div>
@@ -23,9 +23,9 @@
             </div>
             <div class="col-md-6">
                 <select id="data_international" name="institutes[]" multiple="multiple">
-                    <option value="INT" selected="selected" >International</option>
-                    <option value="OTHER" selected="selected" >National</option>
-                    <option value="REG" selected="selected" >Regional</option>
+                    <option value="INT" selected="selected" >{{maps_select_international}}</option>
+                    <option value="OTHER" selected="selected" >{{maps_select_national}}</option>
+                    <option value="REG" selected="selected" >{{maps_select_regional}}</option>
                 </select>
             </div>
         </div>
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-right">
-                    <button id="showasmap" type="button" class="btn btn-default">Show as <span id="btn_text">Table</span></button>
+                    <button id="showasmap" type="button" class="btn btn-default">{{maps_showas}}<span id="btn_text">{{maps_showas_table}}</span></button>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
                 <!-- Result -->
                 <div id="toolbar" class="bootstrapTableExport">
                     <button data-role="exsitu_exportbutton" alt="{{exsitu_export_button_alt}}" class="btn btn-default">
-                        <span alt="{{organizations_export_button_alt}}" class="icojam icojam_download_1"></span> <span>Download Result</span></button>
+                        <span alt="{{organizations_export_button_alt}}" class="icojam icojam_download_1"></span> <span>{{download_results}}</span></button>
                 </div>
                 <table id="table"
                        data-toolbar="#toolbar"
@@ -51,12 +51,12 @@
                 >
                     <thead>
                     <tr>
-                        <th data-sortable="true" data-width="10%" data-field="instcode">WIEWS Instcode</th>
-                        <th data-sortable="true" data-width="38%" data-field="name">Name of organization</th>
-                        <th data-sortable="true" data-width="15%" data-field="country">Country</th>
-                        <th data-sortable="true" data-width="14%" data-align="right" data-field="accessions">Accessions</th>
-                        <th data-sortable="true" data-width="14%" data-align="right" data-field="genus">Genus</th>
-                        <th data-sortable="true" data-width="14%" data-align="right" data-field="species">Species</th>
+                        <th data-sortable="true" data-width="10%" data-field="instcode">{{maps_table_instcode}}</th>
+                        <th data-sortable="true" data-width="38%" data-field="name">{{maps_table_name}}</th>
+                        <th data-sortable="true" data-width="15%" data-field="country">{{maps_table_country}}</th>
+                        <th data-sortable="true" data-width="14%" data-align="right" data-field="accessions">{{maps_table_accessions}}</th>
+                        <th data-sortable="true" data-width="14%" data-align="right" data-field="genus">{{maps_table_genus}}</th>
+                        <th data-sortable="true" data-width="14%" data-align="right" data-field="species">{{maps_table_species}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -71,5 +71,5 @@
     </div>
 </div>
 <div data-page="loaded" class="row">
-    <h1> Loading... <i class="fa fa-spinner" aria-hidden="true"></i> </h1>
+    <h1> {{loading_text}} <i class="fa fa-spinner" aria-hidden="true"></i> </h1>
 </div>

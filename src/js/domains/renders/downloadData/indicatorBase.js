@@ -136,7 +136,8 @@ define([
         },
 
         dd_tab_active : {
-            geo_item : 'dd_filter_item_tab_1'
+            geo_item : 'dd_filter_item_tab_4_1'
+            /*geo_item : 'dd_filter_item_tab_1'*/
         },
 
         filter_available: [
@@ -213,11 +214,19 @@ define([
     }
 
     IndicatorBase.prototype._initVariables = function () {
-
+        /* default */
+        /*
         s.filterDivMsg1 = this.filterDivMsg1;
         this.geoSelectedItem = "dd_filter_item_1";
         this.geoSelectedCode = "iso3";
         this.geoTreeItem = "dd_filter_item_2_1";
+        this.geoListType = 1;
+        */
+        /* stefano */
+        s.filterDivMsg1 = this.filterDivMsg1;
+        this.geoSelectedItem = "dd_filter_item_4_1";
+        this.geoSelectedCode = "fao";
+        this.geoTreeItem = "dd_filter_item_4_1";
         this.geoListType = 1;
     };
 
@@ -363,6 +372,8 @@ define([
     }
 
     IndicatorBase.prototype.onClickButton1 = function (values, dashboardConfig, params) {
+
+        console.log(this.geoTreeItem);
 
         $('[data-field = "1"]').attr('data-field', s.table_columns.domain);
         $('[data-field = "'+s.table_columns.domain+'"]').text(dashboardConfig.columntableName[0]);

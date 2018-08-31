@@ -5,8 +5,22 @@ define(function () {
     return {
 
         // Ex Codelist from FENIX
-
         "cl_period_1" : "January 2012 - June 2014",
+
+        // Maps
+        "maps_select_international" : "International",
+        "maps_select_national" : "National",
+        "maps_select_regional" : "Regional",
+        "maps_showas" : "Show as ",
+        "maps_showas_table" : "Table",
+        "maps_showas_map" : "Map",
+        "maps_table_instcode" : "WIEWS Instcode",
+        "maps_table_name" : "Name of organization",
+        "maps_table_country" : "Country",
+        "maps_table_accessions" : "Accessions",
+        "maps_table_genus" : "Genus",
+        "maps_table_species" : "Species",
+        "maps_tothexsitu": "To the <i>ex situ</i> collection",
 
         // Ex Situ Search
         "exsitu_search_header": "Year",
@@ -57,6 +71,7 @@ define(function () {
         "bootstraptable_search_filter" : "Filter",
         "exsitu-search_add_button" : "Add",
         "domains_button_backtosecond" : "Back to the Second GPA",
-        "loading_text" : "Loading..."
+        "loading_text" : "Loading...",
+        "download_results" : "Download Results"
     }
 });
