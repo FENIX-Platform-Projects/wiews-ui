@@ -1348,23 +1348,25 @@ define(
             query : {
                 "31" : {
                     "mdx": "WITH " +
-                    "MEMBER [Measures].[num_of_crops_public_ann_avg] AS ([Measures].[distinct_crop_taxon] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "MEMBER [Measures].[ distinct_crop_spcecies _ann_avg] AS ([Measures].[distinct_crop_spcecies] / [Measures].[period]) " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~FILTER] AS Except({[Sector].[sector].Members}, {[Sector].[Public]}) " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[distinct_crops], [Measures].[num_of_crops_public_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[distinct_crop_spcecies], [Measures].[ distinct_crop_spcecies _ann_avg]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] " +
-                    "WHERE CrossJoin(Except({[Sector].[sector].Members}, {[Sector].[Public]}), {[DataAvailable_ind31].[1]})",
+                    "WHERE [~FILTER]",
                     "type": "MDX"
                 },
                 "31_stk" : {
                     "mdx": "WITH " +
-                    "MEMBER [Measures].[num_of_crops_public_ann_avg] AS ([Measures].[distinct_crop_taxon] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
-                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "MEMBER [Measures].[ distinct_crop_spcecies _ann_avg] AS ([Measures].[distinct_crop_spcecies] / [Measures].[period]) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SET [~FILTER] AS Except({[Sector].[sector].Members}, {[Sector].[Public]}) " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[distinct_crops], [Measures].[num_of_crops_public_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] " +
-                    "WHERE CrossJoin(Except({[Sector].[sector].Members}, {[Sector].[Public]}), {[DataAvailable_ind31].[1]})",
+                    "NON EMPTY {[Measures].[distinct_crop_spcecies], [Measures].[ distinct_crop_spcecies _ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] " +
+                    "WHERE [~FILTER]",
                     "type": "MDX"
                 }
             },
@@ -1393,23 +1395,25 @@ define(
             query : {
                 "32" : {
                     "mdx": "WITH " +
-                    "MEMBER [Measures].[num_activities_farmers_villages_ann_avg] AS ([Measures].[distinct_programs] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    " MEMBER [Measures].[ distinct_crop_spcecies _ann_avg] AS ([Measures].[distinct_crop_spcecies] / [Measures].[period]) " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "SET [~FILTER] AS Except({[Sector].[sector].Members}, {[Sector].[Private]}) " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[distinct_crop_spcecies], [Measures].[ distinct_crop_spcecies _ann_avg]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] " +
-                    "WHERE CrossJoin({[OrientedTo].[Small scale farmers], [OrientedTo].[Small scale farmers; Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces; Small scale farmers]}, {[DataAvailable_ind32].[1]})",
+                    "WHERE [~FILTER]",
                     "type": "MDX"
                 },
                 "32_stk" : {
                     "mdx": "WITH " +
-                    "MEMBER [Measures].[num_activities_farmers_villages_ann_avg] AS ([Measures].[distinct_programs] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
-                    "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
+                    "MEMBER [Measures].[ distinct_crop_spcecies _ann_avg] AS ([Measures].[distinct_crop_spcecies] / [Measures].[period]) " +
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
+                    "SET [~FILTER] AS Except({[Sector].[sector].Members}, {[Sector].[Private]}) " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] " +
-                    "WHERE CrossJoin({[OrientedTo].[Small scale farmers], [OrientedTo].[Small scale farmers; Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces; Small scale farmers]}, {[DataAvailable_ind32].[1]})",
+                    "NON EMPTY {[Measures].[distinct_crop_spcecies], [Measures].[ distinct_crop_spcecies _ann_avg]} ON COLUMNS, " +
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] " +
+                    "WHERE [~FILTER]",
                     "type": "MDX"
                 }
             },
