@@ -21,6 +21,11 @@ define(function () {
         "maps_table_genus" : "Genus",
         "maps_table_species" : "Species",
         "maps_tothexsitu": "To the <i>ex situ</i> collection",
+        "maps_above_10" : "Above 10",
+        "maps_above_100" : "Above 100",
+        "maps_above_5000" : "Above 5 000",
+        "maps_above_10000" : "Above 10 000",
+        "maps_above_50000" : "Above 50 000",
 
         // Ex Situ Search
         "exsitu_search_header": "Year",

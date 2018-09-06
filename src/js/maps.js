@@ -307,15 +307,15 @@ define([
     Maps.prototype._updateFilter = function (selection) {
 
         $('#data_filter').empty();
-        $('#data_filter').append('<option value="0">All</option>');
+        $('#data_filter').append('<option value="0">'+labels[Clang]['maps_selection_all']+'</option>');
 
         if (selection == "genus" || selection == "species") {
-            $('#data_filter').append('<option value="10">Above 10</option>');
-            $('#data_filter').append('<option value="100">Above 100</option>');
+            $('#data_filter').append('<option value="10">'+labels[Clang]['maps_above_10']+'</option>');
+            $('#data_filter').append('<option value="100">'+labels[Clang]['maps_above_100']+'</option>');
         } else {
-            $('#data_filter').append('<option value="5000">Above 5 000</option>');
-            $('#data_filter').append('<option value="10000">Above 10 000</option>');
-            $('#data_filter').append('<option value="50000">Above 50 000</option>');
+            $('#data_filter').append('<option value="5000">'+labels[Clang]['maps_above_5000']+'</option>');
+            $('#data_filter').append('<option value="10000">'+labels[Clang]['maps_above_10000']+'</option>');
+            $('#data_filter').append('<option value="50000">'+labels[Clang]['maps_above_50000']+'</option>');
         }
         $('#data_filter').select2({ width: '100%',  theme: "bootstrap" });
 
@@ -353,9 +353,9 @@ define([
             if ($('#map').is(":visible")) {
                 self._toggleLoading();
                 self._processMap($('#data_showed').val());
-                $('#btn_text').html(labels[Clang]['maps_showas_table'])
+                $('#btn_text').html(labels[Clang]['maps_table_label'])
             } else {
-                $('#btn_text').html(labels[Clang]['maps_showas_map'])
+                $('#btn_text').html(labels[Clang]['maps_map_label'])
             }
 
         });

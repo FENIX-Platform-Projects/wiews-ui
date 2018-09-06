@@ -149,8 +149,7 @@ define([
             'dd_filter_item_4_3',
             'dd_filter_item_4_4',
             'dd_filter_item_4_5',
-            'dd_filter_item_4_6',
-
+            'dd_filter_item_4_6'
         ],
 
         filter_items : {
@@ -242,11 +241,14 @@ define([
     };
 
     IndicatorBase.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
+        console.log('_renderGeoSelection',item_to_show_prefix, item_to_show, codelistMaxIndex)
+
         for(var index = 1; index<= codelistMaxIndex; index++) {
             var indicatorFilterSection = this.el.find('[data-selector = "'+item_to_show_prefix+'_'+index+'"]');
             indicatorFilterSection.hide();
             if((indicatorFilterSection!=null)&&(typeof indicatorFilterSection!='undefined')&&(index == item_to_show)){
                 this.geoCodelistSelector = item_to_show_prefix+'_'+index;
+                console.log(this.geoCodelistSelector);
                 indicatorFilterSection.show();
             }
         }
@@ -372,8 +374,6 @@ define([
     }
 
     IndicatorBase.prototype.onClickButton1 = function (values, dashboardConfig, params) {
-
-        console.log(this.geoTreeItem);
 
         $('[data-field = "1"]').attr('data-field', s.table_columns.domain);
         $('[data-field = "'+s.table_columns.domain+'"]').text(dashboardConfig.columntableName[0]);
@@ -526,9 +526,11 @@ define([
                         self.filter.setValues(obj);
                         break;
                     case s.filter_items.tabItem_4:
+                        console.log('PEM!', anchor)
                         s.dd_tab_active.geo_item = anchor;
                         var obj = {};
                         obj[s.filter_items.item_3] = ["1"];
+                        console.log(obj)
                         self.filter.setValues(obj);
                         break;
                     case s.filter_items.tabItem_7:
