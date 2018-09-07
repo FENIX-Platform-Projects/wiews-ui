@@ -80,36 +80,30 @@ define(
             query : {
                 "2" : {
                     "mdx":  "WITH " +
-                    "SET [~FILTER] AS{[available_ind2].[1]}" +
                     "MEMBER [Measures].[varieties_avg] AS ([Measures].[varieties] / [Measures].[period])" +
                     "MEMBER [Measures].[species_avg] AS ([Measures].[distinct_species] / [Measures].[period])" +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}" +
                     " SELECT " +
                     "NON EMPTY {[Measures].[varieties_avg], [Measures].[varieties], [Measures].[species_avg], [Measures].[distinct_species]} ON COLUMNS," +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]" +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]",
                     "type": "MDX"
                 },
                 "2_1" : {
                     "mdx":  "WITH " +
-                    "SET [~FILTER] AS{[available_ind2].[1]}" +
                     "MEMBER [Measures].[species_avg] AS ([Measures].[distinct_species] / [Measures].[period])" +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}" +
                     " SELECT " +
                     "NON EMPTY {[Measures].[species_avg], [Measures].[distinct_species]} ON COLUMNS," +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]" +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]",
                     "type": "MDX"
                 },
                 "2_2" : {
                     "mdx":  "WITH " +
-                    "SET [~FILTER] AS{[available_ind2].[1]}" +
                     "MEMBER [Measures].[varieties_avg] AS ([Measures].[varieties] / [Measures].[period])" +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}" +
                     " SELECT " +
                     "NON EMPTY {[Measures].[varieties_avg], [Measures].[varieties]} ON COLUMNS," +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]" +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]",
                     "type": "MDX"
                 }
             },
@@ -140,36 +134,30 @@ define(
             query : {
                 "3" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[available_ind3.available_ind2].[1]} " +
                     "MEMBER [Measures].[% of varieties thr out] AS ([Measures].[threathened_varieties] / [Measures].[varieties]), FORMAT_STRING = \"#0.0#%\" " +
                     "MEMBER [Measures].[% of species thr out] AS ([Measures].[threathened_species] / [Measures].[distinct_species]), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[% of varieties thr out], [Measures].[% of species thr out]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] ",
                     "type": "MDX"
                 },
                 "3_1" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[available_ind3.available_ind2].[1]} " +
                     "MEMBER [Measures].[% of species thr out] AS ([Measures].[threathened_species] / [Measures].[distinct_species]), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[% of species thr out]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] ",
                     "type": "MDX"
                 },
                 "3_2" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[available_ind3.available_ind2].[1]} " +
                     "MEMBER [Measures].[% of varieties thr out] AS ([Measures].[threathened_varieties] / [Measures].[varieties]), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[% of varieties thr out]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] ",
                     "type": "MDX"
                 }
             },
@@ -197,18 +185,16 @@ define(
             },
             query : {
                 "4" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind4].[1]}  SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number of Farming Communities]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [on_farm_management_improvement_04] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number of Farming Communities]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [on_farm_management_improvement_04]",
                     "type": "MDX"
                 },
                 "4_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind4].[1]}  " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[Number of Farming Communities]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [on_farm_management_improvement_04] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [on_farm_management_improvement_04] ",
                     "type": "MDX"
                 }
             },
@@ -236,7 +222,7 @@ define(
             },
             query : {
                 "5" : {
-                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind5].[1]} MEMBER [Measures].[Percentage] AS     (([Measures].[Cultivated Area]) / [Measures].[Total Area]), FORMAT_STRING = \"##.##%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Percentage]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM  [on_farm_management_improvement_05] WHERE [~FILTER]",
+                    "mdx": "WITH MEMBER [Measures].[Percentage] AS (([Measures].[Cultivated Area]) / [Measures].[Total Area]), FORMAT_STRING = \"##.##%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Percentage]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM  [on_farm_management_improvement_05]",
                     "type": "MDX"
                 }
             },
@@ -265,12 +251,11 @@ define(
             query : {
                 "6" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind6].[1]} MEMBER [Measures].[Annual Average] AS ([Measures].[Unique Farmers] / [Measures].[Period]) " +
+                    "MEMBER [Measures].[Annual Average] AS ([Measures].[Unique Farmers] / [Measures].[Period]) " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[Unique Farmers], [Measures].[Annual Average]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [on_farm_management_improvement_06] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [on_farm_management_improvement_06] ",
                     "type": "MDX"
                 }
             },
@@ -299,23 +284,21 @@ define(
             query : {
                 "7" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind7].[1]} MEMBER [Measures].[households_benefited_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) " +
+                    "MEMBER [Measures].[households_benefited_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[households_benefited], [Measures].[households_benefited_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery] ",
                     "type": "MDX"
                 },
                 "7_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind7].[1]} MEMBER [Measures].[households_benefited_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) " +
+                    "MEMBER [Measures].[households_benefited_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[households_benefited], [Measures].[households_benefited_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [disaster_recovery] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [disaster_recovery]",
                     "type": "MDX"
                 }
             },
@@ -495,12 +478,10 @@ define(
             query : {
                 "12" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind12].[1]} " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[estimated_number_of_species]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants_12] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants_12] ",
                     "type": "MDX"
                 }
             },
@@ -572,23 +553,19 @@ define(
             query : {
                 "14" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind14].[1]} " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[crops_req_targeted_collecting]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [targeting_collecting_ind_13_14] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [targeting_collecting_ind_13_14] ",
                     "type": "MDX"
                 },
                 "14_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind14].[1]} " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[crops_req_targeted_collecting]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [targeting_collecting_ind_13_14] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [targeting_collecting_ind_13_14] ",
                     "type": "MDX"
                 }
             },
@@ -711,7 +688,7 @@ define(
                     "SELECT " +
                     "NON EMPTY {[Measures].[Human Resources Capacity], [Measures].[Financial Resources], [Measures].[Infraestructure]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [germplasm_collections_ind_17] " +
-                    "WHERE CrossJoin({[DataAvailable_ind17].[1]}, {[Last_Year_Boolean.last_year_boolean].[1]})",
+                    "WHERE [Last_Year_Boolean.last_year_boolean].[1]",
                     "type": "MDX"
                 }
             },
@@ -937,25 +914,21 @@ define(
             query : {
                 "22" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvalable_ind22].[1]} " +
                     "MEMBER [Measures].[%_of_accessions_without_budget] AS ([Measures].[accessions_out_of_budget] / [Measures].[accessions_num]), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[%_of_accessions_without_budget]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] ",
                     "type": "MDX"
                 },
                 "22_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvalable_ind22].[1]} " +
                     "MEMBER [Measures].[%_of_accessions_without_budget] AS IIf(([Measures].[accessions_need_regeneration] = 0), 0.0, ([Measures].[accessions_out_of_budget] / [Measures].[accessions_need_regeneration])), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[%_of_accessions_without_budget]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] ",
                     "type": "MDX"
                 }
             },
@@ -984,23 +957,21 @@ define(
             query : {
                 "23" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvalable_ind23].[1]} MEMBER [Measures].[accessions_regenerated_ann_avg] AS ([Measures].[accessions_regenerated] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\"  " +
+                    "MEMBER [Measures].[accessions_regenerated_ann_avg] AS ([Measures].[accessions_regenerated] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\"  " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures] .[accessions_regenerated], [Measures].[accessions_regenerated_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] ",
                     "type": "MDX"
                 },
                 "23_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvalable_ind23].[1]} MEMBER [Measures].[accessions_regenerated_ann_avg] AS ([Measures].[accessions_regenerated] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\"  " +
+                    "MEMBER [Measures].[accessions_regenerated_ann_avg] AS ([Measures].[accessions_regenerated] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\"  " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures] .[accessions_regenerated], [Measures].[accessions_regenerated_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] ",
                     "type": "MDX"
                 }
             },
@@ -1029,25 +1000,21 @@ define(
             query : {
                 "24" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvalable_ind24].[1]} " +
                     "MEMBER [Measures].[%_of_accessions_need_regeneration] AS ([Measures].[accessions_need_regeneration] / [Measures].[accessions_num]), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[%_of_accessions_need_regeneration]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] ",
                     "type": "MDX"
                 },
                 "24_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvalable_ind24].[1]} " +
                     "MEMBER [Measures].[%_of_accessions_need_regeneration] AS ([Measures].[accessions_need_regeneration] / [Measures].[accessions_num]), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[%_of_accessions_need_regeneration]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] ",
                     "type": "MDX"
                 }
             },
@@ -1076,23 +1043,19 @@ define(
             query : {
                 "25" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind25].[DataAvailable_Ind25].Members} " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[AvgOfMorphologicalTraits]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_25] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_25]",
                     "type": "MDX"
                 },
                 "25_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind25].[DataAvailable_Ind25].Members} " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[AvgOfMorphologicalTraits]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_25] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_25] ",
                     "type": "MDX"
                 }
             },
@@ -1121,23 +1084,21 @@ define(
             query : {
                 "26" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind26].[1]} MEMBER [Measures].[number_of_pubs_ann_avg] AS ([Measures].[number_of_pubs_total] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "MEMBER [Measures].[number_of_pubs_ann_avg] AS ([Measures].[number_of_pubs_total] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[number_of_pubs_total], [Measures].[number_of_pubs_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_26] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_26] " ,
                     "type": "MDX"
                 },
                 "26_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind26].[1]} MEMBER [Measures].[number_of_pubs_ann_avg] AS ([Measures].[number_of_pubs_total] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "MEMBER [Measures].[number_of_pubs_ann_avg] AS ([Measures].[number_of_pubs_total] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[number_of_pubs_total], [Measures].[number_of_pubs_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_26] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_26] ",
                     "type": "MDX"
                 }
             },
@@ -1166,23 +1127,21 @@ define(
             query : {
                 "27" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind27].[1]} MEMBER [Measures].[number_of_trait_ann_avg] AS ([Measures].[number_of_trait_specific_collection_subset_published] / [Measures].[period]) " +
+                    "MEMBER [Measures].[number_of_trait_ann_avg] AS ([Measures].[number_of_trait_specific_collection_subset_published] / [Measures].[period]) " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[number_of_trait_specific_collection_subset_published], [Measures].[number_of_trait_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_27] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_27] ",
                     "type": "MDX"
                 },
                 "27_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind27].[1]} MEMBER [Measures].[number_of_trait_ann_avg] AS ([Measures].[number_of_trait_specific_collection_subset_published] / [Measures].[period]) " +
+                    "MEMBER [Measures].[number_of_trait_ann_avg] AS ([Measures].[number_of_trait_specific_collection_subset_published] / [Measures].[period]) " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[number_of_trait_specific_collection_subset_published], [Measures].[number_of_trait_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_27] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_27] ",
                     "type": "MDX"
                 }
             },
@@ -1211,25 +1170,21 @@ define(
             query : {
                 "28" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind28].[1]} " +
                     "MEMBER [Measures].[accessions_distributed_ann_avg] AS ([Measures].[accessions_distributed] / [Measures].[period]) " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[accessions_distributed], [Measures].[accessions_distributed_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation] ",
                     "type": "MDX"
                 },
                 "28_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind28].[1]} " +
                     "MEMBER [Measures].[accessions_distributed_ann_avg] AS ([Measures].[accessions_distributed] / [Measures].[period]) " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[accessions_distributed], [Measures].[accessions_distributed_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation] ",
                     "type": "MDX"
                 }
             },
@@ -1258,23 +1213,21 @@ define(
             query : {
                 "29" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind29.DataAvailable_ind28].[1]} MEMBER [Measures].[samples_distributed_ann_avg] AS ([Measures].[samples_distributed] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "MEMBER [Measures].[samples_distributed_ann_avg] AS ([Measures].[samples_distributed] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[samples_distributed], [Measures].[samples_distributed_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation] ",
                     "type": "MDX"
                 },
                 "29_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind29.DataAvailable_ind28].[1]} MEMBER [Measures].[samples_distributed_ann_avg] AS ([Measures].[samples_distributed] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
+                    "MEMBER [Measures].[samples_distributed_ann_avg] AS ([Measures].[samples_distributed] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[samples_distributed], [Measures].[samples_distributed_ann_avg]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation]",
                     "type": "MDX"
                 }
             },
@@ -1402,7 +1355,7 @@ define(
                     " SELECT " +
                     "NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] " +
-                    "WHERE CrossJoin({[OrientedTo].[Small scale farmers], [OrientedTo].[Small scale farmers; Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces; Small scale farmers]}, {[DataAvailable_ind32].[1]})",
+                    "WHERE CrossJoin({[OrientedTo].[Small scale farmers], [OrientedTo].[Small scale farmers; Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces; Small scale farmers]})",
                     "type": "MDX"
                 },
                 "32_stk" : {
@@ -1413,7 +1366,7 @@ define(
                     " SELECT " +
                     "NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, " +
                     "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] " +
-                    "WHERE CrossJoin({[OrientedTo].[Small scale farmers], [OrientedTo].[Small scale farmers; Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces; Small scale farmers]}, {[DataAvailable_ind32].[1]})",
+                    "WHERE CrossJoin({[OrientedTo].[Small scale farmers], [OrientedTo].[Small scale farmers; Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces; Small scale farmers]})",
                     "type": "MDX"
                 }
             },
@@ -1446,7 +1399,7 @@ define(
                     " SELECT " +
                     "NON EMPTY {[Measures].[priv_crop_breeders]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding_33_34] " +
-                    "WHERE CrossJoin({[DataAvailable_ind34].[1]}, {[Last_Year_Crop].[1]})",
+                    "WHERE [Last_Year_Crop].[1]",
                     "type": "MDX"
                 }
             },
@@ -1479,7 +1432,7 @@ define(
                     " SELECT " +
                     "NON EMPTY {[Measures].[priv_crop_breeders]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding_33_34] " +
-                    "WHERE CrossJoin({[DataAvailable_ind34].[1]}, {[Last_Year_Crop].[1]})",
+                    "WHERE [Last_Year_Crop].[1]",
                     "type": "MDX"
                 }
             },
@@ -1508,23 +1461,19 @@ define(
             query : {
                 "35" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind35].[1]} " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[NumberOfPrograms]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_diversification_35] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [crop_diversification_35] ",
                     "type": "MDX"
                 },
                 "35_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind35].[1]} " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[NumberOfPrograms]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [crop_diversification_35] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [crop_diversification_35]",
                     "type": "MDX"
                 }
             },
@@ -1552,7 +1501,7 @@ define(
             },
             query : {
                 "36" : {
-                    "mdx" : "WITH SET [~FILTER] AS {[DataAvailable_ind36].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfNewCrops]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [crop_diversification_36] WHERE [~FILTER]",
+                    "mdx" : "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfNewCrops]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [crop_diversification_36]",
                     "type": "MDX"
                 }
             },
@@ -1611,23 +1560,19 @@ define(
             query : {
                 "38" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind38].[1]} " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[NumberOfPrograms]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [dev_and_comm_of_varieties_38] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [dev_and_comm_of_varieties_38]",
                     "type": "MDX"
                 },
                 "38_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind38].[1]} " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[NumberOfPrograms]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [dev_and_comm_of_varieties_38] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [dev_and_comm_of_varieties_38]",
                     "type": "MDX"
                 }
             },
@@ -1655,7 +1600,7 @@ define(
             },
             query : {
                 "39" : {
-                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_Ind39].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfLandraces], [Measures].[CountOfTaxonCrop]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [dev_and_comm_of_varieties_39] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfLandraces], [Measures].[CountOfTaxonCrop]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [dev_and_comm_of_varieties_39]",
                     "type": "MDX"
                 }
             },
@@ -1683,7 +1628,7 @@ define(
             },
             query : {
                 "40" : {
-                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_Ind40].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfNewVarieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_40] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfNewVarieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_40]",
                     "type": "MDX"
                 }
             },
@@ -1711,7 +1656,7 @@ define(
             },
             query : {
                 "41" : {
-                    "mdx": "WITH SET [~FILTER] AS     {[DataAvailable_ind41].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfRegisteredSeedEnterprises]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_41] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfRegisteredSeedEnterprises]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_41]",
                     "type": "MDX"
                 }
             },
@@ -1739,7 +1684,7 @@ define(
             },
             query : {
                 "42" : {
-                    "mdx": "WITH MEMBER [Measures].[NumberOfVarieties] AS ([Measures].[NumberOfVaretiesXTotalCropArea] / [Measures].[TotalCropArea]), FORMAT_STRING = \"#0.0#%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfVarieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_42] WHERE CrossJoin({[Last_Year_Boolean.last_year_boolean].[1]}, {[DataAvailable_ind42].[1]})",
+                    "mdx": "WITH MEMBER [Measures].[NumberOfVarieties] AS ([Measures].[NumberOfVaretiesXTotalCropArea] / [Measures].[TotalCropArea]), FORMAT_STRING = \"#0.0#%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfVarieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_42] WHERE [Last_Year_Boolean.last_year_boolean].[1]",
                     "type": "MDX"
                 }
             },
@@ -1767,7 +1712,7 @@ define(
             },
             query : {
                 "43" : {
-                    "mdx": "WITH MEMBER [Measures].[area_supplied_with_seed] AS ([Measures].[CalcPerCrop_x_TotalCropHarv] / [Measures].[TotalCropHarvestedArea]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[area_supplied_with_seed]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_43] WHERE CrossJoin({[DataAvailable_ind43].[1]}, {[Last Year Bool].[1]})",
+                    "mdx": "WITH MEMBER [Measures].[area_supplied_with_seed] AS ([Measures].[CalcPerCrop_x_TotalCropHarv] / [Measures].[TotalCropHarvestedArea]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[area_supplied_with_seed]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_43] WHERE [Last Year Bool].[1]",
                     "type": "MDX"
                 }
             },
@@ -1795,7 +1740,7 @@ define(
             },
             query : {
                 "44" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind44].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountries],[Measures].[NumberOfCountriesWithPolicy]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_44] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountries],[Measures].[NumberOfCountriesWithPolicy]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_44]",
                     "type": "MDX"
                 }
             },
@@ -1964,23 +1909,19 @@ define(
             query : {
                 "50" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind50].[1]} " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[NumberOfNetworks]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [networks_50] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [networks_50] ",
                     "type": "MDX"
                 },
                 "50_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind50].[1]} " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[NumberOfNetworks]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [networks_50] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [networks_50] ",
                     "type": "MDX"
                 }
             },
@@ -2009,23 +1950,19 @@ define(
             query : {
                 "51" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind51].[1]} " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[NumberOfPublications]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [networks_51] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [networks_51] ",
                     "type": "MDX"
                 },
                 "51_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind51].[1]} " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[NumberOfPublications]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [networks_51] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [networks_51] ",
                     "type": "MDX"
                 }
             },
@@ -2053,7 +1990,7 @@ define(
             },
             query : {
                 "52" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind52].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number of Crops]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_52] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number of Crops]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_52]",
                     "type": "MDX"
                 }
             },
@@ -2081,7 +2018,7 @@ define(
             },
             query : {
                 "53" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind53].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Farmers Varieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_53] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Farmers Varieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_53]",
                     "type": "MDX"
                 }
             },
@@ -2110,23 +2047,19 @@ define(
             query : {
                 "54" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind54].[1]} " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[Accessions ex situ documented]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [information_systems_54] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [information_systems_54] ",
                     "type": "MDX"
                 },
                 "54_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind54].[1]} " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[Accessions ex situ documented]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [information_systems_54] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [information_systems_54] ",
                     "type": "MDX"
                 }
             },
@@ -2154,7 +2087,7 @@ define(
             },
             query : {
                 "55" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind55].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number Released Varieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_55] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number Released Varieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_55]",
                     "type": "MDX"
                 }
             },
@@ -2191,13 +2124,11 @@ define(
                 },
                 "56_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_ind56].[1]} " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[Int/ Reg Information Systems]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [information_systems_56] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [information_systems_56] " ,
                     "type": "MDX"
                 }
             },
@@ -2253,7 +2184,7 @@ define(
             },
             query : {
                 "58" : {
-                    "mdx": "WITH SET [~FILTER] AS {[DataAvailable_ind58].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Remedial Action]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [monitoring_and_safeguarding_genetic_diversity_58] WHERE [~FILTER]",
+                    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Remedial Action]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [monitoring_and_safeguarding_genetic_diversity_58]",
                     "type": "MDX"
                 }
             },
@@ -2310,25 +2241,21 @@ define(
             query : {
                 "60" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind60].[1]} " +
                     "MEMBER [Measures].[%_of_staff_with_skills_upgraded] AS iif((((([Measures].[NumberOfProfessionalsWithPHD] + [Measures].[NumberOfProfessionalsWithMSC]) + [Measures].[NumberOfProfessionalsAttendedCourses]) / [Measures].[NumberOfProfessionals]) > 1), 1, ((([Measures].[NumberOfProfessionalsWithPHD] + [Measures].[NumberOfProfessionalsWithMSC]) + [Measures].[NumberOfProfessionalsAttendedCourses]) / [Measures].[NumberOfProfessionals])), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[%_of_staff_with_skills_upgraded]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [human_resource_capacity_60] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY [~ROWS] ON ROWS FROM [human_resource_capacity_60] ,
                     "type": "MDX"
                 },
                 "60_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind60].[1]} " +
                     "MEMBER [Measures].[%_of_staff_with_skills_upgraded] AS iif((((([Measures].[NumberOfProfessionalsWithPHD] + [Measures].[NumberOfProfessionalsWithMSC]) + [Measures].[NumberOfProfessionalsAttendedCourses]) / [Measures].[NumberOfProfessionals]) > 1), 1, ((([Measures].[NumberOfProfessionalsWithPHD] + [Measures].[NumberOfProfessionalsWithMSC]) + [Measures].[NumberOfProfessionalsAttendedCourses]) / [Measures].[NumberOfProfessionals])), FORMAT_STRING = \"#0.0#%\" " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[%_of_staff_with_skills_upgraded]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [human_resource_capacity_60] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [human_resource_capacity_60] ",
                     "type": "MDX"
                 }
             },
@@ -2414,18 +2341,16 @@ define(
             query : {
                 "63" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind63].[1]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfProductsDeveloped]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [public_awareness_63] WHERE [~FILTER]",
+                    "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfProductsDeveloped]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [public_awareness_63]",
                     "type": "MDX"
                 },
                 "63_stk" : {
                     "mdx": "WITH " +
-                    "SET [~FILTER] AS {[DataAvailable_Ind63].[1]} " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[NumberOfProductsDeveloped]} ON COLUMNS, " +
-                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [public_awareness_63] " +
-                    " WHERE [~FILTER]",
+                    "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [public_awareness_63] ",
                     "type": "MDX"
                 }
             },
