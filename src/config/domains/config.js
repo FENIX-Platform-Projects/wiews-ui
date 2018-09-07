@@ -1350,23 +1350,25 @@ define(
             query : {
                 "32" : {
                     "mdx": "WITH " +
+                    "SET [~FILTER] AS Except({[OrientedTo].[oriented_to].Members}, {[OrientedTo].[#null]}) " +
                     "MEMBER [Measures].[num_activities_farmers_villages_ann_avg] AS ([Measures].[distinct_programs] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] " +
-                    "WHERE CrossJoin({[OrientedTo].[Small scale farmers], [OrientedTo].[Small scale farmers; Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces; Small scale farmers]})",
+                    "WHERE [~FILTER] ",
                     "type": "MDX"
                 },
                 "32_stk" : {
                     "mdx": "WITH " +
+                    "SET [~FILTER] AS Except({[OrientedTo].[oriented_to].Members}, {[OrientedTo].[#null]}) " +
                     "MEMBER [Measures].[num_activities_farmers_villages_ann_avg] AS ([Measures].[distinct_programs] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, " +
                     "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] " +
-                    "WHERE CrossJoin({[OrientedTo].[Small scale farmers], [OrientedTo].[Small scale farmers; Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces], [OrientedTo].[Villages or communities that use traditional farmers’ varieties/landraces; Small scale farmers]})",
+                    "WHERE [~FILTER] ",
                     "type": "MDX"
                 }
             },
@@ -2245,7 +2247,7 @@ define(
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
                     "NON EMPTY {[Measures].[%_of_staff_with_skills_upgraded]} ON COLUMNS, " +
-                    "NON EMPTY [~ROWS] ON ROWS FROM [human_resource_capacity_60] ,
+                    "NON EMPTY [~ROWS] ON ROWS FROM [human_resource_capacity_60] ",
                     "type": "MDX"
                 },
                 "60_stk" : {
