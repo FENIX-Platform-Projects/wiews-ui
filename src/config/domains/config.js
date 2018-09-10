@@ -867,9 +867,10 @@ define(
                     "mdx": "WITH " +
                     "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
                     "MEMBER [Measures].[%_of_accessions_duplicated] AS IIf(([Measures].[accessions] <> 0), (([Measures].[accessions_duplicated] / [Measures].[accessions])), 0), FORMAT_STRING = \"#0.0#%\" " +
+                    "MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions]" +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[%_of_accessions_duplicated]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[%_of_accessions_duplicated],[Measures].[accessions_national_genbank]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS " +
                     "FROM [germplasm_collections] " +
                     " WHERE [~FILTER]",
@@ -879,10 +880,11 @@ define(
                     "mdx": "WITH " +
                     "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
                     "MEMBER [Measures].[%_of_accessions_duplicated] AS IIf(([Measures].[accessions] <> 0), (([Measures].[accessions_duplicated] / [Measures].[accessions])), 0), FORMAT_STRING = \"#0.0#%\" " +
+                    "MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions]" +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[%_of_accessions_duplicated]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[%_of_accessions_duplicated],[Measures].[accessions_national_genbank]} ON COLUMNS, " +
                     "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS " +
                     "FROM [germplasm_collections] " +
                     " WHERE [~FILTER]",
@@ -915,19 +917,21 @@ define(
                 "22" : {
                     "mdx": "WITH " +
                     "MEMBER [Measures].[%_of_accessions_without_budget] AS ([Measures].[accessions_out_of_budget] / [Measures].[accessions_num]), FORMAT_STRING = \"#0.0#%\" " +
+                    "MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions_num]" +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[%_of_accessions_without_budget]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[%_of_accessions_without_budget],[Measures].[accessions_national_genbank]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] ",
                     "type": "MDX"
                 },
                 "22_stk" : {
                     "mdx": "WITH " +
                     "MEMBER [Measures].[%_of_accessions_without_budget] AS IIf(([Measures].[accessions_need_regeneration] = 0), 0.0, ([Measures].[accessions_out_of_budget] / [Measures].[accessions_need_regeneration])), FORMAT_STRING = \"#0.0#%\" " +
+                    "MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions_num]" +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[%_of_accessions_without_budget]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[%_of_accessions_without_budget],[Measures].[accessions_national_genbank]} ON COLUMNS, " +
                     "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] ",
                     "type": "MDX"
                 }
@@ -1001,19 +1005,21 @@ define(
                 "24" : {
                     "mdx": "WITH " +
                     "MEMBER [Measures].[%_of_accessions_need_regeneration] AS ([Measures].[accessions_need_regeneration] / [Measures].[accessions_num]), FORMAT_STRING = \"#0.0#%\" " +
+                    "MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions_num]" +
                     "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[%_of_accessions_need_regeneration]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[%_of_accessions_need_regeneration],[Measures].[accessions_national_genbank]} ON COLUMNS, " +
                     "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] ",
                     "type": "MDX"
                 },
                 "24_stk" : {
                     "mdx": "WITH " +
                     "MEMBER [Measures].[%_of_accessions_need_regeneration] AS ([Measures].[accessions_need_regeneration] / [Measures].[accessions_num]), FORMAT_STRING = \"#0.0#%\" " +
+                    "MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions_num]" +
                     "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
                     "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
                     " SELECT " +
-                    "NON EMPTY {[Measures].[%_of_accessions_need_regeneration]} ON COLUMNS, " +
+                    "NON EMPTY {[Measures].[%_of_accessions_need_regeneration],[Measures].[accessions_national_genbank]} ON COLUMNS, " +
                     "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] ",
                     "type": "MDX"
                 }

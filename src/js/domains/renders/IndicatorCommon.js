@@ -783,7 +783,7 @@ define([
 
     IndicatorCommon.prototype._parseGEO = function (geovalues, isList) {
         
-        console.log(geovalues);
+        //console.log(geovalues);
 
         var self = this,
             geo_array = {
