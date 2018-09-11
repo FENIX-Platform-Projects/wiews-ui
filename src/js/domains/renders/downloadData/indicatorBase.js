@@ -241,14 +241,12 @@ define([
     };
 
     IndicatorBase.prototype._renderGeoSelection = function (item_to_show_prefix, item_to_show, codelistMaxIndex) {
-        console.log('_renderGeoSelection',item_to_show_prefix, item_to_show, codelistMaxIndex)
 
         for(var index = 1; index<= codelistMaxIndex; index++) {
             var indicatorFilterSection = this.el.find('[data-selector = "'+item_to_show_prefix+'_'+index+'"]');
             indicatorFilterSection.hide();
             if((indicatorFilterSection!=null)&&(typeof indicatorFilterSection!='undefined')&&(index == item_to_show)){
                 this.geoCodelistSelector = item_to_show_prefix+'_'+index;
-                console.log(this.geoCodelistSelector);
                 indicatorFilterSection.show();
             }
         }

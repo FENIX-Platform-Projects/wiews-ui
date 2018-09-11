@@ -1,0 +1,86 @@
+{
+  "0" : {
+    "mdx": "WITH SET [~FILTER] AS {[Indicator].[2]} SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[nfp]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_focal_point] WHERE [~FILTER]",
+    "type": "MDX"
+  },
+  "1" : {
+    "mdx": "WITH MEMBER [Measures].[Annual Avg] AS ([Measures].[surveys carries out] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[surveys carries out], [Measures].[Annual Avg]} ON COLUMNS,NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories_ind_01]",
+    "type": "MDX"
+  },
+  "2" : {
+    "mdx":  "WITH MEMBER [Measures].[varieties_avg] AS ([Measures].[varieties] / [Measures].[period]) MEMBER [Measures].[species_avg] AS ([Measures].[distinct_species] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[varieties_avg], [Measures].[varieties], [Measures].[species_avg], [Measures].[distinct_species]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]",
+    "type": "MDX"
+  },
+  "2_1" : {
+    "mdx":  "WITH MEMBER [Measures].[species_avg] AS ([Measures].[distinct_species] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[species_avg], [Measures].[distinct_species]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]",
+    "type": "MDX"
+  },
+  "2_2" : {
+    "mdx":  "WITH MEMBER [Measures].[varieties_avg] AS ([Measures].[varieties] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[varieties_avg], [Measures].[varieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories]",
+    "type": "MDX"
+  },
+  "3" : {
+    "mdx": "WITH MEMBER [Measures].[% of varieties thr out] AS ([Measures].[threathened_varieties] / [Measures].[varieties]), FORMAT_STRING = \"#0.0#%\" MEMBER [Measures].[% of species thr out] AS ([Measures].[threathened_species] / [Measures].[distinct_species]), FORMAT_STRING = \"#0.0#%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[% of varieties thr out], [Measures].[% of species thr out]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] ",
+    "type": "MDX"
+  },
+  "3_1" : {
+    "mdx": "WITH MEMBER [Measures].[% of species thr out] AS ([Measures].[threathened_species] / [Measures].[distinct_species]), FORMAT_STRING = \"#0.0#%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[% of species thr out]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] ",
+    "type": "MDX"
+  },
+  "3_2" : {
+    "mdx": "WITH MEMBER [Measures].[% of varieties thr out] AS ([Measures].[threathened_varieties] / [Measures].[varieties]), FORMAT_STRING = \"#0.0#%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[% of varieties thr out]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [survies_inventories] ",
+    "type": "MDX"
+  },
+  "4" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number of Farming Communities]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [on_farm_management_improvement_04]",
+    "type": "MDX"
+  },
+  "4_stk" : {
+    "mdx": "WITH SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[Number of Farming Communities]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [on_farm_management_improvement_04] ",
+    "type": "MDX"
+  },
+  "5" : {
+    "mdx": "WITH MEMBER [Measures].[Percentage] AS (([Measures].[Cultivated Area]) / [Measures].[Total Area]), FORMAT_STRING = \"##.##%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Percentage]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM  [on_farm_management_improvement_05]",
+    "type": "MDX"
+  },
+  "6" : {
+    "mdx": "WITH MEMBER [Measures].[Annual Average] AS ([Measures].[Unique Farmers] / [Measures].[Period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Unique Farmers], [Measures].[Annual Average]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [on_farm_management_improvement_06] ",
+    "type": "MDX"
+  },
+  "7" : {
+    "mdx": "WITH MEMBER [Measures].[households_benefited_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[households_benefited], [Measures].[households_benefited_ann_avg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery] ",
+    "type": "MDX"
+  },
+  "7_stk" : {
+    "mdx": "WITH MEMBER [Measures].[households_benefited_ann_avg] AS ([Measures].[households_benefited] / [Measures].[period]) SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[households_benefited], [Measures].[households_benefited_ann_avg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [disaster_recovery]",
+    "type": "MDX"
+  },
+  "8" : {
+    "mdx": "WITH MEMBER [Measures].[%_seeds_prod_local_level] AS ([Measures].[seeds_prod_local_level] / [Measures].[amount_of_seeds_converted]), FORMAT_STRING = \"#0.0#%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[seeds_prod_local_level], [Measures].[amount_of_seeds_converted], [Measures].[%_seeds_prod_local_level]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery]",
+    "type": "MDX"
+  },
+  "8_stk" : {
+    "mdx": "WITH MEMBER [Measures].[%_seeds_prod_local_level] AS ([Measures].[seeds_prod_local_level] / [Measures].[amount_of_seeds_converted]), FORMAT_STRING = \"#0.0#%\" SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[seeds_prod_local_level], [Measures].[amount_of_seeds_converted], [Measures].[%_seeds_prod_local_level]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [disaster_recovery]",
+    "type": "MDX"
+  },
+  "9" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithPolicy],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [disaster_recovery_09]",
+    "type": "MDX"
+  },
+  "10" : {
+    "mdx": "WITH SET [~FILTER] AS {[DataAvalable_ind10].[1]} MEMBER [Measures].[%_of_sites_with_mngmt] AS IIf(([Measures].[sites_total] = 0), NULL, ([Measures].[sites_with_management] / [Measures].[sites_total])), FORMAT_STRING = \"#0.0#%\"  SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[sites_with_management], [Measures].[sites_total], [Measures].[%_of_sites_with_mngmt]} ON COLUMNS,  NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants] WHERE [~FILTER]",
+    "type": "MDX"
+  },
+  "11" : {
+    "mdx": "WITH MEMBER [Measures].[NumberOfActions_AnnAvg] AS ([Measures].[NumberOfActions] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfActions], [Measures].[NumberOfActions_AnnAvg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants_11]",
+    "type": "MDX"
+  },
+  "11_stk" : {
+    "mdx": "WITH MEMBER [Measures].[NumberOfActions_AnnAvg] AS ([Measures].[NumberOfActions] / [Measures].[period]) SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[NumberOfActions], [Measures].[NumberOfActions_AnnAvg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [crop_wild_relatives_wild_food_plants_11]",
+    "type": "MDX"
+  },
+  "12" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[estimated_number_of_species]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [crop_wild_relatives_wild_food_plants_12] ",
+    "type": "MDX"
+  }
+}
