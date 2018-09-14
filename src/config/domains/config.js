@@ -334,56 +334,37 @@ define([
             },
             metadata : "91263"
         },
-
         13: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
-            "13" : labels['en']['element_label1']
-        },
-        dd_filter_category : "3",
+                "13" : labels['en']['element_label1']
+            },
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_13/DashInd13",
             cube : {
-            "queryModel": {},
-            "cube": {
-                "uniqueName": "[wiews_indicators].[targeting_collecting_ind_13]",
-                    "name": "targeting_collecting_ind_13_14",
-                    "connection": "wiews_indicators",
-                    "catalog": "wiews_indicators",
-                    "schema": "wiews_indicators",
-                    "caption": null,
-                    "visible": false
-            }
-        },
-        query : {
-            "13" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[total_crop_strategy_count] AS ([Measures].[total_count]) " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[strategy_count], [Measures].[total_crop_strategy_count]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [targeting_collecting_ind_13_14] ",
-                    "type": "MDX"
+                "queryModel": {},
+                "cube": {
+                    "uniqueName": "[wiews_indicators].[targeting_collecting_ind_13]",
+                        "name": "targeting_collecting_ind_13_14",
+                        "connection": "wiews_indicators",
+                        "catalog": "wiews_indicators",
+                        "schema": "wiews_indicators",
+                        "caption": null,
+                        "visible": false
+                }
             },
-            "13_stk" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[total_crop_strategy_count] AS ([Measures].[total_count]) " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[strategy_count], [Measures].[total_crop_strategy_count]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [targeting_collecting_ind_13_14] ",
-                    "type": "MDX"
-            }
+            query : {
+                "13" : query['13'],
+                "13_stk" : query['13_stk']
+            },
+            metadata : "91264"
         },
-        metadata : "91264"
-
-    },
         14: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "14" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_14/DashInd14",
             cube : {
             "queryModel": {},
@@ -397,34 +378,18 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "14" : {
-                "mdx": "WITH " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[crops_req_targeted_collecting]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [targeting_collecting_ind_13_14] ",
-                    "type": "MDX"
+            query : {
+                "14" : query["14"],
+                "14_stk" : query["14_stk"]
             },
-            "14_stk" : {
-                "mdx": "WITH " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[crops_req_targeted_collecting]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [targeting_collecting_ind_13_14] ",
-                    "type": "MDX"
-            }
+            metadata : "91265"
         },
-        metadata : "91265"
-
-    },
         15: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "15" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_15/DashInd15",
             cube : {
             "queryModel": {},
@@ -438,38 +403,18 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "15" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS {[DataAvalable_ind15].[1]} MEMBER [Measures].[targeted_collecting_mission_ann_avg] AS ([Measures].[targeted_collecting_missions] / [Measures].[period]) " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[targeted_collecting_missions], [Measures].[targeted_collecting_mission_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [targeted_collecting] " +
-                " WHERE [~FILTER]",
-                    "type": "MDX"
+            query : {
+                "15" : query["15"],
+                "15_stk" : query["15_stk"]
             },
-            "15_stk" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS {[DataAvalable_ind15].[1]} MEMBER [Measures].[targeted_collecting_mission_ann_avg] AS ([Measures].[targeted_collecting_missions] / [Measures].[period]) " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[targeted_collecting_missions], [Measures].[targeted_collecting_mission_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [targeted_collecting] " +
-                " WHERE [~FILTER]",
-                    "type": "MDX"
-            }
+            metadata : "91267"
         },
-        metadata : "91267"
-
-    },
         16: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "16" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_16/DashInd16",
             cube : {
             "queryModel": {},
@@ -483,38 +428,18 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "16" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS {[DataAvalable_ind16].[1]} MEMBER [Measures].[accessions_number_ann_avg] AS ([Measures].[accessions_number] / [Measures].[period]) " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[accessions_number], [Measures].[accessions_number_ann_avg], [Measures].[Distinct Taxon], [Measures].[Distinct Genera]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [targeted_collecting] " +
-                " WHERE [~FILTER]",
-                    "type": "MDX"
+            query : {
+                "16" : query["16"],
+                "16_stk" : query["16_stk"]
             },
-            "16_stk" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS {[DataAvalable_ind16].[1]} MEMBER [Measures].[accessions_number_ann_avg] AS ([Measures].[accessions_number] / [Measures].[period]) " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[accessions_number], [Measures].[accessions_number_ann_avg], [Measures].[Distinct Taxon], [Measures].[Distinct Genera]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [targeted_collecting] " +
-                " WHERE [~FILTER]",
-                    "type": "MDX"
-            }
+            metadata : "91268"
         },
-        metadata : "91268"
-
-    },
         17: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "17" : labels['en']['element_label1']
         },
-        dd_filter_category : "2",
+            dd_filter_category : "2",
             vd_code : "wiews_indicator_17/DashInd17",
             cube : {
             "queryModel": {},
@@ -528,27 +453,18 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "17" : {
-                "mdx": "WITH " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SELECT " +
-                "NON EMPTY {[Measures].[Human Resources Capacity], [Measures].[Financial Resources], [Measures].[Infraestructure]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [germplasm_collections_ind_17] " +
-                "WHERE [Last_Year_Boolean.last_year_boolean].[1]",
-                    "type": "MDX"
-            }
+            query : {
+                "17" : query["17"]
+            },
+            metadata : "91269"
         },
-        metadata : "91269"
-
-    },
         18: {
-        period_label : "Year",
+            period_label : "Year",
             domain_label : labels['en']['domain_label'],
             element_label : {
             "18" : labels['en']['element_label1']
         },
-        time: "years",
+            time: "years",
             dd_filter_category : "3",
             vd_code : "wiews_indicator_18/DashInd18",
             cube : {
@@ -563,40 +479,19 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "18" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[crops]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [germplasm_collections] " +
-                " WHERE [~FILTER]",
-                    "type": "MDX"
+            query : {
+                "18" : query["18"],
+                "18_stk" : query["18_stk"]
             },
-            "18_stk" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[crops]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS " +
-                "FROM [germplasm_collections] " +
-                " WHERE [~FILTER]",
-                    "type": "MDX"
-            }
+            metadata : "91270"
         },
-        metadata : "91270"
-
-    },
         19: {
-        period_label : "Year",
+            period_label : "Year",
             domain_label : labels['en']['domain_label'],
             element_label : {
             "19" : labels['en']['element_label1']
         },
-        time: "years",
+            time: "years",
             dd_filter_category : "3",
             vd_code : "wiews_indicator_19/DashInd19",
             cube : {
@@ -611,40 +506,19 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "19" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[species]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [germplasm_collections] " +
-                " WHERE [~FILTER]",
-                    "type": "MDX"
+            query : {
+                "19" : query["19"],
+                "19_stk" : query["19_stk"]
             },
-            "19_stk" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[species]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS " +
-                "FROM [germplasm_collections] " +
-                " WHERE [~FILTER]",
-                    "type": "MDX"
-            }
+            metadata : "91271"
         },
-        metadata : "91271"
-
-    },
         20: {
-        period_label : "Year",
+            period_label : "Year",
             domain_label : labels['en']['domain_label'],
             element_label : {
             "20" : labels['en']['element_label1']
         },
-        time: "years",
+            time: "years",
             dd_filter_category : "3",
             vd_code : "wiews_indicator_20/DashInd20",
             cube : {
@@ -659,42 +533,20 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "20" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[accessions]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS " +
-                "FROM [germplasm_collections] " +
-                " WHERE [~FILTER]",
-                    "type": "MDX"
+            query : {
+                "20" : query["20"],
+                "20_stk" : query["20_stk"]
             },
-            "20_stk" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[accessions]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS " +
-                "FROM [germplasm_collections] " +
-                " WHERE [~FILTER]",
-                    "type": "MDX"
-            }
+            metadata : "91272"
         },
-        metadata : "91272"
-
-    },
         21: {
-        period_label : "Year",
+            period_label : "Year",
             domain_label : labels['en']['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
             "21" : labels['en']['element_label1']
         },
-        time: "years",
+            time: "years",
             dd_filter_category : "3",
             vd_code : "wiews_indicator_21/DashInd21",
             cube : {
@@ -709,38 +561,13 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "21" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
-                "MEMBER [Measures].[%_of_accessions_duplicated] AS IIf(([Measures].[accessions] <> 0), (([Measures].[accessions_duplicated] / [Measures].[accessions])), 0), FORMAT_STRING = \"#0.0#%\" " +
-                "MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions]" +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[%_of_accessions_duplicated],[Measures].[accessions_national_genbank]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS " +
-                "FROM [germplasm_collections] " +
-                " WHERE [~FILTER]",
-                    "type": "MDX"
-            },
-            "21_stk" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} " +
-                "MEMBER [Measures].[%_of_accessions_duplicated] AS IIf(([Measures].[accessions] <> 0), (([Measures].[accessions_duplicated] / [Measures].[accessions])), 0), FORMAT_STRING = \"#0.0#%\" " +
-                "MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions]" +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[%_of_accessions_duplicated],[Measures].[accessions_national_genbank]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS " +
-                "FROM [germplasm_collections] " +
-                " WHERE [~FILTER]",
-                    "type": "MDX"
-            }
+            query : {
+            "21" : query["21"],
+            "21_stk" : query["21_stk"]
         },
-        metadata : "91274"
+            metadata : "91274"
+        },
 
-    },
         22: {
         domain_label : labels['en']['domain_label'],
             element_label : {
