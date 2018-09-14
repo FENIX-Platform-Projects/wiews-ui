@@ -731,7 +731,7 @@ define([
             //elastic_genus = "";
 
         this.elastic_export_file = {
-            "lang": Clang,
+            "lang": $("html").attr("lang").toLowerCase(),
             "separator":";",
             "filters":{
                 "year": parseInt(filter_values.values.search_year[0])
