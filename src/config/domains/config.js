@@ -742,13 +742,12 @@ define([
             },
             metadata : "91281"
         },
-
         29: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "29" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_29/DashInd29",
             cube : {
             "queryModel": {},
@@ -762,36 +761,18 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "29" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[samples_distributed_ann_avg] AS ([Measures].[samples_distributed] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[samples_distributed], [Measures].[samples_distributed_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation] ",
-                    "type": "MDX"
+            query : {
+                "29" : query["29"],
+                "29_stk" : query["29_stk"]
             },
-            "29_stk" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[samples_distributed_ann_avg] AS ([Measures].[samples_distributed] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[samples_distributed], [Measures].[samples_distributed_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation]",
-                    "type": "MDX"
-            }
+            metadata : "91282"
         },
-        metadata : "91282"
-
-    },
         30: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "30" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_30/DashInd30",
             cube : {
             "queryModel": {},
@@ -805,40 +786,18 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "30" : {
-                "mdx": "WITH " +
-                " MEMBER [Measures].[distinct_crop_spcecies_ann_avg] AS ([Measures].[distinct_crop_spcecies] / [Measures].[period]) " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~FILTER] AS Except({[Sector].[sector].Members}, {[Sector].[Private]}) " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[distinct_crop_spcecies], [Measures].[distinct_crop_spcecies_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] " +
-                "WHERE [~FILTER]",
-                    "type": "MDX"
+            query : {
+                "30" : query["30"],
+                "30_stk" : query["30_stk"]
             },
-            "30_stk" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[distinct_crop_spcecies_ann_avg] AS ([Measures].[distinct_crop_spcecies] / [Measures].[period]) " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                "SET [~FILTER] AS Except({[Sector].[sector].Members}, {[Sector].[Private]}) " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[distinct_crop_spcecies], [Measures].[distinct_crop_spcecies_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] " +
-                "WHERE [~FILTER]",
-                    "type": "MDX"
-            }
+            metadata : "91283"
         },
-        metadata : "91283"
-
-    },
         31: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "31" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_31/DashInd31",
             cube : {
             "queryModel": {},
@@ -852,40 +811,18 @@ define([
                     "visible": false
             },
         },
-        query : {
-            "31" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[distinct_crop_spcecies_ann_avg] AS ([Measures].[distinct_crop_spcecies] / [Measures].[period]) " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~FILTER] AS Except({[Sector].[sector].Members}, {[Sector].[Public]}) " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[distinct_crop_spcecies], [Measures].[distinct_crop_spcecies_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] " +
-                "WHERE [~FILTER]",
-                    "type": "MDX"
+            query : {
+                "31" : query["31"],
+                "31_stk" : query["31_stk"]
             },
-            "31_stk" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[distinct_crop_spcecies_ann_avg] AS ([Measures].[distinct_crop_spcecies] / [Measures].[period]) " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                "SET [~FILTER] AS Except({[Sector].[sector].Members}, {[Sector].[Public]}) " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[distinct_crop_spcecies], [Measures].[distinct_crop_spcecies_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] " +
-                "WHERE [~FILTER]",
-                    "type": "MDX"
-            }
+            metadata : "91284"
         },
-        metadata : "91284"
-
-    },
         32: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "32" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_32/DashInd32",
             cube : {
             "queryModel": {},
@@ -899,34 +836,13 @@ define([
                     "visible": false
             },
         },
-        query : {
-            "32" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS Except({[OrientedTo].[oriented_to].Members}, {[OrientedTo].[#null]}) " +
-                "MEMBER [Measures].[num_activities_farmers_villages_ann_avg] AS ([Measures].[distinct_programs] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] " +
-                "WHERE [~FILTER] ",
-                    "type": "MDX"
+            query : {
+                "32" : query["32"],
+                "32_stk" : query["32_stk"]
             },
-            "32_stk" : {
-                "mdx": "WITH " +
-                "SET [~FILTER] AS Except({[OrientedTo].[oriented_to].Members}, {[OrientedTo].[#null]}) " +
-                "MEMBER [Measures].[num_activities_farmers_villages_ann_avg] AS ([Measures].[distinct_programs] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] " +
-                "WHERE [~FILTER] ",
-                    "type": "MDX"
-            }
+            metadata : "91285"
         },
-        metadata : "91285"
 
-    },
         33: {
         domain_label : labels['en']['domain_label'],
             element_label : {

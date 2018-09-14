@@ -206,5 +206,37 @@
   "28_stk" :  {
     "mdx": "WITH MEMBER [Measures].[accessions_distributed_ann_avg] AS ([Measures].[accessions_distributed] / [Measures].[period]) SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[accessions_distributed], [Measures].[accessions_distributed_ann_avg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation] ",
     "type": "MDX"
+  },
+  "29" : {
+    "mdx": "WITH MEMBER [Measures].[samples_distributed_ann_avg] AS ([Measures].[samples_distributed] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[samples_distributed], [Measures].[samples_distributed_ann_avg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation] ",
+    "type": "MDX"
+  },
+  "29_stk" : {
+    "mdx": "WITH MEMBER [Measures].[samples_distributed_ann_avg] AS ([Measures].[samples_distributed] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[samples_distributed], [Measures].[samples_distributed_ann_avg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation]",
+    "type": "MDX"
+  },
+  "30" : {
+    "mdx": "WITH MEMBER [Measures].[distinct_crop_spcecies_ann_avg] AS ([Measures].[distinct_crop_spcecies] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SET [~FILTER] AS Except({[Sector].[sector].Members}, {[Sector].[Private]}) SELECT NON EMPTY {[Measures].[distinct_crop_spcecies], [Measures].[distinct_crop_spcecies_ann_avg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] WHERE [~FILTER]",
+    "type": "MDX"
+  },
+  "30_stk" : {
+    "mdx": "WITH MEMBER [Measures].[distinct_crop_spcecies_ann_avg] AS ([Measures].[distinct_crop_spcecies] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SET [~FILTER] AS Except({[Sector].[sector].Members}, {[Sector].[Private]}) SELECT NON EMPTY {[Measures].[distinct_crop_spcecies], [Measures].[distinct_crop_spcecies_ann_avg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] WHERE [~FILTER]",
+    "type": "MDX"
+  },
+  "31" : {
+    "mdx": "WITH MEMBER [Measures].[distinct_crop_spcecies_ann_avg] AS ([Measures].[distinct_crop_spcecies] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SET [~FILTER] AS Except({[Sector].[sector].Members}, {[Sector].[Public]}) SELECT NON EMPTY {[Measures].[distinct_crop_spcecies], [Measures].[distinct_crop_spcecies_ann_avg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] WHERE [~FILTER]",
+    "type": "MDX"
+  },
+  "31_stk" : {
+    "mdx": "WITH MEMBER [Measures].[distinct_crop_spcecies_ann_avg] AS ([Measures].[distinct_crop_spcecies] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SET [~FILTER] AS Except({[Sector].[sector].Members}, {[Sector].[Public]}) SELECT NON EMPTY {[Measures].[distinct_crop_spcecies], [Measures].[distinct_crop_spcecies_ann_avg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] WHERE [~FILTER]",
+    "type": "MDX"
+  },
+  "32" :  {
+    "mdx": "WITH SET [~FILTER] AS Except({[OrientedTo].[oriented_to].Members}, {[OrientedTo].[#null]}) MEMBER [Measures].[num_activities_farmers_villages_ann_avg] AS ([Measures].[distinct_programs] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\"  SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding] WHERE [~FILTER] ",
+    "type": "MDX"
+  },
+  "32_stk" :  {
+    "mdx": "WITH SET [~FILTER] AS Except({[OrientedTo].[oriented_to].Members}, {[OrientedTo].[#null]}) MEMBER [Measures].[num_activities_farmers_villages_ann_avg] AS ([Measures].[distinct_programs] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] WHERE [~FILTER] ",
+    "type": "MDX"
   }
 }
