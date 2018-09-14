@@ -150,5 +150,61 @@
   "21_stk" :  {
     "mdx": "WITH SET [~FILTER] AS {{{**TIME_PLACEHOLDER**}}} MEMBER [Measures].[%_of_accessions_duplicated] AS IIf(([Measures].[accessions] <> 0), (([Measures].[accessions_duplicated] / [Measures].[accessions])), 0), FORMAT_STRING = \"#0.0#%\"  MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions] SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[%_of_accessions_duplicated],[Measures].[accessions_national_genbank]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [germplasm_collections] WHERE [~FILTER]",
     "type": "MDX"
+  },
+  "22" : {
+    "mdx": "WITH MEMBER [Measures].[%_of_accessions_without_budget] AS ([Measures].[accessions_out_of_budget] / [Measures].[accessions_num]), FORMAT_STRING = \"#0.0#%\" MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions_num] SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[%_of_accessions_without_budget],[Measures].[accessions_national_genbank]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] ",
+    "type": "MDX"
+  },
+  "22_stk" :  {
+    "mdx": "WITH MEMBER [Measures].[%_of_accessions_without_budget] AS IIf(([Measures].[accessions_need_regeneration] = 0), 0.0, ([Measures].[accessions_out_of_budget] / [Measures].[accessions_need_regeneration])), FORMAT_STRING = \"#0.0#%\"  MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions_num] SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[%_of_accessions_without_budget],[Measures].[accessions_national_genbank]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] ",
+    "type": "MDX"
+  },
+  "23" : {
+    "mdx": "WITH MEMBER [Measures].[accessions_regenerated_ann_avg] AS ([Measures].[accessions_regenerated] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures] .[accessions_regenerated], [Measures].[accessions_regenerated_ann_avg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] ",
+    "type": "MDX"
+  },
+  "23_stk" :  {
+    "mdx": "WITH MEMBER [Measures].[accessions_regenerated_ann_avg] AS ([Measures].[accessions_regenerated] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures] .[accessions_regenerated], [Measures].[accessions_regenerated_ann_avg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] ",
+    "type": "MDX"
+  },
+  "24" : {
+    "mdx": "WITH MEMBER [Measures].[%_of_accessions_need_regeneration] AS ([Measures].[accessions_need_regeneration] / [Measures].[accessions_num]), FORMAT_STRING = \"#0.0#%\" MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions_num] SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[%_of_accessions_need_regeneration],[Measures].[accessions_national_genbank]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] ",
+    "type": "MDX"
+  },
+  "24_stk" :  {
+    "mdx": "WITH MEMBER [Measures].[%_of_accessions_need_regeneration] AS ([Measures].[accessions_need_regeneration] / [Measures].[accessions_num]), FORMAT_STRING = \"#0.0#%\" MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions_num] SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[%_of_accessions_need_regeneration],[Measures].[accessions_national_genbank]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] ",
+    "type": "MDX"
+  },
+  "25" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[AvgOfMorphologicalTraits]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_25]",
+    "type": "MDX"
+  },
+  "25_stk" : {
+    "mdx": "WITH SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[AvgOfMorphologicalTraits]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_25] ",
+    "type": "MDX"
+  },
+  "26" : {
+    "mdx": "WITH MEMBER [Measures].[number_of_pubs_ann_avg] AS ([Measures].[number_of_pubs_total] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\"  SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}}  SELECT NON EMPTY {[Measures].[number_of_pubs_total], [Measures].[number_of_pubs_ann_avg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_26] " ,
+    "type": "MDX"
+  },
+  "26_stk" : {
+    "mdx": "WITH MEMBER [Measures].[number_of_pubs_ann_avg] AS ([Measures].[number_of_pubs_total] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[number_of_pubs_total], [Measures].[number_of_pubs_ann_avg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_26] ",
+    "type": "MDX"
+  },
+  "27" :  {
+    "mdx": "WITH MEMBER [Measures].[number_of_trait_ann_avg] AS ([Measures].[number_of_trait_specific_collection_subset_published] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[number_of_trait_specific_collection_subset_published], [Measures].[number_of_trait_ann_avg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_27] ",
+    "type": "MDX"
+  },
+  "27_stk" :  {
+    "mdx": "WITH MEMBER [Measures].[number_of_trait_ann_avg] AS ([Measures].[number_of_trait_specific_collection_subset_published] / [Measures].[period]) SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[number_of_trait_specific_collection_subset_published], [Measures].[number_of_trait_ann_avg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_27] ",
+    "type": "MDX"
+  },
+  "28" : {
+    "mdx": "WITH MEMBER [Measures].[accessions_distributed_ann_avg] AS ([Measures].[accessions_distributed] / [Measures].[period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[accessions_distributed], [Measures].[accessions_distributed_ann_avg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation] ",
+    "type": "MDX"
+  },
+  "28_stk" :  {
+    "mdx": "WITH MEMBER [Measures].[accessions_distributed_ann_avg] AS ([Measures].[accessions_distributed] / [Measures].[period]) SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[accessions_distributed], [Measures].[accessions_distributed_ann_avg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation] ",
+    "type": "MDX"
   }
 }

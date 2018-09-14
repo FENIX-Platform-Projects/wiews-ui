@@ -567,13 +567,12 @@ define([
         },
             metadata : "91274"
         },
-
         22: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "22" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_22/WorldPieDashBoard",
             cube : {
             "queryModel": {},
@@ -587,38 +586,18 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "22" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[%_of_accessions_without_budget] AS ([Measures].[accessions_out_of_budget] / [Measures].[accessions_num]), FORMAT_STRING = \"#0.0#%\" " +
-                "MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions_num]" +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[%_of_accessions_without_budget],[Measures].[accessions_national_genbank]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] ",
-                    "type": "MDX"
-            },
-            "22_stk" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[%_of_accessions_without_budget] AS IIf(([Measures].[accessions_need_regeneration] = 0), 0.0, ([Measures].[accessions_out_of_budget] / [Measures].[accessions_need_regeneration])), FORMAT_STRING = \"#0.0#%\" " +
-                "MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions_num]" +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[%_of_accessions_without_budget],[Measures].[accessions_national_genbank]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] ",
-                    "type": "MDX"
-            }
+            query : {
+            "22" : query["22"],
+            "22_stk" : query["22_stk"]
         },
-        metadata : "91275"
-
-    },
+            metadata : "91275"
+        },
         23: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "23" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_22/WorldPieDashBoard",
             cube : {
             "queryModel": {},
@@ -632,36 +611,18 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "23" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[accessions_regenerated_ann_avg] AS ([Measures].[accessions_regenerated] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\"  " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures] .[accessions_regenerated], [Measures].[accessions_regenerated_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] ",
-                    "type": "MDX"
+            query : {
+                "23" : query["23"],
+                "23_stk" : query["23_stk"]
             },
-            "23_stk" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[accessions_regenerated_ann_avg] AS ([Measures].[accessions_regenerated] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\"  " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures] .[accessions_regenerated], [Measures].[accessions_regenerated_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] ",
-                    "type": "MDX"
-            }
+            metadata : "91276"
         },
-        metadata : "91276"
-
-    },
         24: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "24" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_22/WorldPieDashBoard",
             cube : {
             "queryModel": {},
@@ -675,38 +636,18 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "24" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[%_of_accessions_need_regeneration] AS ([Measures].[accessions_need_regeneration] / [Measures].[accessions_num]), FORMAT_STRING = \"#0.0#%\" " +
-                "MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions_num]" +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[%_of_accessions_need_regeneration],[Measures].[accessions_national_genbank]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [regenerations_of_accessions] ",
-                    "type": "MDX"
+            query : {
+                "24" : query["24"],
+                "24_stk" : query["24_stk"]
             },
-            "24_stk" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[%_of_accessions_need_regeneration] AS ([Measures].[accessions_need_regeneration] / [Measures].[accessions_num]), FORMAT_STRING = \"#0.0#%\" " +
-                "MEMBER [Measures].[accessions_national_genbank] as [Measures].[accessions_num]" +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[%_of_accessions_need_regeneration],[Measures].[accessions_national_genbank]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [regenerations_of_accessions] ",
-                    "type": "MDX"
-            }
+            metadata : "91277"
         },
-        metadata : "91277"
-
-    },
         25: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "25" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_25/DashInd25",
             cube : {
             "queryModel": {},
@@ -720,34 +661,18 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "25" : {
-                "mdx": "WITH " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[AvgOfMorphologicalTraits]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_25]",
-                    "type": "MDX"
+            query : {
+                "25" : query["25"],
+                "25_stk" : query["25_stk"]
             },
-            "25_stk" : {
-                "mdx": "WITH " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[AvgOfMorphologicalTraits]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_25] ",
-                    "type": "MDX"
-            }
+            metadata : "91278"
         },
-        metadata : "91278"
-
-    },
         26: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "26" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_26/DashInd26",
             cube : {
             "queryModel": {},
@@ -761,36 +686,18 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "26" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[number_of_pubs_ann_avg] AS ([Measures].[number_of_pubs_total] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[number_of_pubs_total], [Measures].[number_of_pubs_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_26] " ,
-                    "type": "MDX"
+            query : {
+                "26" : query["26"],
+                "26_stk" : query["26_stk"]
             },
-            "26_stk" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[number_of_pubs_ann_avg] AS ([Measures].[number_of_pubs_total] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[number_of_pubs_total], [Measures].[number_of_pubs_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_26] ",
-                    "type": "MDX"
-            }
+            metadata : "91279"
         },
-        metadata : "91279"
-
-    },
         27: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "27" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_27/DashInd27",
             cube : {
             "queryModel": {},
@@ -804,36 +711,18 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "27" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[number_of_trait_ann_avg] AS ([Measures].[number_of_trait_specific_collection_subset_published] / [Measures].[period]) " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[number_of_trait_specific_collection_subset_published], [Measures].[number_of_trait_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation_27] ",
-                    "type": "MDX"
+            query : {
+                "27" : query["27"],
+                "27_stk" : query["27_stk"]
             },
-            "27_stk" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[number_of_trait_ann_avg] AS ([Measures].[number_of_trait_specific_collection_subset_published] / [Measures].[period]) " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[number_of_trait_specific_collection_subset_published], [Measures].[number_of_trait_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation_27] ",
-                    "type": "MDX"
-            }
+            metadata : "91280"
         },
-        metadata : "91280"
-
-    },
         28: {
-        domain_label : labels['en']['domain_label'],
+            domain_label : labels['en']['domain_label'],
             element_label : {
             "28" : labels['en']['element_label1']
         },
-        dd_filter_category : "3",
+            dd_filter_category : "3",
             vd_code : "wiews_indicator_28/DashInd28",
             cube : {
             "queryModel": {},
@@ -847,30 +736,13 @@ define([
                     "visible": false
             }
         },
-        query : {
-            "28" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[accessions_distributed_ann_avg] AS ([Measures].[accessions_distributed] / [Measures].[period]) " +
-                "SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[accessions_distributed], [Measures].[accessions_distributed_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY [~ROWS] ON ROWS FROM [characterization_and_evaluation] ",
-                    "type": "MDX"
+            query : {
+                "28" : query["28"],
+                "28_stk" : query["28_stk"]
             },
-            "28_stk" : {
-                "mdx": "WITH " +
-                "MEMBER [Measures].[accessions_distributed_ann_avg] AS ([Measures].[accessions_distributed] / [Measures].[period]) " +
-                "SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} " +
-                "SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} " +
-                " SELECT " +
-                "NON EMPTY {[Measures].[accessions_distributed], [Measures].[accessions_distributed_ann_avg]} ON COLUMNS, " +
-                "NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [characterization_and_evaluation] ",
-                    "type": "MDX"
-            }
+            metadata : "91281"
         },
-        metadata : "91281"
 
-    },
         29: {
         domain_label : labels['en']['domain_label'],
             element_label : {
