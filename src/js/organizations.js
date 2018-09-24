@@ -76,22 +76,22 @@ define([
                 "status" : process._source.status,
                 "valid_flag" : process._source.valid,
                 "valid_instcode" : process._source.valid_instcode,
-                "role_f646" : process._source.accession_number,
-                "role_f647" : process._source.accession_number,
-                "role_f648" : process._source.accession_number,
-                "role_f649" : process._source.accession_number,
-                "role_f650" : process._source.accession_number,
-                "role_f651" : process._source.accession_number,
-                "role_f652" : process._source.accession_number,
-                "role_f653" : process._source.accession_number,
-                "role_f654" : process._source.accession_number,
-                "role_f655" : process._source.accession_number,
-                "role_f656" : process._source.accession_number,
-                "role_f657" : process._source.accession_number,
-                "role_f658" : process._source.accession_number,
-                "role_f869" : process._source.accession_number,
-                "role_f874" : process._source.accession_number,
-                "role_f875" : process._source.accession_number,
+                "role_f646" : process._source.role_f646,
+                "role_f647" : process._source.role_f647,
+                "role_f648" : process._source.role_f648,
+                "role_f649" : process._source.role_f649,
+                "role_f650" : process._source.role_f650,
+                "role_f651" : process._source.role_f651,
+                "role_f652" : process._source.role_f652,
+                "role_f653" : process._source.role_f653,
+                "role_f654" : process._source.role_f654,
+                "role_f655" : process._source.role_f655,
+                "role_f656" : process._source.role_f656,
+                "role_f657" : process._source.role_f657,
+                "role_f658" : process._source.role_f658,
+                "role_f869" : process._source.role_f869,
+                "role_f874" : process._source.role_f874,
+                "role_f875" : process._source.role_f875,
                 "longitude" : process._source.longitude,
                 "latitude" : process._source.latitude,
                 "holdings" : 0
@@ -490,7 +490,7 @@ define([
                 return;
             }
             if (row_name == "instcode") {
-                $('[data-GPAIndex=exsitu_search]').attr('href', '/wiews/data/search/'+self.lang.toLowerCase()+'/?instcode='+row_value+'#results');
+                $('[data-GPAIndex=exsitu_search]').attr('href', '/wiews/data/ex-situ-sdg-251/search/'+self.lang.toLowerCase()+'/?instcode='+row_value+'#results');
                 instcode = row_value;
             }
             $('[data-GPAIndex='+row_name+']').html(content);
