@@ -10,12 +10,14 @@ define([
     "fenix-ui-filter",
     "fenix-ui-filter-utils",
     "./renders/IndicatorCommon",
+    "./renders/IndicatorCommonUtils",
     "../../nls/labels"
-], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, labels) {
+], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, ICUtils, labels) {
 
     "use strict";
 
     var mainTabName = "downloadData";
+    var CloudLang = $("html").attr("lang").toLowerCase();
 
     var indicatorCommon;
 
@@ -85,6 +87,8 @@ define([
         this.$el = $(s.EL);
         this.indicatorConfig = this._getIndicatorConfig();
         this.config = this.indicatorConfig[mainTabName];
+        this.icUtils = new ICUtils();
+        this.iterations = this.icUtils.callGoogle('iterations_'+CloudLang+'.json',false,true).hits;
 
         this.indicatorConfig.downloadData.filter.items[12] = this._buildConfig(this.indicatorConfig.downloadData.filter.items[12], "element");
         this.indicatorConfig.downloadData.filter.items[13] = this._buildConfig(this.indicatorConfig.downloadData.filter.items[13], "time");
@@ -125,7 +129,7 @@ define([
                     def = [2017];
                 } else {
                     title = labels[self.lang.toLowerCase()]['filter_period'];
-                    source.push({value: "1", label: labels[self.lang.toLowerCase()]['cl_period_1']});
+                    source = self.iterations;
                 }
                 $.extend(obj,
                     { source: source },

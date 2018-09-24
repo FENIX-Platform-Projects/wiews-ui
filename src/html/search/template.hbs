@@ -196,7 +196,7 @@
                 <!-- Result -->
                 <div id="toolbar" class="bootstrapTableExport">
                     <button data-role="organizations_exportbutton" alt="{{organizations_export_button_alt}}"
-                            class="btn btn-default"><span alt="{{organizations_export_button_alt}}" class="icojam icojam_download_1"></span> <span>Download Result</span></button>
+                            class="btn btn-default"><span alt="{{organizations_export_button_alt}}" class="icojam icojam_download_1"></span> <span>{{download_results}}</span></button>
                 </div>
                 <table id="table"
                        data-toolbar="#toolbar"
@@ -241,66 +241,63 @@
                             <div class="tableGPA">
                                 <div class="GPA-group">
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Holding institute code and name</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_holding_institute_name}}</div>
                                         <div class="GPA-cell txt"><a target="_blank" data-GPAIndex="w_instcode" href="#"><span data-GPAIndex="stakeholder_fullname"></span></a></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Holding institute country</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_holding_institute_country}}</div>
                                         <div data-GPAIndex="country_en" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Accession number</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_accession_number}}</div>
                                         <div data-GPAIndex="accenumb" class="GPA-cell txt"></div>
                                     </div>
                                     <div data-GPAStatus="taxon" class="GPA-row">
-                                        <div class="GPA-cell lbl">Name of taxon</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_taxon_name}}</div>
                                         <div data-GPAIndex="taxon" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Name of crop</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_crop_name}}</div>
                                         <div data-GPAIndex="cropname" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Acquisition Date (YYYY/MM)</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_acquisition_date}}</div>
                                         <div data-GPAIndex="acqdate" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Country of origin</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_country_origin}}</div>
                                         <div data-GPAIndex="origcty" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Biological status of accession</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_biostat}}</div>
                                         <div data-GPAIndex="sampstat" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Genebank(s) holding safety duplications</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_genebank}}</div>
                                         <div data-GPAIndex="genebanks" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Latitude of collecting site (decimal degrees format)
-                                        </div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_latitute}}</div>
                                         <div data-GPAIndex="declatitude" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Longitude of collecting site (decimal degrees
-                                            format)
-                                        </div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_longitute}}</div>
                                         <div data-GPAIndex="declongitude" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Collecting/acquisition source</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_collecting_source}}</div>
                                         <div data-GPAIndex="collsrc" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Type of germplasm storage</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_typeofstorage}}</div>
                                         <div data-GPAIndex="storage" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Status under the Multilateral System</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_mlsstatus}}</div>
                                         <div data-GPAIndex="mlsstat" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Data Owner</div>
+                                        <div class="GPA-cell lbl">{{exsitu-search_table_dataowner}}</div>
                                         <div data-GPAIndex="dataowner" class="GPA-cell txt"></div>
                                     </div>
                                 </div>
@@ -317,5 +314,5 @@
     <br/>
 </div>
 <div id="exsitu-search-ux-loader" data-page="ux-loader">
-    <h1> Loading... <i class="fa fa-spinner" aria-hidden="true"></i> </h1>
+    <h1> {{loading_text}} <i class="fa fa-spinner" aria-hidden="true"></i> </h1>
 </div>

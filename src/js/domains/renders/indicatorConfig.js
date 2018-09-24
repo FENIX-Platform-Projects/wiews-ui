@@ -10,7 +10,8 @@ define([
 
         "use strict";
 
-        var Clang = C.lang.toLowerCase();
+        var Clang = C.lang.toLowerCase(),
+            CloudLang = $("html").attr("lang").toLowerCase();
 
         this.icUtils = new ICUtils();
         /*
@@ -24,15 +25,16 @@ define([
             CGRFA_R = this.icUtils.callElastic(CL['CGRFA_R'],true).hits,
             ITPGRFA_R = this.icUtils.callElastic(CL['ITPGRFA_R'],true).hits;
         */
-        var FAO_CL = this.icUtils.callGoogle('iso3_country_codes.json',false).hits,
-            CGRFA_CL = this.icUtils.callGoogle('cgrfa_country_codes.json',false).hits,
-            ITPGRFA_CL = this.icUtils.callGoogle('itpgrfa_country_codes.json',false).hits,
-            M49 = this.icUtils.callGoogle('m49_region_hierarchy.json',true).hits,
-            SDG = this.icUtils.callGoogle('sdg_region_hierarchy.json',true).hits,
-            MDG = this.icUtils.callGoogle('mdg_region_hierarchy.json',true).hits,
-            FAO_R = this.icUtils.callGoogle('fao_region_hierarchy.json',true).hits,
-            CGRFA_R = this.icUtils.callGoogle('cgrfa_region_hierarchy.json',true).hits,
-            ITPGRFA_R = this.icUtils.callGoogle('itpgrfa_region_hierarchy.json',true).hits;
+        var FAO_CL = this.icUtils.callGoogle('iso3_country_codes_'+CloudLang+'.json',false).hits,
+            CGRFA_CL = this.icUtils.callGoogle('cgrfa_country_codes_'+CloudLang+'.json',false).hits,
+            ITPGRFA_CL = this.icUtils.callGoogle('itpgrfa_country_codes_'+CloudLang+'.json',false).hits,
+            M49 = this.icUtils.callGoogle('m49_region_hierarchy_'+CloudLang+'.json',true).hits,
+            SDG = this.icUtils.callGoogle('sdg_region_hierarchy_'+CloudLang+'.json',true).hits,
+            MDG = this.icUtils.callGoogle('mdg_region_hierarchy_'+CloudLang+'.json',true).hits,
+            FAO_R = this.icUtils.callGoogle('fao_region_hierarchy_'+CloudLang+'.json',true).hits,
+            CGRFA_R = this.icUtils.callGoogle('cgrfa_region_hierarchy_'+CloudLang+'.json',true).hits,
+            ITPGRFA_R = this.icUtils.callGoogle('itpgrfa_region_hierarchy_'+CloudLang+'.json',true).hits,
+            Iterations = this.icUtils.callGoogle('iterations_'+CloudLang+'.json',false,true).hits;
 
 
         return {

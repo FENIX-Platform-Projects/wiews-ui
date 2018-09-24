@@ -29,7 +29,7 @@ define([
         return this;
     }
 
-    IndicatorCommonUtils.prototype.callGoogle = function (filename, isRegion) {
+    IndicatorCommonUtils.prototype.callGoogle = function (filename, isRegion, isIteration) {
         var response_data = {
                 total : -1,
                 hits : []
@@ -44,6 +44,17 @@ define([
                 url:  staticurl+filename,
                 success: function(res) {
                     //console.log('success is ',res);
+                    if (isIteration) {
+                        if (res.hits.hits.length) {
+                            _.each( res.hits.hits, function ( element ) {
+                                var item =  {
+                                    label : element._source["iteration_name_"+$("html").attr("lang")],
+                                    value : element._source["iteration_id"]
+                                };
+                                response_data.hits.push(item);
+                            });
+                        }
+                    }
                     if (isRegion === true) {
                         _.each( res.responses, function(response, index) {
                             response_data.total = response.hits.total;

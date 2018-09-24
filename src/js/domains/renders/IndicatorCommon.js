@@ -713,7 +713,7 @@ define([
         var iso = [],
             output = [];
 
-        output = this.icutils.callGoogle('iso3_country_codes.json',false).hits;
+        output = this.icutils.callGoogle('iso3_country_codes_'+$("html").attr("lang").toLowerCase()+'.json',false).hits;
 
         _.each( output, function( element ) {
             iso[element.value] = element.label;

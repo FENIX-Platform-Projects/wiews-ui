@@ -1,5 +1,5 @@
 <div data-page='organizations'>
-    <h1>Organizations</h1>
+    <h1>{{organizations_label}}</h1>
     <hr>
     <div data-role='filters'>
         <div class="row">
@@ -106,7 +106,7 @@
                 <!-- Result -->
                 <div id="toolbar" class="bootstrapTableExport">
                     <button data-role="organizations_exportbutton" alt="{{organizations_export_button_alt}}" class="btn btn-default">
-                        <span alt="{{organizations_export_button_alt}}" class="icojam icojam_download_1"></span> <span>Download Result</span></button>
+                        <span alt="{{organizations_export_button_alt}}" class="icojam icojam_download_1"></span> <span>{{download_results}}</span></button>
                 </div>
                 <table id="table"
                        data-toolbar="#toolbar"
@@ -151,86 +151,86 @@
                             <div class="tableGPA">
                                 <div class="GPA-group">
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Name of organization</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_name}}</div>
                                         <div data-GPAIndex="name" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Organization acronym</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_acronym}}</div>
                                         <div data-GPAIndex="acronym" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">WIEWS instcode</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_instcode}}</div>
                                         <div data-GPAIndex="instcode" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Parent organization</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_parentorg}}</div>
                                         <div class="GPA-cell txt"><a data-GPAIndex="parent_instcode" href="#"><span data-GPAIndex="parent_name"></span></a></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Address</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_address}}</div>
                                         <div data-GPAIndex="address" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">ZIP code</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_zipcode}}</div>
                                         <div data-GPAIndex="zip_code" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">City</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_city}}</div>
                                         <div data-GPAIndex="city" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Country</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_country}}</div>
                                         <div data-GPAIndex="country" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Telephone</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_telephone}}</div>
                                         <div data-GPAIndex="telephone" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Fax</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_fax}}</div>
                                         <div data-GPAIndex="fax" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Email address</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_email}}</div>
                                         <div data-GPAIndex="email" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">WWW address</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_www}}</div>
                                         <div data-GPAIndex="website" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Organization authority status</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_orgstatus}}</div>
                                         <div data-GPAIndex="status" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Organization role categories</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_rolecategories}}</div>
                                         <div class="GPA-cell txt">
                                             <ul>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f646">Genebank (long term collections)</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f647">Botanical garden</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f648">Breeder</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f649">Network</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f650">Community</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f651">Educational</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f652">Seed producer</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f653">Seed supplier</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f654">Farmer community</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f655">Research</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f656">Extensionist</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f657">Laboratory</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f658">Publisher</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f869">Administration/Policy</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f874">Genebank (medium term collections)</li>
-                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f875">Genebank (short term collections)</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f646">{{organizations_details_role_f646}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f647">{{organizations_details_role_f647}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f648">{{organizations_details_role_f648}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f649">{{organizations_details_role_f649}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f650">{{organizations_details_role_f650}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f651">{{organizations_details_role_f651}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f652">{{organizations_details_role_f652}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f653">{{organizations_details_role_f653}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f654">{{organizations_details_role_f657}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f655">{{organizations_details_role_f655}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f656">{{organizations_details_role_f656}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f657">{{organizations_details_role_f657}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f658">{{organizations_details_role_f658}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f869">{{organizations_details_role_f869}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f874">{{organizations_details_role_f874}}</li>
+                                                <li class="GPAListElement hiddenflag" data-GPAFlag="role_f875">{{organizations_details_role_f875}}</li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Longitude (decimal degrees format)</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_long}}</div>
                                         <div data-GPAIndex="longitude" class="GPA-cell txt"></div>
                                     </div>
                                     <div class="GPA-row">
-                                        <div class="GPA-cell lbl">Latitude (decimal degrees format)</div>
+                                        <div class="GPA-cell lbl">{{organizations_table_details_lat}}</div>
                                         <div data-GPAIndex="latitude" class="GPA-cell txt"></div>
                                     </div>
                                     <!--

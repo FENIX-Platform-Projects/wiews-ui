@@ -6,10 +6,11 @@ define([
 
         var data = {},
             label = {},
+            lang = $("html").attr("lang").toLowerCase(),
             staticurl = "https://storage.googleapis.com/wiews-lang-bucket/",
             url = "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsIndicatorLabels",
             element = [
-                "frontendlabels_EN.json"
+                "frontendlabels_"+lang.toUpperCase()+".json"
             ],
             bodies = [
                 "frontend_label"
@@ -31,7 +32,7 @@ define([
                 url:  staticurl+element[idx],
                 success: function(res) {
                     $.each(res, function(index, object){
-                        data[object[bodies[idx]+"_id"]] = object[bodies[idx]+"_en"];
+                        data[object[bodies[idx]+"_id"]] = object[bodies[idx]+"_"+lang];
                     });
                 },
                 error : function(res) {
@@ -47,10 +48,10 @@ define([
                 dataType: 'json',
                 method: 'GET',
                 contentType: "text/plain; charset=utf-8",
-                url:  staticurl+"saikulabels_en_0.json",
+                url:  staticurl+"saikulabels_"+lang+"_0.json",
                 success: function(res) {
                     $.each(res['saikulabels'], function(indice, element){
-                        data[element['saiku_label_id']] = element['saiku_label_en'];
+                        data[element['saiku_label_id']] = element['saiku_label_'+lang];
                     });
                 },
                 error : function(res) {
@@ -62,10 +63,10 @@ define([
                 dataType: 'json',
                 method: 'GET',
                 contentType: "text/plain; charset=utf-8",
-                url:  staticurl+"saikulabels_en_"+getParameterByName('code')+".json",
+                url:  staticurl+"saikulabels_"+lang+"_"+getParameterByName('code')+".json",
                 success: function(res) {
                     $.each(res['saikulabels'], function(indice, element){
-                        data[element['saiku_label_id']] = element['saiku_label_en'];
+                        data[element['saiku_label_id']] = element['saiku_label_'+lang];
                     });
                 },
                 error : function(res) {
@@ -77,16 +78,16 @@ define([
                 dataType: 'json',
                 method: 'GET',
                 contentType: "text/plain; charset=utf-8",
-                url:  staticurl+"indicator_web_label_en_"+getParameterByName('code')+".json",
+                url:  staticurl+"indicator_web_label_"+lang+"_"+getParameterByName('code')+".json",
                 success: function(res) {
 
-                    data['domain_label'] = res[0]['indicator_field_label_en'];
-                    data['element_label1'] = res[1]['indicator_field_label_en'];
-                    data['element_label2'] = res[2]['indicator_field_label_en'];
-                    data['element_label3'] = res[3]['indicator_field_label_en'];
-                    data['cl_indicator_'+getParameterByName('code')] = res[1]['indicator_field_label_en'];
-                    data['cl_indicator_'+getParameterByName('code')+'_1'] = res[2]['indicator_field_label_en'];
-                    data['cl_indicator_'+getParameterByName('code')+'_2'] = res[3]['indicator_field_label_en'];
+                    data['domain_label'] = res[0]['indicator_field_label_'+lang];
+                    data['element_label1'] = res[1]['indicator_field_label_'+lang];
+                    data['element_label2'] = res[2]['indicator_field_label_'+lang];
+                    data['element_label3'] = res[3]['indicator_field_label_'+lang];
+                    data['cl_indicator_'+getParameterByName('code')] = res[1]['indicator_field_label_'+lang];
+                    data['cl_indicator_'+getParameterByName('code')+'_1'] = res[2]['indicator_field_label_'+lang];
+                    data['cl_indicator_'+getParameterByName('code')+'_2'] = res[3]['indicator_field_label_'+lang];
 
                 },
                 error : function(res) {

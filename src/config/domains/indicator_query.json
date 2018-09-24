@@ -238,5 +238,161 @@
   "32_stk" :  {
     "mdx": "WITH SET [~FILTER] AS Except({[OrientedTo].[oriented_to].Members}, {[OrientedTo].[#null]}) MEMBER [Measures].[num_activities_farmers_villages_ann_avg] AS ([Measures].[distinct_programs] / [Measures].[period]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[distinct_programs], [Measures].[num_activities_farmers_villages_ann_avg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [plant_breeding] WHERE [~FILTER] ",
     "type": "MDX"
+  },
+  "33" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[priv_crop_breeders]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding_33_34] WHERE [Last_Year_Crop].[1]",
+    "type": "MDX"
+  },
+  "34" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[priv_crop_breeders]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [plant_breeding_33_34] WHERE [Last_Year_Crop].[1]",
+    "type": "MDX"
+  },
+  "35" : {
+    "mdx": "WITH MEMBER [Measures].[NumberOfPrograms_AnnAvg] AS ([Measures].[NumberOfPrograms] / [Measures].[Period])  SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfPrograms],[Measures].[NumberOfPrograms_AnnAvg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [crop_diversification_35] ",
+    "type": "MDX"
+  },
+  "35_stk" : {
+    "mdx": "WITH MEMBER [Measures].[NumberOfPrograms_AnnAvg] AS ([Measures].[NumberOfPrograms] / [Measures].[Period]) SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[NumberOfPrograms],[Measures].[NumberOfPrograms_AnnAvg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [crop_diversification_35]",
+    "type": "MDX"
+  },
+  "36" : {
+    "mdx" : "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} MEMBER [Measures].[NumberOfNewCrops_AnnAvg] AS ([Measures].[NumberOfNewCrops] / [Measures].[Period]) SELECT NON EMPTY {[Measures].[NumberOfNewCrops],[Measures].[NumberOfNewCrops_AnnAvg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [crop_diversification_36]",
+    "type": "MDX"
+  },
+  "37" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithPolicy],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [dev_and_comm_of_varieties_37]",
+    "type": "MDX"
+  },
+  "38" : {
+    "mdx": "WITH MEMBER [Measures].[NumberOfPrograms_AnnAvg] AS ([Measures].[NumberOfPrograms] / [Measures].[Period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfPrograms],[Measures].[NumberOfPrograms_AnnAvg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [dev_and_comm_of_varieties_38]",
+    "type": "MDX"
+  },
+  "38_stk" : {
+    "mdx": "WITH MEMBER [Measures].[NumberOfPrograms_AnnAvg] AS ([Measures].[NumberOfPrograms] / [Measures].[Period]) SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[NumberOfPrograms],[Measures].[NumberOfPrograms_AnnAvg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [dev_and_comm_of_varieties_38]",
+    "type": "MDX"
+  },
+  "39" : {
+    "mdx": "WITH MEMBER [Measures].[NumberOfLandraces_AnnAvg] AS ([Measures].[NumberOfLandraces] / [Measures].[Period]) MEMBER [Measures].[CountOfTaxonCrop_AnnAvg] AS ([Measures].[CountOfTaxonCrop] / [Measures].[Period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfLandraces],[Measures].[NumberOfLandraces_AnnAvg], [Measures].[CountOfTaxonCrop],[Measures].[CountOfTaxonCrop_AnnAvg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [dev_and_comm_of_varieties_39]",
+    "type": "MDX"
+  },
+  "40" : {
+    "mdx": "WITH MEMBER [Measures].[NumberOfNewVarieties_AnnAvg] AS ([Measures].[NumberOfNewVarieties] / [Measures].[Period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfNewVarieties],[Measures].[NumberOfNewVarieties_AnnAvg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_40]",
+    "type": "MDX"
+  },
+  "41" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfRegisteredSeedEnterprises]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_41]",
+    "type": "MDX"
+  },
+  "42" : {
+    "mdx": "WITH MEMBER [Measures].[NumberOfVarieties] AS ([Measures].[NumberOfVaretiesXTotalCropArea] / [Measures].[TotalCropArea]), FORMAT_STRING = \"#0.0#%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfVarieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_42] WHERE [Last_Year_Boolean.last_year_boolean].[1]",
+    "type": "MDX"
+  },
+  "43" : {
+    "mdx": "WITH MEMBER [Measures].[area_supplied_with_seed] AS ([Measures].[CalcPerCrop_x_TotalCropHarv] / [Measures].[TotalCropHarvestedArea]), FORMAT_STRING = \"#,##0.00\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[area_supplied_with_seed]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_43] WHERE [Last Year Bool].[1]",
+    "type": "MDX"
+  },
+  "44" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountries],[Measures].[NumberOfCountriesWithPolicy]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [seed_production_and_distribution_44]",
+    "type": "MDX"
+  },
+  "45" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithExistence],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_45]",
+    "type": "MDX"
+  },
+  "46" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithNPF],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_46]",
+    "type": "MDX"
+  },
+  "47" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithPolicy],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_47]",
+    "type": "MDX"
+  },
+  "48" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithExistence],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [national_programme_48]",
+    "type": "MDX"
+  },
+  "49" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithNetwork],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [networks_49]",
+    "type": "MDX"
+  },
+  "50" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfNetworks]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [networks_50] ",
+    "type": "MDX"
+  },
+  "50_stk" :  {
+    "mdx": "WITH SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[NumberOfNetworks]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [networks_50]",
+    "type": "MDX"
+  },
+  "51" : {
+    "mdx": "WITH MEMBER [Measures].[NumberOfPublications_AnnAvg] AS ([Measures].[NumberOfPublications] / [Measures].[Period]) SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfPublications], [Measures].[NumberOfPublications_AnnAvg]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [networks_51] ",
+    "type": "MDX"
+  },
+  "51_stk" : {
+    "mdx": "WITH MEMBER [Measures].[NumberOfPublications_AnnAvg] AS ([Measures].[NumberOfPublications] / [Measures].[Period]) SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[NumberOfPublications], [Measures].[NumberOfPublications_AnnAvg]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [networks_51] ",
+    "type": "MDX"
+  },
+  "52" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number of Crops]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_52]",
+    "type": "MDX"
+  },
+  "53" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Farmers Varieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_53]",
+    "type": "MDX"
+  },
+  "54" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Accessions ex situ documented]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_54] ",
+    "type": "MDX"
+  },
+  "54_stk" :  {
+    "mdx": "WITH SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[Accessions ex situ documented]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [information_systems_54] ",
+    "type": "MDX"
+  },
+  "55" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Number Released Varieties]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_55]",
+    "type": "MDX"
+  },
+  "56" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfStakeholdersWithParticipation],[Measures].[NumberOfStakeholders]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [information_systems_56]",
+    "type": "MDX"
+  },
+  "56_stk" : {
+    "mdx": "WITH SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[Int/ Reg Information Systems]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [information_systems_56] " ,
+    "type": "MDX"
+  },
+  "57" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithExistence],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [monitoring_and_safeguarding_genetic_diversity_57]",
+    "type": "MDX"
+  },
+  "58" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[Remedial Action]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [monitoring_and_safeguarding_genetic_diversity_58]",
+    "type": "MDX"
+  },
+  "59" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithExistence],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [human_resource_capacity_59]",
+    "type": "MDX"
+  },
+  "60" : {
+    "mdx": "WITH MEMBER [Measures].[%_of_staff_with_skills_upgraded] AS iif((((([Measures].[NumberOfProfessionalsWithPHD] + [Measures].[NumberOfProfessionalsWithMSC]) + [Measures].[NumberOfProfessionalsAttendedCourses]) / [Measures].[NumberOfProfessionals]) > 1), 1, ((([Measures].[NumberOfProfessionalsWithPHD] + [Measures].[NumberOfProfessionalsWithMSC]) + [Measures].[NumberOfProfessionalsAttendedCourses]) / [Measures].[NumberOfProfessionals])), FORMAT_STRING = \"#0.0#%\" SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[%_of_staff_with_skills_upgraded]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [human_resource_capacity_60] ",
+    "type": "MDX"
+  },
+  "60_stk" :  {
+    "mdx": "WITH MEMBER [Measures].[%_of_staff_with_skills_upgraded] AS iif((((([Measures].[NumberOfProfessionalsWithPHD] + [Measures].[NumberOfProfessionalsWithMSC]) + [Measures].[NumberOfProfessionalsAttendedCourses]) / [Measures].[NumberOfProfessionals]) > 1), 1, ((([Measures].[NumberOfProfessionalsWithPHD] + [Measures].[NumberOfProfessionalsWithMSC]) + [Measures].[NumberOfProfessionalsAttendedCourses]) / [Measures].[NumberOfProfessionals])), FORMAT_STRING = \"#0.0#%\" SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[%_of_staff_with_skills_upgraded]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [human_resource_capacity_60] ",
+    "type": "MDX"
+  },
+  "61" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfCountriesWithExistence],[Measures].[NumberOfCountries]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [public_awareness_61]",
+    "type": "MDX"
+  },
+  "62" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfStakeholdingGroups]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [public_awareness_61]",
+    "type": "MDX"
+  },
+  "63" : {
+    "mdx": "WITH SET [~ROWS] AS {{{**REGION_PLACEHOLDER**}}} SELECT NON EMPTY {[Measures].[NumberOfProductsDeveloped]} ON COLUMNS, NON EMPTY [~ROWS] ON ROWS FROM [public_awareness_63]",
+    "type": "MDX"
+  },
+  "63_stk" :  {
+    "mdx": "WITH SET [~ROWS_Region_Region.iso3_code] AS {{{**REGION_PLACEHOLDER**}}} SET [~ROWS_Organization_Organization.Organization] AS {[Organization].[wiews_instcode].Members} SELECT NON EMPTY {[Measures].[NumberOfProductsDeveloped]} ON COLUMNS, NON EMPTY NonEmptyCrossJoin([~ROWS_Region_Region.iso3_code], [~ROWS_Organization_Organization.Organization]) ON ROWS FROM [public_awareness_63] ",
+    "type": "MDX"
   }
 }
