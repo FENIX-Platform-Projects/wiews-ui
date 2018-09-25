@@ -3,9 +3,9 @@ define([
     "loglevel",
     "underscore",
     "../../config/config",
-    "../../config/domains/config",
-    "../../html/domains/downloadDataFilterTemplate.hbs",
-    "../../html/domains/downloadDataDashboardTemplate.hbs",
+    "../../config/indicators/config",
+    "../../html/indicators/downloadDataFilterTemplate.hbs",
+    "../../html/indicators/downloadDataDashboardTemplate.hbs",
     "fenix-ui-dashboard",
     "fenix-ui-filter",
     "fenix-ui-filter-utils",
@@ -111,7 +111,7 @@ define([
             case "element":
                 // Element
                 $.each(PAGC[ind].element_label, function (item) {
-                    var the_label = labels[self.lang.toLowerCase()]['cl_indicator_'+item];
+                    var the_label = labels[CloudLang.toLowerCase()]['cl_indicator_'+item];
                     if (the_label != undefined) source.push({value: item, label: the_label});
                 });
                 $.extend(obj,
@@ -128,7 +128,7 @@ define([
                     type = "radio";
                     def = [2017];
                 } else {
-                    title = labels[self.lang.toLowerCase()]['filter_period'];
+                    title = labels[CloudLang.toLowerCase()]['filter_period'];
                     source = self.iterations;
                 }
                 $.extend(obj,
@@ -203,12 +203,15 @@ define([
     //The filter is created just once by the configuration
     DownloadData.prototype._renderFilter = function (filterConfig) {
 
+        console.log(C.lang);
+
         var self = this;
         this.filter = new Filter({
             el: s.filter.filter_container,
             selectors: filterConfig,
             environment: this.environment,
             cache : this.cache,
+            lang: C.lang,
 
             common: {
                 template: {

@@ -4,15 +4,15 @@ define([
     "underscore",
     "handlebars",
     "../config/config",
-    "../config/domains/config",
-    "../html/domains/template.hbs",
-    "./domains/downloadData",
-    "./domains/visualizeData",
+    "../config/indicators/config",
+    "../html/indicators/template.hbs",
+    "./indicators/downloadData",
     "../nls/labels"
-], function ($, log, _, Handlebars, C, PAGC, template, DownloadData, VisualizeData, labels) {
+], function ($, log, _, Handlebars, C, PAGC, template, DownloadData, labels) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
+    var CloudLang = $("html").attr("lang").toLowerCase();
 
     //This code has to be passed by Typo3
     var selected = 0;
@@ -70,7 +70,7 @@ define([
 
     Domains.prototype._attach = function () {
 
-        $(s.EL).html(template(labels[Clang]));
+        $(s.EL).html(template(labels[CloudLang]));
     };
 
     Domains.prototype._initVariables = function () {
@@ -99,7 +99,7 @@ define([
             $('[data-tab="'+s.VISUALIZE_DATA_TAB+'"]').removeAttr('href');
             $('[data-tab="'+s.META_DATA_TAB+'"]').removeAttr('data-toggle');
             $('[data-tab="'+s.META_DATA_TAB+'"]').removeAttr('href');
-            if (this.indicatorProperties.metadata) $('[data-tab="'+s.META_DATA_TAB+'"]').attr('href', "http://www.fao.org/index.php?id="+this.indicatorProperties.metadata);
+            $('[data-tab="'+s.META_DATA_TAB+'"]').attr('href', C.URL_metadata+this.indicatorProperties.indicator_id+"/"+CloudLang+"/");
             //$('[data-tab="'+s.META_DATA_TAB+'"]').attr('target', "_blank");
             s.noVisualize = true;
 //        }
@@ -112,15 +112,15 @@ define([
     Domains.prototype._elementSetting = function () {
 
         // Set Domain
-        this.$el.find('[data-role="domain"]').html(labels[Clang]['domain_'+this.selected_indicator.code])
+        this.$el.find('[data-role="domain"]').html(labels[CloudLang]['domain_'+this.selected_indicator.code])
         // Set Activity1
-        this.$el.find('[data-role="activity1"]').html(labels[Clang]['activity1_'+this.selected_indicator.code])
+        this.$el.find('[data-role="activity1"]').html(labels[CloudLang]['activity1_'+this.selected_indicator.code])
         // Set Activity2
-        this.$el.find('[data-role="activity2"]').html(labels[Clang]['activity2_'+this.selected_indicator.code])
+        this.$el.find('[data-role="activity2"]').html(labels[CloudLang]['activity2_'+this.selected_indicator.code])
         // Set Title
-        this.$el.find('[data-role="title"]').html(labels[Clang]['title_'+this.selected_indicator.code])
+        this.$el.find('[data-role="title"]').html(labels[CloudLang]['title_'+this.selected_indicator.code])
         // Set Indicator
-        this.$el.find('[data-role="indicator"]').html(labels[Clang]['indicator_'+this.selected_indicator.code])
+        this.$el.find('[data-role="indicator"]').html(labels[CloudLang]['indicator_'+this.selected_indicator.code])
     };
 
     //Initialization of the Download Data and Visualize Data Tab
@@ -134,16 +134,6 @@ define([
               indicatorProperties: this.indicatorProperties,
               conversion: PAGC[this.selected_indicator.code].downloadConversion
         });
-
-        if(!s.noVisualize){
-            this.visualizeDataTab = new VisualizeData({
-                el: this.$el.find(s.VISUALIZE_DATA_TAB_EL),
-                lang: this.lang,
-                environment: this.environment,
-                cache : this.cache,
-                indicatorProperties: this.indicatorProperties
-            });
-        }
 
         this.downloadDataTab.render();
     };

@@ -18,12 +18,11 @@ define([
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
-        page_url = "/wiews/data/ex-situ-sdg-251/search/",
-        organization_url = "/wiews/data/organizations/",
-        services_el = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchApi",
-        services_ex = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchReport",
-        services_ef = "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsExsituRawDownload",
-        services_bq = "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsExsituSearch",
+        page_url = C.URL_exsitusearch,
+        organization_url = C.URL_organizations,
+        services_el = C.URL_elasticsearchapi,
+        services_ef = C.URL_elasticrawdownload,
+        services_bq = C.URL_bigquery,
         service_path = {
             "wiews_results" : "?index=exsitu&multiSearch=false",
             "countries" : "?index=countries&multiSearch=false",
@@ -140,7 +139,7 @@ define([
                 total : -1,
                 hits : []
             },
-            staticurl = "https://storage.googleapis.com/wiews-lang-bucket/";
+            staticurl = C.URL_bucket;
 
 
         $.ajax({

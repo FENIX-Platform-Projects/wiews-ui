@@ -2,14 +2,12 @@ define([
     "jquery",
     "loglevel",
     'underscore',
-    "../../../../config/config",
-    "../../../../config/errors",
-    "../../../../config/events",
-    "../../../../config/domains/codelistPayloads",
-    "../../../../config/domains/config",
-    "../IndicatorCommonUtils",
-    "../../../../nls/labels"
-], function ($, log, _, C, ERR, EVT, CL, DM, ICUtils, labels) {
+    "../../../config/config",
+    "../../../config/indicators/codelistPayloads",
+    "../../../config/indicators/config",
+    "./IndicatorCommonUtils",
+    "../../../nls/labels"
+], function ($, log, _, C, CL, DM, ICUtils, labels) {
 
 
     'use strict';
@@ -463,7 +461,7 @@ define([
                 dataType: 'json',
                 method: 'POST',
                 contentType: "text/plain; charset=utf-8",
-                url: "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsIndicatorsRawDownload",
+                url: C.URL_indicator_rawdownload,
                 data: JSON.stringify(data),
                 success: function (res) {
                     setTimeout(function () {

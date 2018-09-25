@@ -20,7 +20,7 @@ define([
     "use strict";
     var Clang = C.lang.toLowerCase(),
         services_url = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchGetData?index=organizations&multiSearch=no",
-        services_el = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchApi",
+        services_el = C.URL_elasticsearchapi,
         service_path = {
             "countries" : "?index=countries&multiSearch=false",
             "biostatus" : "?index=biostatofacc&multiSearch=false",
@@ -108,7 +108,7 @@ define([
                 total : -1,
                 hits : []
             },
-            staticurl = "https://storage.googleapis.com/wiews-lang-bucket/";
+            staticurl = C.URL_bucket;
 
         $.ajax({
             async: false,

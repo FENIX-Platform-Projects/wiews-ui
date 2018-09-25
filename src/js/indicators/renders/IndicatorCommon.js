@@ -3,22 +3,21 @@ define([
     "loglevel",
     'underscore',
     "../../../config/config",
-    "../../../config/errors",
-    "../../../config/events",
-    "../../../config/domains/config",
-    "../../../config/domains/filterSelectors",
-    "../../../config/domains/codelistPayloads",
+    "../../../config/indicators/config",
+    "../../../config/indicators/filterSelectors",
+    "../../../config/indicators/codelistPayloads",
     "../renders/IndicatorCommonUtils",
-    "../renders/downloadData/indicatorBase",
-    "../../../html/domains/visualizeDataDashboardTemplate.hbs",
+    "./indicatorBase",
+    "../../../html/indicators/visualizeDataDashboardTemplate.hbs",
     "fenix-ui-reports",
     "../../../nls/labels",
     "fenix-ui-bridge",
     "json-2-csv",
     "file-saver",
     "bootstrap-table",
-    '../../../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
-], function ($, log, _, C, ERR, EVT, DM, FilterSelectors, CL, ICUtils, IBase, DashboardTemplate, Report, labels, Bridge, converter, FileSaver, bootstrapTable) {
+    '../../../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export',
+    '../../../../node_modules/bootstrap-table/dist/bootstrap-table-locale-all'
+], function ($, log, _, C, DM, FilterSelectors, CL, ICUtils, IBase, DashboardTemplate, Report, labels, Bridge, converter, FileSaver, bootstrapTable) {
 
     'use strict';
 
@@ -937,7 +936,7 @@ define([
                     method: 'POST',
                     contentType: "application/json; charset=utf-8",
                     accept: "application/json, text/javascript, */*; q=0.01",
-                    url: "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/query/execute",
+                    url: C.URL_saiku,
                     data: mdx_query,
                     success: function(res) {
                         table_output = self._convert2TableData(res, dsd, lab);
@@ -971,7 +970,7 @@ define([
                     method: 'POST',
                     contentType: "application/json; charset=utf-8",
                     accept: "application/json, text/javascript, */*; q=0.01",
-                    url: "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/query/execute",
+                    url: C.URL_saiku,
                     data: mdx_query,
                     success: function(res) {
                         table_tobootstrap = table_tobootstrap.concat(table_output,self._convert2TableData(res, dsd, lab));
@@ -1040,16 +1039,28 @@ define([
     //Render of the bootstrap table
     IndicatorCommon.prototype._tableRender = function (table, param) {
         this._toggleLoading();
+        var btLocale = {
+            en : "en-US",
+            es : "es-ES",
+            fr : "fr-FR",
+            ru : "ru-RU",
+            ar : "ar-EG",
+            zh : "zh-CN"
+        }
+        console.log('locale is ',btLocale[C.lang.toLowerCase()])
         var self = this;
         var tableElem = param.indicatorDashboardSection.find('[data-table = "dd-dashboard-table"]');
         var downElem = $('[data-role="organizations_exportbutton"]');
         $('div.tableauPlaceholder').remove();
         param.indicatorDashboardSection.show();
 
+        console.log('btLocale',btLocale);
+
         $('[data-table = "dd-dashboard-table"]').bootstrapTable('destroy');
 
         $('[data-table = "dd-dashboard-table"]').bootstrapTable({
             //data : table,
+            locale: btLocale[C.lang.toLowerCase()],
             pagination: true,
             pageSize: 25,
             pageList: [10, 25, 50, 100, 200],

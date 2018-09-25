@@ -4,7 +4,6 @@ define([
     "underscore",
     "load-google-maps-api-2",
     "../config/config",
-    "../config/maps/config",
     "../html/maps/template.hbs",
     "../nls/labels",
     "json-2-csv",
@@ -13,10 +12,9 @@ define([
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export',
     'typeahead.js',
-    'select2',
+    'select2'
 
-
-], function ($, log, _, GoogleMaps, C, exsituC, template, labels, converter, FileSaver, bootstrap) {
+], function ($, log, _, GoogleMaps, C, template, labels, converter, FileSaver, bootstrap) {
 
     "use strict";
     var Clang = C.lang.toLowerCase();
@@ -25,11 +23,11 @@ define([
             EL: "#maps",
             TABLE : "#table"
         },
-        exsitu_search_url = "http://www.fao.org/wiews/data/ex-situ-sdg-251/search/",
-        organization_url = "http://www.fao.org/wiews/data/organizations/",
-        services_url = "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/WIEWS/wiews_map_agg_{{YEAR}}.saiku",
+        exsitu_search_url = C.URL_exsitusearch,
+        organization_url = C.URL_organizations,
+        services_url = C.URL_saikumap,
         //google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
-        google_apikey = "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY"; // < PROD
+        google_apikey = C.google_apikey; // < PROD
 
     function Maps() {
         console.clear();

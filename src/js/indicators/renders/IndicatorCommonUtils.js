@@ -1,7 +1,8 @@
 define([
     "jquery",
-    "underscore"
-], function ($, _) {
+    "underscore",
+    "../../../config/config"
+], function ($, _, C) {
 
     'use strict';
 
@@ -34,7 +35,7 @@ define([
                 total : -1,
                 hits : []
             },
-            staticurl = "https://storage.googleapis.com/wiews-lang-bucket/";
+            staticurl = C.URL_bucket;
 
             $.ajax({
                 async: false,

@@ -1,16 +1,20 @@
 /*global define*/
 define([
         "jquery",
+        "../../config/config",
         "./indicator_query.json",
         "../../nls/labels"
-    ],function ($, staticfile, labels) {
+    ],function ($, C, staticfile, labels) {
 
     'use strict';
 
     var query = staticfile;
+    //var Clang = C.lang.toLowerCase();
+    var CloudLang = $("html").attr("lang").toLowerCase();
+
 
     // Dynamic part.
-    var staticurl = "https://storage.googleapis.com/wiews-lang-bucket/indicator_query.json";
+    var staticurl = C.URL_bucket;
 
     // Get Query Config
     $.ajax({
@@ -50,9 +54,9 @@ define([
             }
         },
         1: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
                 element_label : {
-                "1" : labels['en']['element_label1']
+                "1" : labels[CloudLang]['element_label1']
             },
             dd_filter_category : "1",
                 vd_code : "wiews_indicator_01/DashInd01",
@@ -70,16 +74,15 @@ define([
             },
             query : {
                 "1" : query["1"]
-            },
-            metadata : "91243"
+            }
 
         },
         2: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-                "2" : labels['en']['element_label1'],
-                "2_1" : labels['en']['element_label2'],
-                "2_2" : labels['en']['element_label3']
+                "2" : labels[CloudLang]['element_label1'],
+                "2_1" : labels[CloudLang]['element_label2'],
+                "2_2" : labels[CloudLang]['element_label3']
             },
             dd_filter_category : "2",
                 vd_code : "wiews_indicator_02/DashInd02",
@@ -104,11 +107,11 @@ define([
 
         },
         3: {
-        domain_label : labels['en']['domain_label'],
+        domain_label : labels[CloudLang]['domain_label'],
         element_label : {
-            "3" : labels['en']['element_label1'],
-                "3_1" : labels['en']['element_label2'],
-                "3_2" : labels['en']['element_label3']
+            "3" : labels[CloudLang]['element_label1'],
+                "3_1" : labels[CloudLang]['element_label2'],
+                "3_2" : labels[CloudLang]['element_label3']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_03_0/DashInd03",
@@ -133,9 +136,9 @@ define([
 
         },
         4: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "4" : labels['en']['element_label1']
+            "4" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_04/DashInd04",
@@ -159,9 +162,9 @@ define([
 
         },
         5: {
-        domain_label : labels['en']['domain_label'],
+        domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "5" : labels['en']['element_label1']
+            "5" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_05/DashInd05",
@@ -183,9 +186,9 @@ define([
             metadata : "91254"
         },
         6: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "6" : labels['en']['element_label1']
+            "6" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_06/DashInd06",
@@ -207,9 +210,9 @@ define([
             metadata : "91255"
         },
         7: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "7" : labels['en']['element_label1']
+            "7" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_07/DashInd07",
@@ -232,9 +235,9 @@ define([
             metadata : "91256"
         },
         8: {
-        domain_label : labels['en']['domain_label'],
+        domain_label : labels[CloudLang]['domain_label'],
         element_label : {
-            "8" : labels['en']['element_label1']
+            "8" : labels[CloudLang]['element_label1']
         },
         dd_filter_category : "3",
         vd_code : "wiews_indicator_08/DashInd08",
@@ -257,9 +260,9 @@ define([
         metadata : "91259"
         },
         9: {
-        domain_label : labels['en']['domain_label'],
+        domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "9" : labels['en']['element_label1']
+            "9" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_09/DashInd09",
@@ -281,9 +284,9 @@ define([
             metadata : "91260"
         },
         10: {
-        domain_label : labels['en']['domain_label'],
+        domain_label : labels[CloudLang]['domain_label'],
         element_label : {
-            "10" : labels['en']['element_label1']
+            "10" : labels[CloudLang]['element_label1']
         },
         dd_filter_category : "1",
         vd_code : "wiews_indicator_10/Dashboard10",
@@ -306,9 +309,9 @@ define([
 
     },
         11: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-                "11" : labels['en']['element_label1']
+                "11" : labels[CloudLang]['element_label1']
             },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_11/DashInd11",
@@ -331,9 +334,9 @@ define([
             metadata : "91262"
         },
         12: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "12" : labels['en']['element_label1']
+            "12" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_12/DashInd12",
@@ -355,9 +358,9 @@ define([
             metadata : "91263"
         },
         13: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-                "13" : labels['en']['element_label1']
+                "13" : labels[CloudLang]['element_label1']
             },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_13/DashInd13",
@@ -380,9 +383,9 @@ define([
             metadata : "91264"
         },
         14: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "14" : labels['en']['element_label1']
+            "14" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_14/DashInd14",
@@ -405,9 +408,9 @@ define([
             metadata : "91265"
         },
         15: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "15" : labels['en']['element_label1']
+            "15" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_15/DashInd15",
@@ -430,9 +433,9 @@ define([
             metadata : "91267"
         },
         16: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "16" : labels['en']['element_label1']
+            "16" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_16/DashInd16",
@@ -455,9 +458,9 @@ define([
             metadata : "91268"
         },
         17: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "17" : labels['en']['element_label1']
+            "17" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "2",
             vd_code : "wiews_indicator_17/DashInd17",
@@ -480,9 +483,9 @@ define([
         },
         18: {
             period_label : "Year",
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "18" : labels['en']['element_label1']
+            "18" : labels[CloudLang]['element_label1']
         },
             time: "years",
             dd_filter_category : "3",
@@ -507,9 +510,9 @@ define([
         },
         19: {
             period_label : "Year",
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "19" : labels['en']['element_label1']
+            "19" : labels[CloudLang]['element_label1']
         },
             time: "years",
             dd_filter_category : "3",
@@ -534,9 +537,9 @@ define([
         },
         20: {
             period_label : "Year",
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "20" : labels['en']['element_label1']
+            "20" : labels[CloudLang]['element_label1']
         },
             time: "years",
             dd_filter_category : "3",
@@ -561,10 +564,10 @@ define([
         },
         21: {
             period_label : "Year",
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {
-            "21" : labels['en']['element_label1']
+            "21" : labels[CloudLang]['element_label1']
         },
             time: "years",
             dd_filter_category : "3",
@@ -588,9 +591,9 @@ define([
             metadata : "91274"
         },
         22: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "22" : labels['en']['element_label1']
+            "22" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_22/WorldPieDashBoard",
@@ -613,9 +616,9 @@ define([
             metadata : "91275"
         },
         23: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "23" : labels['en']['element_label1']
+            "23" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_22/WorldPieDashBoard",
@@ -638,9 +641,9 @@ define([
             metadata : "91276"
         },
         24: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "24" : labels['en']['element_label1']
+            "24" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_22/WorldPieDashBoard",
@@ -663,9 +666,9 @@ define([
             metadata : "91277"
         },
         25: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "25" : labels['en']['element_label1']
+            "25" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_25/DashInd25",
@@ -688,9 +691,9 @@ define([
             metadata : "91278"
         },
         26: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "26" : labels['en']['element_label1']
+            "26" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_26/DashInd26",
@@ -713,9 +716,9 @@ define([
             metadata : "91279"
         },
         27: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "27" : labels['en']['element_label1']
+            "27" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_27/DashInd27",
@@ -738,9 +741,9 @@ define([
             metadata : "91280"
         },
         28: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "28" : labels['en']['element_label1']
+            "28" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_28/DashInd28",
@@ -763,9 +766,9 @@ define([
             metadata : "91281"
         },
         29: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "29" : labels['en']['element_label1']
+            "29" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_29/DashInd29",
@@ -788,9 +791,9 @@ define([
             metadata : "91282"
         },
         30: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "30" : labels['en']['element_label1']
+            "30" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_30/DashInd30",
@@ -813,9 +816,9 @@ define([
             metadata : "91283"
         },
         31: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "31" : labels['en']['element_label1']
+            "31" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_31/DashInd31",
@@ -838,9 +841,9 @@ define([
             metadata : "91284"
         },
         32: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "32" : labels['en']['element_label1']
+            "32" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_32/DashInd32",
@@ -863,9 +866,9 @@ define([
             metadata : "91285"
         },
         33: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "33" : labels['en']['element_label1']
+            "33" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_33/DashInd33",
@@ -887,9 +890,9 @@ define([
             metadata : "91286"
         },
         34: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "34" : labels['en']['element_label1']
+            "34" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_34/DashInd34",
@@ -911,9 +914,9 @@ define([
             metadata : "91287"
         },
         35: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "35" : labels['en']['element_label1']
+            "35" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_35/DashInd35",
@@ -936,9 +939,9 @@ define([
             metadata : "91288"
         },
         36: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "36" : labels['en']['element_label1']
+            "36" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "2",
             vd_code : "wiews_indicator_36/DashInd36",
@@ -961,9 +964,9 @@ define([
 
         },
         37: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "37" : labels['en']['element_label1']
+            "37" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "2",
             vd_code : "wiews_indicator_37/DashInd37",
@@ -985,9 +988,9 @@ define([
              metadata : "91290"
         },
         38: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "38" : labels['en']['element_label1']
+            "38" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_38/DashInd38",
@@ -1010,9 +1013,9 @@ define([
             metadata : "91291"
         },
         39: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "39" : labels['en']['element_label1']
+            "39" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_39/DashInd39",
@@ -1034,9 +1037,9 @@ define([
             metadata : "91292"
         },
         40: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "40" : labels['en']['element_label1']
+            "40" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_40/DashInd40",
@@ -1058,9 +1061,9 @@ define([
             metadata : "91293"
         },
         41: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "41" : labels['en']['element_label1']
+            "41" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_41/DashInd41",
@@ -1082,9 +1085,9 @@ define([
             metadata : "91294"
         },
         42: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "42" : labels['en']['element_label1']
+            "42" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_42/DasnInd42",
@@ -1106,9 +1109,9 @@ define([
             metadata : "91295"
         },
         43: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "43" : labels['en']['element_label1']
+            "43" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_43/DashInd43",
@@ -1130,9 +1133,9 @@ define([
             metadata : "91296"
         },
         44: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "44" : labels['en']['element_label1']
+            "44" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_44/DashInd44",
@@ -1154,9 +1157,9 @@ define([
             metadata : "91297"
         },
         45: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "45" : labels['en']['element_label1']
+            "45" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_45/DashInd45",
@@ -1178,9 +1181,9 @@ define([
             metadata : "91298"
         },
         46: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "46" : labels['en']['element_label1']
+            "46" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_46/DashInd46",
@@ -1202,9 +1205,9 @@ define([
             metadata : "91299"
         },
         47: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "47" : labels['en']['element_label1']
+            "47" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_47/WorldChart",
@@ -1226,9 +1229,9 @@ define([
             metadata : "91300"
         },
         48: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "48" : labels['en']['element_label1']
+            "48" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_48/DashInd48",
@@ -1250,9 +1253,9 @@ define([
             metadata : "91301"
         },
         49: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "49" : labels['en']['element_label1']
+            "49" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_49/DashInd49",
@@ -1274,9 +1277,9 @@ define([
             metadata : "91302"
         },
         50: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "50" : labels['en']['element_label1']
+            "50" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_50/DashInd50",
@@ -1299,9 +1302,9 @@ define([
             metadata : "91303"
         },
         51: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "51" : labels['en']['element_label1']
+            "51" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_51/DashInd51",
@@ -1324,9 +1327,9 @@ define([
             metadata : "91304"
         },
         52: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "52" : labels['en']['element_label1']
+            "52" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_52/DashInd52",
@@ -1348,9 +1351,9 @@ define([
             metadata : "91305"
         },
         53: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "53" : labels['en']['element_label1']
+            "53" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_53/DashInd53",
@@ -1372,9 +1375,9 @@ define([
             metadata : "91306"
         },
         54: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "54" : labels['en']['element_label1']
+            "54" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_54/DashInd54",
@@ -1397,9 +1400,9 @@ define([
             metadata : "91307"
         },
         55: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "55" : labels['en']['element_label1']
+            "55" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_55/DashInd55",
@@ -1421,9 +1424,9 @@ define([
             metadata : "91308"
         },
         56: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "56" : labels['en']['element_label1']
+            "56" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_56/DashInd56",
@@ -1446,9 +1449,9 @@ define([
             metadata : "91309"
         },
         57: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "57" : labels['en']['element_label1']
+            "57" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_57/DashInd57",
@@ -1470,9 +1473,9 @@ define([
             metadata : "91310"
         },
         58: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "58" : labels['en']['element_label1']
+            "58" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_58/DashInd58",
@@ -1494,9 +1497,9 @@ define([
             metadata : "91310"
         },
         59: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "59" : labels['en']['element_label1']
+            "59" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_59/DashInd59",
@@ -1518,9 +1521,9 @@ define([
             metadata : "91312"
         },
         60: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "60" : labels['en']['element_label1']
+            "60" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "3",
             vd_code : "wiews_indicator_60/Dashboard1",
@@ -1544,9 +1547,9 @@ define([
 
     },
         61: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "61" : labels['en']['element_label1']
+            "61" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_61/DashInd61",
@@ -1568,9 +1571,9 @@ define([
             metadata : "91314"
         },
         62: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "62" : labels['en']['element_label1']
+            "62" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_62/DashInd62",
@@ -1592,9 +1595,9 @@ define([
             metadata : "91315"
         },
         63: {
-            domain_label : labels['en']['domain_label'],
+            domain_label : labels[CloudLang]['domain_label'],
             element_label : {
-            "63" : labels['en']['element_label1']
+            "63" : labels[CloudLang]['element_label1']
         },
             dd_filter_category : "1",
             vd_code : "wiews_indicator_63/DashInd63",
