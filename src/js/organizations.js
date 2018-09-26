@@ -14,19 +14,13 @@ define([
     "bootstrap",
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export',
+    '../../node_modules/bootstrap-table/dist/bootstrap-table-locale-all',
     "string.prototype.startswith"
 ], function ($, log, _, Handlebars, Report, Filter, C, template, labels, converter, FileSaver, Bloodhound, bootstrap) {
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
         services_url = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchGetData?index=organizations&multiSearch=no",
-        services_el = C.URL_elasticsearchapi,
-        service_path = {
-            "countries" : "?index=countries&multiSearch=false",
-            "biostatus" : "?index=biostatofacc&multiSearch=false",
-            "germplasm_storage" : "?index=germplasm_storage&multiSearch=false",
-            "organization_roles" : "?index=organization_roles"
-        },
         fromFreetext = false;
 
     var s = {
@@ -194,92 +188,6 @@ define([
 
         return;
 
-        var flow_model = {
-            "outConfig": {
-                "plugin": "wiewsOutputCSV"
-            },
-            "options": {
-                "params" : {
-                    "maxSize" : 200000,
-                    "language": this.lang.toUpperCase()
-                }
-            },
-            "flow": [
-                {
-                    "name": "wiews_organization_filter",
-                    "sid": [
-                        {
-                            "uid": "wiews_organizations"
-                        }
-                    ],
-                    "parameters": {
-                        "name" : $('#search_name').val(),
-                        "acronym" : $('#search_organization').val(),
-                        "instcode" : $('#search_instcode').val(),
-                        "city" : $('#search_city').val()
-                    }
-                },
-                {
-                    "name": "order",
-                    "parameters": {
-                        "search_rank": "ASC",
-                        "name": "ASC",
-                        "acronym": "ASC",
-                        "instcode": "ASC",
-                        "parent_name": "ASC",
-                        "address": "ASC",
-                        "city": "ASC",
-                        "country": "ASC"
-                    }
-                },
-                {
-                    "name": "columns",
-                    "parameters": {
-                        "columns": [
-                            "name",
-                            "acronym",
-                            "instcode",
-                            "parent_instcode",
-                            "parent_name",
-                            "address",
-                            "zip_code",
-                            "city",
-                            "country_iso3",
-                            "country",
-                            "telephone",
-                            "fax",
-                            "email",
-                            "website",
-                            "status",
-                            "organization_roles",
-                            "longitude",
-                            "latitude",
-                            "valid_instcode"
-                        ]
-                    }
-                }
-            ]
-        },
-            filter_values = this.filter.getValues();
-
-
-        //console.log('from export', filter_values);
-
-
-        if (freetext) {
-            flow_model.flow[0].parameters = {};
-            flow_model.flow[0].parameters.freetext = $('#search_omnibox').val();
-        } else {
-            var isValid = (filter_values.values.valid == 'true');
-            if (filter_values.values.valid != 'null') flow_model.flow[0].parameters.valid = isValid;
-            if (filter_values.values.country.length > 0 ) flow_model.flow[0].parameters.country_iso3 = filter_values.values.country;
-            if (filter_values.values.organizations_role.length > 0 ) flow_model.flow[0].parameters.roles = filter_values.values.organizations_role;
-
-        }
-        this.report.export({
-            format: "flow",
-            config: flow_model
-        });
     };
 
     Organizations.prototype._getParameterByName = function (name) {
@@ -289,10 +197,20 @@ define([
 
     Organizations.prototype._initTable = function(data) {
         this.table_data = data.rows;
+        var btLocale = {
+            en : "en-US",
+            es : "es-ES",
+            fr : "fr-FR",
+            ru : "ru-RU",
+            ar : "ar-EG",
+            zh : "zh-CN"
+        };
+
         if (this.instcode.length) if (data.rows) this._fillResults(data.rows[0]);
         $(s.TABLE).bootstrapTable('destroy');
         $(s.TABLE).bootstrapTable({
             data : data.rows,
+            locale: btLocale[C.lang.toLowerCase()],
             pagination: true,
             pageSize: 25,
             pageList: [10, 25, 50, 100, 200],
@@ -315,10 +233,6 @@ define([
 
         $(s.EL).html(template(labels[Clang]));
         this._initTable([]);
-        /*
-        var codelist_ISO3 = this._getCodelists('countries');
-        var codelist_OrgR = this._getCodelists('organization_roles');
-        */
 
         var codelist_ISO3 = this._callGoogle('iso3_country_codes.json').hits;
         var codelist_OrgR = this._callGoogle('organization_roles.json').hits;
@@ -576,18 +490,19 @@ define([
         }
 
         var filter_values = this.filter.getValues();
-        var isValid = (filter_values.values.valid == 'true');
+        var isValid = filter_values.values.valid[0];
 
         var payload = {
             "query":{
                 "bool":{
                     "must":[
-                        { "match":{ "valid": isValid } }
                     ]
                 }
             },
             "size": 2000
         };
+
+        if (isValid != 'null') payload.query.bool.must.push({ "match":{ "valid": isValid } });
 
         if (filter_values.values.country.length > 0 ) payload.query.bool.must.push({ "match":{ "country_iso3": filter_values.values.country.join(" ")} });
         if ($('#search_city').val()) payload.query.bool.must.push({ "wildcard":{ "city":"*"+$('#search_city').val().toLowerCase()+"*" } });
@@ -715,53 +630,6 @@ define([
 
     };
 
-    Organizations.prototype._getCodelists = function (payload_selection, format) {
-        var codelist = [];
-        var payload = {
-            "countries": {
-                query: {
-                    "size": 1000, "_source": ["country_code_iso3","country_name_en"]
-                }
-            },
-            "organization_roles": {
-                query: {
-                    "query":{"match_all": {}}, "size":100, "_source": ["code","title"]
-                },
-                lang: this.lang.toUpperCase()
-            }
-        };
-        // _source here is not from the query, needs to be used for below.
-
-        $.ajax({
-            async: false,
-            dataType: 'json',
-            method: 'POST',
-            data: JSON.stringify(payload[payload_selection].query),
-            contentType: "text/plain; charset=utf-8",
-            url: services_el + service_path[payload_selection],
-            success: function(res) {
-                _.each( res.hits.hits, function( element ) {
-                    //console.log("element:", element._source);
-                    //console.log(element._source[payload[payload_selection].query._source[1]])
-                    if (format) {
-                        // plain
-                        codelist[element._source[payload[payload_selection].query._source[0]]] = element._source[payload[payload_selection].query._source[1]];
-                    } else {
-                        // fenix
-                        codelist.push({
-                            value: element._source[payload[payload_selection].query._source[0]],
-                            label: (payload[payload_selection].lang)
-                                ? element._source[payload[payload_selection].query._source[1]][payload[payload_selection].lang]
-                                : element._source[payload[payload_selection].query._source[1]]
-                        });
-                    }
-                });
-            }
-        });
-
-        return codelist;
-    };
-
     Organizations.prototype._RemoveParameterFromUrl = function(url, parameter) {
         return url
             .replace(new RegExp('[?&]' + parameter + '=[^&#]*(#.*)?$'), '$1')
@@ -771,9 +639,6 @@ define([
     Organizations.prototype._checkforHoldings = function(payload) {
         //console.log('TODO');
         return;
-        var pay_16 = [{"name":"wiews_exsitu_filter","sid":[{"uid":"wiews_2014"},{"uid":"wiews_2016"},{"uid":"ref_sdg_institutes"},{"uid":"ref_iso3_countries"}],"parameters":{"year":"2016","countries":[],"institutes":[payload],"genus_species":[],"taxons":[],"sampstat":[],"accenumb":null,"originCountries":[]}},{"name":"order","parameters":{"country_en":"ASC","w_institute_en":"ASC","cropname":"ASC","taxon":"ASC"}},{"name":"columns","parameters":{"columns":["nicode","country_en","w_instcode","w_institute_en","accenumb","cropname","genus","species","taxon","acqdate","origcty","sampstat","declatitude","declongitude","collsrc","storage","mlsstat"]}}],
-            out_16 = this._callServices(pay_16);
-        $('[data-gpaindex=exsitu_search]').html(out_16.length+' (for 2016)');
     };
 
     Organizations.prototype._importThirdPartyCss = function () {

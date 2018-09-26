@@ -63,6 +63,7 @@ define([
                     console.log(res);
                 }
             });
+
             $.ajax({
                 async: false,
                 dataType: 'json',
@@ -77,6 +78,7 @@ define([
                     data['cl_indicator_'+getParameterByName('code')] = res[1]['indicator_field_label_'+lang];
                     data['cl_indicator_'+getParameterByName('code')+'_1'] = res[2]['indicator_field_label_'+lang];
                     data['cl_indicator_'+getParameterByName('code')+'_2'] = res[3]['indicator_field_label_'+lang];
+                    data['indicator_'+getParameterByName('code')] = data['indicator']+" "+getParameterByName('code')+": "+res[1]['indicator_field_label_'+lang];
                 },
                 error : function(res) {
                     console.log(res);
@@ -93,7 +95,6 @@ define([
                     data['domain_'+getParameterByName('code')] = res[0].pa_labels[0].f2;
                     data['activity1_'+getParameterByName('code')] = res[0].pa_labels[1].f2+" - ";
                     data['activity2_'+getParameterByName('code')] = res[0].pa_labels[2].f2;
-                    data['indicator_'+getParameterByName('code')] = data['indicator']+" "+getParameterByName('code')+": "+res[0].description;
                 },
                 error : function(res) {
                     console.log(res);
@@ -101,8 +102,6 @@ define([
             });
             data["title_" + getParameterByName('code')] = data['domain_label'] + " - ";
         }
-
-
 
         // Inject the language
         language[lang] = data;

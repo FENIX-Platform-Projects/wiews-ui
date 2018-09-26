@@ -12,9 +12,8 @@ define([
     //var Clang = C.lang.toLowerCase();
     var CloudLang = $("html").attr("lang").toLowerCase();
 
-
     // Dynamic part.
-    var staticurl = C.URL_bucket;
+    var staticurl = C.URL_bucket + "indicator_query.json";
 
     // Get Query Config
     $.ajax({

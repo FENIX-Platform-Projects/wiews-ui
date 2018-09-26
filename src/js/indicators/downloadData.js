@@ -9,10 +9,11 @@ define([
     "fenix-ui-dashboard",
     "fenix-ui-filter",
     "fenix-ui-filter-utils",
-    "./renders/IndicatorCommon",
-    "./renders/IndicatorCommonUtils",
+    "./indicatorCommon",
+    "./indicatorCommonUtils",
+    "./indicatorConfig",
     "../../nls/labels"
-], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, ICUtils, labels) {
+], function ($, log, _, C, PAGC, filterTemplate, dashboardTemplate, Dashboard, Filter, FxUtils, ICommon, ICUtils, ICConfig, labels) {
 
     "use strict";
 
@@ -22,8 +23,6 @@ define([
     var indicatorCommon;
 
     var s = {
-        indicator_config_path : './renders/indicatorConfig',
-
         dashboard: {
             dashboard_config_item : 'dashboard',
             dashboard_container : '#dd-dashboard-container'
@@ -85,7 +84,7 @@ define([
     DownloadData.prototype._initVariables = function () {
 
         this.$el = $(s.EL);
-        this.indicatorConfig = this._getIndicatorConfig();
+        this.indicatorConfig = ICConfig;
         this.config = this.indicatorConfig[mainTabName];
         this.icUtils = new ICUtils();
         this.iterations = this.icUtils.callGoogle('iterations_'+CloudLang+'.json',false,true).hits;
@@ -203,8 +202,6 @@ define([
     //The filter is created just once by the configuration
     DownloadData.prototype._renderFilter = function (filterConfig) {
 
-        console.log(C.lang);
-
         var self = this;
         this.filter = new Filter({
             el: s.filter.filter_container,
@@ -212,7 +209,6 @@ define([
             environment: this.environment,
             cache : this.cache,
             lang: C.lang,
-
             common: {
                 template: {
                     hideSwitch: true,
@@ -220,24 +216,11 @@ define([
                 }
             }
         });
-
         this.filter.on(s.events.filterComponent.READY, _.bind(self._renderIndicator, self));
-
         indicatorCommon.disable_element();
         // //OUTPUT FORMATTING OPTIONS DISABLED
 
     }
-
-    DownloadData.prototype._getIndicatorConfig = function () {
-        return require(this._getIndicatorConfigPath());
-    };
-
-    DownloadData.prototype._getIndicatorConfigPath = function () {
-
-        return s.indicator_config_path +'.js';
-
-        //return s.indicator_config_path + this.indicatorProperties.indicator_id+'.js';
-    };
 
     //The istance for the specific indicator is created when the FILTER has been rendered
     DownloadData.prototype._renderIndicator = function (dashboardConfig) {

@@ -13,7 +13,8 @@ define([
     'typeahead.js',
     "bootstrap",
     "bootstrap-table",
-    '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export'
+    '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export',
+    '../../node_modules/bootstrap-table/dist/bootstrap-table-locale-all'
 ], function ($, log, _, Handlebars, Filter, C, template, binomial, labels, converter, FileSaver, Bloodhound, bootstrap) {
 
     "use strict";
@@ -272,11 +273,20 @@ define([
     Search.prototype._initTablePaginated = function(data) {
         var self = this,
             filter = "";
+        var btLocale = {
+            en : "en-US",
+            es : "es-ES",
+            fr : "fr-FR",
+            ru : "ru-RU",
+            ar : "ar-EG",
+            zh : "zh-CN"
+        };
         self.offsetPage = 0;
         $(s.TABLE).bootstrapTable('destroy');
         $(s.TABLE).bootstrapTable({
             ajax:  paginatedAjax,
             sidePagination: 'server',
+            locale: btLocale[C.lang.toLowerCase()],
             pagination: true,
             pageSize: self.pageSize,
             pageList: [10, 25, 50, 100, 200],

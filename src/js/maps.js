@@ -11,6 +11,7 @@ define([
     "bootstrap",
     "bootstrap-table",
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export',
+    '../../node_modules/bootstrap-table/dist/bootstrap-table-locale-all',
     'typeahead.js',
     'select2'
 
@@ -248,9 +249,19 @@ define([
 
     Maps.prototype._bootstrapTable = function (data) {
         var self = this;
+        var btLocale = {
+            en : "en-US",
+            es : "es-ES",
+            fr : "fr-FR",
+            ru : "ru-RU",
+            ar : "ar-EG",
+            zh : "zh-CN"
+        };
+
         $(s.TABLE).bootstrapTable('destroy');
         $(s.TABLE).bootstrapTable({
             data : data,
+            locale: btLocale[C.lang.toLowerCase()],
             pagination: true,
             pageSize: 25,
             pageList: [10, 25, 50, 100, 200],
