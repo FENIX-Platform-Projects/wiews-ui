@@ -36,7 +36,7 @@ define([
 
         0: {
             domain_label: "National Focal Point",
-                cube : {
+            cube : {
                 "queryModel": {},
                 "cube": {
                     "uniqueName": "[wiews_indicators].[wiews_indicators].[national_focal_point]",

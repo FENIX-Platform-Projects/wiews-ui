@@ -929,6 +929,7 @@ define([
 
                 mdx_query = JSON.stringify($.extend(DM[0].cube, DM[0].query["0"]));
                 mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", index.toString());
+                mdx_query = mdx_query.replace("{{**INDICATOR_PLACEHOLDER**}}", self.indicatorProperties.indicator_id);
 
                 $.ajax({
                     async: false,

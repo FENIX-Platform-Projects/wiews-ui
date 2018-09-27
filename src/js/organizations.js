@@ -3,7 +3,6 @@ define([
     "loglevel",
     "underscore",
     "handlebars",
-    "fenix-ui-reports",
     "fenix-ui-filter",
     "../config/config",
     "../html/organizations/template.hbs",
@@ -16,14 +15,15 @@ define([
     '../../node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export',
     '../../node_modules/bootstrap-table/dist/bootstrap-table-locale-all',
     "string.prototype.startswith"
-], function ($, log, _, Handlebars, Report, Filter, C, template, labels, converter, FileSaver, Bloodhound, bootstrap) {
+], function ($, log, _, Handlebars, Filter, C, template, labels, converter, FileSaver, Bloodhound, bootstrap) {
 
     "use strict";
     var Clang = C.lang.toLowerCase(),
+        services_bq = "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsOrganizationsSearch",
         services_url = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchGetData?index=organizations&multiSearch=no",
         fromFreetext = false;
 
-    var s = {
+    var eg = false, s = {
         EL: "#organizations",
         TABLE: "#table",
         FENIX_FILTER : "#fenixfilter"
@@ -46,7 +46,9 @@ define([
 
     };
 
-    Organizations.prototype._parseOutput = function (input) {
+    Organizations.prototype._parseElasticOutput = function (input) {
+        console.log('qua')
+
         var output = {
             total : 0,
             rows : []
@@ -92,6 +94,58 @@ define([
             });
         });
         output.total = input.total;
+        //console.log('output is' ,output);
+        return output;
+    };
+
+    Organizations.prototype._parseOutput = function (input) {
+        console.log('la')
+        var output = {
+            total : input.totalRows,
+            rows : []
+        };
+        //console.log('input is ',input);
+        _.each(input.data, function(process){
+            output.rows.push({
+                "name" : process.name,
+                "acronym" : process.acronym,
+                "instcode" : process.instcode,
+                "parent_instcode" : process.parent_instcode,
+                "parent_name" : process.parent_name,
+                "address" : process.address,
+                "zip_code" : process.zip_code,
+                "city" : process.city,
+                "country" : process.country,
+                "telephone" : process.telephone,
+                "fax" : process.fax,
+                "email" : process.email,
+                "website" : process.website,
+                "status" : process.status,
+                "valid_flag" : process.valid,
+                "valid_instcode" : process.valid_instcode,
+                "role_f646" : process.role_f646,
+                "role_f647" : process.role_f647,
+                "role_f648" : process.role_f648,
+                "role_f649" : process.role_f649,
+                "role_f650" : process.role_f650,
+                "role_f651" : process.role_f651,
+                "role_f652" : process.role_f652,
+                "role_f653" : process.role_f653,
+                "role_f654" : process.role_f654,
+                "role_f655" : process.role_f655,
+                "role_f656" : process.role_f656,
+                "role_f657" : process.role_f657,
+                "role_f658" : process.role_f658,
+                "role_f869" : process.role_f869,
+                "role_f874" : process.role_f874,
+                "role_f875" : process.role_f875,
+                "longitude" : process.longitude,
+                "latitude" : process.latitude,
+                "holdings" : 0
+            });
+        });
+        if (input.totalRows != undefined) self.totalRows = input.totalRows;
+        output.total = self.totalRows;
         //console.log('output is' ,output);
         return output;
     };
@@ -144,6 +198,28 @@ define([
         return response_data;
     };
 
+    Organizations.prototype._callBigQuery = function(payload) {
+        var response_data = {};
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'POST',
+            contentType: "text/plain; charset=utf-8",
+            url:  services_bq,
+            data: JSON.stringify(payload),
+            success: function(res) {
+                response_data = res;
+            },
+            error : function(res) {
+                console.log(res);
+                return;
+            }
+
+        });
+
+        return response_data;
+    };
+
     Organizations.prototype._callServices = function (payload) {
         var self = this,
             table_data = [];
@@ -155,7 +231,7 @@ define([
             url: services_url,
             data: JSON.stringify(payload),
             success: function(res) {
-                table_data = self._parseOutput(self._consumeResponse(res));
+                table_data = self._parseElasticOutput(self._consumeResponse(res));
             }
 
         });
@@ -197,6 +273,8 @@ define([
 
     Organizations.prototype._initTable = function(data) {
         this.table_data = data.rows;
+        var self = this,
+            filter = "";
         var btLocale = {
             en : "en-US",
             es : "es-ES",
@@ -205,22 +283,48 @@ define([
             ar : "ar-EG",
             zh : "zh-CN"
         };
-
+        if (eg) $("#mvrck").append("<div class='eg'></div>");
         if (this.instcode.length) if (data.rows) this._fillResults(data.rows[0]);
+        self.offsetPage = 0;
         $(s.TABLE).bootstrapTable('destroy');
         $(s.TABLE).bootstrapTable({
-            data : data.rows,
+            ajax:  paginatedAjax,
+            sidePagination: 'server',
             locale: btLocale[C.lang.toLowerCase()],
             pagination: true,
-            pageSize: 25,
+            pageSize: self.pageSize,
             pageList: [10, 25, 50, 100, 200],
-            search: true,
+            search: false,
             formatSearch: function() {
                 return labels[Clang]['organizations_search_filter']
             },
-            sortable: true,
-            paginationVAlign: "top"
+            onSearch : function (text) {
+                console.log(_.contains(this.data, text));
+                filter = text;
+            },
+            paginationVAlign: "top",
+            totalField: 'total',
+            sortable: true
         });
+        $(s.TABLE).on('page-change.bs.table', function (event, number, size) {
+            console.log('changing page', self.pageSize, self.offsetPage, size, number);
+            self.pageSize = size;
+            self.offsetPage = self.pageSize * (number - 1);
+        });
+
+        function parseOutput(input) {
+            return self._parseOutput(input);
+        };
+
+        function paginatedAjax(params) {
+            // just use setTimeout
+            setTimeout(function () {
+                var output = parseOutput(self._callBigQuery(self._preparePayloadBigQuery(self.offsetPage)));
+                params.success(output);
+            }, 100);
+
+        };
+
     };
 
     Organizations.prototype._consumeResponse = function (response) {
@@ -232,7 +336,7 @@ define([
         var self = this;
 
         $(s.EL).html(template(labels[Clang]));
-        this._initTable([]);
+        //this._initTable([]);
 
         var codelist_ISO3 = this._callGoogle('iso3_country_codes.json').hits;
         var codelist_OrgR = this._callGoogle('organization_roles.json').hits;
@@ -264,7 +368,7 @@ define([
                     return settings;
                 },
                 transform: function (response) {
-                    return self._parseOutput(self._consumeResponse(response)).rows;
+                    return self._parseElasticOutput(self._consumeResponse(response)).rows;
                 },
                 rateLimitWait: 1000
 
@@ -346,8 +450,6 @@ define([
                     }
                 }
             },
-            environment: this.environment,
-            cache : this.cache,
 
             common: {
                 template: {
@@ -425,18 +527,10 @@ define([
 
         this.$el = $(s.EL);
         this.lang = Clang;
-        this.environment = C.ENVIRONMENT;
-        this.cache = C.cache;
 
-        if (this.report && $.isFunction(this.report.dispose)) {
-            this.report.dispose();
-        }
-
-        this.report = new Report({
-            environment: this.environment,
-            cache: this.cache,
-            silent: true
-        });
+        this.pageSize = 25;
+        this.offsetPage = 0;
+        this.totalRows = 0;
 
     };
 
@@ -472,6 +566,37 @@ define([
             break;
 
         }
+
+    };
+
+    Organizations.prototype._preparePayloadBigQuery = function (from) {
+
+        var filter_values = this.filter.getValues();
+        var isValid  = filter_values.values.valid[0];
+
+        console.log('from is ',from);
+
+        var body = {
+            "lang": Clang,
+            "size": this.pageSize,
+            "from": from,
+            "filters":{ }
+        };
+
+        if ($('#search_instcode').val()) body.filters["instcode"] = $('#search_instcode').val().toUpperCase();
+        if ($('#search_name').val()) body.filters["name"] = $('#search_name').val().toLowerCase();
+        if ($('#search_city').val())  body.filters["city"] = $('#search_city').val().toLowerCase();
+        if ($('#search_organization').val()) body.filters["acronym"] = $('#search_organization').val().toLowerCase();
+        if ($('#search_instcode').val()) body.filters["search_key"] = $('#search_instcode').val().toUpperCase();
+
+        if (isValid != 'null') body.filters["valid"] = isValid ;
+        if (filter_values.values.country.length > 0 ) body.filters["country_iso3"] = filter_values.values.country.join(" ");
+
+        $.each(filter_values.values.organizations_role, function (index,obj) {
+            body.filters["role_"+obj] = true;
+        });
+
+        return body;
 
     };
 
@@ -520,8 +645,8 @@ define([
     }
 
     Organizations.prototype._searchfromkeyboard = function (freetext) {
-        freetext ? this._initTable(this._callServices(this._preparePayload($('#search_omnibox').val()))) : this._initTable(this._callServices(this._preparePayload()));
-        self._statesManagement('results');
+        freetext ? this._initTable(this._callServices(this._preparePayload($('#search_omnibox').val()))) : this._initTable(this._callBigQuery(this._preparePayloadBigQuery(0)));
+        this._statesManagement('results');
     };
 
     Organizations.prototype._bindEventListeners = function () {
@@ -537,30 +662,7 @@ define([
 
         // Enter keypress
 
-        $('#search_name').on("keypress", function(e) {
-            if (e.keyCode == 13) { // Enter
-                self._searchfromkeyboard();
-                return false; // prevent the button click from happening
-            }
-        });
-        $('#search_organization').on("keypress", function(e) {
-            if (e.keyCode == 13) { // Enter
-                self._searchfromkeyboard();
-                return false; // prevent the button click from happening
-            }
-        });
-        $('#search_instcode').on("keypress", function(e) {
-            if (e.keyCode == 13) { // Enter
-                self._searchfromkeyboard();
-                return false; // prevent the button click from happening
-            }
-        });
-        $('#search_city').on("keypress", function(e) {
-            if (e.keyCode == 13) { // Enter
-                self._searchfromkeyboard();
-                return false; // prevent the button click from happening
-            }
-        });
+
         $('#search_omnibox').on("keypress", function(e) {
             if (e.keyCode == 13) { // Enter
                 $('[data-role=messages]').hide();
@@ -592,8 +694,9 @@ define([
         });
 
         $('#adv_search_button').on('click', function(){
+            if ($('#search_omnibox').val().startsWith("easter")) eg = true;
             //self._initTable(self._callServices(self._preparePayload()));
-            self._initTable(self._callServices(self._preparePayload()));
+            self._initTable(self._callBigQuery(self._preparePayloadBigQuery(0)));
             self._statesManagement('results');
         });
 
