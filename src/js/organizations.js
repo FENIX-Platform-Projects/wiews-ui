@@ -23,7 +23,7 @@ define([
         services_url = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchGetData?index=organizations&multiSearch=no",
         fromFreetext = false;
 
-    var eg = false, s = {
+    var s = {
         EL: "#organizations",
         TABLE: "#table",
         FENIX_FILTER : "#fenixfilter"
@@ -47,8 +47,6 @@ define([
     };
 
     Organizations.prototype._parseElasticOutput = function (input) {
-        console.log('qua')
-
         var output = {
             total : 0,
             rows : []
@@ -99,7 +97,6 @@ define([
     };
 
     Organizations.prototype._parseOutput = function (input) {
-        console.log('la')
         var output = {
             total : input.totalRows,
             rows : []
@@ -283,7 +280,7 @@ define([
             ar : "ar-EG",
             zh : "zh-CN"
         };
-        if (eg) $("#mvrck").append("<div class='eg'></div>");
+
         if (this.instcode.length) if (data.rows) this._fillResults(data.rows[0]);
         self.offsetPage = 0;
         $(s.TABLE).bootstrapTable('destroy');
@@ -307,7 +304,7 @@ define([
             sortable: true
         });
         $(s.TABLE).on('page-change.bs.table', function (event, number, size) {
-            console.log('changing page', self.pageSize, self.offsetPage, size, number);
+            //console.log('changing page', self.pageSize, self.offsetPage, size, number);
             self.pageSize = size;
             self.offsetPage = self.pageSize * (number - 1);
         });
@@ -574,7 +571,7 @@ define([
         var filter_values = this.filter.getValues();
         var isValid  = filter_values.values.valid[0];
 
-        console.log('from is ',from);
+        //console.log('from is ',from);
 
         var body = {
             "lang": Clang,
@@ -694,7 +691,6 @@ define([
         });
 
         $('#adv_search_button').on('click', function(){
-            if ($('#search_omnibox').val().startsWith("easter")) eg = true;
             //self._initTable(self._callServices(self._preparePayload()));
             self._initTable(self._callBigQuery(self._preparePayloadBigQuery(0)));
             self._statesManagement('results');

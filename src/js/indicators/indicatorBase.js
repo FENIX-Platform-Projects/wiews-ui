@@ -434,6 +434,7 @@ define([
 
         var self = this,
             data = {
+                "lang" : C.lang.toLowerCase(),
                 "indicator": parseInt(params.indicator_id),
                 "separator": ",",
                 "filters": {
