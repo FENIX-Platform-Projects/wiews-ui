@@ -63,6 +63,28 @@ define([
         return this;
     }
 
+    IndicatorCommon.prototype._pingCloud = function () {
+        var mdx_query = JSON.stringify($.extend(DM[0].cube, DM[0].query["0"]));
+        mdx_query = mdx_query.replace("{{**REGION_PLACEHOLDER**}}", "[Region.iso3_code].[ALB]");
+
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'POST',
+            contentType: "application/json; charset=utf-8",
+            accept: "application/json, text/javascript, */*; q=0.01",
+            url: C.URL_saiku,
+            data: mdx_query,
+            success: function(res) {
+                console.log('ok');
+            },
+            error : function(res) {
+                console.log("error", res);
+                return;
+            }
+        });
+    }
+
     IndicatorCommon.prototype._initVariables = function () {
         
 
@@ -373,6 +395,8 @@ define([
         }
 
         this.indicatorProcesses.bindEventListener();
+
+        if (C.ping_cloud) this._pingCloud();
     };
 
     //Visualization Tab listener
@@ -456,6 +480,10 @@ define([
         }
 
         if((this.filter!=null)&&(typeof this.filter!= 'undefined')){
+            this.filter.on('ready',function(){
+                console.log('FIRED!');
+                if (C.ping_cloud) self._pingCloud();
+            });
             this.filter.on('select', _.bind(self.onSelectFilter, self, {filterDivMsg_1: filter_div_msg_1}));
         }
     };

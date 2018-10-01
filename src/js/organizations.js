@@ -46,6 +46,12 @@ define([
 
     };
 
+    Organizations.prototype._pingCloud = function () {
+        console.log("Bringing Cloud Back Alive");
+        this._callBigQuery(this._preparePayloadBigQuery(0), true);
+        this._callServices(this._preparePayload($('#search_omnibox').val()), true);
+    };
+
     Organizations.prototype._parseElasticOutput = function (input) {
         var output = {
             total : 0,
@@ -195,10 +201,14 @@ define([
         return response_data;
     };
 
-    Organizations.prototype._callBigQuery = function(payload) {
-        var response_data = {};
+    Organizations.prototype._callBigQuery = function(payload, alive) {
+        var async,
+            response_data = {};
+
+        async = (alive == true)?  true : false ;
+
         $.ajax({
-            async: false,
+            async: async,
             dataType: 'json',
             method: 'POST',
             contentType: "text/plain; charset=utf-8",
@@ -217,11 +227,15 @@ define([
         return response_data;
     };
 
-    Organizations.prototype._callServices = function (payload) {
+    Organizations.prototype._callServices = function (payload, alive) {
         var self = this,
+            async,
             table_data = [];
+
+        async = (alive == true)?  true : false ;
+
         $.ajax({
-            async: false,
+            async: async,
             dataType: 'json',
             method: 'POST',
             contentType: "text/plain; charset=utf-8",
@@ -646,11 +660,13 @@ define([
         this._statesManagement('results');
     };
 
+
     Organizations.prototype._bindEventListeners = function () {
         var self = this;
 
         this.filter.on('ready', function(){
             self.initial = self.filter.getValues();
+            if (C.ping_cloud) self._pingCloud();
         });
 
         $('#clear_button').on('click', function () {

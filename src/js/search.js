@@ -60,12 +60,15 @@ define([
         if (!C.lang) alert("Please specify a valid LANGUAGE in config/config.js");
     };
 
-    Search.prototype._callBigQuery = function (payload) {
-        var response_data = {};
+    Search.prototype._callBigQuery = function (payload, alive) {
+        var async,
+            response_data = {};
         $('[data-role=messages]').hide();
 
+        async = (alive == true)?  true : false ;
+
         $.ajax({
-            async: false,
+            async: async,
             dataType: 'json',
             method: 'POST',
             contentType: "text/plain; charset=utf-8",
@@ -88,14 +91,18 @@ define([
 
     };
 
-    Search.prototype._callElastic = function (payload, path, full, service) {
-        var response_data = {
+    Search.prototype._callElastic = function (payload, path, full, service, alive) {
+        var async,
+            response_data = {
             total : -1,
             hits : []
         };
+
+        async = (alive == true)?  true : false ;
+
         $('[data-role=messages]').hide();
         $.ajax({
-            async: false,
+            async: async,
             dataType: 'json',
             method: 'POST',
             contentType: "text/plain; charset=utf-8",
@@ -677,6 +684,13 @@ define([
 
     };
 
+    Search.prototype._pingCloud = function () {
+        console.log("Bringing Cloud Back Alive");
+        var fakeobj = {"query":{"wildcard":{"crop_name_en.lowercase":{"value":"*Mav*","rewrite":"scoring_boolean"}}},"size":"0","aggs":{"result_set":{"terms":{"field":"crop_name_en.aggregator","order":{"max_score":"asc"}},"aggs":{"max_score":{"max":{"script":"_score"}}}}}};
+        this._callBigQuery(this._preparePayloadBigQuery(0), true);
+        this._callElastic(fakeobj, "wiews_exsitu_crops_filter", false, services_el, true);
+    };
+
     Search.prototype._preparePayloadBigQuery = function (from) {
         var retu = { "size": this.pageSize, "from": from };
         this._preparePayloadElastic(from);
@@ -1071,6 +1085,7 @@ define([
 
         this.filter.on('ready', function(){
             self.initial = self.filter.getValues();
+            if (C.ping_cloud) self._pingCloud();
             self._bindYearListener();
             if (self.instcode.length) {
                 appendInstitute(self.instcode);

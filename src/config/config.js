@@ -5,6 +5,7 @@ define(function () {
 
     return {
         lang: $("html").attr("lang").toLowerCase(),
+        ping_cloud : true,
         google_apikey : "AIzaSyA5MmbqZJOxNwBlAIMmpxIDktlQN7_izeY",
         // Services URL
         URL_elasticsearchapi :"https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchApi",
