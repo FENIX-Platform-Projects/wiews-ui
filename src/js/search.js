@@ -31,8 +31,8 @@ define([
             "germplasm_storage" : "?index=germplasm_storage&multiSearch=false",
             "wiews_exsitu_crops_filter" : "?index=crops&multiSearch=false",
             "wiews_exsitu_institute_filter" : "?index=exsitu&multiSearch=false",
-            "wiews_exsitu_genus_filter" : "?index=crops&multiSearch=false",
-            "wiews_exsitu_species_filter" : "?index=crops&multiSearch=false",
+            "wiews_exsitu_genus_filter" : "?index=genus_species&multiSearch=false",
+            "wiews_exsitu_species_filter" : "?index=genus_species&multiSearch=false",
             "elastic_export_fetch" : "?index=exsitu&scroll=false",
             "elastic_export_consume" : "?index=exsitu&scroll=true"
         },
@@ -556,8 +556,8 @@ define([
                         default : ['false'],
                         source: [
                             // it's null / true / false originally
-                            //{value: "null", label: labels[Clang]['exsitu-search_search_crop_wild_relatives_null']},
-                            {value: "null", label: labels[Clang]['exsitu-search_search_crop_wild_relatives_true']},
+                            {value: "null", label: labels[Clang]['exsitu-search_search_crop_wild_relatives_null']},
+                            {value: "true", label: labels[Clang]['exsitu-search_search_crop_wild_relatives_true']},
                             {value: "false", label: labels[Clang]['exsitu-search_search_crop_wild_relatives_false']}
                         ],
                         "config" : {
@@ -592,10 +592,9 @@ define([
         // Binomial
         var binomial_name = content['genus']+' '+content['species'];
 
+        if ($('[data-GPAStatus=binomial_name]').length > 0) $('[data-GPAStatus=binomial_name]').remove();
         if (binomial_name != content['taxon']) {
             $('[data-GPAStatus=taxon]').after(binomial)
-        } else {
-            if ($('[data-GPAStatus=binomial_name]').length > 0) $('[data-GPAStatus=binomial_name]').remove();
         }
 
         _.each(content, function(row_value, row_name) {
@@ -674,7 +673,8 @@ define([
 
             case 'details' :
                 var details_url = page_url+this.lang.toLowerCase()+"/#details" ;
-                if (!frombutton) history.pushState({ page : "details" }, "Details", details_url);
+                if(location.hostname != 'localhost')
+                    if (!frombutton) history.pushState({ page : "details" }, "Details", details_url);
                 $('[data-role=filters]').hide();
                 $('[data-role=results]').hide();
                 $('[data-role=details]').show();
@@ -866,7 +866,8 @@ define([
         }
 
         this.selected_year = filter_values.values.search_year[0];
-        this.cwr = (filter_values.values.search_search_crop_wild_relatives[0] == 'true');
+        this.cwr = (selected_wcr == 'true');
+        if (selected_wcr == "null") this.cwr = null;
 
         var inst_payload = {
                 "query": {
@@ -948,7 +949,14 @@ define([
                                     "rewrite": "scoring_boolean"
                                 }
                             }
-                        }]
+                        }/*,
+                            {
+                                "match_phrase": {
+                                    "year": parseInt(selected_year)
+                                }
+                            }
+                          */
+                        ]
                     }
                 },
                 "size":"0",
@@ -978,7 +986,12 @@ define([
                                     "rewrite": "scoring_boolean"
                                 }
                             }
-                            }
+                            }/*,
+                            {
+                                "match_phrase": {
+                                    "year": parseInt(selected_year)
+                                }
+                            }*/
                         ]
                     }
                 },
@@ -1206,28 +1219,28 @@ define([
                 //selected = selection['crop_en'],
                 text = $('#search_crop').val(),
                 crops = text.charAt(0).toUpperCase() + text.slice(1),
-                wcr = (filter_values.values.search_search_crop_wild_relatives[0] == 'null'),
-                //year is avaiable in self.selected_year
-                result = self._callElastic({
-                        "query": {
-                            "bool": {
-                                "must": [
-                                    {"match": {"crop_name_en": crops}},
-                                    {"match": {"crop_wild_relatives_flag": wcr}}
-                                ]
-                            }
-                        },
-                        "size":"0",
-                        "aggs": {
-                            "result_set": {
-                                "terms": {
-                                    "field": "genus_species_name.aggregator",
-                                    "order": {"_key": "asc"},"size": 1000
-                                }
+                wcr = (filter_values.values.search_search_crop_wild_relatives[0] == 'true'),
+                builtquery = {
+                    "query": {
+                        "bool": {
+                            "must": [
+                                {"match": {"crop_name_en": crops}}
+                            ]
+                        }
+                    },
+                    "size":"0",
+                    "aggs": {
+                        "result_set": {
+                            "terms": {
+                                "field": "genus_species_name.aggregator",
+                                "order": {"_key": "asc"},"size": 1000
                             }
                         }
-                    }, "wiews_exsitu_crops_filter"
-                );
+                    }
+                };
+
+            if (filter_values.values.search_search_crop_wild_relatives[0] != 'null') builtquery.query.bool.must.push({"match": {"crop_wild_relatives_flag": wcr}});
+            var result = self._callElastic(builtquery, "wiews_exsitu_crops_filter");
 
             _.each(result.hits, function(crop) { output.push(crop.key) });
             self.loaded_crop = output;
@@ -1274,7 +1287,12 @@ define([
                     "query": {
                         "bool": {
                             "must": [
-                                {"match_phrase": {"genus_name": self.genus}}
+                                {"match_phrase": {"genus_name": self.genus}}/*,
+                                {
+                                    "match_phrase": {
+                                        "year": parseInt(self.selected_year)
+                                    }
+                                }*/
                             ]
                         }
                     },
