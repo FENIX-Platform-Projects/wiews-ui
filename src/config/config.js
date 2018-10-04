@@ -19,6 +19,7 @@ define(function () {
         URL_faowiews : "http://www.fao.org/wiews/",
         URL_metadata : "http://www.fao.org/wiews/metadata/indicator-",
         URL_exsitusearch : "http://www.fao.org/wiews/data/ex-situ-sdg-251/search/",
-        URL_organizations : "http://www.fao.org/wiews/data/organizations/"
+        URL_organizations : "http://www.fao.org/wiews/data/organizations/",
+        URL_indicators : "http://www.fao.org/wiews/data/domains/domains-list/"+$("html").attr("lang").toLowerCase()+"/",
     };
 });

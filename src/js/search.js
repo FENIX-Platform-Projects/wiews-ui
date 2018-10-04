@@ -31,8 +31,8 @@ define([
             "germplasm_storage" : "?index=germplasm_storage&multiSearch=false",
             "wiews_exsitu_crops_filter" : "?index=crops&multiSearch=false",
             "wiews_exsitu_institute_filter" : "?index=exsitu&multiSearch=false",
-            "wiews_exsitu_genus_filter" : "?index=exsitu&multiSearch=false",
-            "wiews_exsitu_species_filter" : "?index=exsitu&multiSearch=false",
+            "wiews_exsitu_genus_filter" : "?index=crops&multiSearch=false",
+            "wiews_exsitu_species_filter" : "?index=crops&multiSearch=false",
             "elastic_export_fetch" : "?index=exsitu&scroll=false",
             "elastic_export_consume" : "?index=exsitu&scroll=true"
         },
@@ -948,13 +948,7 @@ define([
                                     "rewrite": "scoring_boolean"
                                 }
                             }
-                        },
-                            {
-                                "match_phrase": {
-                                    "year": parseInt(selected_year)
-                                }
-                            }
-                        ]
+                        }]
                     }
                 },
                 "size":"0",
@@ -984,11 +978,6 @@ define([
                                     "rewrite": "scoring_boolean"
                                 }
                             }
-                            },
-                            {
-                                "match_phrase": {
-                                    "year": parseInt(selected_year)
-                                }
                             }
                         ]
                     }
@@ -1285,12 +1274,7 @@ define([
                     "query": {
                         "bool": {
                             "must": [
-                                {"match_phrase": {"genus_name": self.genus}},
-                                {
-                                    "match_phrase": {
-                                        "year": parseInt(self.selected_year)
-                                    }
-                                }
+                                {"match_phrase": {"genus_name": self.genus}}
                             ]
                         }
                     },

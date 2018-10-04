@@ -90,7 +90,7 @@ define([
                 dataType: 'json',
                 method: 'GET',
                 contentType: "text/plain; charset=utf-8",
-                url:  staticurl+"priority_activity_web_label_en_"+getParameterByName('code')+".json",
+                url:  staticurl+"priority_activity_web_label_"+lang+"_"+getParameterByName('code')+".json",
                 success: function(res) {
                     data['domain_'+getParameterByName('code')] = res[0].pa_labels[0].f2;
                     data['activity1_'+getParameterByName('code')] = res[0].pa_labels[1].f2+" - ";

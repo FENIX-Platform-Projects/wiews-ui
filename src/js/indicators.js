@@ -39,38 +39,25 @@ define([
     };
 
     function Domains() {
-
         // console.clear();
-
         // silent trace
-
         log.setLevel("silent");
-
         this._importThirdPartyCss();
-
         this._validateConfig();
-
         this._attach();
-
         this._initVariables();
-
         this._elementSetting();
-
         this._initTabs();
-
         this._bindEventListeners();
     };
 
     Domains.prototype._validateConfig = function () {
-
-        if (!C.lang) {
-            alert("Please specify a valid LANGUAGE in config/config.js");
-        }
+        if (!C.lang) alert("Please specify a valid LANGUAGE in config/config.js");
     };
 
     Domains.prototype._attach = function () {
-
         $(s.EL).html(template(labels[CloudLang]));
+        $('#fs-browse-by-country-profile-back').attr('href', C.URL_indicators );
     };
 
     Domains.prototype._initVariables = function () {
@@ -110,17 +97,16 @@ define([
     };
 
     Domains.prototype._elementSetting = function () {
-
         // Set Domain
-        this.$el.find('[data-role="domain"]').html(labels[CloudLang]['domain_'+this.selected_indicator.code])
+        this.$el.find('[data-role="domain"]').html(labels[CloudLang]['domain_'+this.selected_indicator.code]);
         // Set Activity1
-        this.$el.find('[data-role="activity1"]').html(labels[CloudLang]['activity1_'+this.selected_indicator.code])
+        this.$el.find('[data-role="activity1"]').html(labels[CloudLang]['activity1_'+this.selected_indicator.code]);
         // Set Activity2
-        this.$el.find('[data-role="activity2"]').html(labels[CloudLang]['activity2_'+this.selected_indicator.code])
+        this.$el.find('[data-role="activity2"]').html(labels[CloudLang]['activity2_'+this.selected_indicator.code]);
         // Set Title
-        this.$el.find('[data-role="title"]').html(labels[CloudLang]['title_'+this.selected_indicator.code])
+        this.$el.find('[data-role="title"]').html(labels[CloudLang]['title_'+this.selected_indicator.code]);
         // Set Indicator
-        this.$el.find('[data-role="indicator"]').html(labels[CloudLang]['indicator_'+this.selected_indicator.code])
+        this.$el.find('[data-role="indicator"]').html(labels[CloudLang]['indicator_'+this.selected_indicator.code]);
     };
 
     //Initialization of the Download Data and Visualize Data Tab

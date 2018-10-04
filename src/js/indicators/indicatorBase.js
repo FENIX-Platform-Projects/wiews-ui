@@ -360,13 +360,10 @@ define([
 
         var newValues = this.icUtils.geoItemSelectionValidation(paramsForGeoValidation);
 
-        if(newValues.listTypeError){
-            //s.filterDivMsg1_text = s.error_type.list;
-            return;
-        }
+        if(newValues.listTypeError) return;
 
         return newValues.values;
-    }
+    };
 
     IndicatorBase.prototype.onClickButton1 = function (values, dashboardConfig, params) {
 
@@ -522,11 +519,11 @@ define([
                         self.filter.setValues(obj);
                         break;
                     case s.filter_items.tabItem_4:
-                        console.log('PEM!', anchor)
+                        //console.log('PEM!', anchor)
                         s.dd_tab_active.geo_item = anchor;
                         var obj = {};
                         obj[s.filter_items.item_3] = ["1"];
-                        console.log(obj)
+                        //console.log(obj)
                         self.filter.setValues(obj);
                         break;
                     case s.filter_items.tabItem_7:
@@ -588,6 +585,7 @@ define([
     }
 
     IndicatorBase.prototype.onSelectFilter = function (hostParam, filterResponse, commonParam) {
+
         //console.log('chaanges', filterResponse)
 
         var filterDivMsg1 = hostParam.filterDivMsg_1;
@@ -597,6 +595,7 @@ define([
 
             //Refresh the geographical selector
             if((filterResponse!=null)&&(typeof filterResponse!='undefined')){
+                // this.geoSelectedItem = null;
                 var selectorId = filterResponse.id;
                 if((selectorId!=null)&&(typeof selectorId!='undefined')){
                     switch (selectorId){
@@ -604,7 +603,7 @@ define([
                             var value = filterResponse.values[0];
                             if((value!=null)&&(typeof value!='undefined')){
                                 var codelist = s.choices_code.position.countries[value];
-                                this.geoTreeItem = s.choices_code.groups.countries[value]
+                                this.geoTreeItem = s.choices_code.groups.countries[value];
                                 commonParam.codelist = codelist;
                                 this.geoSelectedCode = codelist;
                                 this._renderGeoSelection(s.filter_items.item_2, value, 3);
@@ -614,7 +613,7 @@ define([
                             var value = filterResponse.values[0];
                             if((value!=null)&&(typeof value!='undefined')){
                                 var codelist = s.choices_code.position.regions[value];
-                                this.geoTreeItem = s.choices_code.groups.regions[value]
+                                this.geoTreeItem = s.choices_code.groups.regions[value];
                                 commonParam.codelist = codelist;
                                 this.geoSelectedCode = codelist;
                                 this._renderGeoSelection(s.filter_items.item_4, value, 6);
@@ -622,8 +621,10 @@ define([
                             break;
 
                     }
+
                     if (s.filter_available.includes(selectorId)) this.geoSelectedItem = selectorId;
                     if (selectorId == "dd_filter_item_6") this.geoListType = filterResponse.values[0];
+                    this.geoSelectedItem = this.geoTreeItem;
 
                     //console.log(s.filter_available.includes(selectorId));
                     //console.log(this.geoSelectedItem, selectorId);

@@ -520,6 +520,7 @@ define([
     IndicatorCommon.prototype._DD_onClick_button1 = function (param) {
         var self = this;
         this._toggleLoading();
+
         setTimeout(function() {
             $('[data-dashboardContainer = "dd-dashboard-container"]').hide();
             var values = self.filter.getValues();
@@ -527,23 +528,28 @@ define([
             var newDashboardConfig = self.indicatorProcesses.onClickButton1(values, self.dashboard_config, param);
             if ((newDashboardConfig != null) && (typeof newDashboardConfig != 'undefined') && (!$.isEmptyObject(newDashboardConfig))) {
                 self._DD_getTableData(param, newDashboardConfig, values)
+            } else {
+                self._toggleLoading();
             }
-        }, 150);
-    }
+        }, 100);
+    };
 
     //Download  Tab Button 2
     IndicatorCommon.prototype._DD_onClick_button2 = function (param) {
         var self = this;
         this._toggleLoading();
+
         setTimeout(function() {
             $('div.tableauPlaceholder').remove();
             var values = self.filter.getValues();
             var newDashboardConfig = self.indicatorProcesses.onClickButton2(values, self.dashboard_config, param);
             if((newDashboardConfig!= null)&&(typeof newDashboardConfig != 'undefined')&&(!$.isEmptyObject(newDashboardConfig))) {
                 self._initiateDashboard(newDashboardConfig);
+            } else {
+                self._toggleLoading();
             }
-        }, 150);
-    }
+        }, 100);
+    };
 
     IndicatorCommon.prototype._initiateDashboard = function (config) {
         //console.log(config.codelist);
@@ -752,10 +758,9 @@ define([
 
     IndicatorCommon.prototype._getCodelist = function (coding) {
         var codes = [],
-            geo = coding.toUpperCase() + "_R",
             output = [];
 
-        output = this.icutils.callElastic(CL[geo],true).hits;
+        output = this.icutils.callGoogle(coding+'_region_hierarchy_'+$("html").attr("lang").toLowerCase()+'.json',true).hits;
 
         _.each( output, function( element ) {
             codes[element.value] = element.label;
@@ -1157,8 +1162,6 @@ define([
 
     //Filter Selection Action
     IndicatorCommon.prototype.onSelectFilter = function (hostParam, filterResponse) {
-
-
         var commonParam = {bridge : this.bridge};
         var res = this.indicatorProcesses.onSelectFilter(hostParam, filterResponse, commonParam);
     }
