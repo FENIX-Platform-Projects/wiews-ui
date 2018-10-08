@@ -254,7 +254,7 @@ define([
             es : "es-ES",
             fr : "fr-FR",
             ru : "ru-RU",
-            ar : "ar-EG",
+            ar : "ar-SA",
             zh : "zh-CN"
         };
 

@@ -1,0 +1,46 @@
+/* Left to Right */
+html[dir="rtl"]  {
+  // General
+
+  .fx-sandbox .col-md-1, .fx-sandbox .col-md-2, .fx-sandbox .col-md-3, .fx-sandbox .col-md-4, .fx-sandbox .col-md-5, .fx-sandbox .col-md-6, .fx-sandbox .col-md-7, .fx-sandbox .col-md-8, .fx-sandbox .col-md-9, .fx-sandbox .col-md-10, .fx-sandbox .col-md-11, .fx-sandbox .col-md-12 {
+   float: right;
+  }
+
+  .pull-left {
+    float: right !important;
+  }
+
+  .pull-right {
+    float: left !important;
+  }
+
+  .fx-sandbox [data-page='domains'] input[type="radio"] + label:before {
+    left: 5px !important;
+  }
+
+  // Special for...
+
+  // ... Search
+  #selected_institute_container_empty, #combined_elements_container_empty {
+    left: -10px !important;
+  }
+
+  .tt-dropdown-menu {
+    text-align: right;
+  }
+
+  // Indicators
+
+  .fx-sandbox [data-page='domains'] .panel-border .panel-body .active .form-group .filter-radio-list {
+    padding-right: 10px !important;
+  }
+
+  .backtodomain {
+    right: auto !important;
+    left : 10px !important;
+  }
+
+  .fx-sandbox [data-page='domains'] .indicator-detail .activity1, .fx-sandbox [data-page='domains'] .indicator-detail .title {
+    float: right !important;
+  }
+}

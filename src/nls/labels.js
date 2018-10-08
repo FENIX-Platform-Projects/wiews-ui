@@ -103,8 +103,12 @@ define([
             data["title_" + getParameterByName('code')] = data['domain_label'] + " - ";
         }
 
+        // Inject the text direction
+        data['text_direction'] = $('html').attr('dir');
+
         // Inject the language
         language[lang] = data;
+
 
         return language;
     });

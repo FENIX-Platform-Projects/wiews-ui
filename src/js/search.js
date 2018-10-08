@@ -285,7 +285,7 @@ define([
             es : "es-ES",
             fr : "fr-FR",
             ru : "ru-RU",
-            ar : "ar-EG",
+            ar : "ar-SA",
             zh : "zh-CN"
         };
         self.offsetPage = 0;
@@ -1249,35 +1249,7 @@ define([
             });
         });
 
-        /*
-        $('#btn_addfromcrop').on('click', function() {
-            var output = [],
-                filter_values = self.filter.getValues(),
-                //selected = selection['crop_en'],
-                text = $('#search_crop').val(),
-                result = self._callServices([
-                    {
-                        "name": "wiews_exsitu_crops_genus_filter",
-                        "sid": [ { "uid": "crop_genus" }, { "uid": "ref_sdg_species" } ],
-                        "parameters": {
-                            "year" : self.selected_year,
-                            "crops" : [text.charAt(0).toUpperCase() + text.slice(1)],
-                            "cwr" : filter_values.values.search_search_crop_wild_relatives[0]
-                        }
-                    },
-                    {
-                        "name":"order",
-                        "parameters":{
-                            "genus" : "ASC",
-                            "species" : "ASC"
-                        }
-                    }
-                ]);
-            _.each(result, function(crop) { (crop.species.length > 0)? output.push([crop.genus,crop.species]) : output.push([crop.genus,null]); });
-            self.loaded_crop = output;
-            _.each(self.loaded_crop, function(element) { appendElement(element[0],element[1]) });
-        });
-        */
+
 
         $('#search_genus').on('typeahead:select', function(event, selection) {
             $('#search_spieces').typeahead('destroy');
