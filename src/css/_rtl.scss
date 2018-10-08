@@ -1,5 +1,6 @@
 /* Left to Right */
-html[dir="rtl"]  {
+// The line below is bad. but it's typo3 mess.
+html[lang="ar"]  {
   // General
 
   .fx-sandbox .col-md-1, .fx-sandbox .col-md-2, .fx-sandbox .col-md-3, .fx-sandbox .col-md-4, .fx-sandbox .col-md-5, .fx-sandbox .col-md-6, .fx-sandbox .col-md-7, .fx-sandbox .col-md-8, .fx-sandbox .col-md-9, .fx-sandbox .col-md-10, .fx-sandbox .col-md-11, .fx-sandbox .col-md-12 {
@@ -18,6 +19,10 @@ html[dir="rtl"]  {
     left: 5px !important;
   }
 
+  .fx-sandbox th {
+    text-align: right !important;
+  }
+
   // Special for...
 
   // ... Search
@@ -26,13 +31,17 @@ html[dir="rtl"]  {
   }
 
   .tt-dropdown-menu {
-    text-align: right;
+    text-align: right !important;
   }
 
   // Indicators
 
   .fx-sandbox [data-page='domains'] .panel-border .panel-body .active .form-group .filter-radio-list {
     padding-right: 10px !important;
+  }
+
+  .fx-sandbox [data-page=domains] ul li {
+    right: 0px !important;
   }
 
   .backtodomain {
@@ -43,4 +52,26 @@ html[dir="rtl"]  {
   .fx-sandbox [data-page='domains'] .indicator-detail .activity1, .fx-sandbox [data-page='domains'] .indicator-detail .title {
     float: right !important;
   }
+
+  .fx-sandbox [data-page=domains] .icojam_hierarchy_12, .fx-sandbox [data-page=domains] .icojam_search {
+    right: 35px !important;
+  }
+
+  .fx-sandbox [data-page=domains] .icojam_download_1 {
+    right: 12px !important;
+  }
+
+  // Metadata
+
+  div.activity1 {
+    float: right !important;
+  }
+
+  // typo fu****g three
+
+  .fx-sandbox .nav-tabs>li {
+    float: right !important;
+    right: 0px !important;
+  }
+
 }

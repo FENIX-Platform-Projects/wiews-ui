@@ -481,7 +481,7 @@ define([
             metadata : "91269"
         },
         18: {
-            period_label : "Year",
+            period_label : labels[CloudLang]['table_title_year'],
             domain_label : labels[CloudLang]['domain_label'],
             element_label : {
             "18" : labels[CloudLang]['element_label1']
@@ -508,7 +508,7 @@ define([
             metadata : "91270"
         },
         19: {
-            period_label : "Year",
+            period_label : labels[CloudLang]['table_title_year'],
             domain_label : labels[CloudLang]['domain_label'],
             element_label : {
             "19" : labels[CloudLang]['element_label1']
@@ -535,7 +535,7 @@ define([
             metadata : "91271"
         },
         20: {
-            period_label : "Year",
+            period_label : labels[CloudLang]['table_title_year'],
             domain_label : labels[CloudLang]['domain_label'],
             element_label : {
             "20" : labels[CloudLang]['element_label1']
@@ -562,7 +562,7 @@ define([
             metadata : "91272"
         },
         21: {
-            period_label : "Year",
+            period_label : labels[CloudLang]['table_title_year'],
             domain_label : labels[CloudLang]['domain_label'],
             indicator_label: "Indicator Label",
             element_label : {

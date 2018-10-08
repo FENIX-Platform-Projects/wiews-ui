@@ -104,7 +104,10 @@ define([
         }
 
         // Inject the text direction
-        data['text_direction'] = $('html').attr('dir');
+        //data['text_direction'] = $('html').attr('dir');
+        // This is only due the typo3 mess!
+
+        if ($('html').attr('lang') == "ar") { data['text_direction'] = "rtl" } else {  data['text_direction'] = "auto" };
 
         // Inject the language
         language[lang] = data;
