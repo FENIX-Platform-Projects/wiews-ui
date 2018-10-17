@@ -142,7 +142,7 @@ define([
 
     };
 
-    Search.prototype._callGoogle = function (filename, keyname) {
+    Search.prototype._callGoogle = function (filename, keyname, lang) {
         var response_data = {
                 total : -1,
                 hits : []
@@ -176,7 +176,7 @@ define([
                 if (res.hits.hits.length) {
                     _.each( res.hits.hits, function ( element ) {
                         var item =  {
-                            label : element._source[keyname+"_name_"+$("html").attr("lang")],
+                            label : element._source[keyname+"_name_"+lang],
                             value : element._source[keyname+"_id"]
                         };
                         response_data.hits.push(item);
@@ -393,6 +393,20 @@ define([
         });
     };
 
+    Search.prototype._swapCodelistInTheStupidWay = function (truecodelist, fakecodelist) {
+        var codelist = [];
+
+        _.each(truecodelist, function(element, index) {
+            var item =  {
+                label : element.label,
+                value : fakecodelist[index].label
+            };
+            codelist.push(item);
+        });
+
+        return codelist;
+    }
+
     Search.prototype._speciesTransformElastic = function (arrayofspecies) {
         var output = [];
         _.each(arrayofspecies, function(element) {
@@ -421,12 +435,14 @@ define([
         var prefetchInstitute = this._bloodHoundPrefetchElastic('wiews_exsitu_institute_filter');
         var prefetchGenus = this._bloodHoundPrefetchElastic('wiews_exsitu_genus_filter');
 
-        var codelist_ISO3 = this._callGoogle('iso3_country_codes_'+$("html").attr("lang").toLowerCase()+'.json').hits;
-        var codelist_BIOS = this._callGoogle('biostatofacc_codelist_'+$("html").attr("lang").toLowerCase()+'.json', 'bio_stat_of_accesion').hits;
-        var codelist_Stor = this._callGoogle('germplasm_storage_'+$("html").attr("lang").toLowerCase()+'.json',"germplasm_storage").hits;
+        var codelist_ISO3 = this._callGoogle('iso3_country_codes_'+$("html").attr("lang").toLowerCase()+'.json', $("html").attr("lang")).hits;
+        var codelist_BIOS = this._callGoogle('biostatofacc_codelist_'+$("html").attr("lang").toLowerCase()+'.json', 'bio_stat_of_accesion', $("html").attr("lang")).hits;
+        var codelist_Stor = this._callGoogle('germplasm_storage_'+$("html").attr("lang").toLowerCase()+'.json',"germplasm_storage", $("html").attr("lang")).hits;
 
-        //console.log(codelist_BIOS);
-        //console.log(codelist_Stor);
+        var codelist_storage = this._callGoogle('germplasm_storage_en.json',"germplasm_storage", "en").hits;
+
+        // Stupidest thing ever.
+        codelist_Stor = this._swapCodelistInTheStupidWay(codelist_Stor,codelist_storage);
 
         $('#search_crop').typeahead(this.tya_options,
             {
@@ -594,7 +610,7 @@ define([
 
         if ($('[data-GPAStatus=binomial_name]').length > 0) $('[data-GPAStatus=binomial_name]').remove();
         if (binomial_name != content['taxon']) {
-            $('[data-GPAStatus=taxon]').after(binomial)
+            $('[data-GPAStatus=taxon]').after(binomial(labels[Clang]))
         }
 
         _.each(content, function(row_value, row_name) {
@@ -638,7 +654,7 @@ define([
         this.tya_options = {
             hint: true,
             highlight: true,
-            minLength: 3
+            minLength: (Clang == "zh") ? 1 : 3
         };
 
         this.elastic_export = {};
@@ -846,7 +862,9 @@ define([
         // Storage
         if (filter_values.values.search_storage.length) {
             payload.query.bool.must.push({"match": {"type_of_germplasm_storage": typeofstorage}});
-            self.elastic_export_file.filters.type_of_germplasm_storage = typeofstorage.split(" ");
+            //console.log(filter_values.values.search_storage);
+            self.elastic_export_file.filters.type_of_germplasm_storage = filter_values.values.search_storage;
+            // self.elastic_export_file.filters.type_of_germplasm_storage = typeofstorage.split(" ");
         }
 
         this.elastic_export = payload;
@@ -899,20 +917,26 @@ define([
                 }
             }
         ;
+
+        var crop_name_lang  = "crop_name_"+Clang,
+            crop_object = {},
+            crop_lowercase  = crop_name_lang+".lowercase",
+            crop_aggregator = crop_name_lang+".aggregator";
+
+        crop_object[crop_lowercase] = {
+            "value": "*"+text+"*",
+            "rewrite": "scoring_boolean"
+        };
+
         var crop_payload = {
             "query": {
-                "wildcard": {
-                    "crop_name_en.lowercase": {
-                        "value": "*"+text+"*",
-                        "rewrite": "scoring_boolean"
-                    }
-                }
+                "wildcard": crop_object
             },
             "size":"0",
             "aggs": {
                 "result_set": {
                     "terms": {
-                        "field": "crop_name_en.aggregator",
+                        "field": crop_aggregator,
                         "order": {"max_score": "asc"}
                     },
                     "aggs": {
@@ -1215,16 +1239,18 @@ define([
 
         $('#btn_addfromcrop').on('click', function() {
             var output = [],
+                match = {},
                 filter_values = self.filter.getValues(),
                 //selected = selection['crop_en'],
                 text = $('#search_crop').val(),
                 crops = text.charAt(0).toUpperCase() + text.slice(1),
-                wcr = (filter_values.values.search_search_crop_wild_relatives[0] == 'true'),
-                builtquery = {
+                wcr = (filter_values.values.search_search_crop_wild_relatives[0] == 'true');
+                match["crop_name_"+Clang+".aggregator"] = crops;
+            var builtquery = {
                     "query": {
                         "bool": {
                             "must": [
-                                {"match": {"crop_name_en": crops}}
+                                {"match": match }
                             ]
                         }
                     },
