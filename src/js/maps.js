@@ -27,11 +27,11 @@ define([
         exsitu_search_url = C.URL_exsitusearch,
         organization_url = C.URL_organizations,
         services_url = C.URL_saikumap,
-        //google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
-        google_apikey = C.google_apikey; // < PROD
+        google_apikey = "AIzaSyBuHFI5p2EP0jdpliVr1BQgx-zprRNRjcc"; // < DEV
+        //google_apikey = C.google_apikey; // < PROD
 
     function Maps() {
-        console.clear();
+        //console.clear();
         // silent trace
         log.setLevel("silent");
         this._importThirdPartyCss();
@@ -161,11 +161,16 @@ define([
             //console.log(googleMaps);
             var map = new googleMaps.Map(document.getElementById('map'), {
                 zoom: 2,
-                center: new google.maps.LatLng(15,-5),
+                mapTypeId: google.maps.MapTypeId.HYBRID,
+                labels: true,
+                center: new google.maps.LatLng(15,25),
                 //disableDefaultUI: true,
                 gestureHandling: 'cooperative',
                 streetViewControl: false,
-                fullscreenControl: false
+                fullscreenControl: false,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.LEFT_BOTTOM
+                },
             });
 
             map.data.setStyle(function(feature) {
@@ -332,8 +337,16 @@ define([
     }
 
     Maps.prototype._convert2CSV = function (data) {
+
+        var entities = {
+            "OTHER" : labels[Clang]['maps_select_national'],
+            "INT" : labels[Clang]['maps_select_international'],
+            "REG" : labels[Clang]['maps_select_regional']
+        };
+
         _.each(data, function(object) {
             object['name'] = "\""+object['name']+"\"";
+            object['type'] = entities[object['type']];
         });
         return data;
 

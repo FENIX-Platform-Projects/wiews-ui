@@ -230,6 +230,7 @@ define([
             fenixvalues.values.search_country_institute.length > 0 ||
             fenixvalues.values.search_country_origin.length > 0 ||
             fenixvalues.values.search_statusofaccession.length > 0 ||
+            fenixvalues.values.search_statusmultilateral.length > 0 ||
             fenixvalues.values.search_storage.length > 0 ||
             this.genus_species.length > 0 ||
             this.institutes.length > 0
@@ -845,8 +846,13 @@ define([
         }
         // Multilateral
         if (mlstatus != null) {
-            payload.query.bool.must.push({"match_phrase": {"status_under_multilateral_system": filter_values.labels.search_statusmultilateral[mlstatus]}});
-            self.elastic_export_file.filters.status_under_multilateral_system = filter_values.labels.search_statusmultilateral[mlstatus];
+            var multilateral = {
+                true : "Included",
+                false : "Not included"
+            };
+            console.log(multilateral[mlstatus]);
+            payload.query.bool.must.push({"match_phrase": {"status_under_multilateral_system": multilateral[mlstatus]}});
+            self.elastic_export_file.filters.status_under_multilateral_system = multilateral[mlstatus];
         }
         // Array > Spaced
         // Country of Origin
