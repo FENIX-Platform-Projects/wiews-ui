@@ -253,26 +253,75 @@ define([
 
     Organizations.prototype._exportList = function (freetext) {
 
+        $('#organizations-ux-loader').show();
+        $('[data-page=organizations]').css('opacity','0.5');
+
+
 
         var json2csvCallback = function (err, csv) {
             if (err) throw err;
-            var blob = new Blob([csv], {type: "text/csv;charset=utf-8"});
-            FileSaver.saveAs(blob, "organizations.txt");
-            //$('div#exsitu-search-ux-loader').hide();
-            //$('[data-page=exsitu-search]').css('opacity','1');
-        };
-        converter.json2csv(this.table_data, json2csvCallback, {
-            delimiter : {
-                wrap  : '"',
-                field : ',',
-                array : ';',
-                eol   : '\n'
-            },
-            prependHeader    : true,
-            sortHeader       : false
-            //keys             : []
-        });
 
+            var keys = [
+                labels[Clang]['organizations_table_details_instcode'], // "instcode"
+                labels[Clang]['organizations_table_details_name'], // "name"
+                labels[Clang]['organizations_table_details_acronym'], // "acronym"
+                labels[Clang]['organizations_table_details_parentorg'], // "parent_name"
+                labels[Clang]['organizations_table_details_parentorgcode'], // "parent_instcode"
+                labels[Clang]['organizations_table_details_address'], // "address"
+                labels[Clang]['organizations_table_details_city'], // "city"
+                labels[Clang]['organizations_table_details_country'], // "country"
+                labels[Clang]['organizations_table_details_zipcode'], // "zip_code"
+                labels[Clang]['organizations_table_details_telephone'], // "telephone"
+                labels[Clang]['organizations_table_details_fax'], // "fax"
+                labels[Clang]['organizations_table_details_email'], // "email"
+                labels[Clang]['organizations_table_details_www'], // "website"
+                labels[Clang]['organizations_table_details_orgstatus'], // "status"
+                labels[Clang]['organizations_table_details_long'], // "longitude"
+                labels[Clang]['organizations_table_details_lat'], // "latitude"
+                labels[Clang]['organizations_table_details_rolecategories'] // "organization_roles"
+            ],
+            header_csv = "\""+ keys.join('","') + "\"\n" + csv ;
+
+            var blob = new Blob([header_csv], {type: "text/csv;charset=utf-8"});
+            FileSaver.saveAs(blob, "organizations.csv");
+            $('#organizations-ux-loader').hide();
+            $('[data-page=organizations]').css('opacity','1');
+
+        };
+
+        if (this.table_data.length > 0) {
+            converter.json2csv(this.table_data, json2csvCallback, {
+                delimiter : {
+                    wrap  : '"',
+                    field : ',',
+                    array : ';',
+                    eol   : '\n'
+                },
+                prependHeader    : false,
+                sortHeader       : false,
+                /*
+                keys             : [
+                    labels[Clang]['organizations_table_details_instcode'], // "instcode"
+                    labels[Clang]['organizations_table_details_name'], // "name"
+                    labels[Clang]['organizations_table_details_acronym'], // "acronym"
+                    labels[Clang]['organizations_table_details_parentorg'], // "parent_name"
+                    labels[Clang]['organizations_table_details_parentorgcode'], // "parent_instcode"
+                    labels[Clang]['organizations_table_details_address'], // "address"
+                    labels[Clang]['organizations_table_details_city'], // "city"
+                    labels[Clang]['organizations_table_details_country'], // "country"
+                    labels[Clang]['organizations_table_details_zipcode'], // "zip_code"
+                    labels[Clang]['organizations_table_details_telephone'], // "telephone"
+                    labels[Clang]['organizations_table_details_fax'], // "fax"
+                    labels[Clang]['organizations_table_details_email'], // "email"
+                    labels[Clang]['organizations_table_details_www'], // "website"
+                    labels[Clang]['organizations_table_details_orgstatus'], // "status"
+                    labels[Clang]['organizations_table_details_long'], // "longitude"
+                    labels[Clang]['organizations_table_details_lat'], // "latitude"
+                    labels[Clang]['organizations_table_details_rolecategories'] // "organization_roles"
+                ]
+                */
+            });
+        }
         return;
 
     };
@@ -282,8 +331,10 @@ define([
         return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
     };
 
-    Organizations.prototype._initTable = function(data) {
-        this.table_data = data.rows;
+    Organizations.prototype._initTable = function(result) {
+
+        this.table_data = result.data;
+
         var self = this,
             filter = "";
         var btLocale = {
@@ -295,7 +346,11 @@ define([
             zh : "zh-CN"
         };
 
-        if (this.instcode.length) if (data.rows) this._fillResults(data.rows[0]);
+        if (this.instcode.length) if (result.rows) {
+            this._fillResults(result.rows[0]);
+            return;
+        }
+
         self.offsetPage = 0;
         $(s.TABLE).bootstrapTable('destroy');
         $(s.TABLE).bootstrapTable({
@@ -322,6 +377,8 @@ define([
             self.pageSize = size;
             self.offsetPage = self.pageSize * (number - 1);
         });
+        $('#organizations-ux-loader').hide();
+        $('[data-page=organizations]').css('opacity','1');
 
         function parseOutput(input) {
             return self._parseOutput(input);
@@ -349,7 +406,7 @@ define([
         $(s.EL).html(template(labels[Clang]));
         //this._initTable([]);
 
-        var codelist_ISO3 = this._callGoogle('iso3_country_codes.json').hits;
+        var codelist_ISO3 = this._callGoogle('iso3_country_codes_'+Clang+'.json').hits;
         var codelist_OrgR = this._callGoogle('organization_roles.json').hits;
 
 
@@ -486,6 +543,9 @@ define([
             } else {
                 $('#orgalert_message').html(labels[Clang]['organizations_search_from_querystring']);
                 $('[data-role=messages]').show();
+                $('#organizations-ux-loader').hide();
+                $('[data-page=organizations]').css('opacity','1');
+
             }
         }
 
@@ -664,6 +724,8 @@ define([
     Organizations.prototype._bindEventListeners = function () {
         var self = this;
 
+        $('#organizations-ux-loader').hide();
+
         this.filter.on('ready', function(){
             self.initial = self.filter.getValues();
             if (C.ping_cloud) self._pingCloud();
@@ -682,6 +744,8 @@ define([
                 if ($('#search_omnibox').val().length < 1) {
                     $('#orgalert_message').html(labels[Clang]['organizations_search_orgalert_message']);
                     $('[data-role=messages]').show();
+                    $('#organizations-ux-loader').hide();
+                    $('[data-page=organizations]').css('opacity','1');
                     return;
                 }
                 self._searchfromkeyboard($('#search_omnibox').val());
@@ -697,19 +761,31 @@ define([
 
         $('#search_button').on('click', function(){
             $('[data-role=messages]').hide();
+            $('#organizations-ux-loader').show();
+            $('[data-page=organizations]').css('opacity','0.5');
             if ($('#search_omnibox').val().length < 1) {
                 $('#orgalert_message').html(labels[Clang]['organizations_search_orgalert_message']);
                 $('[data-role=messages]').show();
+                $('#organizations-ux-loader').hide();
+                $('[data-page=organizations]').css('opacity','1');
                 return;
+            } else {
+                setTimeout(function () {
+                    self._initTable(self._callServices(self._preparePayload($('#search_omnibox').val())));
+                    self._statesManagement('results');
+                }, 150);
             }
-            self._initTable(self._callServices(self._preparePayload($('#search_omnibox').val())));
-            self._statesManagement('results');
         });
 
         $('#adv_search_button').on('click', function(){
             //self._initTable(self._callServices(self._preparePayload()));
-            self._initTable(self._callBigQuery(self._preparePayloadBigQuery(0)));
-            self._statesManagement('results');
+            $('[data-role=messages]').hide();
+            $('#organizations-ux-loader').show();
+            $('[data-page=organizations]').css('opacity','0.5');
+            setTimeout(function () {
+                self._initTable(self._callBigQuery(self._preparePayloadBigQuery(0)));
+                self._statesManagement('results');
+            }, 150);
         });
 
         $('#advanced').on('click', function(){
