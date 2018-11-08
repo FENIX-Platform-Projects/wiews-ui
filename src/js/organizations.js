@@ -21,6 +21,7 @@ define([
     var Clang = C.lang.toLowerCase(),
         services_bq = "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsOrganizationsSearch",
         services_url = "https://us-central1-fao-gift-app.cloudfunctions.net/elasticSearchGetData?index=organizations&multiSearch=no",
+        export_url = "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsOrganizationsRawDownload",
         fromFreetext = false;
 
     var s = {
@@ -251,78 +252,39 @@ define([
 
     };
 
-    Organizations.prototype._exportList = function (freetext) {
+    Organizations.prototype._exportList = function () {
+
+        var self = this;
 
         $('#organizations-ux-loader').show();
         $('[data-page=organizations]').css('opacity','0.5');
 
-
-
-        var json2csvCallback = function (err, csv) {
-            if (err) throw err;
-
-            var keys = [
-                labels[Clang]['organizations_table_details_instcode'], // "instcode"
-                labels[Clang]['organizations_table_details_name'], // "name"
-                labels[Clang]['organizations_table_details_acronym'], // "acronym"
-                labels[Clang]['organizations_table_details_parentorg'], // "parent_name"
-                labels[Clang]['organizations_table_details_parentorgcode'], // "parent_instcode"
-                labels[Clang]['organizations_table_details_address'], // "address"
-                labels[Clang]['organizations_table_details_city'], // "city"
-                labels[Clang]['organizations_table_details_country'], // "country"
-                labels[Clang]['organizations_table_details_zipcode'], // "zip_code"
-                labels[Clang]['organizations_table_details_telephone'], // "telephone"
-                labels[Clang]['organizations_table_details_fax'], // "fax"
-                labels[Clang]['organizations_table_details_email'], // "email"
-                labels[Clang]['organizations_table_details_www'], // "website"
-                labels[Clang]['organizations_table_details_orgstatus'], // "status"
-                labels[Clang]['organizations_table_details_long'], // "longitude"
-                labels[Clang]['organizations_table_details_lat'], // "latitude"
-                labels[Clang]['organizations_table_details_rolecategories'] // "organization_roles"
-            ],
-            header_csv = "\""+ keys.join('","') + "\"\n" + csv ;
-
-            var blob = new Blob([header_csv], {type: "text/csv;charset=utf-8"});
-            FileSaver.saveAs(blob, "organizations.csv");
-            $('#organizations-ux-loader').hide();
-            $('[data-page=organizations]').css('opacity','1');
-
-        };
-
-        if (this.table_data.length > 0) {
-            converter.json2csv(this.table_data, json2csvCallback, {
-                delimiter : {
-                    wrap  : '"',
-                    field : ',',
-                    array : ';',
-                    eol   : '\n'
+        setTimeout(function () {
+            $.ajax({
+                async: false,
+                dataType: 'json',
+                method: 'POST',
+                contentType: "text/plain; charset=utf-8",
+                url:  export_url,
+                data: JSON.stringify(self._preparePayloadBigQuery(0)),
+                success: function(res) {
+                    window.open(res[0], '_blank');
+                    $('#organizations-ux-loader').hide();
+                    $('[data-page=organizations]').css('opacity','1');
                 },
-                prependHeader    : false,
-                sortHeader       : false,
-                /*
-                keys             : [
-                    labels[Clang]['organizations_table_details_instcode'], // "instcode"
-                    labels[Clang]['organizations_table_details_name'], // "name"
-                    labels[Clang]['organizations_table_details_acronym'], // "acronym"
-                    labels[Clang]['organizations_table_details_parentorg'], // "parent_name"
-                    labels[Clang]['organizations_table_details_parentorgcode'], // "parent_instcode"
-                    labels[Clang]['organizations_table_details_address'], // "address"
-                    labels[Clang]['organizations_table_details_city'], // "city"
-                    labels[Clang]['organizations_table_details_country'], // "country"
-                    labels[Clang]['organizations_table_details_zipcode'], // "zip_code"
-                    labels[Clang]['organizations_table_details_telephone'], // "telephone"
-                    labels[Clang]['organizations_table_details_fax'], // "fax"
-                    labels[Clang]['organizations_table_details_email'], // "email"
-                    labels[Clang]['organizations_table_details_www'], // "website"
-                    labels[Clang]['organizations_table_details_orgstatus'], // "status"
-                    labels[Clang]['organizations_table_details_long'], // "longitude"
-                    labels[Clang]['organizations_table_details_lat'], // "latitude"
-                    labels[Clang]['organizations_table_details_rolecategories'] // "organization_roles"
-                ]
-                */
+                error : function(res) {
+                    if (res.responseText == "Record limit of 500000 exceeded.") {
+                        alert(res.responseText);
+                        $('#organizations-ux-loader').hide();
+                        $('[data-page=organizations]').css('opacity','1');
+                    }
+                    console.log(res);
+                    return;
+                }
+
             });
-        }
-        return;
+        }, 100);
+
 
     };
 
@@ -346,8 +308,8 @@ define([
             zh : "zh-CN"
         };
 
-        if (this.instcode.length) if (result.rows) {
-            this._fillResults(result.rows[0]);
+        if (this.instcode.length) if (result.data) {
+            this._fillResults(result.data[0]);
             return;
         }
 
@@ -529,13 +491,10 @@ define([
         });
 
         if (this.instcode.length) {
-            var result = this._callServices({
-                    "query": {
-                        "wildcard": {"instcode.keyword": "*"+this.instcode.toUpperCase()+"*"}
-                    },
-                    "size": 2000
-                });
-            if (result.rows.length) {
+
+            var result = this._callBigQuery(self._preparePayloadBigQuery(0, this.instcode.toUpperCase())) ;
+
+            if (result.data.length) {
                 this._initTable(result);
                 self._statesManagement('querystring');
                 $('#backtosearch_fromomni').show();
@@ -563,6 +522,9 @@ define([
     };
 
     Organizations.prototype._fillResults = function(content) {
+
+        console.log('content is ', content);
+
         var self = this,
             instcode = "";
         _.each(content, function(row_value, row_name) {
@@ -640,12 +602,7 @@ define([
 
     };
 
-    Organizations.prototype._preparePayloadBigQuery = function (from) {
-
-        var filter_values = this.filter.getValues();
-        var isValid  = filter_values.values.valid[0];
-
-        //console.log('from is ',from);
+    Organizations.prototype._preparePayloadBigQuery = function (from, instcode) {
 
         var body = {
             "lang": Clang,
@@ -654,11 +611,22 @@ define([
             "filters":{ }
         };
 
+        if (instcode) {
+            body.filters["instcode"] = instcode.toUpperCase();
+            return body;
+        }
+
+        var filter_values = this.filter.getValues();
+        var isValid  = filter_values.values.valid[0];
+
+        //console.log('from is ',from);
+
         if ($('#search_instcode').val()) body.filters["instcode"] = $('#search_instcode').val().toUpperCase();
         if ($('#search_name').val()) body.filters["name"] = $('#search_name').val().toLowerCase();
         if ($('#search_city').val())  body.filters["city"] = $('#search_city').val().toLowerCase();
         if ($('#search_organization').val()) body.filters["acronym"] = $('#search_organization').val().toLowerCase();
-        if ($('#search_instcode').val()) body.filters["search_key"] = $('#search_instcode').val().toUpperCase();
+
+        //if ($('#search_instcode').val()) body.filters["search_key"] = $('#search_instcode').val().toUpperCase();
 
         if (isValid != 'null') body.filters["valid"] = isValid ;
         if (filter_values.values.country.length > 0 ) body.filters["country_iso3"] = filter_values.values.country.join(" ");
@@ -810,7 +778,7 @@ define([
 
 
         $('[data-role=organizations_exportbutton]').on('click', function() {
-            self._exportList(fromFreetext);
+            if (self.table_data.length > 0) self._exportList();
         });
 
         window.onpopstate = function(event) {

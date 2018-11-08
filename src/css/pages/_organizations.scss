@@ -1,5 +1,12 @@
 /* Homepage */
 
+[data-page="ux-loader"] {
+  position: absolute;
+  top: 50%;
+  left: 43%;
+  z-index: 100;
+}
+
 [data-page='organizations'] {
 
   .GPAListElement {
