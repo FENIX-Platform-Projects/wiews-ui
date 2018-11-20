@@ -142,6 +142,38 @@ define([
 
     };
 
+    Search.prototype._callGoogleSimple = function (filename) {
+        var response_data = {
+                total : -1,
+                hits : []
+            },
+            staticurl = C.URL_bucket;
+
+
+        $.ajax({
+            async: false,
+            dataType: 'json',
+            method: 'GET',
+            contentType: "text/plain; charset=utf-8",
+            url:  staticurl+filename,
+            success: function(res) {
+                response_data.total = res.lenght;
+                _.each( res, function (element) {
+                    var item = {
+                        label : element.country_name,
+                        value : element.iso3
+                    }
+                    response_data.hits.push(item);
+                } );
+            },
+            error : function(res) {
+                console.log(res);
+            }
+        });
+
+        return response_data;
+    };
+
     Search.prototype._callGoogle = function (filename, keyname, lang) {
         var response_data = {
                 total : -1,
@@ -437,6 +469,7 @@ define([
         var prefetchGenus = this._bloodHoundPrefetchElastic('wiews_exsitu_genus_filter');
 
         var codelist_ISO3 = this._callGoogle('iso3_country_codes_'+$("html").attr("lang").toLowerCase()+'.json', $("html").attr("lang")).hits;
+        var codelist_ORIG = this._callGoogleSimple('iso3_origin_'+$("html").attr("lang").toLowerCase()+'.json').hits;
         var codelist_BIOS = this._callGoogle('biostatofacc_codelist_'+$("html").attr("lang").toLowerCase()+'.json', 'bio_stat_of_accesion', $("html").attr("lang")).hits;
         var codelist_Stor = this._callGoogle('germplasm_storage_'+$("html").attr("lang").toLowerCase()+'.json',"germplasm_storage", $("html").attr("lang")).hits;
 
@@ -520,7 +553,7 @@ define([
                 "search_country_origin" : {
                     "selector": {
                         "id": "dropdown",
-                        "source" : codelist_ISO3,
+                        "source" : codelist_ORIG,
                         "config": {
                             "placeholder" : labels[Clang]['exsitu-search_search_country_origin'],
                             plugins: ['remove_button']
