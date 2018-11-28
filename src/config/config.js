@@ -13,8 +13,8 @@ define(function () {
         URL_indicator_rawdownload : "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsIndicatorsRawDownload",
         URL_bigquery: "https://us-central1-fao-gift-app.cloudfunctions.net/wiewsExsituSearch",
         URL_bucket : "https://storage.googleapis.com/wiews-lang-bucket/",
-        URL_saiku : "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/query/execute",
-        URL_saikumap : "http://35.198.138.71:8080/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/WIEWS/wiews_map_agg_{{YEAR}}_"+$("html").attr("lang").toLowerCase()+".saiku",
+        URL_saiku : "https://io.apps.fao.org/pentaho/plugin/saiku/api/anonymousUser/query/execute",
+        URL_saikumap : "https://io.apps.fao.org/pentaho/plugin/saiku/api/anonymousUser/export/saiku/json?file=/home/anonymousUser/WIEWS/wiews_map_agg_{{YEAR}}_"+$("html").attr("lang").toLowerCase()+".saiku",
         // Frontend URL
         URL_faowiews : "http://www.fao.org/wiews/",
         URL_metadata : "http://www.fao.org/wiews/metadata/indicator-",

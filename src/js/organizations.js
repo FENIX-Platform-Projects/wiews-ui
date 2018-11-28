@@ -542,6 +542,9 @@ define([
                 $('[data-GPAIndex=exsitu_search]').attr('href', '/wiews/data/ex-situ-sdg-251/search/'+self.lang.toLowerCase()+'/?instcode='+row_value+'#results');
                 instcode = row_value;
             }
+            // Let's decide a format!
+            if (row_name == "organization_roles") content = content.replace(/;/g,'<BR>');
+
             $('[data-GPAIndex='+row_name+']').html(content);
             //Special Cases
             if (row_name == "valid_flag") if (row_value == false) {
@@ -549,7 +552,7 @@ define([
             } else {
                 $('#containerGPA div.tableheader').css('display', 'none');
             }
-            if (row_name.startsWith('role_f') && row_value == true) $('[data-GPAFlag='+row_name+']').removeClass('hiddenflag');
+            //if (row_name.startsWith('role_f') && row_value == true) $('[data-GPAFlag='+row_name+']').removeClass('hiddenflag');
         });
         this._checkforHoldings(instcode);
     };
