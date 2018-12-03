@@ -466,7 +466,7 @@ define([
                 "valid" : {
                     selector: {
                         id: "dropdown",
-                        default : ['true'],
+                        default : ['null'],
                         source: [
                             {value: "true", label: labels[Clang]['organizations_searchform_search_validation_true']},
                             {value: "null", label: labels[Clang]['organizations_searchform_search_validation_null']},
@@ -543,7 +543,7 @@ define([
                 instcode = row_value;
             }
             // Let's decide a format!
-            if (row_name == "organization_roles") content = content.replace(/;/g,'<BR>');
+            //if (row_name == "organization_roles") content = content.replace(/;/g,'<BR>');
 
             $('[data-GPAIndex='+row_name+']').html(content);
             //Special Cases
@@ -552,7 +552,7 @@ define([
             } else {
                 $('#containerGPA div.tableheader').css('display', 'none');
             }
-            //if (row_name.startsWith('role_f') && row_value == true) $('[data-GPAFlag='+row_name+']').removeClass('hiddenflag');
+            if (row_name.startsWith('role_f') && row_value == true) $('[data-GPAFlag='+row_name+']').removeClass('hiddenflag');
         });
         this._checkforHoldings(instcode);
     };

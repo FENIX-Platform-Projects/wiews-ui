@@ -538,7 +538,7 @@ define([
                 "search_year" : {
                     "selector": {
                         "id": "dropdown",
-                        default : [defaultYear],
+                        default : [this.year],
                         source: [
                             {value: "2014", label: "2014"},
                             {value: "2016", label: "2016"},
@@ -664,6 +664,7 @@ define([
     Search.prototype._initVariables = function () {
 
         this.instcode = ((this._getParameterByName('instcode')) ? this._getParameterByName('instcode') : "");
+        this.year = ((this._getParameterByName('year')) ? this._getParameterByName('year') : defaultYear);
         this.accenumb = ((this._getParameterByName('accenumb')) ? this._getParameterByName('accenumb') : "");
         this.country_search = ((this._getParameterByName('country')) ? this._getParameterByName('country') : "");
 
@@ -679,7 +680,7 @@ define([
 
         this.genus = "";
         this.warning = false;
-        this.selected_year = defaultYear;
+        this.selected_year = this.year;
         this.cwr = null;
         this.loaded_crop = [];
         this.genus_species = [];
@@ -1132,7 +1133,7 @@ define([
         this.filter.setValues({
             values: this.initial.values
         });
-        this.initial.values['search_year'][0] = defaultYear;
+        this.initial.values['search_year'][0] = this.year;
         this._bindYearListener();
         history.pushState({ page : "initial" }, "Search", this._RemoveParameterFromUrl(window.location.href.split('#')[0],'instcode'));
     };
